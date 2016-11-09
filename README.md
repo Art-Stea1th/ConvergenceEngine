@@ -1,1 +1,1 @@
-# Simultaneous Localization And Mapping
+# Simultaneous Localization And Mapping on Kinect
