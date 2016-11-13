@@ -1,0 +1,22 @@
+﻿<Window x:Class="SLAM.Preview.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SLAM.Preview"
+        xmlns:viewmodels="clr-namespace:SLAM.Preview.ViewModels;assembly=SLAM.Preview.ViewModels"
+        xmlns:customcontrols="clr-namespace:SLAM.Preview.CustomControls;assembly=SLAM.Preview.CustomControls"
+        mc:Ignorable="d"
+        Title="MainWindow" Width="1300" Height="660">
+    
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <customcontrols:RapidCellularViewport
+            Name="cellUniverseViewport"
+            CellularData="{Binding CellularData}"
+            SpacingBetweenCells="{Binding SpacingBetweenCells}"/>
+    </Grid>
+</Window>
