@@ -32,8 +32,8 @@
             SurfaceWidth = surfaceWidth;
             SurfaceHeight = surfaceHeight;
 
-            this.CellsHorizontal = cellsHorizontal;
-            this.CellsVertical = cellsVertical;
+            CellsHorizontal = cellsHorizontal;
+            CellsVertical = cellsVertical;
             SpacingBetweenCells = spacingBetweenCells;
 
             CellSize = CalculateActualCellSize(

@@ -11,10 +11,12 @@ namespace SLAM.Preview.CustomControls.RapidCellularViewportDependencies {
 
         private Settings settings;
         private WriteableBitmap surface;
-        private bool InvalidateView = false;
+
+        private bool invalidateView;
 
         internal Renderer(Settings settings) {
             this.settings = settings;
+            invalidateView = false;
         }
 
         internal void Update(
@@ -22,7 +24,8 @@ namespace SLAM.Preview.CustomControls.RapidCellularViewportDependencies {
             if (NeedRecalculateView(surfaceWidth, surfaceHeight, cellsHorizontal, cellsVertical, spacingBetweenCells)) {
                 settings.Recalculate(surfaceWidth, surfaceHeight, cellsHorizontal, cellsVertical, spacingBetweenCells);
                 surface = new WriteableBitmap(surfaceWidth, surfaceHeight, 96, 96, PixelFormats.Bgr32, null);
-                InvalidateView = true;
+
+                invalidateView = true;
 
                 GC.Collect(); // WriteableBitmap Memory Leak?
             }
@@ -98,18 +101,18 @@ namespace SLAM.Preview.CustomControls.RapidCellularViewportDependencies {
 
         private IEnumerable<Tuple<int, int, Color>> GetDifference(Color[,] oldCellularData, Color[,] newCellularData) {
 
-            int width  = oldCellularData.GetLength(1);
-            int height = oldCellularData.GetLength(0);
+            int width  = newCellularData.GetLength(1);
+            int height = newCellularData.GetLength(0);
 
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
-                    if (newCellularData[y, x] == oldCellularData[y, x] && !InvalidateView) {
-                        continue;
-                    }
+                    //if (newCellularData[y, x] == oldCellularData[y, x] && !invalidateView) {
+                    //    continue;
+                    //}
                     yield return new Tuple<int, int, Color>(x, y, newCellularData[y, x]);
                 }
             }
-            InvalidateView = false;
+            invalidateView = false;
         }
 
         private int GetIntColor(byte red, byte green, byte blue) {

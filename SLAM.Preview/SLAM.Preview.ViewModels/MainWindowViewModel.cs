@@ -2,13 +2,19 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace SLAM.Preview.ViewModels {
 
-    public class MainWindowViewModel : ViewModelBase {        
+    using Model;
+    using System.Numerics;
+
+    public class MainWindowViewModel : ViewModelBase {
+
+        // --- Viewport ---
 
         private Color[,] cellularData;
         private int spacingBetweenCells;
@@ -17,10 +23,21 @@ namespace SLAM.Preview.ViewModels {
         private int viewportResolutionX;
         private int viewportResolutionY;
 
+        private Random random;
+
         // --- Kinect ---
 
         private KinectSensor sensor;
         private DepthImagePixel[] depthPixels;
+
+        private int minDepth, maxDepth;
+
+        // --- Math ---
+
+        //private static readonly double HorizontalTanA = Math.Tan(28.5 * Math.PI / 180);
+        private static readonly double pixelAngle = 57.0 / 640;
+
+        private static readonly double hFOV = 58.5;
 
         #region INotifyPropertyChanged
 
@@ -44,77 +61,152 @@ namespace SLAM.Preview.ViewModels {
             }
         }
 
+        public int ViewportResolutionX {
+            get {
+                return viewportResolutionX;
+            }
+            set {
+                viewportResolutionX = value;
+                OnPropertyChanged(GetMemberName((MainWindowViewModel c) => c.ViewportResolutionX));
+            }
+        }
+
+        public int ViewportResolutionY {
+            get {
+                return viewportResolutionY;
+            }
+            set {
+                viewportResolutionY = value;
+                OnPropertyChanged(GetMemberName((MainWindowViewModel c) => c.ViewportResolutionY));
+            }
+        }
+
         #endregion
 
-        private void InitializeSensors() {
+        //private void SensorDepthFrameReady(object sender, DepthImageFrameReadyEventArgs e) {
 
-            foreach (var potentialSensor in KinectSensor.KinectSensors) {
-                if (potentialSensor.Status == KinectStatus.Connected) {
-                    sensor = potentialSensor;
-                    break;
-                }
-            }            
+        //    using (DepthImageFrame depthFrame = e.OpenDepthImageFrame()) {
 
-            if (null != sensor) {
+        //        if (depthFrame != null) {
 
-                sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
-                depthPixels = new DepthImagePixel[sensor.DepthStream.FramePixelDataLength];
-                sensor.DepthFrameReady += SensorDepthFrameReady;
+        //            depthFrame.CopyDepthImagePixelDataTo(depthPixels);
 
-                try {
-                    sensor.Start();
-                }
-                catch (IOException) {
-                    sensor = null;
+        //            Color[,] colors = new Color[viewportResolutionY, viewportResolutionX = depthFrame.Width];
+
+        //            for (int x = 0; x < viewportResolutionX; x++) {
+
+        //                int middleLineIndex = depthFrame.Height / 2;
+        //                int linearIndex = GetLinearIndex(x, middleLineIndex, depthFrame.Width);
+
+        //                int millimeterDepthAsY = depthPixels[linearIndex].Depth;
+
+        //                int realY = millimeterDepthAsY / 10;
+
+        //                if (realY > 0 && realY < colors.GetLength(0)) {
+        //                    colors[viewportResolutionY - realY - 1, viewportResolutionX - x - 1] = viewportColor;
+        //                }
+        //            }
+
+        //            CellularData = colors;
+        //        }
+        //    }
+        //}
+        private void SensorDepthFrameReady(object sender, DepthImageFrameReadyEventArgs e) {
+
+
+            using (DepthImageFrame depthFrame = e.OpenDepthImageFrame()) {
+
+                //GC.Collect();
+                Color[,] viewportSurface = new Color[viewportResolutionY, viewportResolutionX];
+
+                if (depthFrame != null) {
+
+
+                    depthFrame.CopyDepthImagePixelDataTo(depthPixels);
+
+                    minDepth = depthFrame.MinDepth;
+                    maxDepth = depthFrame.MaxDepth;
+
+                    for (int i = 0; i < depthFrame.Width; i++) {
+
+                        int middleLineIndex = depthFrame.Height / 2;
+                        int linearIndex = GetLinearIndex(i, middleLineIndex, depthFrame.Width);
+
+                        if (!depthPixels[linearIndex].IsKnownDepth) {
+                            continue;
+                        }
+
+                        int currentPixelmillimeterDepth = depthPixels[linearIndex].Depth;
+
+                        double currentPixelAngle = ((sensor.DepthStream.NominalHorizontalFieldOfView * 0.5) / depthFrame.Width) * i;
+
+                        double x, y;
+                        PolarToRectangular(currentPixelmillimeterDepth, currentPixelAngle, out x, out y);
+
+                        int xIndex = (int)(x * 0.1)/* + 500*/;
+                        int yIndex = (int)(y * 0.1)/* + 500*/;
+
+                        //if (xIndex >= 0 && xIndex < viewportResolutionX && yIndex >= 0 && yIndex < viewportResolutionY) {
+                        viewportSurface[yIndex, xIndex] = viewportColor;
+                        //}
+                    }
+                    CellularData = viewportSurface;
                 }
             }
         }
 
-        private void InitializeViewport() {
-            viewportResolutionX = 640;
-            viewportResolutionY = 300;
-            SpacingBetweenCells = 1;
-            viewportColor = Color.FromRgb(24, 131, 215);
-        }
-
-        private void Initialize() {
-            InitializeSensors();            
+        private void PolarToRectangular(double radius, double angle, out double x, out double y) {
+            x = radius * Math.Cos(angle * Math.PI / 180.0);
+            y = radius * Math.Sin(angle * Math.PI / 180.0);
         }
 
         private int GetLinearIndex(int x, int y, int width) {
             return width * y + x;
         }
 
-        private void SensorDepthFrameReady(object sender, DepthImageFrameReadyEventArgs e) {
+        public MainWindowViewModel() {
+            Initialize();
+        }
 
-            using (DepthImageFrame depthFrame = e.OpenDepthImageFrame()) {
+        private void Initialize() {
+            InitializeViewport();
+            InitializeSensor();
+            ConfigureSensor();
+            StartSensor();
+        }
 
-                if (depthFrame != null) {
+        private void InitializeViewport() {
+            ViewportResolutionX = 601;
+            ViewportResolutionY = 601;
+            SpacingBetweenCells = 0;
+            random = new Random();
+            viewportColor = Color.FromRgb(24, 131, 215);
+        }
 
-                    depthFrame.CopyDepthImagePixelDataTo(depthPixels);
+        private void InitializeSensor() {
 
-                    Color[,] colors = new Color[viewportResolutionY, viewportResolutionX];
-
-                    for (int x = 0; x < viewportResolutionX; x++) {
-
-                        int middleLineIndex = depthFrame.Height / 2;
-                        int linearIndex = GetLinearIndex(x, middleLineIndex, depthFrame.Width);
-
-                        int centimeterDepthAsY = depthPixels[linearIndex].Depth / 10;
-
-                        if (centimeterDepthAsY > 0 && centimeterDepthAsY < colors.GetLength(0)) {
-                            colors[viewportResolutionY - centimeterDepthAsY - 1, viewportResolutionX - x - 1] = viewportColor;
-                        }                        
-                    }
-
-                    CellularData = colors;
+            foreach (var potentialSensor in KinectSensor.KinectSensors) {
+                if (potentialSensor.Status == KinectStatus.Connected) {
+                    sensor = potentialSensor;
+                    break;
                 }
             }
         }
 
-        public MainWindowViewModel() {
-            InitializeViewport();
-            Initialize();
+        private void ConfigureSensor() {
+
+            if (null != sensor) {
+
+                sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
+
+                depthPixels = new DepthImagePixel[sensor.DepthStream.FramePixelDataLength];
+                sensor.DepthFrameReady += SensorDepthFrameReady;
+            }
+        }
+
+        private void StartSensor() {
+            try { sensor.Start(); }
+            catch (IOException) { sensor = null; }
         }
     }
 }

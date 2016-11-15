@@ -7,16 +7,27 @@
         xmlns:viewmodels="clr-namespace:SLAM.Preview.ViewModels;assembly=SLAM.Preview.ViewModels"
         xmlns:customcontrols="clr-namespace:SLAM.Preview.CustomControls;assembly=SLAM.Preview.CustomControls"
         mc:Ignorable="d"
-        Title="MainWindow" Width="1300" Height="660">
+        Title="MainWindow" MinWidth="1280" MinHeight="720">
     
     <Window.DataContext>
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
-    
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <customcontrols:RapidCellularViewport
+            Grid.Column="0"
             Name="cellUniverseViewport"
+            Width="603" Height="{Binding ElementName=cellUniverseViewport, Path=ActualWidth}"
             CellularData="{Binding CellularData}"
             SpacingBetweenCells="{Binding SpacingBetweenCells}"/>
     </Grid>
 </Window>
+
+<!--
+    Width="{Binding ViewportResolutionX, Mode=TwoWay}"
+    Height="{Binding ViewportResolutionY, Mode=TwoWay}"
+-->
