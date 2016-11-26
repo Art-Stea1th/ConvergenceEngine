@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataProviders\KinectEmulator.cs" />
-    <Compile Include="DataProviders\OldCode.cs" />
+    <Compile Include="Device\DepthFrameSequenceInfo.cs" />
+    <Compile Include="Mapper.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="DataReader.cs" />
+    <Compile Include="_Old\OldCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
