@@ -3,12 +3,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:SLAM.Views"
+    xmlns:converters="clr-namespace:SLAM.ViewModels.Converters;assembly=SLAM.ViewModels"
+    xmlns:viewmodels="clr-namespace:SLAM.ViewModels;assembly=SLAM.ViewModels"
     StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="Resources/Styles.xaml"/>-->
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+
+        <converters:IntToBoolConverter x:Key="IntToBool"/>
+        <converters:BoolInverseConverter x:Key="BoolInverse"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+        <converters:BoolToVisibilityConverterInverse x:Key="BoolToVisibilityInverse"/>
+        <converters:IntToVisibilityConverter x:Key="IntToVisibility"/>
+        <converters:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
+        
+        <viewmodels:MainVindowViewModel x:Key="MainVindowViewModel"/>
+        
     </Application.Resources>
 </Application>

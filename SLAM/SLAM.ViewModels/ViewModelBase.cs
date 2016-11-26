@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace SLAM.ViewModels {
 
@@ -10,11 +11,15 @@ namespace SLAM.ViewModels {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public virtual void OnPropertyChanged(string propertyName) {
+        public virtual void OnPropertyChanged([CallerMemberName]string propertyName = null) {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) {
-                handler.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }        
+
+        protected void Set<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = null) {
+            oldValue = newValue;
+            PropertyChangedEventHandler handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected string GetMemberName<T, TValue>(Expression<Func<T, TValue>> memberAccess) {
