@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 
@@ -8,10 +10,8 @@ using Microsoft.Win32;
 namespace SLAM.ViewModels {
 
     using Helpers;
-    using Models;
-    using System.Threading.Tasks;
-    using System;
-    using System.Windows.Media;
+    using Models;    
+
 
     public class MainVindowViewModel : ViewModelBase {
 
@@ -128,7 +128,6 @@ namespace SLAM.ViewModels {
             ModelReady = model.Ready;
             CurrentFileName = model.FullFileName;
             TotalFramesCount = model.FramesCount;
-            //CurrentFrame = model.CurrentFrame;
         }
 
         private void InitializeCommands() {

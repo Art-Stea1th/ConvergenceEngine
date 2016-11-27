@@ -44,7 +44,6 @@
     <Compile Include="Mapper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="DataReader.cs" />
-    <Compile Include="_Old\OldCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
