@@ -9,6 +9,7 @@ namespace SLAM.Models {
         private BinaryReader reader;
 
         private int currentFrameIndex;
+        private byte[] currentFrameBuffer;
 
         internal DepthFrameSequenceInfo FrameInfo { get; private set; }
 
@@ -35,6 +36,7 @@ namespace SLAM.Models {
             FrameInfo = new DepthFrameSequenceInfo(reader);
             if (FrameInfo.IsCorrect) {
                 FullFileName = fullFileName;
+                currentFrameBuffer = new byte[FrameInfo.BytesPerFrame];
                 return true;
             }
             CloseFile();
@@ -46,10 +48,9 @@ namespace SLAM.Models {
             long savedPosition = reader.BaseStream.Position;
             int framesCount = 0;            
 
-            byte[] buffer = new byte[FrameInfo.BytesPerFrame];
             reader.BaseStream.Position = 0;
 
-            while (reader.Read(buffer, 0, FrameInfo.BytesPerFrame) == FrameInfo.BytesPerFrame) {
+            while (reader.Read(currentFrameBuffer, 0, FrameInfo.BytesPerFrame) == FrameInfo.BytesPerFrame) {
                 ++framesCount;
             }
             reader.BaseStream.Position = savedPosition;
@@ -57,20 +58,16 @@ namespace SLAM.Models {
             CurrentFrame = 0;
         }
 
-        public byte[] ReadFrame(int frameIndex) {
-
-            if (stream == null || reader == null || FrameInfo == null) { return null; }
-            if (FramesCount < 1) { return null; }
-            if (frameIndex < 0 || frameIndex >= FramesCount) { return null; }
+        // performance critical
+        public byte[] ReadFrameBytes(int frameIndex) {
 
             long savedPosition = reader.BaseStream.Position;
 
-            byte[] result = new byte[FrameInfo.BytesPerFrame];
             reader.BaseStream.Position = CalculateOffset(frameIndex);
 
-            if (reader.Read(result, 0, FrameInfo.BytesPerFrame) == FrameInfo.BytesPerFrame) {
+            if (reader.Read(currentFrameBuffer, 0, FrameInfo.BytesPerFrame) == FrameInfo.BytesPerFrame) {
                 CurrentFrame = frameIndex;
-                return result;
+                return currentFrameBuffer;
             }
             reader.BaseStream.Position = savedPosition;
             return null;

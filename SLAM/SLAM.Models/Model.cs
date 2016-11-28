@@ -10,7 +10,11 @@ namespace SLAM.Models {
     public sealed class Model : IDisposable {
 
         private DataReader reader;
+        private DataConverter converter;
         private Mapper mapper;
+
+        private byte[] fullFrameBuffer;
+        private byte[] curveFrameBuffer;
 
         public event ModelUpdatedEvent OnModelUpdated;
 
@@ -33,7 +37,11 @@ namespace SLAM.Models {
         }
 
         public bool OpenFile(string fullFileName) {
-            return reader.OpenFile(fullFileName);
+            bool openResult  = reader.OpenFile(fullFileName);
+            fullFrameBuffer  = new byte[reader.FrameInfo.Length * sizeof(int)];
+            curveFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
+            converter = new DataConverter(reader.FrameInfo);
+            return openResult;
         }
 
         public Task CalculateFramesCount() {
@@ -47,49 +55,25 @@ namespace SLAM.Models {
             return calculateFramesCountTask;
         }
 
-        public byte[] GetFullFrame(int frameIndex) {
+        public byte[] GetViewportFullFrame(int frameIndex) {
 
-            byte[] rawData = reader.ReadFrame(frameIndex);
+            byte[] rawData = reader.ReadFrameBytes(frameIndex);            
 
             if (rawData != null) {
+                converter.ConvertRawToViewportFullFrame(rawData, fullFrameBuffer);
+                return fullFrameBuffer;
+            }
+            return null;
+        }
 
-                byte[] resultFrame = new byte[reader.FrameInfo.FrameLength * sizeof(int)];
+        public byte[] GetViewportCurveFrame(int frameIndex) {
 
-                int fullDepth = reader.FrameInfo.MaxDepth - reader.FrameInfo.MinDepth;
-                double intencityStep = 192.0 / fullDepth;
+            byte[] rawData = reader.ReadFrameBytes(frameIndex);
 
-                int colorPixelIndex = 0;
-                for (int i = 0; i < reader.FrameInfo.FrameLength; ++i) {
-
-                    short depth = rawData[i * sizeof(short) + 1];
-                    short depthLowByte = rawData[i * sizeof(short)];
-
-                    depth <<= 8;
-                    depth |= depthLowByte;
-
-                    depth >>= 3; // !! remove unused bits
-
-                    byte intensity = (byte)(255 - Math.Round(depth * intencityStep));
-
-                    if (depth < reader.FrameInfo.MinDepth) {
-                        resultFrame[colorPixelIndex++] = 192;
-                        resultFrame[colorPixelIndex++] = 128;
-                        resultFrame[colorPixelIndex++] = 0;
-                    }
-                    else if (depth > reader.FrameInfo.MaxDepth) {
-                        resultFrame[colorPixelIndex++] = 32;
-                        resultFrame[colorPixelIndex++] = 0;
-                        resultFrame[colorPixelIndex++] = 0;
-                    }
-                    else {
-                        resultFrame[colorPixelIndex++] = intensity;
-                        resultFrame[colorPixelIndex++] = intensity;
-                        resultFrame[colorPixelIndex++] = intensity;
-                    }
-                    ++colorPixelIndex;
-
-                }
-                return resultFrame;
+            if (rawData != null) {
+                curveFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
+                converter.ConvertRawToViewportCurveFrame(rawData, curveFrameBuffer);
+                return curveFrameBuffer;
             }
             return null;
         }

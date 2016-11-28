@@ -103,8 +103,8 @@ namespace SLAM.ViewModels {
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {
 
-                byte[] colorPixels = model.GetFullFrame(CurrentFrame);
-                byte[] curvePixels = colorPixels;
+                byte[] colorPixels = model.GetViewportFullFrame(CurrentFrame);
+                byte[] curvePixels = model.GetViewportCurveFrame(CurrentFrame);
 
                 if (colorPixels != null) {
                     firstViewportData.WritePixels(
@@ -112,7 +112,7 @@ namespace SLAM.ViewModels {
                 }
                 if (curvePixels != null) {
                     secondViewportData.WritePixels(
-                        new Int32Rect(0, 0, 640, 480), colorPixels, secondViewportData.PixelWidth * sizeof(int), 0);
+                        new Int32Rect(0, 0, 640, 480), curvePixels, secondViewportData.PixelWidth * sizeof(int), 0);
                 }
                 lastTimeOfFrameUpdate = DateTime.Now;
             }            
@@ -171,7 +171,7 @@ namespace SLAM.ViewModels {
                     if (model.OpenFile(openFileDialog.FileName)) {
                         CurrentFileName = openFileDialog.FileName;
                         await model.CalculateFramesCount();
-                        UpdateViewports();
+                        CurrentFrame = 0;
                     }
                     else {
                         MessageBox.Show(
@@ -187,6 +187,7 @@ namespace SLAM.ViewModels {
             TotalFramesCount = 0;
             CurrentFileName = string.Empty;
             model.CloseFile();
+            InitializeViewports();
         }
 
         private bool CanExecuteCloseFileCommand(object obj) {
