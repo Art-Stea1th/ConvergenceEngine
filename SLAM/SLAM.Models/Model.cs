@@ -42,7 +42,7 @@ namespace SLAM.Models {
             bool openResult  = reader.OpenFile(fullFileName);
             fullFrameBuffer  = new byte[reader.FrameInfo.Length * sizeof(int)];
             curveFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
-            converter = new SlowExtendedConverter(reader.FrameInfo);
+            converter = new RapidConverter(reader.FrameInfo);
             return openResult;
         }
 
