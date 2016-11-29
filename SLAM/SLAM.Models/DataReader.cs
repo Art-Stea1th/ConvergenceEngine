@@ -83,8 +83,10 @@ namespace SLAM.Models {
         }
 
         public void Dispose() {
-            reader?.Dispose();
-            stream?.Dispose();
+            if(reader !=null)
+                reader.Dispose();
+            if(stream !=null)
+                stream.Dispose();
         }
     }
 }

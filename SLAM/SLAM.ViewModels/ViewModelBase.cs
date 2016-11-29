@@ -13,13 +13,15 @@ namespace SLAM.ViewModels {
 
         public virtual void OnPropertyChanged([CallerMemberName]string propertyName = null) {
             PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if(handler != null)
+                handler.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }        
 
         protected void Set<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = null) {
             oldValue = newValue;
             PropertyChangedEventHandler handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if(handler != null)
+                handler.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         protected string GetMemberName<T, TValue>(Expression<Func<T, TValue>> memberAccess) {

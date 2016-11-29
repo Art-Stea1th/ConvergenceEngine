@@ -20,8 +20,8 @@ namespace SLAM.Models {
 
         public event ModelUpdatedEvent OnModelUpdated;
 
-        public string CurrentState { get; private set; } = "Ready";
-        public bool Ready { get; private set; } = true;
+        public string CurrentState { get; private set; }
+        public bool Ready { get; private set; }
         public string FullFileName { get { return reader.FullFileName; } }
         public int FramesCount { get { return reader.FramesCount; } }
         public int CurrentFrame { get { return reader.CurrentFrame; } }
@@ -30,12 +30,15 @@ namespace SLAM.Models {
             OnModelUpdated += onModelUpdated;
             reader = new DataReader();
             mapper = new Mapper();
+            CurrentState = "Ready";
+            Ready = true;
         }
 
         private void ChangeState(string newModelState, bool lockModel = false) {
             CurrentState = newModelState;
             Ready = !lockModel;
-            OnModelUpdated?.Invoke();
+            if(OnModelUpdated != null)
+                OnModelUpdated.Invoke();
         }
 
         public bool OpenFile(string fullFileName) {

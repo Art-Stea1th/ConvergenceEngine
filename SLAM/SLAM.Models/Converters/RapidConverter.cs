@@ -79,17 +79,20 @@ namespace SLAM.Models.Converters {
 
                 double resultX, resultY;
                 PolarToRectangular(depth, deltaAngleBetweenRays, out resultX, out resultY);
-
+                //PerspectiveToRectangle(x, y, z, out resultX, out resultY);
                 // --- EndMath ---
 
-                int imageX = (int)(resultX * 0.1);
-                int imageY = (int)(resultY * 0.1);
+                int imageX = (int)(resultX *0.1);
+                int imageY = (int)(resultY *0.1);
 
                 int resultLinearIndex = GetLinearIndex(imageX * sizeof(int), imageY, FrameInfo.Width * sizeof(int));
 
-                outViewportFullFrameBuffer[resultLinearIndex++] = 128;
-                outViewportFullFrameBuffer[resultLinearIndex++] = 192;
-                outViewportFullFrameBuffer[resultLinearIndex++] = 255;
+                if (resultLinearIndex >= 0)
+                {
+                    outViewportFullFrameBuffer[resultLinearIndex++] = 128;
+                    outViewportFullFrameBuffer[resultLinearIndex++] = 192;
+                    outViewportFullFrameBuffer[resultLinearIndex++] = 255;
+                }
             }
         }
 
@@ -115,6 +118,17 @@ namespace SLAM.Models.Converters {
         private void PolarToRectangular(double radius, double angle, out double x, out double y) {
             x = radius * Math.Cos(angle * Math.PI / 180.0);
             y = radius * Math.Sin(angle * Math.PI / 180.0);
+        }
+
+        private void PerspectiveToRectangle(double x, double y, double z, out double rectX, out double rectY)
+        {
+            double cx = 339.307;
+            double cy = 242.739;
+            double fx = 1 / 594.214;
+            double fy = 1 / 591.0405;
+            rectX = (x - cx) * z * fx;
+            //rectY = (y - cy) * z * fy;
+            rectY = z;
         }
 
         private int GetLinearIndex(int x, int y, int width) {
