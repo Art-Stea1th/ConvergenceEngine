@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace SLAM.Models {
 
+    using Converters;
+
     public delegate void ModelUpdatedEvent();
 
     public sealed class Model : IDisposable {
 
         private DataReader reader;
-        private DataConverter converter;
+        private IDataConverter converter;
         private Mapper mapper;
 
         private byte[] fullFrameBuffer;
@@ -40,7 +42,7 @@ namespace SLAM.Models {
             bool openResult  = reader.OpenFile(fullFileName);
             fullFrameBuffer  = new byte[reader.FrameInfo.Length * sizeof(int)];
             curveFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
-            converter = new DataConverter(reader.FrameInfo);
+            converter = new SlowExtendedConverter(reader.FrameInfo);
             return openResult;
         }
 
@@ -60,7 +62,7 @@ namespace SLAM.Models {
             byte[] rawData = reader.ReadFrameBytes(frameIndex);            
 
             if (rawData != null) {
-                converter.ConvertRawToViewportFullFrame(rawData, fullFrameBuffer);
+                converter.RawFrameToFullFrame(rawData, fullFrameBuffer);
                 return fullFrameBuffer;
             }
             return null;
@@ -72,7 +74,7 @@ namespace SLAM.Models {
 
             if (rawData != null) {
                 curveFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
-                converter.ConvertRawToViewportCurveFrame(rawData, curveFrameBuffer);
+                converter.RawFrameToCurveFrame(rawData, curveFrameBuffer);
                 return curveFrameBuffer;
             }
             return null;

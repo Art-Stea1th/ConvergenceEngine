@@ -39,10 +39,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataConverter.cs" />
-    <Compile Include="Device\DepthFrameSequenceInfo.cs" />
+    <Compile Include="Converters\IDataConverter.cs" />
+    <Compile Include="Converters\RapidConverter.cs" />
+    <Compile Include="Converters\SlowExtendedConverter.cs" />
+    <Compile Include="DepthFrameSequenceInfo.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="DataReader.cs" />
