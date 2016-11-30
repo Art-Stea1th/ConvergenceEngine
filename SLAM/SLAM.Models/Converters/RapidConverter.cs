@@ -82,13 +82,12 @@ namespace SLAM.Models.Converters {
                 //PerspectiveToRectangle(x, y, z, out resultX, out resultY);
                 // --- EndMath ---
 
-                int imageX = (int)(resultX *0.1);
-                int imageY = (int)(resultY *0.1);
+                int imageX = (int)(resultX * 0.1);
+                int imageY = (int)(resultY * 0.1);
 
                 int resultLinearIndex = GetLinearIndex(imageX * sizeof(int), imageY, FrameInfo.Width * sizeof(int));
 
-                if (resultLinearIndex >= 0)
-                {
+                if (resultLinearIndex >= 0) {
                     outViewportFullFrameBuffer[resultLinearIndex++] = 128;
                     outViewportFullFrameBuffer[resultLinearIndex++] = 192;
                     outViewportFullFrameBuffer[resultLinearIndex++] = 255;
@@ -120,8 +119,8 @@ namespace SLAM.Models.Converters {
             y = radius * Math.Sin(angle * Math.PI / 180.0);
         }
 
-        private void PerspectiveToRectangle(double x, double y, double z, out double rectX, out double rectY)
-        {
+        private void PerspectiveToRectangle(double x, double y, double z, out double rectX, out double rectY) {
+
             double cx = 339.307;
             double cy = 242.739;
             double fx = 1 / 594.214;
@@ -146,6 +145,6 @@ namespace SLAM.Models.Converters {
 
         private double MagnitudeOfRay(double x, double y, double z) {
             return Math.Sqrt(Math.Pow(x, 2.0) + Math.Pow(y, 2.0) + Math.Pow(z, 2.0));
-        }        
+        }
     }
 }
