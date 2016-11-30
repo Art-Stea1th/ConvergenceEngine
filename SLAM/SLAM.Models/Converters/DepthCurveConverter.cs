@@ -59,13 +59,16 @@ namespace SLAM.Models.Converters {
                 double deltaAngleBetweenRays = ((FrameInfo.NominalHorizontalFOV * 0.5) / FrameInfo.Width) * x;
 
                 double resultX, resultY;
-                PolarToRectangular(z, deltaAngleBetweenRays, out resultX, out resultY);
+
+                Point3D tmp = AdjustSomethingFormula(x, y, z);
+                resultX = tmp.X; resultY = tmp.Y;
+                //PolarToRectangular(z, deltaAngleBetweenRays, out resultX, out resultY);
                 //PerspectiveToRectangle(x, y, z, out resultX, out resultY);
                 
                 // --- Convert to viewport ---
 
-                int imageX = (int)(resultX * 0.1);
-                int imageY = (int)(resultY * 0.1);
+                int imageX = (int)(resultX/* * 0.1*/) + 320;
+                int imageY = (int)(resultY/* * 0.1*/) + 240;
 
                 int resultLinearIndex = GetLinearIndex(imageX * sizeof(int), imageY, FrameInfo.Width * sizeof(int));
 
@@ -91,6 +94,21 @@ namespace SLAM.Models.Converters {
             rectX = (x - cx) * z * fx;
             //rectY = (y - cy) * z * fy;
             rectY = z;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static Point3D AdjustSomethingFormula(double inX, double inY, double inZ) {
+
+            Point3D point = new Point3D(0,0,0);
+
+            double z = inZ / 1000.0;
+            double x = ((inX - 0.5) * (0.003501 * z)) * 320;
+            double y = ((0.5 - inY) * (0.003501 * z)) * 240;
+            point.X = x;
+            point.Y = y;
+            point.Z = z;
+            //point.W = 1f;
+            return point;
         }
     }
 }
