@@ -37,11 +37,11 @@ namespace SLAM.ViewModels {
 
         public ImageSource FirstViewportData {
             get { return firstViewportData; }
-            set { firstViewportData = (WriteableBitmap)value; OnPropertyChanged(); }
+            set { Set(ref firstViewportData, (WriteableBitmap)value); }
         }
         public ImageSource SecondViewportData {
             get { return secondViewportData; }
-            set { secondViewportData = (WriteableBitmap)value; OnPropertyChanged(); }
+            set { Set(ref secondViewportData, (WriteableBitmap)value); }
         }
 
         public string ModelCurrentState {
