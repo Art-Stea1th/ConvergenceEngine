@@ -76,7 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\RectangularCSViewport.xaml">
+    <Page Include="Controls\MapViewport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -88,8 +88,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\RectangularCSViewport.xaml.cs">
-      <DependentUpon>RectangularCSViewport.xaml</DependentUpon>
+    <Compile Include="Controls\MapViewport.xaml.cs">
+      <DependentUpon>MapViewport.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

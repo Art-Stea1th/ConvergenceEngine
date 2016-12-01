@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace SLAM.Views.Controls {
 
-    public partial class RectangularCSViewport : Border, INotifyPropertyChanged {
+    public partial class MapViewport : Border, INotifyPropertyChanged {
 
         #region DependencyProperties // --------------------------------------------------------------------------------
 
@@ -17,10 +17,10 @@ namespace SLAM.Views.Controls {
         }
         public static readonly DependencyProperty Point2DVectorProperty;
 
-        static RectangularCSViewport() {
+        static MapViewport() {
 
             DefaultStyleKeyProperty.OverrideMetadata(
-                typeof(RectangularCSViewport), new FrameworkPropertyMetadata(typeof(RectangularCSViewport)));
+                typeof(MapViewport), new FrameworkPropertyMetadata(typeof(MapViewport)));
 
             var point2DVectorPropertyMetadata = new FrameworkPropertyMetadata();
             point2DVectorPropertyMetadata.BindsTwoWayByDefault = true;
@@ -28,7 +28,7 @@ namespace SLAM.Views.Controls {
 
             Point2DVectorProperty =
                 DependencyProperty.Register(
-                    "Point2DVector", typeof(Point[]), typeof(RectangularCSViewport), point2DVectorPropertyMetadata);
+                    "Point2DVector", typeof(Point[]), typeof(MapViewport), point2DVectorPropertyMetadata);
         }
 
         #endregion // --------------------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ namespace SLAM.Views.Controls {
             set { Set(ref height, value); }
         }        
 
-        public RectangularCSViewport() {
+        public MapViewport() {
             InitializeComponent();
         }
 

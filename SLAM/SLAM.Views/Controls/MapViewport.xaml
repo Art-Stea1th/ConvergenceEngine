@@ -1,10 +1,10 @@
-﻿<Border x:Class="SLAM.Views.Controls.RectangularCSViewport"
+﻿<Border x:Class="SLAM.Views.Controls.MapViewport"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:SLAM.Views.Controls"
         Background="Black">
     <Border.DataContext>
-        <local:RectangularCSViewport/>
+        <local:MapViewport/>
     </Border.DataContext>
     <Viewbox>
         <Image

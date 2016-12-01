@@ -16,7 +16,7 @@
         <converters:IntToVisibilityConverter x:Key="IntToVisibility"/>
         <converters:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
 
-        <controls:RectangularCSViewport x:Key="RectangularCSViewport"/>
+        <!--<controls:MapViewport x:Key="MapViewport"/>-->
 
         <viewmodels:MainVindowViewModel x:Key="MainVindowViewModel"/>
         
