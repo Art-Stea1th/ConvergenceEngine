@@ -10,15 +10,16 @@ using Microsoft.Win32;
 namespace SLAM.ViewModels {
 
     using Helpers;
-    using Models;    
+    using Models;
 
 
     public class MainVindowViewModel : ViewModelBase {
 
         private Model model;
 
-        private WriteableBitmap firstViewportData;
-        private WriteableBitmap secondViewportData;
+        private WriteableBitmap mapViewportData;
+        private WriteableBitmap topViewportData;
+        private WriteableBitmap frontDepthViewportData;
 
         private string modelCurrentState;
         private bool modelReady;
@@ -27,7 +28,7 @@ namespace SLAM.ViewModels {
         private int currentFrame;
 
         private DateTime lastTimeOfFrameUpdate;
-        private TimeSpan frameUpdateLimit;        
+        private TimeSpan frameUpdateLimit;
 
         private ICommand openFileCommand;
         private ICommand closeFileCommand;
@@ -35,13 +36,17 @@ namespace SLAM.ViewModels {
         private ICommand prevFrameCommand;
         private ICommand exitApplicationCommand;
 
-        public ImageSource FirstViewportData {
-            get { return firstViewportData; }
-            set { Set(ref firstViewportData, (WriteableBitmap)value); }
+        public ImageSource MapViewportData {
+            get { return mapViewportData; }
+            set { Set(ref mapViewportData, (WriteableBitmap)value); }
         }
-        public ImageSource SecondViewportData {
-            get { return secondViewportData; }
-            set { Set(ref secondViewportData, (WriteableBitmap)value); }
+        public ImageSource TopViewportData {
+            get { return topViewportData; }
+            set { Set(ref topViewportData, (WriteableBitmap)value); }
+        }
+        public ImageSource FrontDepthViewportData {
+            get { return frontDepthViewportData; }
+            set { Set(ref frontDepthViewportData, (WriteableBitmap)value); }
         }
 
         public string ModelCurrentState {
@@ -63,7 +68,7 @@ namespace SLAM.ViewModels {
         public int CurrentFrame {
             get { return currentFrame; }
             set { Set(ref currentFrame, value); UpdateViewports(); }
-        }        
+        }
 
         public ICommand OpenFile {
             get { return openFileCommand; }
@@ -95,33 +100,40 @@ namespace SLAM.ViewModels {
         }
 
         private void InitializeViewports() {
-            FirstViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
-            SecondViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
+            MapViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
+            TopViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
+            FrontDepthViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
+
         }
 
         private void UpdateViewports() {
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {
 
-                byte[] colorPixels = model.GetViewportFullFrame(CurrentFrame);
-                byte[] curvePixels = model.GetViewportCurveFrame(CurrentFrame);
+                byte[] topViewportPixels = model.GetViewportCurveFrame(CurrentFrame);
+                byte[] frontViewportPixels = model.GetViewportFullFrame(CurrentFrame);
+                byte[] mapViewportPixels = topViewportPixels;
 
-                if (colorPixels != null) {
-                    firstViewportData.WritePixels(
-                        new Int32Rect(0, 0, 640, 480), colorPixels, firstViewportData.PixelWidth * sizeof(int), 0);
+                if (mapViewportPixels != null) {
+                    mapViewportData.WritePixels(
+                        new Int32Rect(0, 0, 640, 480), mapViewportPixels, topViewportData.PixelWidth * sizeof(int), 0);
                 }
-                if (curvePixels != null) {
-                    secondViewportData.WritePixels(
-                        new Int32Rect(0, 0, 640, 480), curvePixels, secondViewportData.PixelWidth * sizeof(int), 0);
+                if (topViewportPixels != null) {
+                    topViewportData.WritePixels(
+                        new Int32Rect(0, 0, 640, 480), topViewportPixels, topViewportData.PixelWidth * sizeof(int), 0);
+                }
+                if (frontViewportPixels != null) {
+                    frontDepthViewportData.WritePixels(
+                        new Int32Rect(0, 0, 640, 480), frontViewportPixels, frontDepthViewportData.PixelWidth * sizeof(int), 0);
                 }
                 lastTimeOfFrameUpdate = DateTime.Now;
-            }            
+            }
         }
 
         private void UpdateUI() {
-            InitializeProperties();            
+            InitializeProperties();
             InitializeCommands();
-        }        
+        }
 
         private void InitializeProperties() {
             ModelCurrentState = model.CurrentState;
@@ -179,7 +191,7 @@ namespace SLAM.ViewModels {
                             "Open RAW Depth Stream Data file",
                             MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
-                }                
+                }
             }
         }
 

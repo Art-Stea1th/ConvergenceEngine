@@ -3,10 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:SLAM.Views"
     xmlns:converters="clr-namespace:SLAM.ViewModels.Converters;assembly=SLAM.ViewModels"
-    xmlns:controls="clr-namespace:SLAM.Views.Controls"
     xmlns:viewmodels="clr-namespace:SLAM.ViewModels;assembly=SLAM.ViewModels"
-    StartupUri="MainWindow.xaml">
-    
+    StartupUri="MainWindow.xaml">    
     <Application.Resources>
 
         <converters:IntToBoolConverter x:Key="IntToBool"/>
@@ -15,8 +13,6 @@
         <converters:BoolToVisibilityConverterInverse x:Key="BoolToVisibilityInverse"/>
         <converters:IntToVisibilityConverter x:Key="IntToVisibility"/>
         <converters:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
-
-        <!--<controls:MapViewport x:Key="MapViewport"/>-->
 
         <viewmodels:MainVindowViewModel x:Key="MainVindowViewModel"/>
         
