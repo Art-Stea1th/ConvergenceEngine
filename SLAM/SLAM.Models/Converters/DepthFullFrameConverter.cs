@@ -30,8 +30,6 @@ namespace SLAM.Models.Converters {
 
         public override void ConvertRawDataToViewportFrame(byte[] rawInput, byte[] viewportOutput) {
 
-            HorizontalMirror(rawInput);
-
             int fullDepth = FrameInfo.MaxDepth - FrameInfo.MinDepth;
             double intencityStep = 192.0 / fullDepth;
 

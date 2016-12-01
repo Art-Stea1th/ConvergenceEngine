@@ -18,7 +18,7 @@ namespace SLAM.ViewModels {
         private Model model;
 
         private WriteableBitmap mapViewportData;
-        private WriteableBitmap topViewportData;
+        private WriteableBitmap topDepthViewportData;
         private WriteableBitmap frontDepthViewportData;
 
         private string modelCurrentState;
@@ -40,9 +40,9 @@ namespace SLAM.ViewModels {
             get { return mapViewportData; }
             set { Set(ref mapViewportData, (WriteableBitmap)value); }
         }
-        public ImageSource TopViewportData {
-            get { return topViewportData; }
-            set { Set(ref topViewportData, (WriteableBitmap)value); }
+        public ImageSource TopDepthViewportData {
+            get { return topDepthViewportData; }
+            set { Set(ref topDepthViewportData, (WriteableBitmap)value); }
         }
         public ImageSource FrontDepthViewportData {
             get { return frontDepthViewportData; }
@@ -101,7 +101,7 @@ namespace SLAM.ViewModels {
 
         private void InitializeViewports() {
             MapViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
-            TopViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
+            TopDepthViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
             FrontDepthViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
 
         }
@@ -110,21 +110,24 @@ namespace SLAM.ViewModels {
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {
 
-                byte[] topViewportPixels = model.GetViewportCurveFrame(CurrentFrame);
-                byte[] frontViewportPixels = model.GetViewportFullFrame(CurrentFrame);
-                byte[] mapViewportPixels = topViewportPixels;
+                byte[] mapViewportPixels = model.GetViewportTopDepthFrame(CurrentFrame);
+                byte[] topDepthViewportPixels = model.GetViewportTopDepthFrame(CurrentFrame);
+                byte[] frontViewportPixels = model.GetViewportFrontDepthFrame(CurrentFrame);
 
                 if (mapViewportPixels != null) {
                     mapViewportData.WritePixels(
-                        new Int32Rect(0, 0, 640, 480), mapViewportPixels, topViewportData.PixelWidth * sizeof(int), 0);
+                        new Int32Rect(0, 0, 640, 480),
+                        mapViewportPixels, topDepthViewportData.PixelWidth * sizeof(int), 0);
                 }
-                if (topViewportPixels != null) {
-                    topViewportData.WritePixels(
-                        new Int32Rect(0, 0, 640, 480), topViewportPixels, topViewportData.PixelWidth * sizeof(int), 0);
+                if (topDepthViewportPixels != null) {
+                    topDepthViewportData.WritePixels(
+                        new Int32Rect(0, 0, 640, 480),
+                        topDepthViewportPixels, topDepthViewportData.PixelWidth * sizeof(int), 0);
                 }
                 if (frontViewportPixels != null) {
                     frontDepthViewportData.WritePixels(
-                        new Int32Rect(0, 0, 640, 480), frontViewportPixels, frontDepthViewportData.PixelWidth * sizeof(int), 0);
+                        new Int32Rect(0, 0, 640, 480),
+                        frontViewportPixels, frontDepthViewportData.PixelWidth * sizeof(int), 0);
                 }
                 lastTimeOfFrameUpdate = DateTime.Now;
             }

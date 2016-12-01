@@ -16,8 +16,8 @@ namespace SLAM.Models {
         private IDataConverter curveFrameConverter;
         private Mapper mapper;
 
-        private byte[] fullFrameBuffer;
-        private byte[] curveFrameBuffer;
+        private byte[] topDepthFrameBuffer;
+        private byte[] frontDepthFrameBuffer;        
 
         public event ModelUpdatedEvent OnModelUpdated;
 
@@ -44,8 +44,8 @@ namespace SLAM.Models {
 
         public bool OpenFile(string fullFileName) {
             bool openResult  = reader.OpenFile(fullFileName);
-            fullFrameBuffer  = new byte[reader.FrameInfo.Length * sizeof(int)];
-            curveFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
+            frontDepthFrameBuffer  = new byte[reader.FrameInfo.Length * sizeof(int)];
+            topDepthFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
             fullFrameConverter = new DepthFullFrameConverter(reader.FrameInfo);
             curveFrameConverter = new DepthCurveConverter(reader.FrameInfo);
             return openResult;
@@ -62,28 +62,28 @@ namespace SLAM.Models {
             return calculateFramesCountTask;
         }
 
-        public byte[] GetViewportFullFrame(int frameIndex) {
-
-            byte[] rawData = reader.ReadFrameBytes(frameIndex);            
-
-            if (rawData != null) {
-                fullFrameConverter.ConvertRawDataToViewportFrame(rawData, fullFrameBuffer);
-                return fullFrameBuffer;
-            }
-            return null;
-        }
-
-        public byte[] GetViewportCurveFrame(int frameIndex) {
+        public byte[] GetViewportTopDepthFrame(int frameIndex) {
 
             byte[] rawData = reader.ReadFrameBytes(frameIndex);
 
             if (rawData != null) {
-                curveFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
-                curveFrameConverter.ConvertRawDataToViewportFrame(rawData, curveFrameBuffer);
-                return curveFrameBuffer;
+                topDepthFrameBuffer = new byte[reader.FrameInfo.Length * sizeof(int)];
+                curveFrameConverter.ConvertRawDataToViewportFrame(rawData, topDepthFrameBuffer);
+                return topDepthFrameBuffer;
             }
             return null;
         }
+
+        public byte[] GetViewportFrontDepthFrame(int frameIndex) {
+
+            byte[] rawData = reader.ReadFrameBytes(frameIndex);            
+
+            if (rawData != null) {
+                fullFrameConverter.ConvertRawDataToViewportFrame(rawData, frontDepthFrameBuffer);
+                return frontDepthFrameBuffer;
+            }
+            return null;
+        }        
 
         public void CloseFile() {
             reader.CloseFile();

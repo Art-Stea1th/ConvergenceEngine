@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.CompilerServices;
+
 
 namespace SLAM.Models {
 
@@ -62,16 +64,46 @@ namespace SLAM.Models {
         // performance critical
         public byte[] ReadFrameBytes(int frameIndex) {
 
+            if (CurrentFrame != 0 && CurrentFrame == frameIndex) {
+                return currentFrameBuffer;
+            }
+
             long savedPosition = reader.BaseStream.Position;
 
             reader.BaseStream.Position = CalculateOffset(frameIndex);
 
             if (reader.Read(currentFrameBuffer, 0, FrameInfo.BytesPerFrame) == FrameInfo.BytesPerFrame) {
                 CurrentFrame = frameIndex;
+                HorizontalMirror(currentFrameBuffer);
                 return currentFrameBuffer;
             }
             reader.BaseStream.Position = savedPosition;
             return null;
+        }
+
+        // Horizontal Mirror RAW Frame and swap [hi <--> low] bytes for each Int16\short depth
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected void HorizontalMirror(byte[] frame) {
+
+            int width  = FrameInfo.Width * sizeof(short);
+            int height = FrameInfo.Height;
+
+            for (int y = 0; y < height; ++y) {
+                for (int x = 0; x < width / 2; ++x) {
+
+                    int linearIndexNormal = GetLinearIndex(x, y, width);
+                    int linearIndexInverse = GetLinearIndex((width - 1 - x), y, width);
+
+                    byte tmp = frame[linearIndexNormal];
+                    frame[linearIndexNormal] = frame[linearIndexInverse];
+                    frame[linearIndexInverse] = tmp;
+                }
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected int GetLinearIndex(int x, int y, int width) {
+            return width * y + x;
         }
 
         private long CalculateOffset(int frameIndex) {

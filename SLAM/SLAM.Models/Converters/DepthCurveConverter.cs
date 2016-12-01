@@ -46,7 +46,6 @@ namespace SLAM.Models.Converters {
 
         public override void ConvertRawDataToViewportFrame(byte[] rawInput, byte[] viewportOutput) {
 
-            HorizontalMirror(rawInput);
             UpdatePointCloudMiddleLineFromRawInput(rawInput);
 
             for (int i = 0; i < FrameInfo.Width; ++i) {
