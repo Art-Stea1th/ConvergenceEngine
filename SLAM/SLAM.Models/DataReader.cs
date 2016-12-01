@@ -17,7 +17,8 @@ namespace SLAM.Models {
         internal int FramesCount { get; private set; }
         internal int CurrentFrame {
             get { return currentFrameIndex; }
-            private set { currentFrameIndex = value >= 0 && value < FramesCount ? value : 0; } }
+            private set { currentFrameIndex = value >= 0 && value < FramesCount ? value : 0; }
+        }
 
         internal DataReader() {
             Initialize();
