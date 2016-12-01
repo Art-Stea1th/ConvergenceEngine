@@ -6,10 +6,21 @@
     <Border.DataContext>
         <local:RectangularCSViewport/>
     </Border.DataContext>
-    <Viewbox>
-        <Image
+    <Grid>
+        <Viewbox>
+            <Image
             Source="{Binding ViewportData}"
             Width="640"
             Height="480"/>
-    </Viewbox>
+        </Viewbox>
+        <Line
+            HorizontalAlignment="Center"
+            X1="0" Y1="0" X2="0" Y2="1" 
+            Stroke="Green" 
+            Stretch="Fill"
+            StrokeThickness="1"
+            />
+    </Grid>
+    
+    
 </Border>
