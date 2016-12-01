@@ -59,17 +59,21 @@ namespace SLAM.Models.Converters {
                 double deltaAngleBetweenRays = ((FrameInfo.NominalHorizontalFOV * 0.5) / FrameInfo.Width) * x;
 
                 double resultX, resultY;
-                PolarToRectangular(z, deltaAngleBetweenRays, out resultX, out resultY);
-                //PerspectiveToRectangle(x, y, z, out resultX, out resultY);
-                
+                //Point3D point = AdjustSomethingFormula(x, y, z);
+                //resultX = point.X;
+                //resultY = point.Z;
+                //PolarToRectangular(z, deltaAngleBetweenRays, out resultX, out resultY);
+                PerspectiveToRectangle(x, y, z, out resultX, out resultY);
+
                 // --- Convert to viewport ---
 
-                int imageX = (int)(resultX * 0.1)/* + 320*/;
-                int imageY = (int)(resultY * 0.1)/* + 240*/;
+                int imageX = (int)(resultX*0.1) + 320; // костыль, т.к. x получаем из массива как номер пикселя, а resultX - это координата в мм, которую потом засовыем в массив как номер пикселя
+                int imageY = (int)(resultY*0.1); //+ 240;
 
                 int resultLinearIndex = GetLinearIndex(imageX * sizeof(int), imageY, FrameInfo.Width * sizeof(int));
 
-                if (resultLinearIndex >= 0) {
+                //if (resultLinearIndex >= 0)
+                {
                     SetColorToViewportByteArray(viewportOutput, resultLinearIndex, viewportCurveColor);
                 }
             }
@@ -84,13 +88,13 @@ namespace SLAM.Models.Converters {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void PerspectiveToRectangle(double x, double y, double z, out double rectX, out double rectY) {
 
-            double cx = 339.307;
-            double cy = 242.739;
+            double cx = 320; //339.307;
+            //double cy = 242.739;
             double fx = 1 / 594.214;
-            double fy = 1 / 591.0405;
+            //double fy = 1 / 591.0405;
+            rectY = z ;
             rectX = (x - cx) * z * fx;
             //rectY = (y - cy) * z * fy;
-            rectY = z;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -99,8 +103,8 @@ namespace SLAM.Models.Converters {
             Point3D point = new Point3D(0,0,0);
 
             double z = inZ / 1000.0;
-            double x = ((inX - 0.5) * (0.003501 * z)) * 320;
-            double y = ((0.5 - inY) * (0.003501 * z)) * 240;
+            double x = ((inX - 320) * (0.003501 * z)) * 0.5;
+            double y = ((inY-240) * (0.003501 * z)) * 0.5;
             point.X = x;
             point.Y = y;
             point.Z = z;
