@@ -65,7 +65,7 @@ namespace SLAM.Models.Converters {
                 // --- Convert to viewport ---
 
                 int imageX = (int)resultX + 320; // shift right on 1/2 Frame-Width
-                int imageY = (int)resultY + 240; // shift  down on 1/2 Frame-Height
+                int imageY = 480 - (int)resultY; // shift  down on  1  Frame-Height and flip vertical
 
                 int resultLinearIndex = GetLinearIndex(imageX * sizeof(int), imageY, FrameInfo.Width * sizeof(int));
 
@@ -79,7 +79,7 @@ namespace SLAM.Models.Converters {
             z *= 0.1; double factor = (0.003501 * 0.5) * z;
 
             resultX = (x - 320) * factor;
-            resultY = 240 - z;
+            resultY = z;
             resultZ = y * factor;
         }
     }
