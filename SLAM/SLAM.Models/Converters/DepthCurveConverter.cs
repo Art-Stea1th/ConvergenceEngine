@@ -1,7 +1,7 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+
 
 namespace SLAM.Models.Converters {
 
@@ -9,7 +9,7 @@ namespace SLAM.Models.Converters {
 
         private Color viewportCurveColor;
 
-        private int middleLineIndex;
+        private int middleLineX, middleLineY;
         private int startIndex, endIndex;
 
         private Point3D[] middleHorizontalLineFromPointCloud;        
@@ -22,16 +22,17 @@ namespace SLAM.Models.Converters {
         private void Initialize() {
             viewportCurveColor = Color.FromArgb(255, 255, 192, 128);
 
-            middleLineIndex = FrameInfo.Height / 2;
-            startIndex = GetLinearIndex(0, middleLineIndex, FrameInfo.Width);
-            endIndex = GetLinearIndex(FrameInfo.Width - 1, middleLineIndex, FrameInfo.Width);
+            middleLineX = FrameInfo.Width / 2;
+            middleLineY = FrameInfo.Height / 2;           
+            startIndex = GetLinearIndex(0, middleLineY, FrameInfo.Width);
+            endIndex = GetLinearIndex(FrameInfo.Width - 1, middleLineY, FrameInfo.Width);
         }
 
         private void InitializePoints3DBuffer() {
             middleHorizontalLineFromPointCloud = new Point3D[FrameInfo.Width];
             for (int i = 0; i < FrameInfo.Width; ++i) {
-                middleHorizontalLineFromPointCloud[i].X = i; // FrameInfo.Width / 2 - i;
-                middleHorizontalLineFromPointCloud[i].Y = middleLineIndex;
+                middleHorizontalLineFromPointCloud[i].X = i;
+                middleHorizontalLineFromPointCloud[i].Y = middleLineY;
             }
         }
 
@@ -50,7 +51,7 @@ namespace SLAM.Models.Converters {
 
             for (int i = 0; i < FrameInfo.Width; ++i) {
 
-                double x = middleHorizontalLineFromPointCloud[i].X; // 0   - 639
+                double x = middleHorizontalLineFromPointCloud[i].X; //   0 - 639
                 double y = middleHorizontalLineFromPointCloud[i].Y; // 240 - 240
                 double z = middleHorizontalLineFromPointCloud[i].Z; // 800 - 4000
 
@@ -58,58 +59,28 @@ namespace SLAM.Models.Converters {
 
                 double deltaAngleBetweenRays = ((FrameInfo.NominalHorizontalFOV * 0.5) / FrameInfo.Width) * x;
 
-                double resultX, resultY;
-                //Point3D point = AdjustSomethingFormula(x, y, z);
-                //resultX = point.X;
-                //resultY = point.Z;
-                //PolarToRectangular(z, deltaAngleBetweenRays, out resultX, out resultY);
-                PerspectiveToRectangle(x, y, z, out resultX, out resultY);
+                double resultX, resultY, resultZ;
+                PerspectiveToRectangle(x, y, z, out resultX, out resultY, out resultZ);
 
                 // --- Convert to viewport ---
 
-                int imageX = (int)(resultX*0.1) + 320; // костыль, т.к. x получаем из массива как номер пикселя, а resultX - это координата в мм, которую потом засовыем в массив как номер пикселя
-                int imageY = (int)(resultY*0.1); //+ 240;
+                int imageX = (int)resultX + 320; // shift right on 1/2 Frame-Width
+                int imageY = (int)resultY + 240; // shift  down on 1/2 Frame-Height
 
                 int resultLinearIndex = GetLinearIndex(imageX * sizeof(int), imageY, FrameInfo.Width * sizeof(int));
 
-                //if (resultLinearIndex >= 0)
-                {
-                    SetColorToViewportByteArray(viewportOutput, resultLinearIndex, viewportCurveColor);
-                }
+                SetColorToViewportByteArray(viewportOutput, resultLinearIndex, viewportCurveColor);
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void PolarToRectangular(double radius, double angle, out double x, out double y) {
-            x = radius * Math.Cos(angle * Math.PI / 180.0);
-            y = radius * Math.Sin(angle * Math.PI / 180.0);
-        }
+        private void PerspectiveToRectangle(double x, double y, double z, out double resultX, out double resultY, out double resultZ) {
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void PerspectiveToRectangle(double x, double y, double z, out double rectX, out double rectY) {
+            z *= 0.1; double factor = (0.003501 * 0.5) * z;
 
-            double cx = 320; //339.307;
-            //double cy = 242.739;
-            double fx = 1 / 594.214;
-            //double fy = 1 / 591.0405;
-            rectY = z ;
-            rectX = (x - cx) * z * fx;
-            //rectY = (y - cy) * z * fy;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Point3D AdjustSomethingFormula(double inX, double inY, double inZ) {
-
-            Point3D point = new Point3D(0,0,0);
-
-            double z = inZ / 1000.0;
-            double x = ((inX - 320) * (0.003501 * z)) * 0.5;
-            double y = ((inY-240) * (0.003501 * z)) * 0.5;
-            point.X = x;
-            point.Y = y;
-            point.Z = z;
-            //point.W = 1f;
-            return point;
+            resultX = (x - 320) * factor;
+            resultY = 240 - z;
+            resultZ = y * factor;
         }
     }
 }
