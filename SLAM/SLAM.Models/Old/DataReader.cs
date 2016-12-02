@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 
 
-namespace SLAM.Models {
+namespace SLAM.Models.Old {
 
     internal class DataReader : IDisposable {
 

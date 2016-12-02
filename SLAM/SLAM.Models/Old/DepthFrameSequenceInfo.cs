@@ -1,7 +1,7 @@
 ﻿using System.IO;
 
 
-namespace SLAM.Models {
+namespace SLAM.Models.Old {
 
     public sealed class DepthFrameSequenceInfo {
 
@@ -20,9 +20,11 @@ namespace SLAM.Models {
 
         // ---
 
-        public int FirstFramePosition { get { return sizeof(float) * 5 + sizeof(int) * 4; } }
+        public int DepthRange { get { return MaxDepth - MinDepth; } }
 
         public int Length { get { return Width * Height; } }
+
+        public int FirstFramePosition { get { return sizeof(float) * 5 + sizeof(int) * 4; } }
 
         public int BytesPerFrame { get { return Length * sizeof(short); } }
 

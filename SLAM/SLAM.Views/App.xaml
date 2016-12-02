@@ -14,7 +14,7 @@
         <converters:IntToVisibilityConverter x:Key="IntToVisibility"/>
         <converters:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
 
-        <viewmodels:MainVindowViewModel x:Key="MainVindowViewModel"/>
+        <viewmodels:MainWindowViewModel x:Key="MainWindowViewModel"/>
         
     </Application.Resources>
 </Application>

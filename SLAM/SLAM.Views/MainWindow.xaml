@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SLAM On Kinect Data: Preview Window"
         Width="960" Height="590"
-        DataContext="{StaticResource MainVindowViewModel}">
+        DataContext="{StaticResource MainWindowViewModel}">
     <DockPanel>
 
         <Menu DockPanel.Dock="Top"

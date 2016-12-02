@@ -10,10 +10,10 @@ using Microsoft.Win32;
 namespace SLAM.ViewModels {
 
     using Helpers;
-    using Models;
+    using Models.Old;
 
 
-    public class MainVindowViewModel : ViewModelBase {
+    public class MainWindowViewModel : ViewModelBase {
 
         private Model model;
 
@@ -91,7 +91,7 @@ namespace SLAM.ViewModels {
             private set { Set(ref exitApplicationCommand, value); }
         }
 
-        public MainVindowViewModel() {
+        public MainWindowViewModel() {
             model = new Model(UpdateUI);
             lastTimeOfFrameUpdate = DateTime.Now;
             frameUpdateLimit = TimeSpan.FromMilliseconds(1000.0 / 29.97);
@@ -110,7 +110,7 @@ namespace SLAM.ViewModels {
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {
 
-                byte[] mapViewportPixels = model.GetViewportTopDepthFrame(CurrentFrame);
+                byte[] mapViewportPixels = model.GetViewportFullMapFrame(CurrentFrame);
                 byte[] topDepthViewportPixels = model.GetViewportTopDepthFrame(CurrentFrame);
                 byte[] frontViewportPixels = model.GetViewportFrontDepthFrame(CurrentFrame);
 
@@ -189,8 +189,9 @@ namespace SLAM.ViewModels {
                         CurrentFrame = 0;
                     }
                     else {
+                        string fileName = Path.GetFileName(openFileDialog.FileName);
                         MessageBox.Show(
-                            "The content of this file corrupted, or the file has the wrong type.",
+                            $"The content of \"{fileName}\" file corrupted, or the file has the wrong type.",
                             "Open RAW Depth Stream Data file",
                             MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }

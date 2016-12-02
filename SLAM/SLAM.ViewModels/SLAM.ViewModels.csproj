@@ -72,7 +72,7 @@
     <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
-    <Compile Include="MainVindowViewModel.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

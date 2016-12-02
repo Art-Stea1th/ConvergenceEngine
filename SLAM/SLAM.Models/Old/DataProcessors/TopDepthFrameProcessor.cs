@@ -3,9 +3,9 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 
-namespace SLAM.Models.Converters {
+namespace SLAM.Models.Old.DataProcessors {
 
-    internal sealed class DepthCurveConverter : DataConverter, IDataConverter {
+    internal sealed class TopDepthFrameProcessor : DataProcessor, IDataProcessor {
 
         private Color viewportCurveColor;
 
@@ -14,7 +14,7 @@ namespace SLAM.Models.Converters {
 
         private Point3D[] middleHorizontalLineFromPointCloud;        
 
-        public DepthCurveConverter(DepthFrameSequenceInfo frameInfo) : base(frameInfo) {
+        public TopDepthFrameProcessor(DepthFrameSequenceInfo frameInfo) : base(frameInfo) {
             Initialize();
             InitializePoints3DBuffer();
         }
@@ -44,7 +44,7 @@ namespace SLAM.Models.Converters {
             }
         }
 
-        public override void ConvertRawDataToViewportFrame(byte[] rawInput, byte[] viewportOutput) {
+        public override void CalculateViewportFrame(byte[] rawInput, byte[] viewportOutput) {
 
             UpdatePointCloudMiddleLineFromRawInput(rawInput);
 
@@ -55,8 +55,6 @@ namespace SLAM.Models.Converters {
                 double z = middleHorizontalLineFromPointCloud[i].Z; // 800 - 4000
 
                 if (z < FrameInfo.MinDepth || z > FrameInfo.MaxDepth) { continue; }
-
-                double deltaAngleBetweenRays = ((FrameInfo.NominalHorizontalFOV * 0.5) / FrameInfo.Width) * x;
 
                 double resultX, resultY, resultZ;
                 PerspectiveToRectangle(x, y, z, out resultX, out resultY, out resultZ);

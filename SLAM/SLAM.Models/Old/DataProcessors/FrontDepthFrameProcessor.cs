@@ -1,15 +1,15 @@
 ﻿using System.Windows.Media;
 
 
-namespace SLAM.Models.Converters {
+namespace SLAM.Models.Old.DataProcessors {
 
-    internal sealed class DepthFullFrameConverter : DataConverter, IDataConverter {
+    internal sealed class FrontDepthFrameProcessor : DataProcessor, IDataProcessor {
 
         private Color nearColor;
         private Color farColor;
         private Color[] intensity;
 
-        public DepthFullFrameConverter(DepthFrameSequenceInfo frameInfo) : base(frameInfo) {
+        public FrontDepthFrameProcessor(DepthFrameSequenceInfo frameInfo) : base(frameInfo) {
             InitializeColorBuffers();
         }
 
@@ -28,10 +28,9 @@ namespace SLAM.Models.Converters {
             }
         }
 
-        public override void ConvertRawDataToViewportFrame(byte[] rawInput, byte[] viewportOutput) {
+        public override void CalculateViewportFrame(byte[] rawInput, byte[] viewportOutput) {
 
-            int fullDepth = FrameInfo.MaxDepth - FrameInfo.MinDepth;
-            double intencityStep = 192.0 / fullDepth;
+            double intencityStep = 192.0 / FrameInfo.DepthRange;
 
             int colorPixelIndex = 0;
             for (int i = 0; i < FrameInfo.Length; ++i) {

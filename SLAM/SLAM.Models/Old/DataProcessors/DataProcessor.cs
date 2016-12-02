@@ -1,17 +1,17 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Media;
 
-namespace SLAM.Models.Converters {
+namespace SLAM.Models.Old.DataProcessors {
 
-    internal abstract class DataConverter : IDataConverter {
+    internal abstract class DataProcessor : IDataProcessor {
 
         public DepthFrameSequenceInfo FrameInfo { get; private set; }
 
-        internal protected DataConverter(DepthFrameSequenceInfo frameInfo) {
+        internal protected DataProcessor(DepthFrameSequenceInfo frameInfo) {
             FrameInfo = frameInfo;
         }
 
-        public abstract void ConvertRawDataToViewportFrame(byte[] rawInput, byte[] viewportOutput);
+        public abstract void CalculateViewportFrame(byte[] rawInput, byte[] viewportOutput);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected int GetLinearIndex(int x, int y, int width) {

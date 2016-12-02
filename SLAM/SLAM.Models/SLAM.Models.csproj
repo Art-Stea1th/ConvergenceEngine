@@ -62,14 +62,28 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\DataConverter.cs" />
-    <Compile Include="Converters\DepthCurveConverter.cs" />
-    <Compile Include="Converters\DepthFullFrameConverter.cs" />
-    <Compile Include="Converters\IDataConverter.cs" />
-    <Compile Include="DepthFrameSequenceInfo.cs" />
-    <Compile Include="Mapper.cs" />
+    <Compile Include="Data\Converters\IDataConverter.cs" />
+    <Compile Include="Data\Converters\KinectDataConverter.cs" />
+    <Compile Include="Data\KinectDataProvider.cs" />
+    <Compile Include="Data\SequenceInfo.cs" />
+    <Compile Include="Data\Devices\IDevice.cs" />
+    <Compile Include="Data\Devices\KinectDevice.cs" />
+    <Compile Include="Data\Readers\IReader.cs" />
+    <Compile Include="Data\Readers\KinectReader.cs" />
+    <Compile Include="Data\IDataProvider.cs" />
+    <Compile Include="Data\Writers\IWriter.cs" />
+    <Compile Include="Data\Writers\KinectWriter.cs" />
+    <Compile Include="FramesProvider.cs" />
+    <Compile Include="Map\IMaper.cs" />
     <Compile Include="Model.cs" />
-    <Compile Include="DataReader.cs" />
+    <Compile Include="Old\DataProcessors\DataProcessor.cs" />
+    <Compile Include="Old\DataProcessors\TopDepthFrameProcessor.cs" />
+    <Compile Include="Old\DataProcessors\FrontDepthFrameProcessor.cs" />
+    <Compile Include="Old\DataProcessors\IDataProcessor.cs" />
+    <Compile Include="Old\DepthFrameSequenceInfo.cs" />
+    <Compile Include="Old\DataProcessors\FullMapFrameProcessor.cs" />
+    <Compile Include="Old\Model.cs" />
+    <Compile Include="Old\DataReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
