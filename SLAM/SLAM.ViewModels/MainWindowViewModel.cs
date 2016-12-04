@@ -10,7 +10,7 @@ using Microsoft.Win32;
 namespace SLAM.ViewModels {
 
     using Helpers;
-    using Models.Old;
+    using Models/*.Old*/;
 
 
     public class MainWindowViewModel : ViewModelBase {
@@ -110,9 +110,13 @@ namespace SLAM.ViewModels {
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {
 
-                byte[] mapViewportPixels = model.GetViewportFullMapFrame(CurrentFrame);
-                byte[] topDepthViewportPixels = model.GetViewportTopDepthFrame(CurrentFrame);
-                byte[] frontViewportPixels = model.GetViewportFrontDepthFrame(CurrentFrame);
+                //byte[] mapViewportPixels = model.GetViewportFullMapFrame(CurrentFrame);
+                //byte[] topDepthViewportPixels = model.GetViewportTopDepthFrame(CurrentFrame);
+                //byte[] frontViewportPixels = model.GetViewportFrontDepthFrame(CurrentFrame);
+                model.MoveToPosition(CurrentFrame);
+                byte[] mapViewportPixels = model.GetActualMapFrame();
+                byte[] topDepthViewportPixels = model.GetActualTopDepthFrame();
+                byte[] frontViewportPixels = model.GetActualFrontDepthFrame();
 
                 if (mapViewportPixels != null) {
                     mapViewportData.WritePixels(
@@ -141,7 +145,6 @@ namespace SLAM.ViewModels {
         private void InitializeProperties() {
             ModelCurrentState = model.CurrentState;
             ModelReady = model.Ready;
-            CurrentFileName = model.FullFileName;
             TotalFramesCount = model.FramesCount;
         }
 

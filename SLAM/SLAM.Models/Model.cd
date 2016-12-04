@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SLAM.Models.Model" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAECCAIBQEAAAABICAAAAAAQEAAAQAAQACQEBg=</HashCode>
+      <FileName>Model.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SLAM.Models.FramesConverter" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAYAQAECAAAEQAAAAAIAggAAAAAyAIACAAAAAAAEAA=</HashCode>
+      <FileName>FramesConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SLAM.Models.Data.Adapters.KinectDataAdapter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAhAAAAAAAIAABAAIAAAAAA=</HashCode>
+      <FileName>Data\Adapters\KinectDataAdapter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SLAM.Models.Data.Readers.DataProvider" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAABAAiAQCAAAAAACAEAAAAAAAAAAIIAAAAAAAAI=</HashCode>
+      <FileName>Data\Readers\DataProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SLAM.Models.Data.Readers.DeviceReader" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Data\Readers\DeviceReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SLAM.Models.Data.Readers.FileReader" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQAAAAAAAAAAAAAAQAAAKAAAAACQAAA=</HashCode>
+      <FileName>Data\Readers\FileReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SLAM.Models.Data.Readers.KinectDeviceReader" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Readers\KinectDeviceReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SLAM.Models.Data.Readers.KinectFileReader" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAggAAAAQAAAAAgAAACAAAA=</HashCode>
+      <FileName>Data\Readers\KinectFileReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SLAM.Models.Data.Writers.BaseWriter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Writers\BaseWriter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SLAM.Models.Data.FrameSequenceInfo" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAQAAAAAAAGhBEAAIgAQQAAIAAAIAAAA=</HashCode>
+      <FileName>Data\FrameSequenceInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SLAM.Models.Map.BaseMaper" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map\BaseMaper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SLAM.Models.Map.MatrixBasedMapper" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map\MatrixBasedMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SLAM.Models.Data.Adapters.IDataAdapter" Collapsed="true">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Data\Adapters\IDataAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Delegate Name="SLAM.Models.Events.ModelUpdatedEvent" Collapsed="true">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\ModelUpdatedEvent.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="SLAM.Models.Events.NextFrameReadyEvent" Collapsed="true">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\NextFrameReadyEvent.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

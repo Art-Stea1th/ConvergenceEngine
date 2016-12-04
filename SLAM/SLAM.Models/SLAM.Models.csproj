@@ -62,31 +62,26 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Converters\IDataConverter.cs" />
-    <Compile Include="Data\Converters\KinectDataConverter.cs" />
-    <Compile Include="Data\KinectDataProvider.cs" />
-    <Compile Include="Data\SequenceInfo.cs" />
-    <Compile Include="Data\Devices\IDevice.cs" />
-    <Compile Include="Data\Devices\KinectDevice.cs" />
-    <Compile Include="Data\Readers\IReader.cs" />
-    <Compile Include="Data\Readers\KinectReader.cs" />
-    <Compile Include="Data\IDataProvider.cs" />
-    <Compile Include="Data\Writers\IWriter.cs" />
-    <Compile Include="Data\Writers\KinectWriter.cs" />
-    <Compile Include="FramesProvider.cs" />
-    <Compile Include="Map\IMaper.cs" />
+    <Compile Include="Data\Adapters\IDataAdapter.cs" />
+    <Compile Include="Data\Adapters\KinectDataAdapter.cs" />
+    <Compile Include="Data\Readers\DataProvider.cs" />
+    <Compile Include="Data\FrameSequenceInfo.cs" />
+    <Compile Include="Data\Readers\DeviceReader.cs" />
+    <Compile Include="Data\Readers\FileReader.cs" />
+    <Compile Include="Data\Readers\KinectDeviceReader.cs" />
+    <Compile Include="Data\Readers\KinectFileReader.cs" />
+    <Compile Include="Data\Writers\BaseWriter.cs" />
+    <Compile Include="Events\NextFrameReadyEvent.cs" />
+    <Compile Include="Events\ModelUpdatedEvent.cs" />
+    <Compile Include="FramesConverter.cs" />
+    <Compile Include="Map\BaseMaper.cs" />
+    <Compile Include="Map\MatrixBasedMapper.cs" />
     <Compile Include="Model.cs" />
-    <Compile Include="Old\DataProcessors\DataProcessor.cs" />
-    <Compile Include="Old\DataProcessors\TopDepthFrameProcessor.cs" />
-    <Compile Include="Old\DataProcessors\FrontDepthFrameProcessor.cs" />
-    <Compile Include="Old\DataProcessors\IDataProcessor.cs" />
-    <Compile Include="Old\DepthFrameSequenceInfo.cs" />
-    <Compile Include="Old\DataProcessors\FullMapFrameProcessor.cs" />
-    <Compile Include="Old\Model.cs" />
-    <Compile Include="Old\DataReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Model.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

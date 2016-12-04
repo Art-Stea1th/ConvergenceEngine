@@ -1,9 +1,9 @@
 ﻿using System.IO;
 
 
-namespace SLAM.Models.Old {
+namespace SLAM.Models.Data {
 
-    public sealed class DepthFrameSequenceInfo {
+    internal sealed class FrameSequenceInfo {
 
         public float NominalFocalLengthInPixels { get; private set; }
         public float NominalInverseFocalLengthInPixels { get; private set; }
@@ -18,14 +18,11 @@ namespace SLAM.Models.Old {
         public int Width { get; private set; }
         public int Height { get; private set; }
 
-        // ---
 
         public int DepthRange { get { return MaxDepth - MinDepth; } }
-
         public int Length { get { return Width * Height; } }
 
         public int FirstFramePosition { get { return sizeof(float) * 5 + sizeof(int) * 4; } }
-
         public int BytesPerFrame { get { return Length * sizeof(short); } }
 
         public bool IsCorrect {
@@ -48,7 +45,7 @@ namespace SLAM.Models.Old {
             }
         }
 
-        public DepthFrameSequenceInfo(BinaryReader reader) {
+        public FrameSequenceInfo(BinaryReader reader) {
 
             long savedPosition = reader.BaseStream.Position;
             reader.BaseStream.Position = 0;
