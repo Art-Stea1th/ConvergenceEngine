@@ -7,7 +7,7 @@ namespace SLAM.Models.Map {
 
     using Data.Readers;    
 
-    internal sealed class MatrixBasedMapper : BaseMaper {        
+    internal sealed class MatrixBasedMapper : BaseMapper {        
 
         protected Point[] previousPointsBuffer;
         protected Point[] currentPointsBuffer;
@@ -23,7 +23,7 @@ namespace SLAM.Models.Map {
         private double translateX = 0.0, translateY = 0.0, rotateAngle = 0.0;
 
         public MatrixBasedMapper(DataProvider dataProvider) : base(dataProvider) {
-            Configure(5.0, 1.0, 90.0, 30.0);
+            Configure(1.0, 5.0, 90.0, 30.0);
         }
 
         private void Configure(double xKmpH, double yKmpH, double degreePerSec, double fps) {
@@ -32,21 +32,29 @@ namespace SLAM.Models.Map {
             translateYRange = PixelPerFrameBySpeed(yKmpH, fps);
             rotateAngleRange = DegreePerFrame(degreePerSec, fps);
 
-            translateXStep = 1.0;
-            translateYStep = 1.0;
+            translateXStep = CalculateStep(translateXRange);
+            translateYStep = CalculateStep(translateYRange);
             rotateAngleStep = 0.5;
-        }
+        }        
 
         private double PixelPerFrameBySpeed(double speedKmH, double fps) {
             double mPerH = speedKmH * 1000.0;
-            double cmPerH = speedKmH * 100.0; 
-            double cmPerMin = cmPerH * 0.6;
-            double cmPerSec = cmPerMin * 0.6;
-            double cmPerFrame = cmPerSec * (1.0 / fps);
+            double cmPerH = mPerH * 100.0; 
+            double cmPerMin = cmPerH / 60.0;
+            double cmPerSec = cmPerMin / 60.0;
+            double cmPerFrame = cmPerSec / fps;
             return cmPerFrame; // <-- 1 cm = 1 pixel
         }
+
         private double DegreePerFrame(double degreePerSec, double fps) {
-            return degreePerSec * (1.0 / fps);
+            return degreePerSec / fps;
+        }
+
+        private double CalculateStep(double range) {
+            while (range > 1.0) {
+                range /= 2;
+            }
+            return range;
         }
 
         protected override void NextFrameProceed() {
@@ -70,17 +78,11 @@ namespace SLAM.Models.Map {
         }
         
         private void ResetTransform() {
-            //matrix = new Matrix();
             translateX = translateY = rotateAngle = 0.0;
             maxHitPoints = 0;
         }
 
         private void FindTransform() {
-
-            // prepare points
-            //ApplyTransform(estimatedPointsBuffer, translateXRange * -0.5, translateYRange * -0.5, rotateAngleRange * -0.5);
-
-            //int maxHitPoints = 0;
 
             maxHitPoints = HitPointsCount(estimatedPointsBuffer, previousPointsBuffer);
 

@@ -74,7 +74,7 @@
     <Compile Include="Events\NextFrameReadyEvent.cs" />
     <Compile Include="Events\ModelUpdatedEvent.cs" />
     <Compile Include="FramesConverter.cs" />
-    <Compile Include="Map\BaseMaper.cs" />
+    <Compile Include="Map\BaseMapper.cs" />
     <Compile Include="Map\MatrixBasedMapper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

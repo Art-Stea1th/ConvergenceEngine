@@ -5,11 +5,13 @@ using System.Windows.Media;
 
 namespace SLAM.Models {
 
-    using Data.Readers;    
+    using Data.Readers;
+    using Map;
 
     internal sealed class FramesConverter {
 
         private DataProvider dataProvider;
+        private BaseMapper mapper;
 
         private bool thisInitialized;
 
@@ -21,8 +23,9 @@ namespace SLAM.Models {
         private byte[] topDepthFrameBuffer;
         private byte[] frontDepthFrameBuffer;
 
-        public FramesConverter(DataProvider dataProvider) {
-            this.dataProvider = dataProvider;
+        public FramesConverter(BaseMapper mapper) {
+            this.mapper = mapper;
+            dataProvider = mapper.DataProvider;
             thisInitialized = false;
         }
 
@@ -58,8 +61,16 @@ namespace SLAM.Models {
         internal byte[] GetActualMapFrame() {
             Initialize();
 
+            //Point[] nextMapFrameData;
+            //dataProvider.GetNextFrameTo(out nextMapFrameData);
+
+            //topDepthFrameBuffer = new byte[mapper.ActualWidth * mapper.ActualHeight * sizeof(int)];
+
+            //foreach (var point in nextMapFrameData) {
+            //    int index = GetLinearIndex((int)point.X, (int)point.Y, dataProvider.FrameInfo.Width);
+            //    SetColorToViewportByteArray(topDepthFrameBuffer, index * sizeof(int), nearColor);
+            //}
             return topDepthFrameBuffer;
-            //return fullMapFrameBuffer;
         }
 
         internal byte[] GetActualTopDepthFrame() {

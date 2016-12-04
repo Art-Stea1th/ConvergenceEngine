@@ -14,7 +14,7 @@ namespace SLAM.Models {
 
         private DataProvider reader;
         private BaseWriter   writer;
-        private BaseMaper    mapper;
+        private BaseMapper   mapper;
 
         private FramesConverter framesConverter;
 
@@ -39,7 +39,7 @@ namespace SLAM.Models {
 
         private void Initialize() {
             mapper = new MatrixBasedMapper(reader);
-            framesConverter = new FramesConverter(reader);
+            framesConverter = new FramesConverter(mapper);
         }
 
         private void ChangeState(string newModelState, bool lockModel = false) {
