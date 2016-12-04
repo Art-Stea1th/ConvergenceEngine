@@ -17,7 +17,7 @@ namespace SLAM.Models {
         private Color farColor;
         private Color[] intensity;
 
-        private byte[] fullMapFrameBuffer;
+        //private byte[] fullMapFrameBuffer;
         private byte[] topDepthFrameBuffer;
         private byte[] frontDepthFrameBuffer;
 
@@ -36,7 +36,7 @@ namespace SLAM.Models {
 
         private void InitializeViewportsBuffers() {
             //fullMapFrameBuffer = new byte[dataProvider.FrameInfo.Length * sizeof(int)]; ??
-            //topDepthFrameBuffer = new byte[dataProvider.FrameInfo.Length * sizeof(int)];
+            //topDepthFrameBuffer = new byte[dataProvider.FrameInfo.Length * sizeof(int)]; // need to reallocate for correct redraw !
             frontDepthFrameBuffer = new byte[dataProvider.FrameInfo.Length * sizeof(int)];
         }
 
@@ -45,10 +45,9 @@ namespace SLAM.Models {
             nearColor = Color.FromArgb(255, 0, 128, 192);
             farColor = Color.FromArgb(255, 0, 0, 30);
 
-            int fullDepth = dataProvider.FrameInfo.MaxDepth - dataProvider.FrameInfo.MinDepth;
-            double intencityStep = 192.0 / fullDepth;
+            double intencityStep = 192.0 / dataProvider.FrameInfo.DepthRange;
 
-            intensity = new Color[fullDepth];
+            intensity = new Color[dataProvider.FrameInfo.DepthRange];
             for (int i = 0; i < intensity.Length; ++i) {
                 byte colorComponent = (byte)(byte.MaxValue - (i * intencityStep));
                 intensity[i] = Color.FromArgb(255, colorComponent, colorComponent, colorComponent);

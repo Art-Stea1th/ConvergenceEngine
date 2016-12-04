@@ -58,7 +58,7 @@ namespace SLAM.Models {
             return calculateFramesCountTask;
         }
 
-        public bool OpenFile(string fileName) {
+        public bool Start(string fileName) {
             return (bool)(reader as FileReader)?.Start(fileName);
         }
 
@@ -66,7 +66,7 @@ namespace SLAM.Models {
             (reader as FileReader)?.MoveToPosition(frameIndex);
         }
 
-        public void CloseFile() {
+        public void Stop() {
             reader?.Stop();
         }
 

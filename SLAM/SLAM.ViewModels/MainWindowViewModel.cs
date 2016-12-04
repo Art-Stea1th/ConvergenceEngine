@@ -186,7 +186,7 @@ namespace SLAM.ViewModels {
 
             if (result == true) {
                 if (openFileDialog.FileName != currentFilePath) {
-                    if (model.OpenFile(openFileDialog.FileName)) {
+                    if (model.Start(openFileDialog.FileName)) {
                         CurrentFileName = openFileDialog.FileName;
                         await model.CalculateFramesCount();
                         CurrentFrame = 0;
@@ -205,7 +205,7 @@ namespace SLAM.ViewModels {
         private void ExecuteCloseFileCommand(object obj) {
             TotalFramesCount = 0;
             CurrentFileName = string.Empty;
-            model.CloseFile();
+            model.Stop();
             InitializeViewports();
         }
 

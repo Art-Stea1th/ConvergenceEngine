@@ -97,7 +97,7 @@
                     <Viewbox>
                         <Image Source="{Binding TopDepthViewportData}"/>
                     </Viewbox>
-                    <Path Data="M0,0 L0,1"/>
+                    <!--<Path Data="M0,0 L0,1"/>-->
                 </Grid>                
             </Border>
 
