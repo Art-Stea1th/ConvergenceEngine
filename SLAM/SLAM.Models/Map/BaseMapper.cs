@@ -11,6 +11,12 @@ namespace SLAM.Models.Map {
 
         public int ActualWidth { get; protected set; }
         public int ActualHeight { get; protected set; }
+
+        public double ActualMinX { get; protected set; }
+        public double ActualMinY { get; protected set; }
+        public double ActualMaxX { get; protected set; }
+        public double ActualMaxY { get; protected set; }
+
         public Point[] ResultMap { get; protected set; }        
 
         internal BaseMapper(DataProvider dataProvider) {

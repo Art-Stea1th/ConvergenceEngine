@@ -27,6 +27,9 @@ namespace SLAM.ViewModels {
         private int totalFramesCount;
         private int currentFrame;
 
+        private int mapViewportNewX;
+        private int mapViewpornNewY;
+
         private DateTime lastTimeOfFrameUpdate;
         private TimeSpan frameUpdateLimit;
 
@@ -106,22 +109,29 @@ namespace SLAM.ViewModels {
 
         }
 
-        private void UpdateViewports() {
+        private async void UpdateViewports() {            
 
-            if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {
+            if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {                
 
-                //byte[] mapViewportPixels = model.GetViewportFullMapFrame(CurrentFrame);
-                //byte[] topDepthViewportPixels = model.GetViewportTopDepthFrame(CurrentFrame);
-                //byte[] frontViewportPixels = model.GetViewportFrontDepthFrame(CurrentFrame);
+                NextFrame = new RelayCommand(ExecuteNextFrameCommand, (object o) => { return false; }); // <- tmp
+                PrevFrame = new RelayCommand(ExecutePrevFrameCommand, (object o) => { return false; }); // <- tmp
+
                 model.MoveToPosition(CurrentFrame);
-                byte[] mapViewportPixels = model.GetActualMapFrame();
+                byte[] mapViewportPixels = await model.GetActualMapFrameAsync();
                 byte[] topDepthViewportPixels = model.GetActualTopDepthFrame();
                 byte[] frontViewportPixels = model.GetActualFrontDepthFrame();
 
+                if (model.MapActualWidth > 0 && model.MapActualHeight > 0) {
+                    MapViewportData
+                        = new WriteableBitmap(
+                            model.MapActualWidth,
+                            model.MapActualHeight, 96.0, 96.0, PixelFormats.Bgr32, null); // <- tmp
+                }
+
                 if (mapViewportPixels != null) {
                     mapViewportData.WritePixels(
-                        new Int32Rect(0, 0, 640, 480),
-                        mapViewportPixels, topDepthViewportData.PixelWidth * sizeof(int), 0);
+                        new Int32Rect(0, 0, model.MapActualWidth, model.MapActualHeight),
+                        mapViewportPixels, mapViewportData.PixelWidth * sizeof(int), 0);
                 }
                 if (topDepthViewportPixels != null) {
                     topDepthViewportData.WritePixels(
@@ -146,6 +156,8 @@ namespace SLAM.ViewModels {
             ModelCurrentState = model.CurrentState;
             ModelReady = model.Ready;
             TotalFramesCount = model.FramesCount;
+            mapViewportNewX = model.MapActualWidth;
+            mapViewpornNewY = model.MapActualHeight;
         }
 
         private void InitializeCommands() {
@@ -165,7 +177,7 @@ namespace SLAM.ViewModels {
         }
 
         private void ExecuteNextFrameCommand(object obj) {
-            if (CurrentFrame < TotalFramesCount) { ++CurrentFrame; }
+            if (CurrentFrame < TotalFramesCount && model.Ready) { ++CurrentFrame; }
         }
 
         private bool CanExecuteNavigationsCommand(object obj) {
@@ -188,7 +200,7 @@ namespace SLAM.ViewModels {
                 if (openFileDialog.FileName != currentFilePath) {
                     if (model.Start(openFileDialog.FileName)) {
                         CurrentFileName = openFileDialog.FileName;
-                        await model.CalculateFramesCount();
+                        await model.CalculateFramesCountAsync();
                         CurrentFrame = 0;
                     }
                     else {

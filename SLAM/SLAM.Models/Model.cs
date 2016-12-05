@@ -22,6 +22,9 @@ namespace SLAM.Models {
         public bool Ready { get; private set; } = true;
         public int FramesCount { get { return reader.TotalFrames; } }
 
+        public int MapActualWidth { get { return mapper.ActualWidth; } }
+        public int MapActualHeight { get { return mapper.ActualHeight; } }
+
         public Model(ModelUpdatedEvent onModelUpdated) {
             OnModelUpdated += onModelUpdated;
             MapperSwitchOffline();
@@ -48,7 +51,7 @@ namespace SLAM.Models {
             OnModelUpdated?.Invoke();
         }
 
-        public Task CalculateFramesCount() {
+        public Task CalculateFramesCountAsync() {
             Task calculateFramesCountTask = new Task(() => {
                 ChangeState("Calculate Frames Count", true);
                 (reader as FileReader)?.CalculateFramesCount();
@@ -72,6 +75,17 @@ namespace SLAM.Models {
 
         public byte[] GetActualMapFrame() {
             return framesConverter.GetActualMapFrame();
+        }
+
+        public Task<byte[]> GetActualMapFrameAsync() {
+            Task<byte[]> getActualMapFrame = new Task<byte[]>(() => {
+                ChangeState("Calculate Map", true);
+                byte[] result = framesConverter.GetActualMapFrame();
+                ChangeState("Ready");
+                return result;                
+            });
+            getActualMapFrame.Start();
+            return getActualMapFrame;
         }
 
         public byte[] GetActualTopDepthFrame() {

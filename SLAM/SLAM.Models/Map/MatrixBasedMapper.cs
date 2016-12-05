@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-
+using System.Collections.Generic;
 
 namespace SLAM.Models.Map {
 
@@ -63,16 +63,59 @@ namespace SLAM.Models.Map {
             DataProvider.GetNextFrameTo(out currentPointsBuffer);
             if (EstimatedBufferInitialize()) {                
                 FindTransform();
+                UpdateMap();
+                SetNewMapSize();
             }            
         }
+
+        private void SetNewMapSize() {
+
+            ActualMinX = ActualMaxX = ResultMap[0].X;
+            ActualMinY = ActualMaxY = ResultMap[0].Y;
+
+            for (int i = 0; i < ResultMap.Length; ++i) {
+                if (ResultMap[i].X < ActualMinX) { ActualMinX = ResultMap[i].X; }
+                if (ResultMap[i].X > ActualMaxX) { ActualMaxX = ResultMap[i].X; }
+                if (ResultMap[i].Y < ActualMinY) { ActualMinY = ResultMap[i].Y; }
+                if (ResultMap[i].Y > ActualMaxY) { ActualMaxY = ResultMap[i].Y; }
+            }
+
+            ActualWidth = (int)Math.Abs(ActualMaxX - ActualMinX) + 1;
+            ActualHeight = (int)Math.Abs(ActualMaxY - ActualMinY) + 1;
+        }
+
+        private void UpdateMap() {
+            if (ResultMap == null) {
+                ResultMap = new Point[currentPointsBuffer.Length];
+                Array.Copy(currentPointsBuffer, ResultMap, currentPointsBuffer.Length);
+                return;
+            }
+            if (estimatedPointsBuffer != null) {
+                ApplyTransform(ResultMap, -translateX, -translateY, -rotateAngle);
+                ResultMap = MergePointBuffers(ResultMap, currentPointsBuffer);
+            }
+        }
+
+        private Point[] MergePointBuffers(Point[] bufferA, Point[] bufferB) {
+
+            List<Point> resultA = bufferA.Length > bufferB.Length ? new List<Point>(bufferA) : new List<Point>(bufferB);
+            List<Point> resultB = bufferA.Length < bufferB.Length ? new List<Point>(bufferA) : new List<Point>(bufferB);
+
+            for (int i = 0; i < resultB.Count; ++i) {
+                if (PointExists(resultA, resultB[i])) {
+                    continue;
+                }
+                resultA.Add(resultB[i]);
+                resultA.RemoveAt(i); --i;
+            }
+            return resultA.ToArray();
+        }        
 
         private bool EstimatedBufferInitialize() {
             if (previousPointsBuffer == null) {
                 return false;
             }
-            if (estimatedPointsBuffer == null) {
-                estimatedPointsBuffer = new Point[previousPointsBuffer.Length];
-            }            
+            estimatedPointsBuffer = new Point[previousPointsBuffer.Length];
             Array.Copy(previousPointsBuffer, estimatedPointsBuffer, estimatedPointsBuffer.Length);
             return true;
         }
@@ -106,8 +149,8 @@ namespace SLAM.Models.Map {
         private void ApplyTransform(Point[] points, double offsetX, double offsetY, double angle) {
 
             Matrix matrix = new Matrix();
-            double centerX = DataProvider.FrameInfo.Width * 0.5;
-            double centerY = DataProvider.FrameInfo.Height - 1;
+            double centerX = DataProvider.FrameInfo.Width * 0.5; // incorrect !!
+            double centerY = DataProvider.FrameInfo.Height - 1;  // incorrect !!
             matrix.RotateAt(angle, centerX, centerY);
             matrix.Transform(points);
 
@@ -128,6 +171,16 @@ namespace SLAM.Models.Map {
                 }
             }
             return resultHits;
+        }
+
+        private bool PointExists(List<Point> sequence, Point point) {
+            for (int i = 0; i < sequence.Count; ++i) {
+                if (Math.Abs(sequence[i].X - point.X) < 1.0 &&
+                    Math.Abs(sequence[i].Y - point.Y) < 1.0) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool HitPoint(Point pointA, Point pointB) {

@@ -19,7 +19,7 @@ namespace SLAM.Models {
         private Color farColor;
         private Color[] intensity;
 
-        //private byte[] fullMapFrameBuffer;
+        private byte[] fullMapFrameBuffer;
         private byte[] topDepthFrameBuffer;
         private byte[] frontDepthFrameBuffer;
 
@@ -61,16 +61,19 @@ namespace SLAM.Models {
         internal byte[] GetActualMapFrame() {
             Initialize();
 
-            //Point[] nextMapFrameData;
-            //dataProvider.GetNextFrameTo(out nextMapFrameData);
+            Point[] nextMapFrameData = mapper.ResultMap;
 
-            //topDepthFrameBuffer = new byte[mapper.ActualWidth * mapper.ActualHeight * sizeof(int)];
+            if (nextMapFrameData == null) {
+                return null;
+            }
 
-            //foreach (var point in nextMapFrameData) {
-            //    int index = GetLinearIndex((int)point.X, (int)point.Y, dataProvider.FrameInfo.Width);
-            //    SetColorToViewportByteArray(topDepthFrameBuffer, index * sizeof(int), nearColor);
-            //}
-            return topDepthFrameBuffer;
+            fullMapFrameBuffer = new byte[mapper.ActualWidth * mapper.ActualHeight * sizeof(int)];
+
+            foreach (var point in nextMapFrameData) {
+                int index = GetLinearIndex((int)(point.X - mapper.ActualMinX), (int)(point.Y - mapper.ActualMinY), mapper.ActualWidth);
+                SetColorToViewportByteArray(fullMapFrameBuffer, index * sizeof(int), nearColor);
+            }
+            return fullMapFrameBuffer;
         }
 
         internal byte[] GetActualTopDepthFrame() {
