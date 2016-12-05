@@ -9,6 +9,6 @@ namespace SLAM.Models.Data.Adapters {
 
         DataProvider DataProvider { get; }
 
-        void Adapt(byte[] rawFrameBuffer, Point[] adaptedFrameBuffer);
+        Point[] GetAdapted(byte[] rawFrameBuffer);
     }
 }

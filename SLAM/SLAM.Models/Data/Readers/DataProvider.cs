@@ -23,9 +23,7 @@ namespace SLAM.Models.Data.Readers {
         public abstract void Dispose();
 
         public virtual bool GetNextFrameTo(out Point[] destination) {
-            Point[] adaptedPointsFrameBuffer = new Point[FrameInfo.Width];
-            adapter?.Adapt(rawFrameBuffer, adaptedPointsFrameBuffer);
-            destination = adaptedPointsFrameBuffer;
+            destination = adapter?.GetAdapted(rawFrameBuffer);
             return destination != null;
         }
 

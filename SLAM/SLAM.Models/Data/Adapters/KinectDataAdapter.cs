@@ -14,11 +14,26 @@ namespace SLAM.Models.Data.Adapters {
             DataProvider = dataProvider;
         }
 
-        public void Adapt(byte[] rawFrameBuffer, Point[] adaptedFrameBuffer) {
+        public Point[] GetAdapted(byte[] rawFrameBuffer) {
+
+            Point[] result = new Point[DataProvider.FrameInfo.Width];
+
             int i = 0;
             foreach (var nextPoint in AdaptedSequenceFrom(rawFrameBuffer)) {
-                adaptedFrameBuffer[i] = nextPoint; ++i;
+                result[i] = nextPoint; ++i;
             }
+            if (i < DataProvider.FrameInfo.Width) {
+                TruncateResultSequence(ref result, i);
+            }
+            return result;
+        }
+
+        private void TruncateResultSequence(ref Point[] pointSequence, int newLength) { // compress
+            Point[] result = new Point[newLength];
+            for (int i = 0; i < newLength; ++i) {
+                result[i] = pointSequence[i];
+            }
+            pointSequence = result;
         }
 
         private IEnumerable<Point> AdaptedSequenceFrom(byte[] rawFrameBuffer) {
