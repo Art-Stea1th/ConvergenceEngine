@@ -149,8 +149,8 @@ namespace SLAM.Models.Map {
         private void ApplyTransform(Point[] points, double offsetX, double offsetY, double angle) {
 
             Matrix matrix = new Matrix();
-            double centerX = DataProvider.FrameInfo.Width * 0.5; // incorrect !!
-            double centerY = DataProvider.FrameInfo.Height - 1;  // incorrect !!
+            double centerX = DataProvider.FrameInfo.Width * 0.5; // incorrect ?!
+            double centerY = DataProvider.FrameInfo.Height - 1;  // incorrect ?!
             matrix.RotateAt(angle, centerX, centerY);
             matrix.Transform(points);
 
