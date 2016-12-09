@@ -21,7 +21,7 @@ namespace SLAM.Models.Map {
 
         internal BaseMapper(DataProvider dataProvider) {
             DataProvider = dataProvider;
-            DataProvider.OnNextFrameReady += NextFrameProceed;
+            //DataProvider.OnNextFrameReady += NextFrameProceed;
         }
 
         protected abstract void NextFrameProceed();

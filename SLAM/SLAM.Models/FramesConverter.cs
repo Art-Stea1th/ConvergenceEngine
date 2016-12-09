@@ -19,8 +19,6 @@ namespace SLAM.Models {
         private Color farColor;
         private Color[] intensity;
 
-        private byte[] fullMapFrameBuffer;
-        private byte[] topDepthFrameBuffer;
         private byte[] frontDepthFrameBuffer;
 
         public FramesConverter(BaseMapper mapper) {
@@ -38,8 +36,6 @@ namespace SLAM.Models {
         }
 
         private void InitializeViewportsBuffers() {
-            //fullMapFrameBuffer = new byte[dataProvider.FrameInfo.Length * sizeof(int)]; ??
-            //topDepthFrameBuffer = new byte[dataProvider.FrameInfo.Length * sizeof(int)]; // need to reallocate for correct redraw !
             frontDepthFrameBuffer = new byte[dataProvider.FrameInfo.Length * sizeof(int)];
         }
 
@@ -58,37 +54,16 @@ namespace SLAM.Models {
             
         }
 
-        internal byte[] GetActualMapFrame() {
+        internal Point[] GetActualMapFrame() {
             Initialize();
-
-            Point[] nextMapFrameData = mapper.ResultMap;
-
-            if (nextMapFrameData == null) {
-                return null;
-            }
-
-            fullMapFrameBuffer = new byte[mapper.ActualWidth * mapper.ActualHeight * sizeof(int)];
-
-            foreach (var point in nextMapFrameData) {
-                int index = GetLinearIndex((int)(point.X - mapper.ActualMinX), (int)(point.Y - mapper.ActualMinY), mapper.ActualWidth);
-                SetColorToViewportByteArray(fullMapFrameBuffer, index * sizeof(int), nearColor);
-            }
-            return fullMapFrameBuffer;
+            return mapper.ResultMap;
         }
 
-        internal byte[] GetActualTopDepthFrame() {
+        internal Point[] GetActualTopDepthFrame() {
             Initialize();
-
             Point[] nextFrameData;
             dataProvider.GetNextFrameTo(out nextFrameData);
-
-            topDepthFrameBuffer = new byte[dataProvider.FrameInfo.Length * sizeof(int)];
-
-            foreach (var point in nextFrameData) {
-                int index = GetLinearIndex((int)point.X, (int)point.Y, dataProvider.FrameInfo.Width);
-                SetColorToViewportByteArray(topDepthFrameBuffer, index * sizeof(int), nearColor);
-            }
-            return topDepthFrameBuffer;
+            return nextFrameData;
         }
 
         internal byte[] GetActualFrontDepthFrame() {

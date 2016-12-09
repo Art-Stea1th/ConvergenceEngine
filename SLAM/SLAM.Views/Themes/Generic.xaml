@@ -10,9 +10,21 @@
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}">
-                        <Viewbox>
-                            <Image x:Name="PART_ViewportSurfaceSource"/>
+                        BorderThickness="{TemplateBinding BorderThickness}"                        
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                        MinWidth="{TemplateBinding MinWidth}"
+                        MinHeight="{TemplateBinding MinHeight}"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        MaxWidth="{TemplateBinding MaxWidth}"
+                        MaxHeight="{TemplateBinding MaxHeight}"
+                        Padding="{TemplateBinding Margin}"
+                        SnapsToDevicePixels="True">
+                        <Viewbox
+                            Stretch="Uniform"
+                            HorizontalAlignment="Center">
+                            <Image x:Name="PART_ViewportSurface"/>
                         </Viewbox>
                     </Border>                    
                 </ControlTemplate>

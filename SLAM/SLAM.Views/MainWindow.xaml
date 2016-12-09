@@ -1,6 +1,7 @@
 ﻿<Window x:Class="SLAM.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:customcontrols="clr-namespace:SLAM.Views.CustomControls"
         Title="SLAM On Kinect Data: Preview Window"
         Width="960" Height="590"
         DataContext="{StaticResource MainWindowViewModel}">
@@ -74,32 +75,24 @@
                     <Setter Property="Stretch" Value="Fill"/>
                     <Setter Property="StrokeThickness" Value="1"/>
                     <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
                 </Style>
             </Grid.Resources>
 
-            <Border
+            <customcontrols:MathDataViewport
                 Grid.Column="0"
                 Grid.Row="0"
                 Margin="0,0,2,0"
-                Grid.RowSpan="2">
-                <Grid>
-                    <Viewbox>
-                        <Image Source="{Binding MapViewportData}"/>
-                    </Viewbox>
-                </Grid>                
-            </Border>
+                Grid.RowSpan="2"
+                Background="Black"
+                Data="{Binding MapViewportData}"/>
 
-            <Border
+            <customcontrols:MathDataViewport
                 Grid.Column="1"
                 Grid.Row="0"
-                Margin="2,0,0,2">
-                <Grid>
-                    <Viewbox>
-                        <Image Source="{Binding TopDepthViewportData}"/>
-                    </Viewbox>
-                    <!--<Path Data="M0,0 L0,1"/>-->
-                </Grid>                
-            </Border>
+                Margin="2,0,0,2"
+                Background="Black"
+                Data="{Binding TopDepthViewportData}"/>
 
             <Border
                 Grid.Column="1"

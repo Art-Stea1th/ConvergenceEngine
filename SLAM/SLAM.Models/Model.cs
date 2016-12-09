@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows;
+
 
 namespace SLAM.Models {
 
@@ -73,14 +75,14 @@ namespace SLAM.Models {
             reader?.Stop();
         }
 
-        public byte[] GetActualMapFrame() {
+        public Point[] GetActualMapFrame() {
             return framesConverter.GetActualMapFrame();
         }
 
-        public Task<byte[]> GetActualMapFrameAsync() {
-            Task<byte[]> getActualMapFrame = new Task<byte[]>(() => {
+        public Task<Point[]> GetActualMapFrameAsync() {
+            Task<Point[]> getActualMapFrame = new Task<Point[]>(() => {
                 ChangeState("Calculate Map", true);
-                byte[] result = framesConverter.GetActualMapFrame();
+                Point[] result = framesConverter.GetActualMapFrame();
                 ChangeState("Ready");
                 return result;                
             });
@@ -88,7 +90,7 @@ namespace SLAM.Models {
             return getActualMapFrame;
         }
 
-        public byte[] GetActualTopDepthFrame() {
+        public Point[] GetActualTopDepthFrame() {
             return framesConverter.GetActualTopDepthFrame();
         }
 
@@ -97,6 +99,7 @@ namespace SLAM.Models {
         }
 
         public void Dispose() {
+            reader?.Dispose();
 
         }
     }

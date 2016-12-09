@@ -1,12 +1,12 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
+
 namespace SLAM.Views.CustomControls {
 
-    [TemplatePart(Name = MathDataViewport.ViewportSurfaceControlName, Type = typeof(ImageSource))]
-    public class MathDataViewport : Control {        
+    [TemplatePart(Name = MathDataViewport.ViewportSurfaceName, Type = typeof(Image))]
+    public class MathDataViewport : Control {
 
         #region DependencyProperties
 
@@ -17,7 +17,10 @@ namespace SLAM.Views.CustomControls {
             set { SetValue(DataProperty, value); }
         }
 
-        static MathDataViewport() {            
+        static MathDataViewport() {
+
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(MathDataViewport), new FrameworkPropertyMetadata(typeof(MathDataViewport)));
 
             var dataPropertyMetadata = new FrameworkPropertyMetadata();
             dataPropertyMetadata.DefaultValue = null;
@@ -28,29 +31,40 @@ namespace SLAM.Views.CustomControls {
             DataProperty =
                 DependencyProperty.Register(
                     "Data", typeof(Point[]), typeof(MathDataViewport), dataPropertyMetadata);
+        }
 
-            // DefaultStyleKeyProperty.OverrideMetadata(typeof(MathDataViewport), dataPropertyMetadata);
+        private static void OnDataPropertyChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e) {
+            var viewport = sender as MathDataViewport;
+            viewport.Data = (Point[])e.NewValue;
         }
 
         #endregion
 
         #region TemplateParts
 
-        private const string ViewportSurfaceControlName = "PART_ViewportSurfaceSource";
-        private ImageSource  viewportSurfaceControl;
+        private const string ViewportSurfaceName = "PART_ViewportSurface";
+        private Image viewportSurface;
+
+        #endregion
+
+        #region InnerData
+
+        MathDataViewportRenderer renderer;
 
         #endregion
 
         public override void OnApplyTemplate() {
-            viewportSurfaceControl = GetTemplateChild(ViewportSurfaceControlName) as ImageSource;
-        }
-
-        private static void OnDataPropertyChangedCallback(DependencyObject dObject, DependencyPropertyChangedEventArgs e) {
-            throw new NotImplementedException();
+            renderer = new MathDataViewportRenderer();
+            viewportSurface = GetTemplateChild(ViewportSurfaceName) as Image;
+            if (viewportSurface != null) {
+                viewportSurface.Width = 640.0;
+                viewportSurface.Height = 480.0;
+                OnRender(null);
+            }
         }
 
         protected override void OnRender(DrawingContext drawingContext) {
-            // base.OnRender(drawingContext);
-        }
+            viewportSurface.Source = renderer.TmpRenderMethod(Data);
+        }        
     }
 }

@@ -17,8 +17,8 @@ namespace SLAM.ViewModels {
 
         private Model model;
 
-        private WriteableBitmap mapViewportData;
-        private WriteableBitmap topDepthViewportData;
+        private Point[] mapViewportData;
+        private Point[] topDepthViewportData;
         private WriteableBitmap frontDepthViewportData;
 
         private string modelCurrentState;
@@ -39,13 +39,13 @@ namespace SLAM.ViewModels {
         private ICommand prevFrameCommand;
         private ICommand exitApplicationCommand;
 
-        public ImageSource MapViewportData {
+        public Point[] MapViewportData {
             get { return mapViewportData; }
-            set { Set(ref mapViewportData, (WriteableBitmap)value); }
+            set { Set(ref mapViewportData, value); }
         }
-        public ImageSource TopDepthViewportData {
+        public Point[] TopDepthViewportData {
             get { return topDepthViewportData; }
-            set { Set(ref topDepthViewportData, (WriteableBitmap)value); }
+            set { Set(ref topDepthViewportData, value); }
         }
         public ImageSource FrontDepthViewportData {
             get { return frontDepthViewportData; }
@@ -103,41 +103,21 @@ namespace SLAM.ViewModels {
         }
 
         private void InitializeViewports() {
-            MapViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
-            TopDepthViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
+            MapViewportData = new Point[1];
+            TopDepthViewportData = new Point[1];
             FrontDepthViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
-
         }
 
         private async void UpdateViewports() {            
 
-            if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {                
-
-                NextFrame = new RelayCommand(ExecuteNextFrameCommand, (object o) => { return false; }); // <- tmp
-                PrevFrame = new RelayCommand(ExecutePrevFrameCommand, (object o) => { return false; }); // <- tmp
+            if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit) {
 
                 model.MoveToPosition(CurrentFrame);
-                byte[] mapViewportPixels = await model.GetActualMapFrameAsync();
-                byte[] topDepthViewportPixels = model.GetActualTopDepthFrame();
+                //MapViewportData = await model.GetActualMapFrameAsync();
+                TopDepthViewportData = model.GetActualTopDepthFrame();
+                MapViewportData = TopDepthViewportData; // <- tmp
                 byte[] frontViewportPixels = model.GetActualFrontDepthFrame();
 
-                if (model.MapActualWidth > 0 && model.MapActualHeight > 0) {
-                    MapViewportData
-                        = new WriteableBitmap(
-                            model.MapActualWidth,
-                            model.MapActualHeight, 96.0, 96.0, PixelFormats.Bgr32, null); // <- tmp
-                }
-
-                if (mapViewportPixels != null) {
-                    mapViewportData.WritePixels(
-                        new Int32Rect(0, 0, model.MapActualWidth, model.MapActualHeight),
-                        mapViewportPixels, mapViewportData.PixelWidth * sizeof(int), 0);
-                }
-                if (topDepthViewportPixels != null) {
-                    topDepthViewportData.WritePixels(
-                        new Int32Rect(0, 0, 640, 480),
-                        topDepthViewportPixels, topDepthViewportData.PixelWidth * sizeof(int), 0);
-                }
                 if (frontViewportPixels != null) {
                     frontDepthViewportData.WritePixels(
                         new Int32Rect(0, 0, 640, 480),
