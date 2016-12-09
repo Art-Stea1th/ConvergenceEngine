@@ -13,9 +13,8 @@ namespace SLAM.Models.Data.Readers {
         public FrameSequenceInfo FrameInfo { get; protected set; }
         public int TotalFrames { get; protected set; }
         public int FrameIndex  { get; protected set; }
-        
-        protected byte[] rawFrameBuffer;
 
+        protected byte[] rawFrameBuffer;
         protected IDataAdapter adapter;
 
         internal abstract bool Start(string param = null);

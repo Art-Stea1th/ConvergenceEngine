@@ -67,10 +67,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\BoolInverseConverter.cs" />
-    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converters\IntToBoolConverter.cs" />
-    <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

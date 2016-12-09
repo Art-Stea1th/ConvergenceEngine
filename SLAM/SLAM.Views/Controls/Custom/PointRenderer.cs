@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace SLAM.Views.CustomControls {
+namespace SLAM.Views.Controls.Custom {
 
-    internal sealed class MathDataViewportRenderer {
+    internal sealed class PointRenderer {
 
         internal ImageSource TmpRenderMethod(Point[] points) {
 

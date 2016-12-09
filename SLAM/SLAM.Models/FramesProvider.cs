@@ -8,7 +8,7 @@ namespace SLAM.Models {
     using Data.Readers;
     using Map;
 
-    internal sealed class FramesConverter {
+    internal sealed class FramesProvider {
 
         private DataProvider dataProvider;
         private BaseMapper mapper;
@@ -21,7 +21,7 @@ namespace SLAM.Models {
 
         private byte[] frontDepthFrameBuffer;
 
-        public FramesConverter(BaseMapper mapper) {
+        public FramesProvider(BaseMapper mapper) {
             this.mapper = mapper;
             dataProvider = mapper.DataProvider;
             thisInitialized = false;

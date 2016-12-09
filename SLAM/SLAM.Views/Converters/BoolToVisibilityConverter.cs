@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace SLAM.ViewModels.Converters {
+namespace SLAM.Views.Converters {
 
     public class BoolToVisibilityConverter : IValueConverter {
 

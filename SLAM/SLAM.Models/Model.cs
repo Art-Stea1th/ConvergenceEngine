@@ -18,7 +18,7 @@ namespace SLAM.Models {
         private BaseWriter   writer;
         private BaseMapper   mapper;
 
-        private FramesConverter framesConverter;
+        private FramesProvider framesProvider;
 
         public string CurrentState { get; private set; } = "Ready";
         public bool Ready { get; private set; } = true;
@@ -44,7 +44,7 @@ namespace SLAM.Models {
 
         private void Initialize() {
             mapper = new MatrixBasedMapper(reader);
-            framesConverter = new FramesConverter(mapper);
+            framesProvider = new FramesProvider(mapper);
         }
 
         private void ChangeState(string newModelState, bool lockModel = false) {
@@ -76,13 +76,13 @@ namespace SLAM.Models {
         }
 
         public Point[] GetActualMapFrame() {
-            return framesConverter.GetActualMapFrame();
+            return framesProvider.GetActualMapFrame();
         }
 
         public Task<Point[]> GetActualMapFrameAsync() {
             Task<Point[]> getActualMapFrame = new Task<Point[]>(() => {
                 ChangeState("Calculate Map", true);
-                Point[] result = framesConverter.GetActualMapFrame();
+                Point[] result = framesProvider.GetActualMapFrame();
                 ChangeState("Ready");
                 return result;                
             });
@@ -91,11 +91,11 @@ namespace SLAM.Models {
         }
 
         public Point[] GetActualTopDepthFrame() {
-            return framesConverter.GetActualTopDepthFrame();
+            return framesProvider.GetActualTopDepthFrame();
         }
 
         public byte[] GetActualFrontDepthFrame() {
-            return framesConverter.GetActualFrontDepthFrame();
+            return framesProvider.GetActualFrontDepthFrame();
         }
 
         public void Dispose() {
