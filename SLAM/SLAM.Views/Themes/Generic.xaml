@@ -11,26 +11,82 @@
         <Setter Property="VerticalAlignment" Value="Stretch"/>        
     </Style>
 
+    <Style x:Key="AxisValuesStyle" TargetType="{x:Type Label}">
+        <Setter Property="Background" Value="{Binding ElementName=PART_SurfaceContainer, Path=Background}"/>
+        <Setter Property="MinWidth" Value="36"/>
+    </Style>
+
     <Style TargetType="{x:Type local:MathDataViewport}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:MathDataViewport}">
                     <Border
+                        x:Name="PART_SurfaceContainer"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         SnapsToDevicePixels="True">
-                        <Grid>
+                        <Grid
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
                             <Viewbox
+                                Grid.Row="1"
+                                Grid.Column="1"
                                 Stretch="Uniform"
                                 HorizontalAlignment="Center">
                                 <Image
                                     x:Name="PART_ViewportSurface"/>
                             </Viewbox>
+
                             <Path
+                                Grid.Row="1"
+                                Grid.Column="1"
                                 Style="{StaticResource AxisStyle}"
                                 x:Name="PART_Axis"
                                 Data="M-1,0 L1,0 M0,1 L0,-1"/>
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Style="{StaticResource AxisValuesStyle}"
+                                x:Name="PART_XPositive"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Center"/>
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Style="{StaticResource AxisValuesStyle}"
+                                x:Name="PART_XNegative"
+                                HorizontalContentAlignment="Right"
+                                VerticalContentAlignment="Center"/>
+
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Style="{StaticResource AxisValuesStyle}"
+                                x:Name="PART_YPositive"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Bottom"/>
+                            
+                            <Label
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Style="{StaticResource AxisValuesStyle}"
+                                x:Name="PART_YNegative"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Top"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>

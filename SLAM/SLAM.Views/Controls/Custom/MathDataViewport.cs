@@ -12,9 +12,14 @@ namespace SLAM.Views.Controls.Custom {
 
         private const string ViewportSurfaceName = "PART_ViewportSurface";
         private const string XAxisName = "PART_Axis";
+        private const string XPositiveLabelName = "PART_XPositive";
+        private const string XNegativeLabelName = "PART_XNegative";
+        private const string YPositiveLabelName = "PART_YPositive";
+        private const string YNegativeLabelName = "PART_YNegative";
 
         private Image viewportSurface;
         private Path axis;
+        private Label xPositive, xNegative, yPositive, yNegative;
 
         #endregion
 
@@ -115,16 +120,58 @@ namespace SLAM.Views.Controls.Custom {
             renderer = new PointRenderer();
             viewportSurface = GetTemplateChild(ViewportSurfaceName) as Image;
             axis = GetTemplateChild(XAxisName) as Path;
+            xPositive = GetTemplateChild(XPositiveLabelName) as Label;
+            xNegative = GetTemplateChild(XNegativeLabelName) as Label;
+            yPositive = GetTemplateChild(YPositiveLabelName) as Label;
+            yNegative = GetTemplateChild(YNegativeLabelName) as Label;
             OnRender(null);
         }
 
         protected override void OnRender(DrawingContext drawingContext) {
+            UpdateViewportSurface();
+            UpdateAxis();
+            UpdateAxisLabels();
+        }
+
+        private void UpdateViewportSurface() {
             viewportSurface.Width = Proportions.X;
             viewportSurface.Height = Proportions.Y;
             viewportSurface.Source = renderer.Render(Data, DataColor);
+        }
 
-            axis.Visibility = AxisVisible ? Visibility.Visible : Visibility.Collapsed;
-            axis.Stroke = new SolidColorBrush(AxisColor);
-        }        
+        private void UpdateAxis() {
+
+            if (AxisVisible) {                
+                axis.Stroke = new SolidColorBrush(AxisColor);
+                axis.Visibility = Visibility.Visible;
+                return;
+            }
+            axis.Visibility = Visibility.Collapsed;
+        }
+
+        private void UpdateAxisLabels() {
+            if (AxisVisible) {
+
+                xPositive.Foreground = new SolidColorBrush(DataColor);
+                xNegative.Foreground = new SolidColorBrush(DataColor);
+                yPositive.Foreground = new SolidColorBrush(DataColor);
+                yNegative.Foreground = new SolidColorBrush(DataColor);
+
+                xPositive.Content = (int)renderer.MaxX;
+                xNegative.Content = (int)renderer.MinX;
+                yPositive.Content = (int)renderer.MaxY;
+                yNegative.Content = (int)renderer.MinY;
+
+                xPositive.Visibility = Visibility.Visible;
+                xNegative.Visibility = Visibility.Visible;
+                yPositive.Visibility = Visibility.Visible;
+                yNegative.Visibility = Visibility.Visible;
+                return;
+            }
+            xPositive.Visibility = Visibility.Collapsed;
+            xNegative.Visibility = Visibility.Collapsed;
+            yPositive.Visibility = Visibility.Collapsed;
+            yNegative.Visibility = Visibility.Collapsed;
+        }
     }
 }

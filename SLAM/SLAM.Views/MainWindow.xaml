@@ -78,7 +78,7 @@
                     <Setter Property="SnapsToDevicePixels" Value="True"/>
                 </Style>
                 <Style TargetType="{x:Type cc:MathDataViewport}">
-                    <Setter Property="Background" Value="#0F0F0F"/>
+                    <Setter Property="Background" Value="#0A0A0A"/>
                     <Setter Property="Proportions" Value="4, 3"/>
                     <Setter Property="DataColor" Value="Red"/>
                     <Setter Property="AxisColor" Value="#3F3F3F"/>
