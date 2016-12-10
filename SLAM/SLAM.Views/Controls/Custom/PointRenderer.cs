@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -8,6 +9,7 @@ namespace SLAM.Views.Controls.Custom {
     internal sealed class PointRenderer {
 
         private Point min, max;
+        private int width, height;
 
         internal double MinX { get { return min.X; } }
         internal double MinY { get { return min.Y; } }
@@ -28,41 +30,36 @@ namespace SLAM.Views.Controls.Custom {
 
         private void UpdateLimits(Point[] points) {
 
-            min = new Point(points[0].X, points[0].Y);
-            max = new Point(points[0].X, points[0].Y);
+            max = new Point(0, 0);
 
             foreach (var point in points) {
+                double
+                    x = Math.Abs(point.X),
+                    y = Math.Abs(point.Y);
 
-                if (point.X > max.X) { max.X = point.X; }
-                else
-                if (point.X < min.X) { min.X = point.X; }
-
-                if (point.Y > max.Y) { max.Y = point.Y; }
-                else
-                if (point.Y < min.Y) { min.Y = point.Y; }
+                if (x > max.X) { max.X = x; }
+                if (y > max.Y) { max.Y = y; }
             }
-            OffsetX = -min.X;
-            OffsetY = -min.Y;
+
+            min = new Point(-max.X, -max.Y);
+
+            OffsetX = max.X + 1;
+            OffsetY = max.Y + 1;
+
+            width  = ((int)OffsetX) * 2 + 1;
+            height = ((int)OffsetY) * 2 + 1;
         }
 
         private ImageSource CreateBitmap(Point[] points, Color color) {
 
-            Point localMin = min, localMax = max;
-
-            localMin.Offset(OffsetX, OffsetY);
-            localMax.Offset(OffsetX, OffsetY);
-
-            if (localMax.X < 1 || localMax.Y < 1) { return null; }
-
-            int width = (int)localMax.X + 1;
-            int height = (int)localMax.Y + 1;
+            if (max.X < 1 || max.Y < 1) { return null; }            
 
             WriteableBitmap result = new WriteableBitmap(width, height, 96.0, 96.0, PixelFormats.Bgr32, null);
             byte[] fullFrameBuffer = new byte[width * height * sizeof(int)];
 
             foreach (var point in points) {
                 point.Offset(OffsetX, OffsetY);
-                int index = GetLinearIndex((int)point.X, (int)point.Y, width);
+                int index = GetLinearIndex((int)point.X, height - ((int)point.Y), width);
                 SetColorToViewportByteArray(fullFrameBuffer, index * sizeof(int), color);
             }
 

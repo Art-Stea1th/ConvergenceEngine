@@ -78,10 +78,10 @@
                     <Setter Property="SnapsToDevicePixels" Value="True"/>
                 </Style>
                 <Style TargetType="{x:Type cc:MathDataViewport}">
-                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Background" Value="#0F0F0F"/>
                     <Setter Property="Proportions" Value="4, 3"/>
                     <Setter Property="DataColor" Value="Red"/>
-                    <Setter Property="AxisColor" Value="DimGray"/>
+                    <Setter Property="AxisColor" Value="#3F3F3F"/>
                     <!--<Setter Property="AxisVisible" Value="False"/>-->
                 </Style>
             </Grid.Resources>
@@ -89,8 +89,8 @@
             <cc:MathDataViewport
                 Grid.Column="0"
                 Grid.Row="0"
-                Margin="0,0,2,0"
                 Grid.RowSpan="2"
+                Margin="0,0,2,0"                
                 Data="{Binding MapViewportData}"/>
 
             <cc:MathDataViewport

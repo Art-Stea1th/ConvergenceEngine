@@ -54,10 +54,8 @@ namespace SLAM.Models.Data.Adapters {
                 double resultX, resultY, resultZ;
                 PerspectiveToRectangle(x, y, z, out resultX, out resultY, out resultZ);
 
-                // --- Convert to viewport ---
-
-                bufferedPoint.X = resultX + middleLineX;                   // shift right on 1/2 Frame-Width
-                bufferedPoint.Y = DataProvider.FrameInfo.Height - resultY; // shift  down on  1  Frame-Height and flip vertical
+                bufferedPoint.X = resultX;
+                bufferedPoint.Y = resultY;
 
                 yield return bufferedPoint;
             }
