@@ -80,6 +80,9 @@
                 <Style TargetType="{x:Type cc:MathDataViewport}">
                     <Setter Property="Background" Value="Black"/>
                     <Setter Property="Proportions" Value="4, 3"/>
+                    <Setter Property="DataColor" Value="Red"/>
+                    <Setter Property="AxisColor" Value="DimGray"/>
+                    <!--<Setter Property="AxisVisible" Value="False"/>-->
                 </Style>
             </Grid.Resources>
 

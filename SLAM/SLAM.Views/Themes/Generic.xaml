@@ -3,6 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:SLAM.Views.Controls.Custom">
 
+    <Style x:Key="AxisStyle" TargetType="{x:Type Path}">
+        <Setter Property="Stretch" Value="Fill"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>        
+    </Style>
+
     <Style TargetType="{x:Type local:MathDataViewport}">
         <Setter Property="Template">
             <Setter.Value>
@@ -12,14 +20,21 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         SnapsToDevicePixels="True">
-                        <Viewbox
-                            Stretch="Uniform"
-                            HorizontalAlignment="Center">
-                            <Image x:Name="PART_ViewportSurface"/>
-                        </Viewbox>
-                    </Border>                    
+                        <Grid>
+                            <Viewbox
+                                Stretch="Uniform"
+                                HorizontalAlignment="Center">
+                                <Image
+                                    x:Name="PART_ViewportSurface"/>
+                            </Viewbox>
+                            <Path
+                                Style="{StaticResource AxisStyle}"
+                                x:Name="PART_Axis"
+                                Data="M-1,0 L1,0 M0,1 L0,-1"/>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>    
 </ResourceDictionary>
