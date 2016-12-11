@@ -43,7 +43,20 @@ namespace SLAM.Models.Map {
 
         protected override void NextFrameProceed() {
             DataProvider.GetNextFrameTo(out currFrameBuffer);
+            currFrameBuffer = NormalizeFrame(currFrameBuffer).ToArray();
             AddNextFrameToResultMap();
+        }
+
+        private List<Point> NormalizeFrame(Point[] points) {
+
+            List<Point> result = new List<Point>();
+
+            foreach (var point in points) {
+                if (!PointInSequenceExists(point, result)) {
+                    result.Add(point);
+                }
+            }
+            return result;
         }
 
         private void AddNextFrameToResultMap() {
@@ -85,18 +98,18 @@ namespace SLAM.Models.Map {
                         List<Point> currentDifference = GetDifference(prevFrameBuffer, currFrameBuffer);
                         if (currentDifference.Count < minDefference.Count) {
                             minDefference = currentDifference;
-                            resultX = shiftX; resultY = shiftY; resultAngle = rotateA;
+                            resultX = -shiftX; resultY = -shiftY; resultAngle = -rotateA;
                         }
                     }
                 }
                 if (Math.Abs(a) < aStep) { a = 0.0; } // <- infinity protection
             }
-            Console.WriteLine($"Done! -- x: {resultX}, y: {resultY}, angle: {resultAngle} --");
+            //Console.WriteLine($"Done! -- x: {resultX}, y: {resultY}, angle: {resultAngle} --");
 
-            //if (resultX != 0 && resultY != 0 && resultAngle != 0.0) {
+            if (resultX != 0 && resultY != 0 && resultAngle != 0.0) {
                 Transform(ResultMap, resultX, resultY, resultAngle);
                 MergeDifferenceToMap(minDefference);
-            //}            
+            }            
         }
 
         private void MergeDifferenceToMap(List<Point> difference) {
@@ -152,30 +165,28 @@ namespace SLAM.Models.Map {
 
             List<Point> result = new List<Point>();
 
-            for (int b = 0; b < currBuffer.Length; ++b) {
-                for (int m = 0; m < prevBuffer.Length; ++m) {
-                    if (HitPointInt(currBuffer[b], prevBuffer[m])) {
-                        continue;
-                    }
-                    result.Add(currBuffer[b]);
-                    break;
+            foreach (var point in currBuffer) {
+                if (!PointInSequenceExists(point, prevBuffer)) {
+                    result.Add(point);
                 }
             }
             return result;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool HitPointInt(Point pointA, Point pointB) {
-            return
-                (int)Math.Abs(pointA.X - pointB.X) == 0 &&
-                (int)Math.Abs(pointA.Y - pointB.Y) == 0;
+        private bool PointInSequenceExists(Point point, IEnumerable<Point> sequence) {
+            foreach (var sPoint in sequence) {
+                if (HitPoint(point, sPoint)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool HitPoint(Point pointA, Point pointB) {
             return
-                Math.Abs(pointA.X - pointB.X) < xStep &&
-                Math.Abs(pointA.Y - pointB.Y) < yStep;
+                Math.Abs(pointA.X - pointB.X) < xStep * 2 &&
+                Math.Abs(pointA.Y - pointB.Y) < xStep * 2;
         }
     }
 }
