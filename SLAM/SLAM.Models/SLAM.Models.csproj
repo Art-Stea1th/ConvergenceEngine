@@ -75,7 +75,7 @@
     <Compile Include="Events\ModelUpdatedEvent.cs" />
     <Compile Include="FramesProvider.cs" />
     <Compile Include="Map\BaseMapper.cs" />
-    <Compile Include="Map\MatrixBasedMapper.cs" />
+    <Compile Include="Map\BrutforceMapper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

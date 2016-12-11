@@ -24,8 +24,8 @@ namespace SLAM.Models {
         public bool Ready { get; private set; } = true;
         public int FramesCount { get { return reader.TotalFrames; } }
 
-        public int MapActualWidth { get { return mapper.ActualWidth; } }
-        public int MapActualHeight { get { return mapper.ActualHeight; } }
+        //public int MapActualWidth { get { return mapper.ActualWidth; } }
+        //public int MapActualHeight { get { return mapper.ActualHeight; } }
 
         public Model(ModelUpdatedEvent onModelUpdated) {
             OnModelUpdated += onModelUpdated;
@@ -43,7 +43,7 @@ namespace SLAM.Models {
         }
 
         private void Initialize() {
-            mapper = new MatrixBasedMapper(reader);
+            mapper = new BrutforceMapper(reader);
             framesProvider = new FramesProvider(mapper);
         }
 
@@ -64,6 +64,7 @@ namespace SLAM.Models {
         }
 
         public bool Start(string fileName) {
+            MapperSwitchOffline();
             return (bool)(reader as FileReader)?.Start(fileName);
         }
 
