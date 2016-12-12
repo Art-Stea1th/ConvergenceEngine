@@ -100,6 +100,8 @@ namespace SLAM.ViewModels {
         }
 
         private void InitializeViewports() {
+            MapViewportData = null;
+            TopDepthViewportData = null;
             FrontDepthViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
         }
 

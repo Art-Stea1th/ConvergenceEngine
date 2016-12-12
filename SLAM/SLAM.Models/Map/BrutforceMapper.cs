@@ -20,7 +20,7 @@ namespace SLAM.Models.Map {
         private double aStep, aRange, resultAngle;
 
         public BrutforceMapper(DataProvider dataProvider) : base(dataProvider) {
-            Configure(1.0, 5.0, 90.0, 30.0);
+            Configure(1.0, 5.0, 60.0, 30.0);
         }
 
         private void Configure(double xKmpH, double yKmpH, double degreePerSec, double fps) {
