@@ -27,9 +27,6 @@ namespace SLAM.ViewModels {
         private int totalFramesCount;
         private int currentFrame;
 
-        //private int mapViewportNewX;
-        //private int mapViewpornNewY;
-
         private DateTime lastTimeOfFrameUpdate;
         private TimeSpan frameUpdateLimit;
 
@@ -103,8 +100,6 @@ namespace SLAM.ViewModels {
         }
 
         private void InitializeViewports() {
-            //MapViewportData = new Point[1];
-            //TopDepthViewportData = new Point[1];
             FrontDepthViewportData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
         }
 
@@ -117,7 +112,6 @@ namespace SLAM.ViewModels {
                 model.MoveToPosition(CurrentFrame);
                 MapViewportData = await model.GetActualMapFrameAsync();
                 TopDepthViewportData = model.GetActualTopDepthFrame();
-                //MapViewportData = TopDepthViewportData; // <- tmp
                 byte[] frontViewportPixels = model.GetActualFrontDepthFrame();
 
                 if (frontViewportPixels != null) {
@@ -138,8 +132,6 @@ namespace SLAM.ViewModels {
             ModelCurrentState = model.CurrentState;
             ModelReady = model.Ready;
             TotalFramesCount = model.FramesCount;
-            //mapViewportNewX = model.MapActualWidth;
-            //mapViewpornNewY = model.MapActualHeight;
         }
 
         private void InitializeCommands() {

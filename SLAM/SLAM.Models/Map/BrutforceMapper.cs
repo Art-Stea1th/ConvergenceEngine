@@ -12,7 +12,7 @@ namespace SLAM.Models.Map {
 
         // buffers
         private Point[] prevFrameBuffer; // previous
-        private Point[] currFrameBuffer; // estimated
+        private Point[] currFrameBuffer; // current
 
         // settings X, Y, Angle
         private int xStep, xRange, resultX;
@@ -145,7 +145,7 @@ namespace SLAM.Models.Map {
 
         private void Rotate(Point[] points, double angle) {
             Matrix matrix = new Matrix();
-            matrix.RotateAt(angle, 0.0, 0.0);              // <-- rotate at center (0.0, 0.0) ?!
+            matrix.RotateAt(angle, 0.0, 0.0);
             matrix.Transform(points);
         }
 
