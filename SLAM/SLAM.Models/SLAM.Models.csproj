@@ -76,6 +76,9 @@
     <Compile Include="FramesProvider.cs" />
     <Compile Include="Map\BaseMapper.cs" />
     <Compile Include="Map\BrutforceMapper.cs" />
+    <Compile Include="Map\BrutforceMapperResources\FramesWorker.cs" />
+    <Compile Include="Map\BrutforceMapperResources\GradientDescent.cs" />
+    <Compile Include="Map\BrutforceMapperResources\IntersectionsSeeker.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

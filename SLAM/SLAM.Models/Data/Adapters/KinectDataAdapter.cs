@@ -54,8 +54,8 @@ namespace SLAM.Models.Data.Adapters {
                 double resultX, resultY, resultZ;
                 PerspectiveToRectangle(x, y, z, out resultX, out resultY, out resultZ);
 
-                bufferedPoint.X = resultX;
-                bufferedPoint.Y = resultY;
+                bufferedPoint.X = resultX; // -320 - 319
+                bufferedPoint.Y = resultY; //    0 - 480
 
                 yield return bufferedPoint;
             }
