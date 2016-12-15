@@ -1,12 +1,9 @@
-﻿using System.Windows;
-
+﻿using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace SLAM.Models.Map.BrutforceMapperResources {
 
     internal sealed class VirtualOdometry {
-
-        private Point oldestOffset;
-        private double oldestAngle;
 
         private Point previousOffset;
         private double previousAngle;
@@ -28,34 +25,30 @@ namespace SLAM.Models.Map.BrutforceMapperResources {
             CalculateExpectedMove();
         }
 
-        public void SetLastMove(double lastX, double lastY, double lastAngle) {
+        public void SetLastMove(double lastOffsetX, double lastOffsetY, double lastAngle) {
             ShiftInternalData();
-            currentOffset.X = lastX;
-            currentOffset.Y = lastY;
+            currentOffset.X = lastOffsetX;
+            currentOffset.Y = lastOffsetY;
             currentAngle = lastAngle;
             CalculateExpectedMove();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ShiftInternalData() {
-            oldestOffset = previousOffset;
-            oldestAngle = previousAngle;
             previousOffset = currentOffset;
             previousAngle = currentAngle;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void CalculateExpectedMove() {
-            var firstOffsetDiff = previousOffset - oldestOffset;
-            var firstAngleDiff = previousAngle - oldestAngle;
-            var secondOffsetDiff = currentOffset - previousOffset;
-            var secondAngleDiff = currentAngle - previousAngle;
 
-            var accelerationPercentX = firstOffsetDiff.X == 0.0 ? 100.0 : (secondOffsetDiff.X / firstOffsetDiff.X) * 100.0;
-            var accelerationPercentY = firstOffsetDiff.Y == 0.0 ? 100.0 : (secondOffsetDiff.Y / firstOffsetDiff.Y) * 100.0;
-            var accelerationPercentA = firstAngleDiff == 0.0 ? 100.0 : (secondAngleDiff / firstAngleDiff) * 100.0;
+            var accelerationFactorX = previousOffset.X == 0.0 ? 1.0 : (currentOffset.X / previousOffset.X);
+            var accelerationFactorY = previousOffset.Y == 0.0 ? 1.0 : (currentOffset.Y / previousOffset.Y);
+            var accelerationFactorA = previousAngle == 0.0 ? 1.0 : (currentAngle / previousAngle);
 
-            expectedOffset.X = currentOffset.X * 0.01 * accelerationPercentX;
-            expectedOffset.Y = currentOffset.Y * 0.01 * accelerationPercentY;
-            expectedAngle = currentAngle * 0.01 * accelerationPercentA;
+            expectedOffset.X = currentOffset.X * accelerationFactorX;
+            expectedOffset.Y = currentOffset.Y * accelerationFactorY;
+            expectedAngle = currentAngle * accelerationFactorA;
         }
     }
 }
