@@ -6,26 +6,30 @@ namespace SLAM.Models.Map.BrutforceMapperResources {
     internal sealed class VirtualOdometry {
 
         private Point previousOffset;
-        private double previousAngle;
+        private float previousAngle;
 
         private Point currentOffset;
-        private double currentAngle;
+        private float currentAngle;
 
         private Point expectedOffset;
-        private double expectedAngle;        
+        private float expectedAngle;        
 
-        public double ExpectedX { get { return expectedOffset.X; } }
-        public double ExpectedY { get { return expectedOffset.Y; } }
-        public double ExpectedA { get { return expectedAngle; } }
+        public float ExpectedX { get { return (float)expectedOffset.X; } }
+        public float ExpectedY { get { return (float)expectedOffset.Y; } }
+        public float ExpectedA { get { return expectedAngle; } }
 
-        public void SetLastMove(Point lastOffset, double lastAngle) {
+        public bool Zero() {
+            return expectedOffset.X == 0.0f && expectedOffset.Y == 0.0f && expectedAngle == 0.0f;
+        }
+
+        public void SetLastMove(Point lastOffset, float lastAngle) {
             ShiftInternalData();
             currentOffset = lastOffset;
             currentAngle = lastAngle;
             CalculateExpectedMove();
         }
 
-        public void SetLastMove(double lastOffsetX, double lastOffsetY, double lastAngle) {
+        public void SetLastMove(float lastOffsetX, float lastOffsetY, float lastAngle) {
             ShiftInternalData();
             currentOffset.X = lastOffsetX;
             currentOffset.Y = lastOffsetY;
@@ -48,7 +52,7 @@ namespace SLAM.Models.Map.BrutforceMapperResources {
 
             expectedOffset.X = currentOffset.X * accelerationFactorX;
             expectedOffset.Y = currentOffset.Y * accelerationFactorY;
-            expectedAngle = currentAngle * accelerationFactorA;
+            expectedAngle = (float)(currentAngle * accelerationFactorA);
         }
     }
 }

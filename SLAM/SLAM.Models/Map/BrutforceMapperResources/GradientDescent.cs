@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,24 +11,25 @@ namespace SLAM.Models.Map.BrutforceMapperResources {
 
         public enum Direction { Forward, Backward }
 
-        private Direction direction;
+        //private Direction direction;
 
         private int maxIterations;
-        private Func<bool> NeedImproved;
+        //private Func<bool> NeedImproved;
+        //public Func<bool> Improved;
 
-        
+        public void Proceed(Func<bool> NeedImproved, Func<Direction, bool> Improved) {
 
-        public Func<bool> Improved;        
+            Direction direction = Direction.Forward;
 
-        public void Proceed() {
+            while (NeedImproved()) {
 
-            while (true) {
+                if (!Improved(direction)) {
 
-                if (Improved()) {
+                    direction = SwitchedDirection(direction);
 
                 }
                 else {
-                    ChangeDirection();
+                    
                 }
             }
 
@@ -41,12 +43,15 @@ namespace SLAM.Models.Map.BrutforceMapperResources {
             //}
         }
 
-        private void ChangeDirection() {
-            if (direction == Direction.Forward) {
-                direction = Direction.Backward;
-                return;
-            }
-            direction = Direction.Forward;
+        private void MoveNext(Direction direction) {
+            throw new NotImplementedException();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Direction SwitchedDirection(Direction direction) {
+            return direction == Direction.Forward
+                ? Direction.Backward
+                : Direction.Forward;
         }
     }
 }

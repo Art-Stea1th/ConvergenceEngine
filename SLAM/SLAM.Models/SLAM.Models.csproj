@@ -76,9 +76,12 @@
     <Compile Include="FramesProvider.cs" />
     <Compile Include="Map\BaseMapper.cs" />
     <Compile Include="Map\BrutforceMapper.cs" />
-    <Compile Include="Map\BrutforceMapperResources\FramesWorker.cs" />
+    <Compile Include="Map\BrutforceMapperOld.cs" />
+    <Compile Include="Map\BrutforceMapperResources\AngleCalculator.cs" />
+    <Compile Include="Map\BrutforceMapperResources\PointsProcessor.cs" />
     <Compile Include="Map\BrutforceMapperResources\GradientDescent.cs" />
     <Compile Include="Map\BrutforceMapperResources\IntersectionsSeeker.cs" />
+    <Compile Include="Map\BrutforceMapperResources\VirtualOdometry.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
