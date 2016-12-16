@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace SLAM.Models.Map.BrutforceMapperResources {
 
-    internal sealed class AngleCalculator {
+    internal sealed class AnglesCalculator {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double AlphaAngle(double a, double b, double c) {

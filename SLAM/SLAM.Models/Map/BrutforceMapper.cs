@@ -1,110 +1,188 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
-
+using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace SLAM.Models.Map {
-
+    using BrutforceMapperResources;
     using Data.Readers;
-    using BrutforceMapperResources;    
+    using System.Runtime.CompilerServices;
+    using System.Windows.Media.Media3D;
 
     internal sealed class BrutforceMapper : BaseMapper {
 
-        private Point[] prevFrame; // previous
-        private Point[] currFrame; // current
+        // buffers
+        private Point[] prevFrameBuffer; // previous
+        private Point[] currFrameBuffer; // current
 
-        private VirtualOdometry odometry;
-        private AngleCalculator angleCalc;
-        private PointsProcessor pointsProc;
+        // settings X, Y, Angle
+        private float xStep, xRange, resultX;
+        private float yStep, yRange, resultY;
+        private float aStep, aRange, resultAngle;
 
         public BrutforceMapper(DataProvider dataProvider) : base(dataProvider) {
-            odometry = new VirtualOdometry();
-            angleCalc = new AngleCalculator();
-            pointsProc = new PointsProcessor();
+            Configure(1.0f, 5.0f, 90.0f, 30.0f);
+        }
+
+        private void Configure(float xKmpH, float yKmpH, float degreePerSec, float fps) {
+
+            xRange = PixelPerFrameBySpeed(xKmpH, fps) * 2;
+            yRange = PixelPerFrameBySpeed(yKmpH, fps) * 2;
+            aRange = (degreePerSec / fps) * 2;
+
+            xStep = 1.0f;
+            yStep = 1.0f;
+            aStep = 0.25f;
+        }
+
+        private float PixelPerFrameBySpeed(float speedKmH, float fps) {
+            float mPerH = speedKmH * 1000.0f;
+            float cmPerH = mPerH * 100.0f;
+            float cmPerMin = cmPerH / 60.0f;
+            float cmPerSec = cmPerMin / 60.0f;
+            float cmPerFrame = cmPerSec / fps;
+            return (float)Math.Round(cmPerFrame); // 1 cm = 1 pixel
         }
 
         protected override void NextFrameProceed() {
-            DataProvider.GetNextFrameTo(out currFrame);
-            currFrame = pointsProc.NormalizedFrame(currFrame, 2.0f, 2.0f).ToArray();            
+            DataProvider.GetNextFrameTo(out currFrameBuffer);
+            currFrameBuffer = NormalizeFrame(currFrameBuffer).ToArray();
             AddNextFrameToResultMap();
         }
 
+        private List<Point> NormalizeFrame(Point[] points) {
+
+            List<Point> result = new List<Point>();
+
+            foreach (var point in points) {
+                if (!PointInSequenceExists(result, point, 2.0f, 2.0f)) {
+                    result.Add(point);
+                }
+            }
+            return result;
+        }
+
         private void AddNextFrameToResultMap() {
-            if (prevFrame == null || ResultMap == null) {
+            if (prevFrameBuffer == null || ResultMap == null) {
 
-                prevFrame = new Point[currFrame.Length];
-                Array.Copy(currFrame, prevFrame, currFrame.Length);
+                prevFrameBuffer = new Point[currFrameBuffer.Length];
+                Array.Copy(currFrameBuffer, prevFrameBuffer, currFrameBuffer.Length);
 
-                ResultMap = new Point[currFrame.Length];
-                Array.Copy(currFrame, ResultMap, currFrame.Length);
+                ResultMap = new Point[currFrameBuffer.Length];
+                Array.Copy(currFrameBuffer, ResultMap, currFrameBuffer.Length);
                 return;
             }
-            BrutforceNextMoving();
-            prevFrame = currFrame;
+            BrutforceNextMoving();            
+            prevFrameBuffer = currFrameBuffer;
         }
 
         private void BrutforceNextMoving() {
 
-            float XYlimit = 1.0f;
+            List<Point> minDefference = new List<Point>(currFrameBuffer);
 
-            List<Point> minDifference = pointsProc.GetDifference(prevFrame, currFrame, XYlimit, XYlimit);
+            float rotateA = 0.0f;
+            float shiftX = 0.0f, shiftY = 0.0f;
 
-            float expX = 0.0f, expY = 0.0f, expA = 0.0f;
+            for (float a = aRange + aStep; a != 0.0; a = Bounce(a, aStep)) {
+                /// rotate ex.  +3.0, -6.0, +5.5 -5.0, +4.5, -4.0, +3.5, -3.0, +2.5, -2.0, +1.5, -1.0, +0.5 ...                
+                Rotate(currFrameBuffer, a <= aRange ? a : aRange / 2);
+                rotateA += a <= aRange ? a : aRange / 2;
 
-            // Approximate by Odometry
+                for (float y = yRange + yStep; y != 0; y = Bounce(y, yStep)) {
+                    /// shift-y ex.  +5, -10, +9, -8, +7, -6, +5, -4, +3, -2, +1 ...
+                    ShiftY(currFrameBuffer, y <= yRange ? y : yRange / 2);
+                    shiftY += y <= yRange ? y : yRange / 2;
 
-            if (!odometry.Zero()) {
+                    for (float x = xRange + xStep; x != 0; x = Bounce(x, xStep)) {
+                        /// shift-x ex.  +1 -2 +1 ...
+                        ShiftX(currFrameBuffer, x <= xRange ? x : xRange / 2);
+                        shiftX += x <= xRange ? x : xRange / 2;
 
-                float odoX = odometry.ExpectedX;
-                float odoY = odometry.ExpectedY;
-                float odoA = odometry.ExpectedA;
-
-                pointsProc.Transform(prevFrame, odoX, odoY, odoA);
-
-                List<Point> odoDifference = pointsProc.GetDifference(prevFrame, currFrame, XYlimit, XYlimit);
-                if (odoDifference.Count < minDifference.Count) {
-                    minDifference = odoDifference;
-                    expX += odoX; expY += odoY; expA += odoA;
+                        List<Point> currentDifference = GetDifference(prevFrameBuffer, currFrameBuffer, xStep, yStep);
+                        if (currentDifference.Count < minDefference.Count) {
+                            minDefference = currentDifference;
+                            resultX = -shiftX; resultY = -shiftY; resultAngle = -rotateA;
+                        }
+                    }
                 }
-                else {
-                    pointsProc.Transform(prevFrame, -expX, -expY, -expA);
-                }
-                //Console.WriteLine($"Odometry\t-- x: {expX}, y: {expY}, angle: {expA} --");
             }
+            //Console.WriteLine($"Done! -- x: {resultX}, y: {resultY}, angle: {resultAngle} --");
 
-            // Approximate by Nearest Points
+            if (resultX != 0 && resultY != 0 && resultAngle != 0.0) {
+                Transform(ResultMap, resultX, resultY, resultAngle);
+                MergeDifferenceToMap(minDefference);
+            }            
+        }
 
-            int prevNPIndex, currNPIndex;
-            if (pointsProc.FindNearestPoints(prevFrame, currFrame, out prevNPIndex, out currNPIndex, 2.0f)) {
+        private void MergeDifferenceToMap(List<Point> difference) {
 
-                float npX = (float)(currFrame[currNPIndex].X - prevFrame[prevNPIndex].X);
-                float npY = (float)(currFrame[currNPIndex].Y - prevFrame[prevNPIndex].Y);
+            List<Point> result = new List<Point>(ResultMap);
 
-                pointsProc.ShiftXY(prevFrame, npX, npY);
-
-                List<Point> npDifference = pointsProc.GetDifference(prevFrame, currFrame, XYlimit, XYlimit);
-
-                if (npDifference.Count < minDifference.Count) {
-                    minDifference = npDifference;
-                    expX += npX; expY += npY;
-                }
-                else {
-                    pointsProc.ShiftXY(prevFrame, -npX, -npY);
-                }
-                //Console.WriteLine($"Nearest\t-- x: {expX}, y: {expY}, angle: {expA} --");
+            foreach (var point in difference) {
+                result.Add(point);
             }
+            ResultMap = result.ToArray();
+        }
 
-            // Approximate by Calculated Angle
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private float Bounce(float value, float step) {
+            float result = value <= 0.0f
+                ? value + (-value * 2.0f - step)
+                : value - (value * 2.0f - step);
+            return Math.Abs(result) < step ? 0.0f : (float)Math.Round(result, 1);
+        }
 
+        private void Transform(Point[] points, float x, float y, float angle) {
+            Matrix matrix = new Matrix();
+            matrix.Rotate(angle);
+            //matrix.Translate(x, y);
+            matrix.Transform(points);
+        }
 
+        private void Rotate(Point[] points, float angle) {
+            Matrix matrix = new Matrix();
+            matrix.Rotate(angle);
+            matrix.Transform(points);
+        }
 
-            // Apply final Result
+        private void ShiftX(Point[] points, float x) {
+            Matrix matrix = new Matrix();
+            matrix.Translate(x, 0.0);
+            matrix.Transform(points);
+        }
 
-            pointsProc.Transform(ResultMap, expX, expY, expA);
-            ResultMap = pointsProc.MergePoints(minDifference, ResultMap).ToArray();
+        private void ShiftY(Point[] points, float y) {
+            Matrix matrix = new Matrix();
+            matrix.Translate(0.0, y);
+            matrix.Transform(points);
+        }
 
-            odometry.SetLastMove(expX, expY, expA);            
-            //ResultMap = minDifference.ToArray();
+        private List<Point> GetDifference(Point[] prevBuffer, Point[] currBuffer, float Xlimit, float Ylimit) {
+
+            List<Point> result = new List<Point>();
+
+            foreach (var point in currBuffer) {
+                if (!PointInSequenceExists(prevBuffer, point, Xlimit, Ylimit)) {
+                    result.Add(point);
+                }
+            }
+            return result;
+        }
+
+        private bool PointInSequenceExists(IEnumerable<Point> sequence, Point point, float Xlimit, float Ylimit) {
+            foreach (var sPoint in sequence) {
+                if (HitPoint(point, sPoint, Xlimit, Ylimit)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool HitPoint(Point pointA, Point pointB, float Xlimit, float Ylimit) {
+            return
+                Math.Abs(pointA.X - pointB.X) < Xlimit &&
+                Math.Abs(pointA.Y - pointB.Y) < Ylimit;
         }
     }
 }

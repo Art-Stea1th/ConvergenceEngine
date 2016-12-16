@@ -78,7 +78,7 @@ namespace SLAM.Models.Data.Adapters {
 
             z *= 0.1; double factor = (0.003501 * 0.5) * z;
 
-            resultX = (x - 320) * factor;
+            resultX = (x - 320.0) * factor;
             resultY = z;
             resultZ = y * factor;
         }

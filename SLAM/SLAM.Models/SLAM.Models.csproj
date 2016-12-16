@@ -75,10 +75,11 @@
     <Compile Include="Events\ModelUpdatedEvent.cs" />
     <Compile Include="FramesProvider.cs" />
     <Compile Include="Map\BaseMapper.cs" />
+    <Compile Include="Map\BrutforceMapperResources\LinesBuilder.cs" />
+    <Compile Include="Map\ComplexMapper.cs" />
     <Compile Include="Map\BrutforceMapper.cs" />
-    <Compile Include="Map\BrutforceMapperOld.cs" />
-    <Compile Include="Map\BrutforceMapperResources\AngleCalculator.cs" />
-    <Compile Include="Map\BrutforceMapperResources\PointsProcessor.cs" />
+    <Compile Include="Map\BrutforceMapperResources\AnglesCalculator.cs" />
+    <Compile Include="Map\BrutforceMapperResources\PointsTransformer.cs" />
     <Compile Include="Map\BrutforceMapperResources\GradientDescent.cs" />
     <Compile Include="Map\BrutforceMapperResources\IntersectionsSeeker.cs" />
     <Compile Include="Map\BrutforceMapperResources\VirtualOdometry.cs" />

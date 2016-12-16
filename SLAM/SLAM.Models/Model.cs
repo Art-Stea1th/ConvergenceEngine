@@ -40,7 +40,7 @@ namespace SLAM.Models {
         }
 
         private void Initialize() {
-            mapper = new BrutforceMapper(reader);
+            mapper = new ComplexMapper(reader);
             framesProvider = new FramesProvider(mapper);
         }
 

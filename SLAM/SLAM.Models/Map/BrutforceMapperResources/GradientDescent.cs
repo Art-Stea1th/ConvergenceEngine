@@ -11,11 +11,7 @@ namespace SLAM.Models.Map.BrutforceMapperResources {
 
         public enum Direction { Forward, Backward }
 
-        //private Direction direction;
-
         private int maxIterations;
-        //private Func<bool> NeedImproved;
-        //public Func<bool> Improved;
 
         public void Proceed(Func<bool> NeedImproved, Func<Direction, bool> Improved) {
 
@@ -32,15 +28,6 @@ namespace SLAM.Models.Map.BrutforceMapperResources {
                     
                 }
             }
-
-
-            //while (true) { // r
-            //    while (true) { // y
-            //        while (true) { // x
-
-            //        }
-            //    }
-            //}
         }
 
         private void MoveNext(Direction direction) {
