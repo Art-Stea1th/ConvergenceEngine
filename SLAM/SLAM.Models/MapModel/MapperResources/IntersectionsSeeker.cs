@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-namespace SLAM.Models.Map.BrutforceMapperResources {
+namespace SLAM.Models.MapModel.MapperResources {
 
     internal sealed class IntersectionsSeeker {
 

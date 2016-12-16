@@ -1,7 +1,7 @@
 ﻿using System.IO;
 
 
-namespace SLAM.Models.Data {
+namespace SLAM.Models.DataModel {
 
     internal sealed class FrameSequenceInfo {
 

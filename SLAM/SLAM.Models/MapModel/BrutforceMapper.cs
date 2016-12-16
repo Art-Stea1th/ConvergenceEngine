@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
 
-namespace SLAM.Models.Map {
-    using BrutforceMapperResources;
-    using Data.Readers;
+namespace SLAM.Models.MapModel {
+    using MapperResources;
+    using DataModel.Readers;
     using System.Runtime.CompilerServices;
     using System.Windows.Media.Media3D;
 

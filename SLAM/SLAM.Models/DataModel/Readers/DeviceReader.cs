@@ -1,7 +1,7 @@
 ﻿using System;
-using SLAM.Models.Data.Adapters;
+using SLAM.Models.DataModel.Adapters;
 
-namespace SLAM.Models.Data.Readers {
+namespace SLAM.Models.DataModel.Readers {
 
     internal abstract class DeviceReader : DataProvider, IDisposable {
 

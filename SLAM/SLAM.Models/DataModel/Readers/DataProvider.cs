@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace SLAM.Models.Data.Readers {
+namespace SLAM.Models.DataModel.Readers {
 
     using Adapters;
     using Events;

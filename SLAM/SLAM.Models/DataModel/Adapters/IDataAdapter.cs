@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 
 
-namespace SLAM.Models.Data.Adapters {
+namespace SLAM.Models.DataModel.Adapters {
 
     using Readers;
 

@@ -5,8 +5,8 @@ using System.Windows.Media;
 
 namespace SLAM.Models {
 
-    using Data.Readers;
-    using Map;
+    using DataModel.Readers;
+    using MapModel;
 
     internal sealed class FramesProvider {
 

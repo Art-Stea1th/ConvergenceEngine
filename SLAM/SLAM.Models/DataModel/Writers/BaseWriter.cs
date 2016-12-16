@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace SLAM.Models.Data.Writers {
+namespace SLAM.Models.DataModel.Writers {
 
     internal abstract class BaseWriter : IDisposable {
 

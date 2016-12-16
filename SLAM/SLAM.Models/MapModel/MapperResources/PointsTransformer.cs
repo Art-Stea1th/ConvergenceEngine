@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace SLAM.Models.Map.BrutforceMapperResources {
+namespace SLAM.Models.MapModel.MapperResources {
 
     internal sealed class PointsTransformer {               
 

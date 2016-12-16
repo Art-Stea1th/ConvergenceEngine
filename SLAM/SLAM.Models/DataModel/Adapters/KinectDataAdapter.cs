@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows;
-using SLAM.Models.Data.Readers;
+using SLAM.Models.DataModel.Readers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace SLAM.Models.Data.Adapters {
+namespace SLAM.Models.DataModel.Adapters {
 
     internal sealed class KinectDataAdapter : IDataAdapter {        
 

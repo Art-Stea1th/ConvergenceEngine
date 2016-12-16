@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 
 
-namespace SLAM.Models.Map {
+namespace SLAM.Models.MapModel {
 
-    using Data.Readers;
+    using DataModel.Readers;
 
     internal abstract class BaseMapper {
 

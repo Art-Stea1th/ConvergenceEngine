@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Windows;
 
 
-namespace SLAM.Models.Map {
+namespace SLAM.Models.MapModel {
 
-    using Data.Readers;
-    using BrutforceMapperResources;    
+    using DataModel.Readers;
+    using MapperResources;    
 
     internal sealed class ComplexMapper : BaseMapper {
 

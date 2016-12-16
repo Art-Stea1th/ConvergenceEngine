@@ -62,27 +62,27 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Adapters\IDataAdapter.cs" />
-    <Compile Include="Data\Adapters\KinectDataAdapter.cs" />
-    <Compile Include="Data\Readers\DataProvider.cs" />
-    <Compile Include="Data\FrameSequenceInfo.cs" />
-    <Compile Include="Data\Readers\DeviceReader.cs" />
-    <Compile Include="Data\Readers\FileReader.cs" />
-    <Compile Include="Data\Readers\KinectDeviceReader.cs" />
-    <Compile Include="Data\Readers\KinectFileReader.cs" />
-    <Compile Include="Data\Writers\BaseWriter.cs" />
+    <Compile Include="DataModel\Adapters\IDataAdapter.cs" />
+    <Compile Include="DataModel\Adapters\KinectDataAdapter.cs" />
+    <Compile Include="DataModel\Readers\DataProvider.cs" />
+    <Compile Include="DataModel\FrameSequenceInfo.cs" />
+    <Compile Include="DataModel\Readers\DeviceReader.cs" />
+    <Compile Include="DataModel\Readers\FileReader.cs" />
+    <Compile Include="DataModel\Readers\KinectDeviceReader.cs" />
+    <Compile Include="DataModel\Readers\KinectFileReader.cs" />
+    <Compile Include="DataModel\Writers\BaseWriter.cs" />
     <Compile Include="Events\NextFrameReadyEvent.cs" />
     <Compile Include="Events\ModelUpdatedEvent.cs" />
     <Compile Include="FramesProvider.cs" />
-    <Compile Include="Map\BaseMapper.cs" />
-    <Compile Include="Map\BrutforceMapperResources\LinesBuilder.cs" />
-    <Compile Include="Map\ComplexMapper.cs" />
-    <Compile Include="Map\BrutforceMapper.cs" />
-    <Compile Include="Map\BrutforceMapperResources\AnglesCalculator.cs" />
-    <Compile Include="Map\BrutforceMapperResources\PointsTransformer.cs" />
-    <Compile Include="Map\BrutforceMapperResources\GradientDescent.cs" />
-    <Compile Include="Map\BrutforceMapperResources\IntersectionsSeeker.cs" />
-    <Compile Include="Map\BrutforceMapperResources\VirtualOdometry.cs" />
+    <Compile Include="MapModel\BaseMapper.cs" />
+    <Compile Include="MapModel\MapperResources\LinesBuilder.cs" />
+    <Compile Include="MapModel\ComplexMapper.cs" />
+    <Compile Include="MapModel\BrutforceMapper.cs" />
+    <Compile Include="MapModel\MapperResources\AnglesCalculator.cs" />
+    <Compile Include="MapModel\MapperResources\PointsTransformer.cs" />
+    <Compile Include="MapModel\MapperResources\GradientDescent.cs" />
+    <Compile Include="MapModel\MapperResources\IntersectionsSeeker.cs" />
+    <Compile Include="MapModel\MapperResources\VirtualOdometry.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
