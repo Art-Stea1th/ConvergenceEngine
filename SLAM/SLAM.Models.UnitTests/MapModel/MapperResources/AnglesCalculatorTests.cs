@@ -8,14 +8,20 @@ namespace SLAM.Models.UnitTests.MapModel.MapperResources {
     [TestFixture]
     public sealed class AnglesCalculatorTests {
 
+        private AnglesCalculator anglesCalculator;
+
+        [SetUp]
+        public void Initialize() {
+            anglesCalculator = new AnglesCalculator();
+        }
+
         [Test]
         [TestCase(3.0, 4.0, 5.0, 36.87)]
         [TestCase(4.0, 5.0, 3.0, 53.13)]
         [TestCase(5.0, 3.0, 4.0, 90.00)]
         public void AlphaAngle_ValidSides_ReturnValidAngle(double sideA, double sideB, double sideC, double expectedAngle) {
-            AnglesCalculator ac = new AnglesCalculator();               // --- Arrange            
-            double resultGamma = ac.AlphaAngle(sideA, sideB, sideC);    // --- Act            
-            Assert.AreEqual(expectedAngle, Math.Round(resultGamma, 2)); // --- Assert
+            double resultAlpha = anglesCalculator.AlphaAngle(sideA, sideB, sideC);
+            Assert.AreEqual(expectedAngle, Math.Round(resultAlpha, 2));
         }
 
         [Test]
@@ -23,9 +29,8 @@ namespace SLAM.Models.UnitTests.MapModel.MapperResources {
         [TestCase(4.0, 3.0, 5.0, 36.87)]
         [TestCase(3.0, 5.0, 4.0, 90.00)]
         public void BetaAngle_ValidSides_ReturnValidAngle(double sideA, double sideB, double sideC, double expectedAngle) {
-            AnglesCalculator ac = new AnglesCalculator();               // --- Arrange            
-            double resultGamma = ac.BetaAngle(sideA, sideB, sideC);     // --- Act            
-            Assert.AreEqual(expectedAngle, Math.Round(resultGamma, 2)); // --- Assert
+            double resultBeta = anglesCalculator.BetaAngle(sideA, sideB, sideC);
+            Assert.AreEqual(expectedAngle, Math.Round(resultBeta, 2));
         }
 
         [Test]
@@ -33,9 +38,8 @@ namespace SLAM.Models.UnitTests.MapModel.MapperResources {
         [TestCase(4.0, 5.0, 3.0, 36.87)]
         [TestCase(5.0, 3.0, 4.0, 53.13)]
         public void GammaAngle_ValidSides_ReturnValidAngle(double sideA, double sideB, double sideC, double expectedAngle) {
-            AnglesCalculator ac = new AnglesCalculator();               // --- Arrange            
-            double resultGamma = ac.GammaAngle(sideA, sideB, sideC);    // --- Act            
-            Assert.AreEqual(expectedAngle, Math.Round(resultGamma, 2)); // --- Assert
+            double resultGamma = anglesCalculator.GammaAngle(sideA, sideB, sideC);
+            Assert.AreEqual(expectedAngle, Math.Round(resultGamma, 2));
         }
     }
 }
