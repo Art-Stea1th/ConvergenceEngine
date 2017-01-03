@@ -2,12 +2,12 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 
 namespace SLAM.Models.MapModel {
-    using MapperResources;
-    using DataModel.Readers;
-    using System.Runtime.CompilerServices;
-    using System.Windows.Media.Media3D;
+
+    using DataModel.Readers;    
 
     internal sealed class BrutforceMapper : BaseMapper {
 

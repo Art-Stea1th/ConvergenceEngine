@@ -82,6 +82,7 @@
     <Compile Include="MapModel\MapperResources\PointsTransformer.cs" />
     <Compile Include="MapModel\MapperResources\GradientDescent.cs" />
     <Compile Include="MapModel\MapperResources\IntersectionsSeeker.cs" />
+    <Compile Include="MapModel\MapperResources\TrigonometricHelper.cs" />
     <Compile Include="MapModel\MapperResources\VirtualOdometry.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

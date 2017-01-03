@@ -40,6 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -52,6 +53,7 @@
   <ItemGroup>
     <Compile Include="MapModel\MapperResources\AnglesCalculatorTests.cs" />
     <Compile Include="MapModel\MapperResources\PointsTransformerTests.cs" />
+    <Compile Include="MapModel\MapperResources\TrigonometricHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
