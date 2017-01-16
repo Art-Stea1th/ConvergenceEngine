@@ -8,6 +8,9 @@ namespace SLAM.Models.MapModel.MapperResources {
     internal sealed class LinesBuilder {
 
         public void BuildLine(IList<Point> points, int startIndex, out int endIndex) {
+
+            throw new NotImplementedException();
+
             endIndex = startIndex;
 
             double errorLimit = 1.0;

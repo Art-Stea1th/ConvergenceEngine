@@ -15,6 +15,8 @@ namespace SLAM.Models.MapModel.MapperResources {
 
         public void Proceed(Func<bool> NeedImproved, Func<Direction, bool> Improved) {
 
+            throw new NotImplementedException();
+
             Direction direction = Direction.Forward;
 
             while (NeedImproved()) {

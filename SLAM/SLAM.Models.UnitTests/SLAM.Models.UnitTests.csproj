@@ -54,6 +54,7 @@
     <Compile Include="MapModel\MapperResources\AnglesCalculatorTests.cs" />
     <Compile Include="MapModel\MapperResources\PointsTransformerTests.cs" />
     <Compile Include="MapModel\MapperResources\TrigonometricHelperTests.cs" />
+    <Compile Include="MapModel\MapperResources\OffsetPredictorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

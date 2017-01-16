@@ -95,7 +95,7 @@ namespace SLAM.Models.UnitTests.MapModel.MapperResources {
             Assert.AreEqual(expected[1].X, points[1].X, 0.00000005);
             Assert.AreEqual(expected[1].Y, points[1].Y, 0.00000005);
         }
-
+        
         [Test]
         [TestCase(-1.0, -1.0, 1.0, 1.0, 1.0)]
         [TestCase(-1.0, -1.0, 1.0, 1.0, -1.0)]

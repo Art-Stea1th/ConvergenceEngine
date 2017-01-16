@@ -32,7 +32,7 @@ namespace SLAM.Models.MapModel {
 
             xStep = 1.0f;
             yStep = 1.0f;
-            aStep = 0.25f;
+            aStep = 0.1f;
         }
 
         private float PixelPerFrameBySpeed(float speedKmH, float fps) {
@@ -146,15 +146,15 @@ namespace SLAM.Models.MapModel {
         }
 
         private void ShiftX(Point[] points, float x) {
-            Matrix matrix = new Matrix();
-            matrix.Translate(x, 0.0);
-            matrix.Transform(points);
+            //Matrix matrix = new Matrix();
+            //matrix.Translate(x, 0.0);
+            //matrix.Transform(points);
         }
 
         private void ShiftY(Point[] points, float y) {
-            Matrix matrix = new Matrix();
-            matrix.Translate(0.0, y);
-            matrix.Transform(points);
+            //Matrix matrix = new Matrix();
+            //matrix.Translate(0.0, y);
+            //matrix.Transform(points);
         }
 
         private List<Point> GetDifference(Point[] prevBuffer, Point[] currBuffer, float Xlimit, float Ylimit) {
