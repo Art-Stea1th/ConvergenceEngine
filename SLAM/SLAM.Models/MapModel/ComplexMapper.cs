@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
-
 
 namespace SLAM.Models.MapModel {
 
     using DataModel.Readers;
-    using MapperResources;    
+    using MapperResources;
 
     internal sealed class ComplexMapper : BaseMapper {
 
@@ -27,7 +25,7 @@ namespace SLAM.Models.MapModel {
 
         protected override void NextFrameProceed() {
             DataProvider.GetNextFrameTo(out currFrame);
-            currFrame = intersectionSeeker.NormalizedFrame(currFrame, 2.0f, 2.0f).ToArray();
+            currFrame = intersectionSeeker.NormalizedFrame(currFrame, 2.0f).ToArray();
             ResultMap = currFrame;
             //AddNextFrameToResultMap();
         }
@@ -48,6 +46,12 @@ namespace SLAM.Models.MapModel {
 
         private void CalculateNextMoving() {
             throw new NotImplementedException();
-        }        
+
+            // step 1: conditionally divided into segments
+            // step 2: approximate segments by Ordinary Least Squares
+            // step 3: real split into segments by threshold angle
+            // step 4: approximate segments by Ordinary Least Squares
+
+        }
     }
 }

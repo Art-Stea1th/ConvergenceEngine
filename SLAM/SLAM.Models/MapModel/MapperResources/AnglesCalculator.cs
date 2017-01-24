@@ -5,17 +5,14 @@ namespace SLAM.Models.MapModel.MapperResources {
 
     internal sealed class AnglesCalculator {
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double AlphaAngle(double a, double b, double c) {
             return TrigonometricHelper.DegreesFromRadians(RadiansAngle(c, b, a));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double BetaAngle(double a, double b, double c) {
             return TrigonometricHelper.DegreesFromRadians(RadiansAngle(a, c, b));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double GammaAngle(double a, double b, double c) {  
             return TrigonometricHelper.DegreesFromRadians(RadiansAngle(a, b, c));
         }
