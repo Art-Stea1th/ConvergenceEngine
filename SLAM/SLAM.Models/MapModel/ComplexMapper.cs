@@ -1,31 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace SLAM.Models.MapModel {
 
     using DataModel.Readers;
-    using MapperResources;
+    using ComplexMapperResources;
 
     internal sealed class ComplexMapper : BaseMapper {
 
         private Point[] prevFrame; // previous
         private Point[] currFrame; // current
 
-        private OffsetPredictor predictor;
-        private AnglesCalculator anglesCalculator;
-        private PointsTransformer pointsTransformer;
-        private IntersectionsSeeker intersectionSeeker;
-
         public ComplexMapper(DataProvider dataProvider) : base(dataProvider) {
-            predictor = new OffsetPredictor();
-            anglesCalculator = new AnglesCalculator();
-            pointsTransformer = new PointsTransformer();
-            intersectionSeeker = new IntersectionsSeeker();
+
         }
 
         protected override void NextFrameProceed() {
             DataProvider.GetNextFrameTo(out currFrame);
-            currFrame = intersectionSeeker.NormalizedFrame(currFrame, 2.0f).ToArray();
             ResultMap = currFrame;
             //AddNextFrameToResultMap();
         }
@@ -45,12 +37,23 @@ namespace SLAM.Models.MapModel {
         }
 
         private void CalculateNextMoving() {
+
             throw new NotImplementedException();
 
-            // step 1: conditionally divided into segments
-            // step 2: approximate segments by Ordinary Least Squares
-            // step 3: real split into segments by threshold angle
-            // step 4: approximate segments by Ordinary Least Squares
+            // step 0  : beautify data
+            //      0a : remove artifacts
+            //      0b : normalize by distance or not? =)
+
+            // step 1  : conditionally divided into segments (by distance)
+
+            // step 2  : approximate segments by Ordinary Least Squares
+            //      2a : cut segments from lines by perpendicular from the start and end points
+
+            // step 3  : conditionally divided into segments (by threshold angle)
+
+            // step 4  : approximate segments by Ordinary Least Squares
+
+            // step 5  : calculate offset & rotation
 
         }
     }

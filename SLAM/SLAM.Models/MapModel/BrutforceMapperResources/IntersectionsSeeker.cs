@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-namespace SLAM.Models.MapModel.MapperResources {
+namespace SLAM.Models.MapModel.BrutforceMapperResources {
 
     internal sealed class IntersectionsSeeker {
-
-        private float errorLimit;
-
-        internal IntersectionsSeeker(float errorLimit = 0.001f) { this.errorLimit = errorLimit; }
 
         public List<Point> MergePoints(IList<Point> source, IList<Point> target) {
 
@@ -21,53 +17,53 @@ namespace SLAM.Models.MapModel.MapperResources {
             return result;
         }
 
-        public List<Point> GetDifference(IEnumerable<Point> prevBuffer, IEnumerable<Point> currBuffer, float error) {
+        public List<Point> GetDifference(IEnumerable<Point> prevBuffer, IEnumerable<Point> currBuffer, float threshold) {
 
             List<Point> result = new List<Point>();
 
             foreach (var point in currBuffer) {
-                if (!PointInSequenceExists(prevBuffer, point, error)) {
+                if (!PointInSequenceExists(prevBuffer, point, threshold)) {
                     result.Add(point);
                 }
             }
             return result;
         }
 
-        public bool FindNearestPoints(IList<Point> pointsA, IList<Point> pointsB, out int indexA, out int indexB, float limit) {
+        public bool FindNearestPoints(IList<Point> pointsA, IList<Point> pointsB, out int indexA, out int indexB, float threshold) {
 
             indexA = indexB = 0;
-            float minimalDistance = Distance(pointsA[indexA], pointsB[indexB]);
+            float minimalDistance = GetDistance(pointsA[indexA], pointsB[indexB]);
 
             for (int a = 0; a < pointsA.Count; ++a) {
                 for (int b = 0; b < pointsB.Count; ++b) {
-                    float currentDistance = Distance(pointsA[a], pointsB[b]);
+                    float currentDistance = GetDistance(pointsA[a], pointsB[b]);
                     if (currentDistance <= minimalDistance) {
                         minimalDistance = currentDistance;
                         indexA = a; indexB = b;
                     }
                 }
             }
-            if (minimalDistance < limit) {
+            if (minimalDistance < threshold) {
                 return true;
             }
             return false;
         }
 
-        public List<Point> NormalizedFrame(IEnumerable<Point> points, float error) {
+        public List<Point> NormalizedFrame(IEnumerable<Point> points, float threshold) {
 
             List<Point> result = new List<Point>();
 
             foreach (var point in points) {
-                if (!PointInSequenceExists(result, point, error)) {
+                if (!PointInSequenceExists(result, point, threshold)) {
                     result.Add(point);
                 }
             }
             return result;
         }
 
-        public bool PointInSequenceExists(IEnumerable<Point> sequence, Point point, float error) {
+        public bool PointInSequenceExists(IEnumerable<Point> sequence, Point point, float threshold) {
             foreach (var sPoint in sequence) {
-                if (HitPoint(point, sPoint, error)) {
+                if (HitPoint(point, sPoint, threshold)) {
                     return true;
                 }
             }
@@ -75,13 +71,13 @@ namespace SLAM.Models.MapModel.MapperResources {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool HitPoint(Point pointA, Point pointB, float error) {
-            float absoluteDifference = Distance(pointA, pointB);
-            return absoluteDifference < error;
+        public bool HitPoint(Point pointA, Point pointB, float threshold) {
+            float absoluteDifference = GetDistance(pointA, pointB);
+            return absoluteDifference < threshold;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float Distance(Point pointA, Point pointB) {
+        public float GetDistance(Point pointA, Point pointB) {
 
             return (float)Math.Sqrt(
                 Math.Pow(pointB.X - pointA.X, 2.0) +

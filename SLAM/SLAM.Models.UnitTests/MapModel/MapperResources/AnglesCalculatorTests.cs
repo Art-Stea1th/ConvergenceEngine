@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SLAM.Models.MapModel.MapperResources;
+using SLAM.Models.MapModel.BrutforceMapperResources;
 using System;
 
 

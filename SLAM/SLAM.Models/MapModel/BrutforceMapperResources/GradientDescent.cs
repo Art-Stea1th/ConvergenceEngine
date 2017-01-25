@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SLAM.Models.MapModel.MapperResources {
+namespace SLAM.Models.MapModel.BrutforceMapperResources {
 
     internal sealed class GradientDescent {
 

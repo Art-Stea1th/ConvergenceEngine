@@ -75,20 +75,22 @@
     <Compile Include="Events\ModelUpdatedEvent.cs" />
     <Compile Include="FramesProvider.cs" />
     <Compile Include="MapModel\BaseMapper.cs" />
-    <Compile Include="MapModel\MapperResources\LinesBuilder.cs" />
+    <Compile Include="MapModel\ComplexMapperResources\DataBeautifier.cs" />
+    <Compile Include="MapModel\ComplexMapperResources\DataClusterer.cs" />
     <Compile Include="MapModel\ComplexMapper.cs" />
     <Compile Include="MapModel\BrutforceMapper.cs" />
-    <Compile Include="MapModel\MapperResources\AnglesCalculator.cs" />
-    <Compile Include="MapModel\MapperResources\MovementSeeker.cs" />
-    <Compile Include="MapModel\MapperResources\PointsTransformer.cs" />
-    <Compile Include="MapModel\MapperResources\GradientDescent.cs" />
-    <Compile Include="MapModel\MapperResources\IntersectionsSeeker.cs" />
-    <Compile Include="MapModel\MapperResources\TrigonometricHelper.cs" />
-    <Compile Include="MapModel\MapperResources\OffsetPredictor.cs" />
-    <Compile Include="MapModel\MapperResources\VirtualOdometry.cs" />
+    <Compile Include="MapModel\BrutforceMapperResources\AnglesCalculator.cs" />
+    <Compile Include="MapModel\ComplexMapperResources\MovementSeeker.cs" />
+    <Compile Include="MapModel\BrutforceMapperResources\PointsTransformer.cs" />
+    <Compile Include="MapModel\BrutforceMapperResources\GradientDescent.cs" />
+    <Compile Include="MapModel\BrutforceMapperResources\IntersectionsSeeker.cs" />
+    <Compile Include="MapModel\BrutforceMapperResources\TrigonometricHelper.cs" />
+    <Compile Include="MapModel\ComplexMapperResources\OffsetPredictor.cs" />
+    <Compile Include="MapModel\ComplexMapperResources\VirtualOdometry.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
