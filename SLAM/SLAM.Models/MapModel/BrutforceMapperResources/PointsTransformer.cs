@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 
-namespace SLAM.Models.MapModel.BrutforceMapperResources {
+namespace SLAM.Models.MapModel.ComplexMapperResources {
 
     internal sealed class PointsTransformer {
 

@@ -78,13 +78,11 @@
     <Compile Include="MapModel\ComplexMapperResources\DataBeautifier.cs" />
     <Compile Include="MapModel\ComplexMapperResources\DataClusterer.cs" />
     <Compile Include="MapModel\ComplexMapper.cs" />
-    <Compile Include="MapModel\BrutforceMapper.cs" />
-    <Compile Include="MapModel\BrutforceMapperResources\AnglesCalculator.cs" />
+    <Compile Include="MapModel\ComplexMapperResources\AnglesCalculator.cs" />
     <Compile Include="MapModel\ComplexMapperResources\MovementSeeker.cs" />
     <Compile Include="MapModel\BrutforceMapperResources\PointsTransformer.cs" />
-    <Compile Include="MapModel\BrutforceMapperResources\GradientDescent.cs" />
     <Compile Include="MapModel\BrutforceMapperResources\IntersectionsSeeker.cs" />
-    <Compile Include="MapModel\BrutforceMapperResources\TrigonometricHelper.cs" />
+    <Compile Include="MapModel\ComplexMapperResources\TrigonometricHelper.cs" />
     <Compile Include="MapModel\ComplexMapperResources\OffsetPredictor.cs" />
     <Compile Include="MapModel\ComplexMapperResources\VirtualOdometry.cs" />
     <Compile Include="Model.cs" />

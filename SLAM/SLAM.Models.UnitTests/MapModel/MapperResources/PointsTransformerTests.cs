@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace SLAM.Models.UnitTests.MapModel.MapperResources {
 
-    using SLAM.Models.MapModel.BrutforceMapperResources;
+    using SLAM.Models.MapModel.ComplexMapperResources;
 
     [TestFixture]
     public sealed class PointsTransformerTests {

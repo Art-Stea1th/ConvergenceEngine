@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace SLAM.Models.MapModel.BrutforceMapperResources {
+namespace SLAM.Models.MapModel.ComplexMapperResources {
 
     internal sealed class AnglesCalculator {
 

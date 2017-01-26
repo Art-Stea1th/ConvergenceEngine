@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using SLAM.Models.MapModel.BrutforceMapperResources;
+using SLAM.Models.MapModel.ComplexMapperResources;
 
 namespace SLAM.Models.UnitTests.MapModel.MapperResources {
 
