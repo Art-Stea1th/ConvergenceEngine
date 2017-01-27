@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SLAM.Models.MapModel.ComplexMapperResources {
+namespace SLAM.Models.Mapping.Data {
 
-    internal sealed class MovementSeeker {
+    internal sealed class Map {
+
+        private List<Frame> frames;
 
     }
 }

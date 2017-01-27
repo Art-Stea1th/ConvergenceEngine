@@ -5,8 +5,8 @@ using System.Windows.Media;
 
 namespace SLAM.Models {
 
-    using DataModel.Readers;
-    using MapModel;
+    using IO.Readers;
+    using Mapping;
 
     internal sealed class FramesProvider {
 
@@ -56,7 +56,7 @@ namespace SLAM.Models {
 
         internal Point[] GetActualMapFrame() {
             Initialize();
-            return mapper.ResultMap;
+            return mapper.ResultMap.ToArray();
         }
 
         internal Point[] GetActualTopDepthFrame() {

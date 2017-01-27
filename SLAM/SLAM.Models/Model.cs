@@ -6,9 +6,9 @@ using System.Windows;
 namespace SLAM.Models {
 
     using Events;
-    using DataModel.Readers;
-    using DataModel.Writers;
-    using MapModel;
+    using IO.Readers;
+    using IO.Writers;
+    using Mapping;
 
     public class Model : IDisposable {
 

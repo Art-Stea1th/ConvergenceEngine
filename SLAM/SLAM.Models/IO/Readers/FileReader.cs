@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace SLAM.Models.DataModel.Readers {
+namespace SLAM.Models.IO.Readers {
 
     using Adapters;
 

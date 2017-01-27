@@ -62,29 +62,26 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModel\Adapters\IDataAdapter.cs" />
-    <Compile Include="DataModel\Adapters\KinectDataAdapter.cs" />
-    <Compile Include="DataModel\Readers\DataProvider.cs" />
-    <Compile Include="DataModel\FrameSequenceInfo.cs" />
-    <Compile Include="DataModel\Readers\DeviceReader.cs" />
-    <Compile Include="DataModel\Readers\FileReader.cs" />
-    <Compile Include="DataModel\Readers\KinectDeviceReader.cs" />
-    <Compile Include="DataModel\Readers\KinectFileReader.cs" />
-    <Compile Include="DataModel\Writers\BaseWriter.cs" />
+    <Compile Include="IO\Adapters\IDataAdapter.cs" />
+    <Compile Include="IO\Adapters\KinectDataAdapter.cs" />
+    <Compile Include="IO\Readers\DataProvider.cs" />
+    <Compile Include="IO\FrameSequenceInfo.cs" />
+    <Compile Include="IO\Readers\DeviceReader.cs" />
+    <Compile Include="IO\Readers\FileReader.cs" />
+    <Compile Include="IO\Readers\KinectDeviceReader.cs" />
+    <Compile Include="IO\Readers\KinectFileReader.cs" />
+    <Compile Include="IO\Writers\BaseWriter.cs" />
     <Compile Include="Events\NextFrameReadyEvent.cs" />
     <Compile Include="Events\ModelUpdatedEvent.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\PointExtensions.cs" />
     <Compile Include="FramesProvider.cs" />
-    <Compile Include="MapModel\BaseMapper.cs" />
-    <Compile Include="MapModel\ComplexMapperResources\DataBeautifier.cs" />
-    <Compile Include="MapModel\ComplexMapperResources\DataClusterer.cs" />
-    <Compile Include="MapModel\ComplexMapper.cs" />
-    <Compile Include="MapModel\ComplexMapperResources\AnglesCalculator.cs" />
-    <Compile Include="MapModel\ComplexMapperResources\MovementSeeker.cs" />
-    <Compile Include="MapModel\BrutforceMapperResources\PointsTransformer.cs" />
-    <Compile Include="MapModel\BrutforceMapperResources\IntersectionsSeeker.cs" />
-    <Compile Include="MapModel\ComplexMapperResources\TrigonometricHelper.cs" />
-    <Compile Include="MapModel\ComplexMapperResources\OffsetPredictor.cs" />
-    <Compile Include="MapModel\ComplexMapperResources\VirtualOdometry.cs" />
+    <Compile Include="Mapping\BaseMapper.cs" />
+    <Compile Include="Mapping\ComplexMapperResources\DataBeautifier.cs" />
+    <Compile Include="Mapping\Data\Frame.cs" />
+    <Compile Include="Mapping\Data\Map.cs" />
+    <Compile Include="Mapping\Data\NavSkeleton.cs" />
+    <Compile Include="Mapping\ComplexMapper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
