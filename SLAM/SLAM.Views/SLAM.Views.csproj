@@ -92,7 +92,7 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
-    <Compile Include="Controls\Custom\MathDataViewport.cs" />
+    <Compile Include="Controls\Custom\PointsViewport.cs" />
     <Compile Include="Controls\Custom\PointRenderer.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

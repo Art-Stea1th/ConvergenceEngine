@@ -16,10 +16,10 @@
         <Setter Property="MinWidth" Value="36"/>
     </Style>
 
-    <Style TargetType="{x:Type local:MathDataViewport}">
+    <Style TargetType="{x:Type local:PointsViewport}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:MathDataViewport}">
+                <ControlTemplate TargetType="{x:Type local:PointsViewport}">
                     <Border
                         x:Name="PART_SurfaceContainer"
                         Background="{TemplateBinding Background}"

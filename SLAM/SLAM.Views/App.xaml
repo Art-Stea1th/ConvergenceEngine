@@ -16,7 +16,7 @@
         <cv:IntToVisibilityConverter x:Key="IntToVisibility"/>
         <cv:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
 
-        <cc:MathDataViewport x:Key="MathDataViewport"/>
+        <cc:PointsViewport x:Key="MathDataViewport"/>
 
         <vm:MainWindowViewModel x:Key="MainWindowViewModel"/>
         

@@ -6,7 +6,7 @@ using System.Windows.Shapes;
 namespace SLAM.Views.Controls.Custom {
 
     [TemplatePart(Name = ViewportSurfaceName, Type = typeof(Image))]
-    public sealed class MathDataViewport : Control {
+    public sealed class PointsViewport : Control {
 
         #region TemplateParts
 
@@ -57,10 +57,10 @@ namespace SLAM.Views.Controls.Custom {
             set { SetValue(AxisColorProperty, value); }
         }
 
-        static MathDataViewport() {
+        static PointsViewport() {
 
             DefaultStyleKeyProperty.OverrideMetadata(
-                typeof(MathDataViewport), new FrameworkPropertyMetadata(typeof(MathDataViewport)));
+                typeof(PointsViewport), new FrameworkPropertyMetadata(typeof(PointsViewport)));
 
             var dataPropertyMetadata =
                 new FrameworkPropertyMetadata(null,
@@ -89,23 +89,23 @@ namespace SLAM.Views.Controls.Custom {
 
             DataProperty =
                 DependencyProperty.Register(
-                    "Data", typeof(Point[]), typeof(MathDataViewport), dataPropertyMetadata);
+                    "Data", typeof(Point[]), typeof(PointsViewport), dataPropertyMetadata);
 
             ProportionsProperty =
                 DependencyProperty.Register(
-                    "Proportions", typeof(Point), typeof(MathDataViewport), proportionsPropertyMetadata);
+                    "Proportions", typeof(Point), typeof(PointsViewport), proportionsPropertyMetadata);
 
             AxisVisibleProperty =
                 DependencyProperty.Register(
-                    "AxisVisible", typeof(bool), typeof(MathDataViewport), axisVisiblePropertyMetadata);
+                    "AxisVisible", typeof(bool), typeof(PointsViewport), axisVisiblePropertyMetadata);
 
             DataColorProperty =
                 DependencyProperty.Register(
-                    "DataColor", typeof(Color), typeof(MathDataViewport), dataColorPropertyMetadata);
+                    "DataColor", typeof(Color), typeof(PointsViewport), dataColorPropertyMetadata);
 
             AxisColorProperty =
                 DependencyProperty.Register(
-                    "AxisColor", typeof(Color), typeof(MathDataViewport), axisColorPropertyMetadata);
+                    "AxisColor", typeof(Color), typeof(PointsViewport), axisColorPropertyMetadata);
         }
 
         #endregion        
