@@ -1,0 +1,3390 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    132709,       3382]
+NotebookOptionsPosition[    132197,       3362]
+NotebookOutlinePosition[    132544,       3377]
+CellTagsIndexPosition[    132501,       3374]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"f1p01x", "=", 
+   RowBox[{"-", "87.553008"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p02x", "=", 
+   RowBox[{"-", "86.4554445"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p03x", "=", 
+   RowBox[{"-", "85.1054589"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p04x", "=", 
+   RowBox[{"-", "83.63416365"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p05x", "=", 
+   RowBox[{"-", "81.2778156"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p06x", "=", 
+   RowBox[{"-", "78.5697921"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p07x", "=", 
+   RowBox[{"-", "71.9949141"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p08x", "=", 
+   RowBox[{"-", "69.29441775"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p09x", "=", 
+   RowBox[{"-", "69.6002301"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p10x", "=", 
+   RowBox[{"-", "68.8139055"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p11x", "=", 
+   RowBox[{"-", "67.208697"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p12x", "=", 
+   RowBox[{"-", "67.07828475"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p13x", "=", 
+   RowBox[{"-", "64.8843831"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p14x", "=", 
+   RowBox[{"-", "64.5811965"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p15x", "=", 
+   RowBox[{"-", "64.69848"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p16x", "=", 
+   RowBox[{"-", "62.6903064"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p17x", "=", 
+   RowBox[{"-", "61.841664"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p18x", "=", 
+   RowBox[{"-", "59.59244655"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p19x", "=", 
+   RowBox[{"-", "65.42511255"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p20x", "=", 
+   RowBox[{"-", "63.6534315"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p21x", "=", 
+   RowBox[{"-", "60.53229"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p22x", "=", 
+   RowBox[{"-", "54.8561187"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p23x", "=", 
+   RowBox[{"-", "51.611742"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p24x", "=", 
+   RowBox[{"-", "45.72463545"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p25x", "=", 
+   RowBox[{"-", "45.40289355"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p26x", "=", 
+   RowBox[{"-", "45.0603207"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p27x", "=", 
+   RowBox[{"-", "44.7165225"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p27x", "=", "102.36486375"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p28x", "=", "101.13811335"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p29x", "=", "99.2747061"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p30x", "=", "98.19937395"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p31x", "=", "97.36753635"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p32x", "=", "96.158466"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p33x", "=", "95.21232075"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p34x", "=", "88.5409902"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p35x", "=", "88.6551228"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p36x", "=", "87.4532295"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p01y", "=", "156.3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p02y", "=", "163.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p03y", "=", "169.4"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p04y", "=", "176.3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p05y", "=", "182.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p06y", "=", "187.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p07y", "=", "187.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p08y", "=", "193.1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p09y", "=", "199.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p10y", "=", "206.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p11y", "=", "213.3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p12y", "=", "221.5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p13y", "=", "227.4"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p14y", "=", "233.5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p15y", "=", "240.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p16y", "=", "248.7"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p17y", "=", "256.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p18y", "=", "263.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p19y", "=", "349.3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p20y", "=", "356.5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p21y", "=", "364.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p22y", "=", "360.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p23y", "=", "364.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p24y", "=", "367.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p25y", "=", "375.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p26y", "=", "384.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p27y", "=", "393.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p27y", "=", "259.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p28y", "=", "252.3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p29y", "=", "243.4"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p30y", "=", "236.7"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p31y", "=", "228.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p32y", "=", "221.5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p33y", "=", "213.3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p34y", "=", "178.1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f1p35y", "=", "171.1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f1p36y", "=", "163.8"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"f2p01x", "=", 
+   RowBox[{"-", "88.393248"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p02x", "=", 
+   RowBox[{"-", "86.8797657"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p03x", "=", 
+   RowBox[{"-", "86.1032439"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p04x", "=", 
+   RowBox[{"-", "83.9427768"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p05x", "=", 
+   RowBox[{"-", "81.2778156"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p06x", "=", 
+   RowBox[{"-", "75.3737292"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p07x", "=", 
+   RowBox[{"-", "71.9949141"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p08x", "=", 
+   RowBox[{"-", "71.756496"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p09x", "=", 
+   RowBox[{"-", "71.10898605"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p10x", "=", 
+   RowBox[{"-", "69.6786525"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p11x", "=", 
+   RowBox[{"-", "68.500566"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p12x", "=", 
+   RowBox[{"-", "68.0153274"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p13x", "=", 
+   RowBox[{"-", "67.033647"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p14x", "=", 
+   RowBox[{"-", "65.95884"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p15x", "=", 
+   RowBox[{"-", "65.26196595"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p16x", "=", 
+   RowBox[{"-", "64.0767024"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p17x", "=", 
+   RowBox[{"-", "59.615028"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p18x", "=", 
+   RowBox[{"-", "69.9625836"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p19x", "=", 
+   RowBox[{"-", "69.6635982"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p20x", "=", 
+   RowBox[{"-", "69.823944"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p21x", "=", 
+   RowBox[{"-", "68.836662"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p22x", "=", 
+   RowBox[{"-", "67.7961648"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p23x", "=", 
+   RowBox[{"-", "64.901538"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p24x", "=", 
+   RowBox[{"-", "61.1572185"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p25x", "=", 
+   RowBox[{"-", "55.4866488"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p26x", "=", 
+   RowBox[{"-", "49.1813478"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p27x", "=", 
+   RowBox[{"-", "47.7504891"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p27x", "=", 
+   RowBox[{"-", "45.404469"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p28x", "=", "100.380672"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p29x", "=", "98.82430245"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p30x", "=", "97.73514135"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p31x", "=", "96.3009567"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p32x", "=", "95.76477855"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p33x", "=", "94.1772501"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p34x", "=", "93.6829089"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p35x", "=", "91.8161757"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p36x", "=", "91.4503212"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p37x", "=", "89.8944768"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p38x", "=", "88.9576092"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p39x", "=", "88.1198199"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p40x", "=", "87.0646185"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p41x", "=", "85.942548"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p01y", "=", "157.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p02y", "=", "163.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p03y", "=", "170.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p04y", "=", "176.3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p05y", "=", "182.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p06y", "=", "184.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p07y", "=", "187.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p08y", "=", "195.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p09y", "=", "202.1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p10y", "=", "209.5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p11y", "=", "217.4"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p12y", "=", "225.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p13y", "=", "233.5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p14y", "=", "240.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p15y", "=", "246.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p16y", "=", "254.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p17y", "=", "258.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p18y", "=", "317.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p19y", "=", "326.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p20y", "=", "332.4"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p21y", "=", "339.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p22y", "=", "345.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p23y", "=", "356.5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p24y", "=", "356.5"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p25y", "=", "360.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p26y", "=", "360.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p27y", "=", "384.2"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p27y", "=", "393.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p28y", "=", "256.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p29y", "=", "248.7"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p30y", "=", "241.7"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p31y", "=", "235.1"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p32y", "=", "228.9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p33y", "=", "218.7"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p34y", "=", "210.7"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p35y", "=", "203.3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p36y", "=", "196.4"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p37y", "=", "188.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p38y", "=", "182.8"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p39y", "=", "175.4"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f2p40y", "=", "168.6"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"f2p41y", "=", "161.5"}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab01", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p01x", " ", "-", " ", "f1p36x"}], ",", " ", 
+     RowBox[{"f1p01y", " ", "-", " ", "f1p36y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac01", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p26x", " ", "-", " ", "f1p36x"}], ",", " ", 
+     RowBox[{"f1p26y", " ", "-", " ", "f1p36y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab01n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab01", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d01", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab01n", ",", " ", "ac01"}], "]"}], " ", "*", " ", "ab01n"}], 
+     "  ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p36x", ",", " ", "f1p36y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab02", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p26x", " ", "-", " ", "f1p01x"}], ",", " ", 
+     RowBox[{"f1p26y", " ", "-", " ", "f1p01y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac02", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p19x", " ", "-", " ", "f1p01x"}], ",", " ", 
+     RowBox[{"f1p19y", " ", "-", " ", "f1p01y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab02n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab02", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d02", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab02n", ",", " ", "ac02"}], "]"}], " ", "*", " ", "ab02n"}], 
+     " ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p01x", ",", " ", "f1p01y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab03", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p26x", " ", "-", " ", "f1p36x"}], ",", " ", 
+     RowBox[{"f1p26y", " ", "-", " ", "f1p36y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac03", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p27x", " ", "-", " ", "f1p36x"}], ",", " ", 
+     RowBox[{"f1p27y", " ", "-", " ", "f1p36y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab03n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab03", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d03", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab03n", ",", " ", "ac03"}], "]"}], " ", "*", " ", "ab03n"}], 
+     " ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p36x", ",", " ", "f1p36y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab04", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p19x", " ", "-", " ", "f1p01x"}], ",", " ", 
+     RowBox[{"f1p19y", " ", "-", " ", "f1p01y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac04", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p18x", " ", "-", " ", "f1p01x"}], ",", " ", 
+     RowBox[{"f1p18y", " ", "-", " ", "f1p01y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab04n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab04", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d04", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab04n", ",", " ", "ac04"}], "]"}], " ", "*", " ", "ab04n"}], 
+     " ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p01x", ",", " ", "f1p01y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab05", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p26x", " ", "-", " ", "f1p19x"}], ",", " ", 
+     RowBox[{"f1p26y", " ", "-", " ", "f1p19y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac05", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p24x", " ", "-", " ", "f1p19x"}], ",", " ", 
+     RowBox[{"f1p24y", " ", "-", " ", "f1p19y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab05n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab05", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d05", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab05n", ",", " ", "ac05"}], "]"}], " ", "*", " ", "ab05n"}], 
+     " ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p19x", ",", " ", "f1p19y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab06", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p18x", " ", "-", " ", "f1p01x"}], ",", " ", 
+     RowBox[{"f1p18y", " ", "-", " ", "f1p01y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac06", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p08x", " ", "-", " ", "f1p01x"}], ",", " ", 
+     RowBox[{"f1p08y", " ", "-", " ", "f1p01y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab06n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab06", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d06", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab06n", ",", " ", "ac06"}], "]"}], " ", "*", " ", "ab06n"}], 
+     " ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p01x", ",", " ", "f1p01y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab07", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p24x", " ", "-", " ", "f1p19x"}], ",", " ", 
+     RowBox[{"f1p24y", " ", "-", " ", "f1p19y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac07", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p21x", " ", "-", " ", "f1p19x"}], ",", " ", 
+     RowBox[{"f1p21y", " ", "-", " ", "f1p19y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab07n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab07", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d07", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab07n", ",", " ", "ac07"}], "]"}], " ", "*", " ", "ab07n"}], 
+     " ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p19x", ",", " ", "f1p19y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab08", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p08x", " ", "-", " ", "f1p01x"}], ",", " ", 
+     RowBox[{"f1p08y", " ", "-", " ", "f1p01y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac08", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p05x", " ", "-", " ", "f1p01x"}], ",", " ", 
+     RowBox[{"f1p05y", " ", "-", " ", "f1p01y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab08n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab08", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d08", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab08n", ",", " ", "ac08"}], "]"}], " ", "*", " ", "ab08n"}], 
+     " ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p01x", ",", " ", "f1p01y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab09", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p24x", " ", "-", " ", "f1p21x"}], ",", " ", 
+     RowBox[{"f1p24y", " ", "-", " ", "f1p21y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ac09", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"f1p22x", " ", "-", " ", "f1p21x"}], ",", " ", 
+     RowBox[{"f1p22y", " ", "-", " ", "f1p21y"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ab09n", " ", "=", " ", 
+   RowBox[{"Normalize", "[", "ab09", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"d09", " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Dot", "[", 
+       RowBox[{"ab09n", ",", " ", "ac09"}], "]"}], " ", "*", " ", "ab09n"}], 
+     " ", "+", " ", 
+     RowBox[{"{", 
+      RowBox[{"f1p21x", ",", " ", "f1p21y"}], "}"}]}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ListPlot", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p02x", ",", "f1p02y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p03x", ",", "f1p03y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p04x", ",", "f1p04y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p06x", ",", "f1p06y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p07x", ",", "f1p07y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p09x", ",", "f1p09y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p10x", ",", "f1p10y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p11x", ",", "f1p11y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p12x", ",", "f1p12y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p13x", ",", "f1p13y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p14x", ",", "f1p14y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p15x", ",", "f1p15y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p16x", ",", "f1p16y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p17x", ",", "f1p17y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p20x", ",", "f1p20y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p23x", ",", "f1p23y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p25x", ",", "f1p25y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p28x", ",", "f1p28y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p29x", ",", "f1p29y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p30x", ",", "f1p30y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p31x", ",", "f1p31y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p32x", ",", "f1p32y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p33x", ",", "f1p33y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p34x", ",", "f1p34y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p35x", ",", "f1p35y"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+    RowBox[{"AxesOrigin", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+    RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+    RowBox[{"PlotStyle", "\[Rule]", 
+     RowBox[{"RGBColor", "[", 
+      RowBox[{"1", ",", "0", ",", "0"}], "]"}]}]}], "]"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Show", "[", "\n", 
+   RowBox[{
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p02x", ",", "f1p02y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p03x", ",", "f1p03y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p04x", ",", "f1p04y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p06x", ",", "f1p06y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p07x", ",", "f1p07y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p09x", ",", "f1p09y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p10x", ",", "f1p10y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p11x", ",", "f1p11y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p12x", ",", "f1p12y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p13x", ",", "f1p13y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p14x", ",", "f1p14y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p15x", ",", "f1p15y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p16x", ",", "f1p16y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p17x", ",", "f1p17y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p20x", ",", "f1p20y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p23x", ",", "f1p23y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p25x", ",", "f1p25y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p28x", ",", "f1p28y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p29x", ",", "f1p29y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p30x", ",", "f1p30y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p31x", ",", "f1p31y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p32x", ",", "f1p32y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p33x", ",", "f1p33y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p34x", ",", "f1p34y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p35x", ",", "f1p35y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "1", ",", "1"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", "d01"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", "d02"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", "d03"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", "d04"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", "d05"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", "d06"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", "d07"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", "d08"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", "d09"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.125"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p02x", ",", "f1p02y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p03x", ",", "f1p03y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p04x", ",", "f1p04y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p06x", ",", "f1p06y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p07x", ",", "f1p07y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p09x", ",", "f1p09y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p10x", ",", "f1p10y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p11x", ",", "f1p11y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p12x", ",", "f1p12y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p13x", ",", "f1p13y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p14x", ",", "f1p14y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p15x", ",", "f1p15y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p16x", ",", "f1p16y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p17x", ",", "f1p17y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p20x", ",", "f1p20y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p23x", ",", "f1p23y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p25x", ",", "f1p25y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p28x", ",", "f1p28y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p29x", ",", "f1p29y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p30x", ",", "f1p30y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p31x", ",", "f1p31y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p32x", ",", "f1p32y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p33x", ",", "f1p33y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p34x", ",", "f1p34y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p35x", ",", "f1p35y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0", ",", "0", ",", "0.5"}], "]"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Show", "[", "\n", 
+   RowBox[{
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p02x", ",", "f1p02y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p03x", ",", "f1p03y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p04x", ",", "f1p04y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p06x", ",", "f1p06y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p07x", ",", "f1p07y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p09x", ",", "f1p09y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p10x", ",", "f1p10y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p11x", ",", "f1p11y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p12x", ",", "f1p12y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p13x", ",", "f1p13y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p14x", ",", "f1p14y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p15x", ",", "f1p15y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p16x", ",", "f1p16y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p17x", ",", "f1p17y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p20x", ",", "f1p20y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p23x", ",", "f1p23y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p25x", ",", "f1p25y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p28x", ",", "f1p28y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p29x", ",", "f1p29y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p30x", ",", "f1p30y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p31x", ",", "f1p31y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p32x", ",", "f1p32y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p33x", ",", "f1p33y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p34x", ",", "f1p34y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p35x", ",", "f1p35y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0", ",", "0", ",", "0.25"}], "]"}]}]}], "]"}], ",",
+     "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", "d01"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", "d02"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", "d03"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", "d04"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", "d05"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", "d06"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", "d07"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", "d08"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", "d09"}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0", ",", " ", "0.0625"}], "]"}]}]}], 
+     "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", " ", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0"}], "]"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]",
+   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Show", "[", "\n", 
+   RowBox[{
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p02x", ",", "f1p02y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p03x", ",", "f1p03y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p04x", ",", "f1p04y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p06x", ",", "f1p06y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p07x", ",", "f1p07y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p09x", ",", "f1p09y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p10x", ",", "f1p10y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p11x", ",", "f1p11y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p12x", ",", "f1p12y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p13x", ",", "f1p13y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p14x", ",", "f1p14y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p15x", ",", "f1p15y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p16x", ",", "f1p16y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p17x", ",", "f1p17y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p20x", ",", "f1p20y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p23x", ",", "f1p23y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p25x", ",", "f1p25y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p28x", ",", "f1p28y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p29x", ",", "f1p29y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p30x", ",", "f1p30y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p31x", ",", "f1p31y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p32x", ",", "f1p32y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p33x", ",", "f1p33y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p34x", ",", "f1p34y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p35x", ",", "f1p35y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "1", ",", "1"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.5", ",", "0.75", ",", "0.125"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.5", ",", "0.75", ",", "0.125"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.5", ",", "0.75", ",", "0.125"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0", ",", "0.125"}], "]"}]}]}], "]"}], 
+    ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.5", ",", "0.75", ",", "0.125"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.5", ",", "0.75", ",", "0.125"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.5", ",", "0.75", ",", "0.125"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.5", ",", "0.75", ",", "0.125"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0", ",", "0.125"}], "]"}]}]}], "]"}], 
+    ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.5", ",", "0.75", ",", "0.125"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", " ", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0", ",", "0", ",", "0"}], "]"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]",
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Show", "[", "\n", 
+   RowBox[{
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p02x", ",", "f1p02y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p03x", ",", "f1p03y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p04x", ",", "f1p04y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p06x", ",", "f1p06y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p07x", ",", "f1p07y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p09x", ",", "f1p09y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p10x", ",", "f1p10y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p11x", ",", "f1p11y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p12x", ",", "f1p12y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p13x", ",", "f1p13y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p14x", ",", "f1p14y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p15x", ",", "f1p15y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p16x", ",", "f1p16y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p17x", ",", "f1p17y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p20x", ",", "f1p20y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p23x", ",", "f1p23y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p25x", ",", "f1p25y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p28x", ",", "f1p28y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p29x", ",", "f1p29y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p30x", ",", "f1p30y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p31x", ",", "f1p31y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p32x", ",", "f1p32y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p33x", ",", "f1p33y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p34x", ",", "f1p34y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p35x", ",", "f1p35y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "1", ",", "1"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p01x", ",", "f2p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p02x", ",", "f2p02y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p03x", ",", "f2p03y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p04x", ",", "f2p04y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p05x", ",", "f2p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p06x", ",", "f2p06y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p07x", ",", "f2p07y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p08x", ",", "f2p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p09x", ",", "f2p09y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p10x", ",", "f2p10y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p11x", ",", "f2p11y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p12x", ",", "f2p12y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p13x", ",", "f2p13y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p14x", ",", "f2p14y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p15x", ",", "f2p15y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p16x", ",", "f2p16y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p17x", ",", "f2p17y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p18x", ",", "f2p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p19x", ",", "f2p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p20x", ",", "f2p20y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p21x", ",", "f2p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p22x", ",", "f2p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p23x", ",", "f2p23y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p24x", ",", "f2p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p25x", ",", "f2p25y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p26x", ",", "f2p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p27x", ",", "f2p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p28x", ",", "f2p28y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p29x", ",", "f2p29y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p30x", ",", "f2p30y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p31x", ",", "f2p31y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p32x", ",", "f2p32y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p33x", ",", "f2p33y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p34x", ",", "f2p34y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p35x", ",", "f2p35y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p36x", ",", "f2p36y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p37x", ",", "f2p37y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p38x", ",", "f2p38y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p39x", ",", "f2p39y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p40x", ",", "f2p40y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p41x", ",", "f2p41y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "1", ",", "1"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p33x", ",", "f1p33y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p34x", ",", "f1p34y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f1p01x", ",", "f1p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p05x", ",", "f1p05y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p08x", ",", "f1p08y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p18x", ",", "f1p18y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p19x", ",", "f1p19y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p21x", ",", "f1p21y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p22x", ",", "f1p22y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p24x", ",", "f1p24y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p26x", ",", "f1p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f1p27x", ",", "f1p27y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p33x", ",", "f1p33y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p34x", ",", "f1p34y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f1p36x", ",", "f1p36y"}], "}"}]}], "}"}], ",", " ", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"0.125", ",", "0.5", ",", "0.75"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p01x", ",", "f2p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p05x", ",", "f2p05y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p05x", ",", "f2p05y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p07x", ",", "f2p07y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p07x", ",", "f2p07y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p16x", ",", "f2p16y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p16x", ",", "f2p16y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p17x", ",", "f2p17y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p18x", ",", "f2p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p23x", ",", "f2p23y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p23x", ",", "f2p23y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p26x", ",", "f2p26y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p26x", ",", "f2p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p27x", ",", "f2p27y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ListLinePlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p28x", ",", "f2p28y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p41x", ",", "f2p41y"}], "}"}]}], "}"}], ",", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}], ",", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"f2p01x", ",", "f2p01y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p05x", ",", "f2p05y"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"f2p07x", ",", "f2p07y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p16x", ",", "f2p16y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p17x", ",", "f2p17y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p18x", ",", "f2p18y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p23x", ",", "f2p23y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p26x", ",", "f2p26y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p27x", ",", "f2p27y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p28x", ",", "f2p28y"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"f2p41x", ",", "f2p41y"}], "}"}]}], "}"}], ",", " ", 
+      RowBox[{"AxesOrigin", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}]}], ",", " ", 
+      RowBox[{"AspectRatio", "\[Rule]", "2"}], ",", " ", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"RGBColor", "[", 
+        RowBox[{"1", ",", "0.25", ",", "0"}], "]"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Remove", "[", "\"\<Global`*\>\"", 
+  "]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.694563229531423*^9, 3.6945632339200263`*^9}, {
+   3.694563471173346*^9, 3.694563474812099*^9}, {3.6945635129357815`*^9, 
+   3.6945635159843874`*^9}, {3.69456356770269*^9, 3.69456357531252*^9}, {
+   3.694563621995929*^9, 3.694563660992945*^9}, {3.6945639301393414`*^9, 
+   3.694563947910271*^9}, {3.6945640170947*^9, 3.6945641588711953`*^9}, 
+   3.694564194438243*^9, {3.694564354639125*^9, 3.694564369724704*^9}, {
+   3.694564489279862*^9, 3.6945645266164474`*^9}, {3.694564662260051*^9, 
+   3.694564687578538*^9}, {3.6945659257461214`*^9, 3.6945659476069455`*^9}, {
+   3.694566014323753*^9, 3.6945660479536724`*^9}, {3.6945754834998665`*^9, 
+   3.6945755851530733`*^9}, {3.69463452675299*^9, 3.694634645531272*^9}, {
+   3.694634692227607*^9, 3.6946347287490425`*^9}, {3.6946348595266666`*^9, 
+   3.6946349487070003`*^9}, {3.694635035181265*^9, 3.694635068801695*^9}, {
+   3.694636571535711*^9, 3.6946366050161066`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{}, 
+    {RGBColor[1, 0, 0], PointSize[0.012833333333333334`], AbsoluteThickness[
+     1.6], PointBox[CompressedData["
+1:eJxTTMoPSmViYGBQAWIQ7TV7VXXK49ADs2YCQWeyg4bmBga1uaEHGEAgIcVh
+3pL11/a7hR44ewYIdFIdfjgrKU97EQJRz5nmkCIiuvt4IJR/M83B6qBHZfmS
+YAi/Mt1BuNRgzZr/gXC+5vPuvdeDAg8Yg4ByhsOplCbtrDSo/M8MBzMlCXZx
+k0CIfXcyHeoKV3pFnw2AyK/McljkyDWP6WgAxH0bsh2Wvpi0e6ZFAER9To6D
+HvO5ICNVqLxBroO9VenTzTpQPkOeg4TMqa/REf4H0kBALN/BWiZ26e7XflD5
+AofkgnueV0/7QuTrChwWXHfhNo2Gmn+l1KE/bOuSxZf9Ieo9yhyK/qmJKLlA
+9R8oc7D9r+MzNdcb4r/mMofK01f7fc95wuVvLtp968AdN4j5/8ocqpr4WCZt
+hvLryh1OP9oybUe7G0Q/c4XD3vyat5HTIx3A8nYFDmyRCTeveUQ6QOIr3+HA
+gycnplyMcID4P89BY/eXrkM9ERD103Idrl3V294aDpWfk+Nw6uFkPxWuCAdY
++J1IOLpy2tlwB1j4msvGTJ2vFOYAtt85zcHbXK/jrSaUn5zq4M7qt43xbihE
+fWWKAwASaf3y
+      "]]}, {}}, {}, {}, {{}, {}}},
+  AspectRatio->2,
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0., 0.},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{-87.553008, 102.36486375}, {0., 384.2}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.694634993441119*^9, {3.694635044005274*^9, 3.6946350705082164`*^9}, 
+   3.6946366085348687`*^9, 3.694663851865574*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[1, 1, 1], PointSize[0.012833333333333334`], AbsoluteThickness[
+      1.6], PointBox[CompressedData["
+1:eJxTTMoPSmViYGBQAWIQ7TV7VXXK49ADs2YCQWeyg4bmBga1uaEHGEAgIcVh
+3pL11/a7hR44ewYIdFIdfjgrKU97EQJRz5nmkCIiuvt4IJR/M83B6qBHZfmS
+YAi/Mt1BuNRgzZr/gXC+5vPuvdeDAg8Yg4ByhsOplCbtrDSo/M8MBzMlCXZx
+k0CIfXcyHeoKV3pFnw2AyK/McljkyDWP6WgAxH0bsh2Wvpi0e6ZFAER9To6D
+HvO5ICNVqLxBroO9VenTzTpQPkOeg4TMqa/REf4H0kBALN/BWiZ26e7XflD5
+AofkgnueV0/7QuTrChwWXHfhNo2Gmn+l1KE/bOuSxZf9Ieo9yhyK/qmJKLlA
+9R8oc7D9r+MzNdcb4r/mMofK01f7fc95wuVvLtp968AdN4j5/8ocqpr4WCZt
+hvLryh1OP9oybUe7G0Q/c4XD3vyat5HTIx3A8nYFDmyRCTeveUQ6QOIr3+HA
+gycnplyMcID4P89BY/eXrkM9ERD103Idrl3V294aDpWfk+Nw6uFkPxWuCAdY
++J1IOLpy2tlwB1j4msvGTJ2vFOYAtt85zcHbXK/jrSaUn5zq4M7qt43xbihE
+fWWKAwASaf3y
+       "]]}, {}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-87.553008, 156.3}, {87.4532295, 
+       163.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-45.0603207, 384.2}, {-35.389329966951536`, 
+       158.5355065215768}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-87.553008, 156.3}, {-45.0603207, 
+       384.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-45.0603207, 384.2}, {87.4532295, 
+       163.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-65.42511255, 349.3}, {-52.03310820493028, 
+       346.80301775798466`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{102.36486375, 259.9}, {48.974196371992385`, 
+       227.79933356711834`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-87.553008, 156.3}, {-65.42511255, 
+       349.3}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-65.42511255, 349.3}, {-45.0603207, 
+       384.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-45.0603207, 384.2}, {102.36486375, 
+       259.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{102.36486375, 259.9}, {87.4532295, 
+       163.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-59.59244655, 263.9}, {-75.01370487519696, 
+       265.66808285972746`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-45.72463545, 367.9}, {-52.324468735989825`, 
+       371.75112410068436`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-87.553008, 156.3}, {-59.59244655, 
+       263.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-59.59244655, 263.9}, {-65.42511255, 
+       349.3}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-65.42511255, 349.3}, {-45.72463545, 
+       367.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-45.72463545, 367.9}, {-45.0603207, 
+       384.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-69.29441775, 193.1}, {-77.440238227343, 
+       195.2167445540652}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-60.53229, 364.}, {-55.500358974582795`, 
+       358.6703525841392}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-87.553008, 156.3}, {-69.29441775, 
+       193.1}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-69.29441775, 193.1}, {-59.59244655, 
+       263.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-65.42511255, 349.3}, {-60.53229, 
+       364.}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-60.53229, 364.}, {-45.72463545, 
+       367.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-81.2778156, 182.8}, {-75.76254435009623, 
+       180.06355766658703`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-54.8561187, 360.2}, {-56.16023161580216, 
+       365.15150091061327`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-87.553008, 156.3}, {-81.2778156, 
+       182.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-81.2778156, 182.8}, {-69.29441775, 
+       193.1}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-60.53229, 364.}, {-54.8561187, 
+       360.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.125], 
+      LineBox[{{-54.8561187, 360.2}, {-45.72463545, 
+       367.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, 
+     {RGBColor[1, 0, 0], PointSize[0.012833333333333334`], AbsoluteThickness[
+      1.6], Opacity[0.5], PointBox[CompressedData["
+1:eJxTTMoPSmViYGBQAWIQ7TV7VXXK49ADs2YCQWeyg4bmBga1uaEHGEAgIcVh
+3pL11/a7hR44ewYIdFIdfjgrKU97EQJRz5nmkCIiuvt4IJR/M83B6qBHZfmS
+YAi/Mt1BuNRgzZr/gXC+5vPuvdeDAg8Yg4ByhsOplCbtrDSo/M8MBzMlCXZx
+k0CIfXcyHeoKV3pFnw2AyK/McljkyDWP6WgAxH0bsh2Wvpi0e6ZFAER9To6D
+HvO5ICNVqLxBroO9VenTzTpQPkOeg4TMqa/REf4H0kBALN/BWiZ26e7XflD5
+AofkgnueV0/7QuTrChwWXHfhNo2Gmn+l1KE/bOuSxZf9Ieo9yhyK/qmJKLlA
+9R8oc7D9r+MzNdcb4r/mMofK01f7fc95wuVvLtp968AdN4j5/8ocqpr4WCZt
+hvLryh1OP9oybUe7G0Q/c4XD3vyat5HTIx3A8nYFDmyRCTeveUQ6QOIr3+HA
+gycnplyMcID4P89BY/eXrkM9ERD103Idrl3V294aDpWfk+Nw6uFkPxWuCAdY
++J1IOLpy2tlwB1j4msvGTJ2vFOYAtt85zcHbXK/jrSaUn5zq4M7qt43xbihE
+fWWKAwASaf3y
+       "]]}, {}}, {}, {}, {{}, {}}}},
+  AspectRatio->2,
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0., 0.},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{-87.553008, 102.36486375}, {0., 384.2}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.694634993441119*^9, {3.694635044005274*^9, 3.6946350705082164`*^9}, 
+   3.6946366085348687`*^9, 3.694663852323614*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[1, 0, 0], PointSize[0.012833333333333334`], AbsoluteThickness[
+      1.6], Opacity[0.25], PointBox[CompressedData["
+1:eJxTTMoPSmViYGBQAWIQ7TV7VXXK49ADs2YCQWeyg4bmBga1uaEHGEAgIcVh
+3pL11/a7hR44ewYIdFIdfjgrKU97EQJRz5nmkCIiuvt4IJR/M83B6qBHZfmS
+YAi/Mt1BuNRgzZr/gXC+5vPuvdeDAg8Yg4ByhsOplCbtrDSo/M8MBzMlCXZx
+k0CIfXcyHeoKV3pFnw2AyK/McljkyDWP6WgAxH0bsh2Wvpi0e6ZFAER9To6D
+HvO5ICNVqLxBroO9VenTzTpQPkOeg4TMqa/REf4H0kBALN/BWiZ26e7XflD5
+AofkgnueV0/7QuTrChwWXHfhNo2Gmn+l1KE/bOuSxZf9Ieo9yhyK/qmJKLlA
+9R8oc7D9r+MzNdcb4r/mMofK01f7fc95wuVvLtp968AdN4j5/8ocqpr4WCZt
+hvLryh1OP9oybUe7G0Q/c4XD3vyat5HTIx3A8nYFDmyRCTeveUQ6QOIr3+HA
+gycnplyMcID4P89BY/eXrkM9ERD103Idrl3V294aDpWfk+Nw6uFkPxWuCAdY
++J1IOLpy2tlwB1j4msvGTJ2vFOYAtt85zcHbXK/jrSaUn5zq4M7qt43xbihE
+fWWKAwASaf3y
+       "]]}, {}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-87.553008, 156.3}, {87.4532295, 
+       163.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-45.0603207, 384.2}, {-35.389329966951536`, 
+       158.5355065215768}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-87.553008, 156.3}, {-45.0603207, 
+       384.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-45.0603207, 384.2}, {87.4532295, 
+       163.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-65.42511255, 349.3}, {-52.03310820493028, 
+       346.80301775798466`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{102.36486375, 259.9}, {48.974196371992385`, 
+       227.79933356711834`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-87.553008, 156.3}, {-65.42511255, 
+       349.3}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-65.42511255, 349.3}, {-45.0603207, 
+       384.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-45.0603207, 384.2}, {102.36486375, 
+       259.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{102.36486375, 259.9}, {87.4532295, 
+       163.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-59.59244655, 263.9}, {-75.01370487519696, 
+       265.66808285972746`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-45.72463545, 367.9}, {-52.324468735989825`, 
+       371.75112410068436`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-87.553008, 156.3}, {-59.59244655, 
+       263.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-59.59244655, 263.9}, {-65.42511255, 
+       349.3}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-65.42511255, 349.3}, {-45.72463545, 
+       367.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-45.72463545, 367.9}, {-45.0603207, 
+       384.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-69.29441775, 193.1}, {-77.440238227343, 
+       195.2167445540652}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-60.53229, 364.}, {-55.500358974582795`, 
+       358.6703525841392}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-87.553008, 156.3}, {-69.29441775, 
+       193.1}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-69.29441775, 193.1}, {-59.59244655, 
+       263.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-65.42511255, 349.3}, {-60.53229, 
+       364.}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-60.53229, 364.}, {-45.72463545, 
+       367.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-81.2778156, 182.8}, {-75.76254435009623, 
+       180.06355766658703`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-54.8561187, 360.2}, {-56.16023161580216, 
+       365.15150091061327`}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-87.553008, 156.3}, {-81.2778156, 
+       182.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-81.2778156, 182.8}, {-69.29441775, 
+       193.1}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-60.53229, 364.}, {-54.8561187, 
+       360.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0, 0, 0], PointSize[0.019444444444444445`], AbsoluteThickness[
+      1.6], Opacity[0.0625], 
+      LineBox[{{-54.8561187, 360.2}, {-45.72463545, 
+       367.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, 
+     {RGBColor[0, 0, 0], PointSize[0.012833333333333334`], AbsoluteThickness[
+      1.6], PointBox[{{-87.553008, 156.3}, {-81.2778156, 
+       182.8}, {-69.29441775, 193.1}, {-59.59244655, 263.9}, {-65.42511255, 
+       349.3}, {-60.53229, 364.}, {-54.8561187, 360.2}, {-45.72463545, 
+       367.9}, {-45.0603207, 384.2}, {102.36486375, 259.9}, {87.4532295, 
+       163.8}}]}, {}}, {}, {}, {{}, {}}}},
+  AspectRatio->2,
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0., 0.},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{-87.553008, 102.36486375}, {0., 384.2}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.694634993441119*^9, {3.694635044005274*^9, 3.6946350705082164`*^9}, 
+   3.6946366085348687`*^9, 3.694663852734661*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[1, 1, 1], PointSize[0.012833333333333334`], AbsoluteThickness[
+      1.6], PointBox[CompressedData["
+1:eJxTTMoPSmViYGBQAWIQ7TV7VXXK49ADs2YCQWeyg4bmBga1uaEHGEAgIcVh
+3pL11/a7hR44ewYIdFIdfjgrKU97EQJRz5nmkCIiuvt4IJR/M83B6qBHZfmS
+YAi/Mt1BuNRgzZr/gXC+5vPuvdeDAg8Yg4ByhsOplCbtrDSo/M8MBzMlCXZx
+k0CIfXcyHeoKV3pFnw2AyK/McljkyDWP6WgAxH0bsh2Wvpi0e6ZFAER9To6D
+HvO5ICNVqLxBroO9VenTzTpQPkOeg4TMqa/REf4H0kBALN/BWiZ26e7XflD5
+AofkgnueV0/7QuTrChwWXHfhNo2Gmn+l1KE/bOuSxZf9Ieo9yhyK/qmJKLlA
+9R8oc7D9r+MzNdcb4r/mMofK01f7fc95wuVvLtp968AdN4j5/8ocqpr4WCZt
+hvLryh1OP9oybUe7G0Q/c4XD3vyat5HTIx3A8nYFDmyRCTeveUQ6QOIr3+HA
+gycnplyMcID4P89BY/eXrkM9ERD103Idrl3V294aDpWfk+Nw6uFkPxWuCAdY
++J1IOLpy2tlwB1j4msvGTJ2vFOYAtt85zcHbXK/jrSaUn5zq4M7qt43xbihE
+fWWKAwASaf3y
+       "]]}, {}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.5, 0.75, 0.125], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-87.553008, 156.3}, {-81.2778156, 
+       182.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.5, 0.75, 0.125], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-81.2778156, 182.8}, {-69.29441775, 
+       193.1}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.5, 0.75, 0.125], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-69.29441775, 193.1}, {-59.59244655, 
+       263.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], Opacity[0.125], 
+      LineBox[{{-59.59244655, 263.9}, {-65.42511255, 
+       349.3}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.5, 0.75, 0.125], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-65.42511255, 349.3}, {-60.53229, 
+       364.}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.5, 0.75, 0.125], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-60.53229, 364.}, {-54.8561187, 
+       360.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.5, 0.75, 0.125], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-54.8561187, 360.2}, {-45.72463545, 
+       367.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.5, 0.75, 0.125], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-45.72463545, 367.9}, {-45.0603207, 
+       384.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], Opacity[0.125], 
+      LineBox[{{-45.0603207, 384.2}, {102.36486375, 
+       259.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.5, 0.75, 0.125], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{102.36486375, 259.9}, {87.4532295, 
+       163.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, 
+     {RGBColor[0, 0, 0], PointSize[0.012833333333333334`], AbsoluteThickness[
+      1.6], PointBox[{{-87.553008, 156.3}, {-81.2778156, 
+       182.8}, {-69.29441775, 193.1}, {-59.59244655, 263.9}, {-65.42511255, 
+       349.3}, {-60.53229, 364.}, {-54.8561187, 360.2}, {-45.72463545, 
+       367.9}, {-45.0603207, 384.2}, {102.36486375, 259.9}, {87.4532295, 
+       163.8}}]}, {}}, {}, {}, {{}, {}}}},
+  AspectRatio->2,
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0., 0.},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{-87.553008, 102.36486375}, {0., 384.2}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.694634993441119*^9, {3.694635044005274*^9, 3.6946350705082164`*^9}, 
+   3.6946366085348687`*^9, 3.694663852905681*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {{}, 
+     {RGBColor[1, 1, 1], PointSize[0.012833333333333334`], AbsoluteThickness[
+      1.6], PointBox[CompressedData["
+1:eJxTTMoPSmViYGBQAWIQ7TV7VXXK49ADs2YCQWeyg4bmBga1uaEHGEAgIcVh
+3pL11/a7hR44ewYIdFIdfjgrKU97EQJRz5nmkCIiuvt4IJR/M83B6qBHZfmS
+YAi/Mt1BuNRgzZr/gXC+5vPuvdeDAg8Yg4ByhsOplCbtrDSo/M8MBzMlCXZx
+k0CIfXcyHeoKV3pFnw2AyK/McljkyDWP6WgAxH0bsh2Wvpi0e6ZFAER9To6D
+HvO5ICNVqLxBroO9VenTzTpQPkOeg4TMqa/REf4H0kBALN/BWiZ26e7XflD5
+AofkgnueV0/7QuTrChwWXHfhNo2Gmn+l1KE/bOuSxZf9Ieo9yhyK/qmJKLlA
+9R8oc7D9r+MzNdcb4r/mMofK01f7fc95wuVvLtp968AdN4j5/8ocqpr4WCZt
+hvLryh1OP9oybUe7G0Q/c4XD3vyat5HTIx3A8nYFDmyRCTeveUQ6QOIr3+HA
+gycnplyMcID4P89BY/eXrkM9ERD103Idrl3V294aDpWfk+Nw6uFkPxWuCAdY
++J1IOLpy2tlwB1j4msvGTJ2vFOYAtt85zcHbXK/jrSaUn5zq4M7qt43xbihE
+fWWKAwASaf3y
+       "]]}, {}}, {}, {}, {{}, {}}}, {{}, {{}, 
+     {RGBColor[1, 1, 1], PointSize[0.012833333333333334`], AbsoluteThickness[
+      1.6], PointBox[CompressedData["
+1:eJxTTMoPSmViYGDQBGIQ/ersip9akmEHZs0Egp3JDvKZp0X8doRC+JUpDnsa
+fHtmt4UeSAMBt1SH2NsNJWF/QiDynGkOKSKiu48HQvk30xxuP36g+/p6EIQv
+me4gXGqwZs3/QKh56Q5Nj43ysj4EQsxLy3CQkFuw4OexwAPGIOCc6RBg9pQr
+PzvwAAMIGGQ5hN7/6cqpEHjg7Bkg0Ml2eJp3TP43A5Rvk+PwSW2/q/qhAKj6
+XAf9tqJFsbVQPkOew8xfV3iOBARA1N/Jc5j6UG/jC5YAiP3H8h1e8p+12XnO
+F6JeocBhfpbdj1m1UPdcLnY4t3pqSkUWlJ9c4iCYP7d+dwnU/cdKHKZ+Pnqv
+2xTm3lKH2j6T2C+foPbNKXWobis4s8kS6h6PMocDL2P3yE/xg/PnBbI0ee3z
+hpjfXOZwRnJ2utl0Dzi/fP7jxUc3u0HUT6hwMFgg/i5GItIB4r8ChwsGAvEH
+t0Q4gN0jlu/wl9uvjycfyjfLczjG8OS+k3CEA8T9uQ6rrXcrfvoQ7gBxX47D
+3LVnBSK6wyHqw7Id8l62H9+SDeNnOfRdYrC0+RLmAI6/zEyH5jVMApfuhEH0
+92Q4/Dg4T9q+Eio/M90hUEyywtMWygemB9tfooqr2aHq36Q63OFdtFXpSCjE
+PcKpDo67bmwJqgmF+McgxQEAyjMezw==
+       "]]}, {}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-87.553008, 156.3}, {-81.2778156, 
+       182.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-81.2778156, 182.8}, {-69.29441775, 
+       193.1}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-69.29441775, 193.1}, {-59.59244655, 
+       263.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-65.42511255, 349.3}, {-60.53229, 
+       364.}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-60.53229, 364.}, {-54.8561187, 
+       360.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-54.8561187, 360.2}, {-45.72463545, 
+       367.9}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-45.72463545, 367.9}, {-45.0603207, 
+       384.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{102.36486375, 259.9}, {95.21232075, 
+       213.3}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{88.5409902, 178.1}, {87.4532295, 
+       163.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, 
+     {RGBColor[0.125, 0.5, 0.75], PointSize[0.012833333333333334`], 
+      AbsoluteThickness[1.6], 
+      PointBox[{{-87.553008, 156.3}, {-81.2778156, 182.8}, {-69.29441775, 
+       193.1}, {-59.59244655, 263.9}, {-65.42511255, 349.3}, {-60.53229, 
+       364.}, {-54.8561187, 360.2}, {-45.72463545, 367.9}, {-45.0603207, 
+       384.2}, {102.36486375, 259.9}, {95.21232075, 213.3}, {88.5409902, 
+       178.1}, {87.4532295, 163.8}}]}, {}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-88.393248, 157.8}, {-81.2778156, 
+       182.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-81.2778156, 182.8}, {-71.9949141, 
+       187.8}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-71.9949141, 187.8}, {-64.0767024, 
+       254.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-64.0767024, 254.2}, {-59.615028, 
+       258.}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-69.9625836, 317.2}, {-64.901538, 
+       356.5}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-64.901538, 356.5}, {-49.1813478, 
+       360.2}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{-49.1813478, 360.2}, {-45.404469, 
+       393.}}]}}, {}, {}, {{}, {}}}, {{}, {{}, {}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.019444444444444445`], 
+      AbsoluteThickness[1.6], 
+      LineBox[{{100.380672, 256.}, {85.942548, 
+       161.5}}]}}, {}, {}, {{}, {}}}, {{}, {{}, 
+     {RGBColor[1, 0.25, 0], PointSize[0.012833333333333334`], 
+      AbsoluteThickness[1.6], 
+      PointBox[{{-88.393248, 157.8}, {-81.2778156, 182.8}, {-71.9949141, 
+       187.8}, {-64.0767024, 254.2}, {-59.615028, 258.}, {-69.9625836, 
+       317.2}, {-64.901538, 356.5}, {-49.1813478, 360.2}, {-45.404469, 
+       393.}, {100.380672, 256.}, {85.942548, 
+       161.5}}]}, {}}, {}, {}, {{}, {}}}},
+  AspectRatio->2,
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0., 0.},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 1, 2][#]& )[
+         Part[#, 1]], 
+        (Part[{{Identity, Identity}, {Identity, Identity}}, 2, 2][#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{-87.553008, 102.36486375}, {0., 384.2}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.694634993441119*^9, {3.694635044005274*^9, 3.6946350705082164`*^9}, 
+   3.6946366085348687`*^9, 3.6946638532007046`*^9}]
+}, Open  ]]
+},
+WindowSize->{1916, 997},
+WindowMargins->{{Automatic, -4}, {Automatic, 0}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 100160, 2705, 10049, "Input"],
+Cell[100743, 2729, 2047, 47, 447, "Output"],
+Cell[102793, 2778, 8980, 173, 447, "Output"],
+Cell[111776, 2953, 8632, 165, 447, "Output"],
+Cell[120411, 3120, 4536, 93, 447, "Output"],
+Cell[124950, 3215, 7231, 144, 447, "Output"]
+}, Open  ]]
+}
+]
+*)
+
