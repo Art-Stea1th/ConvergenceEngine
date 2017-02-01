@@ -161,9 +161,9 @@ namespace SLAM.ViewModels {
             PrevFrame = new RelayCommand(ExecutePrevFrameCommand, CanExecuteNavigationsCommand);
             ExitApplication = new RelayCommand(w => ((Window)w).Close());
 
-            ShowRaw;
-            ShowFlat;
-            ShowCurves;
+            //ShowRaw;
+            //ShowFlat;
+            //ShowCurves;
         }
 
         private void ExecuteShowRawCommand(object obj) {
