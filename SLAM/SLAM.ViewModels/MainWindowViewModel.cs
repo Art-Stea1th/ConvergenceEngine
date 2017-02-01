@@ -10,7 +10,7 @@ using Microsoft.Win32;
 namespace SLAM.ViewModels {
 
     using Helpers;
-    using Models/*.Old*/;
+    using Models;
 
 
     public class MainWindowViewModel : ViewModelBase {
@@ -35,6 +35,10 @@ namespace SLAM.ViewModels {
         private ICommand nextFrameCommand;
         private ICommand prevFrameCommand;
         private ICommand exitApplicationCommand;
+
+        private ICommand showRawCommand;
+        private ICommand showFlatCommand;
+        private ICommand showCurvesCommand;
 
         public Point[] MapViewportData {
             get { return mapViewportData; }
@@ -90,6 +94,20 @@ namespace SLAM.ViewModels {
             get { return exitApplicationCommand; }
             private set { Set(ref exitApplicationCommand, value); }
         }
+                
+        public ICommand ShowRaw {
+            get { return showRawCommand; }
+            private set { Set(ref showRawCommand, value); }
+        }
+        public ICommand ShowFlat {
+            get { return showFlatCommand; }
+            private set { Set(ref showFlatCommand, value); }
+        }
+        public ICommand ShowCurves {
+            get { return showCurvesCommand; }
+            private set { Set(ref showCurvesCommand, value); }
+        }
+
 
         public MainWindowViewModel() {
             model = new Model(UpdateUI);
@@ -142,6 +160,18 @@ namespace SLAM.ViewModels {
             NextFrame = new RelayCommand(ExecuteNextFrameCommand, CanExecuteNavigationsCommand);
             PrevFrame = new RelayCommand(ExecutePrevFrameCommand, CanExecuteNavigationsCommand);
             ExitApplication = new RelayCommand(w => ((Window)w).Close());
+
+            ShowRaw;
+            ShowFlat;
+            ShowCurves;
+        }
+
+        private void ExecuteShowRawCommand(object obj) {
+
+        }
+
+        private void ExecuteShowFlatCommand(object obj) {
+
         }
 
         private bool CanExecuteOpenFileCommand(object obj) {
@@ -200,5 +230,7 @@ namespace SLAM.ViewModels {
         private bool CanExecuteCloseFileCommand(object obj) {
             return TotalFramesCount > 0;
         }
+
+
     }
 }

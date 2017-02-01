@@ -9,7 +9,7 @@ namespace SLAM.Models.Mapping.Data {
 
     internal sealed class NavSkeleton {
 
-        private List<Point> points;
+        private List<Vector> points;
 
 
     }
