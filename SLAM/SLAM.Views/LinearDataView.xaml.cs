@@ -2,8 +2,10 @@
 
 
 namespace SLAM.Views {
-    public partial class MainWindow : Window {
-        public MainWindow() {
+
+    public partial class LinearDataView : Window {
+
+        public LinearDataView() {
             InitializeComponent();
         }
     }

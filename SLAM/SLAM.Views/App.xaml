@@ -1,24 +1,8 @@
-﻿<Application
-    x:Class="SLAM.Views.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:SLAM.Views"
-    xmlns:cv="clr-namespace:SLAM.Views.Converters"
-    xmlns:cc="clr-namespace:SLAM.Views.Controls.Custom"
-    xmlns:vm="clr-namespace:SLAM.ViewModels;assembly=SLAM.ViewModels"
-    StartupUri="MainWindow.xaml">
+﻿<Application x:Class="SLAM.Views.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SLAM.Views">
     <Application.Resources>
 
-        <cv:IntToBoolConverter x:Key="IntToBool"/>
-        <cv:BoolInverseConverter x:Key="BoolInverse"/>
-        <cv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
-        <cv:BoolToVisibilityConverterInverse x:Key="BoolToVisibilityInverse"/>
-        <cv:IntToVisibilityConverter x:Key="IntToVisibility"/>
-        <cv:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
-
-        <cc:PointsViewport x:Key="MathDataViewport"/>
-
-        <vm:MainWindowViewModel x:Key="MainWindowViewModel"/>
-        
     </Application.Resources>
 </Application>
