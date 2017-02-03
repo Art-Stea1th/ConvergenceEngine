@@ -82,7 +82,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\WindowManager.cs" />
     <Compile Include="LinearDataView.xaml.cs">
       <DependentUpon>LinearDataView.xaml</DependentUpon>
     </Compile>

@@ -23,20 +23,16 @@ namespace SLAM.ViewModels {
         }
 
         public MainViewModel() {
-            //windowManager = new WindowManager();
             linearDataWindowViewModel = new LinearDataViewModel();
             NewWindow = new RelayCommand(ExecuteNewWindowCommand, CanExecuteNewWindowCommand);
         }
 
         private void ExecuteNewWindowCommand(object obj) {
-            MessageBox.Show("Execute NewWindowCommand Success!",
-                            "NewWindowCommand",
-                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            //windowManager.ShowWindow(linearDataWindowViewModel);
+            CreateWindow(linearDataWindowViewModel, this);
         }
 
         private bool CanExecuteNewWindowCommand(object obj) {
-            return true;
+            return !WindowExists(linearDataWindowViewModel);
         }
     }
 }
