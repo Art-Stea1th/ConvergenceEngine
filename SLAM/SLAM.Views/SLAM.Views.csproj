@@ -80,14 +80,27 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppWindows\WindowManager.cs" />
+    <Compile Include="AppWindows\RawDataWindow.xaml.cs">
+      <DependentUpon>RawDataWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LinearDataView.xaml.cs">
-      <DependentUpon>LinearDataView.xaml</DependentUpon>
+    <Compile Include="AppWindows\LinearDataWindow.xaml.cs">
+      <DependentUpon>LinearDataWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
+    <Compile Include="AppWindows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppWindows\PointsDataWindow.xaml.cs">
+      <DependentUpon>PointsDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Custom\PointRenderer.cs" />
+    <Compile Include="Controls\Custom\PointsViewport.cs" />
+    <Compile Include="Converters\BoolInverseConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntToBoolConverter.cs" />
+    <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -121,11 +134,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="LinearDataView.xaml">
+    <Page Include="AppWindows\LinearDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainView.xaml">
+    <Page Include="AppWindows\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppWindows\PointsDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppWindows\RawDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,167 @@
+﻿<Window x:Class="SLAM.Views.AppWindows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="clr-namespace:SLAM.Views.Controls"
+        xmlns:cc="clr-namespace:SLAM.Views.Controls.Custom"
+        Title="SLAM On Kinect Data: Preview Window"
+        Width="660" Height="540">
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top"
+              Padding="8,4">
+            <MenuItem Header="FILE"
+                      Margin="0,0,4,0">
+                <MenuItem Header="Open"
+                          Command="{Binding OpenFile}"/>
+                <MenuItem Header="Close"
+                          Command="{Binding CloseFile}"/>
+                <Separator/>
+                <MenuItem Header="Exit"
+                          Command="{Binding ExitApplication}"
+                          CommandParameter="{Binding
+                    RelativeSource={RelativeSource FindAncestor,
+                    AncestorType={x:Type Window}}}"/>
+            </MenuItem>
+            <MenuItem Header="VIEW"
+                      Margin="4,0,4,0">
+                <MenuItem Header="Raw"
+                          Command="{Binding ShowRawDataWindow}"/>
+                <MenuItem Header="Points"
+                          Command="{Binding ShowPointsDataWindow}"/>
+                <MenuItem Header="Lines"
+                          Command="{Binding ShowLinearDataWindow}"/>
+            </MenuItem>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom"
+                   Padding="8,2">
+            <StatusBarItem>
+                <TextBlock
+                    Text="Current File: "
+                    Visibility="{Binding TotalFramesCount,
+                    Converter={StaticResource IntToVisibility}}"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding CurrentFileName}"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid DockPanel.Dock="Left"
+              Margin="8,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                </Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                </Style>
+            </Grid.Resources>
+
+            <cc:PointsViewport
+                Grid.Column="0"
+                Grid.Row="0"
+                Margin="0,0,2,0"                
+                Data="{Binding MapViewportData}"
+                AxisVisible="False"/>
+
+            <Grid
+                Grid.Column="0"
+                Grid.Row="2"
+                Grid.ColumnSpan="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    Style="{x:Null}"
+                    Grid.Column="0"
+                    Visibility="{Binding TotalFramesCount,
+                    Converter={StaticResource IntToVisibility}}"
+                    MinWidth="32"
+                    Margin="0,8,8,8">
+                    <TextBlock
+                        Text="{Binding ElementName=FrameSlider, Path=Value}"                        
+                        HorizontalAlignment="Center"
+                        Visibility="{Binding ModelReady,
+                        Converter={StaticResource BoolToVisibility}}"/>
+                </Border>
+
+                <RepeatButton
+                    Grid.Column="1"
+                    Content="PREV"
+                    Command="{Binding PrevFrame}"
+                    Visibility="{Binding ModelReady,
+                    Converter={StaticResource BoolToVisibility}}"
+                    Padding="8,2"
+                    Margin="0,4"/>
+
+                <Slider
+                    Name="FrameSlider"
+                    Grid.Column="2"
+                    Margin="8"
+                    Value="{Binding CurrentFrame}"
+                    Maximum="{Binding TotalFramesCount}"
+                    IsEnabled="{Binding TotalFramesCount,
+                    Converter={StaticResource IntToBool}}"/>
+
+                <RepeatButton
+                    Grid.Column="3"
+                    Content="NEXT"
+                    Command="{Binding NextFrame}"
+                    Visibility="{Binding ModelReady,
+                    Converter={StaticResource BoolToVisibility}}"
+                    Padding="8,2"
+                    Margin="0,4"/>
+
+                <Border
+                    Style="{x:Null}"
+                    Grid.Column="4"
+                    Visibility="{Binding TotalFramesCount,
+                    Converter={StaticResource IntToVisibility}}"
+                    MinWidth="32"
+                    Margin="8,8,0,8">
+                    <TextBlock
+                        Text="{Binding TotalFramesCount}"                        
+                        HorizontalAlignment="Center"
+                        Visibility="{Binding ModelReady,
+                        Converter={StaticResource BoolToVisibility}}"/>
+                </Border>
+
+                <Grid
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    Margin="0,4"
+                    Visibility="{Binding ModelReady,
+                    Converter={StaticResource BoolToVisibilityInverse}}">
+
+                    <ProgressBar
+                        IsIndeterminate="{Binding ModelReady,
+                        Converter={StaticResource BoolInverse}}"/>
+
+                    <TextBlock
+                        Margin="4"
+                        Text="{Binding ModelCurrentState}"
+                        HorizontalAlignment="Center"/>
+                </Grid>
+            </Grid>
+
+        </Grid>
+    </DockPanel>
+</Window>
