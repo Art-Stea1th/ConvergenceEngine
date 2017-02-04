@@ -80,7 +80,7 @@
     <Compile Include="Mapping\ComplexMapperResources\DataBeautifier.cs" />
     <Compile Include="Mapping\Data\Frame.cs" />
     <Compile Include="Mapping\Data\Map.cs" />
-    <Compile Include="Mapping\Data\NavSkeleton.cs" />
+    <Compile Include="Mapping\Data\Navigation\Skeleton.cs" />
     <Compile Include="Mapping\ComplexMapper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

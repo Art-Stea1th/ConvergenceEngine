@@ -19,10 +19,10 @@ namespace SLAM.Views.Converters {
                 foreach (var segment in segments) {
 
                     if (segment != null) {
-                        Point startPoint = segment.First();
+                        Point startPoint = FlipVertical(segment.First());
                         List<LineSegment> lineSegments = new List<LineSegment>();
                         foreach (var point in segment.Skip(1)) {
-                            lineSegments.Add(new LineSegment(point, true));
+                            lineSegments.Add(new LineSegment(FlipVertical(point), true));
                         }
                         PathFigure figure = new PathFigure(startPoint, lineSegments, false);
                         geometry.Figures.Add(figure);
@@ -35,6 +35,10 @@ namespace SLAM.Views.Converters {
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             throw new NotImplementedException();
+        }
+
+        private Point FlipVertical(Point point) {
+            return new Point(point.X, -point.Y);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SLAM.ViewModels.AppWindows {
         }
 
         public override void UpdateFrom(Model model) {
-            PointsData = model.GetActualTopDepthFrame();
+            PointsData = model.GetActualPointsFrame();
         }
     }
 }

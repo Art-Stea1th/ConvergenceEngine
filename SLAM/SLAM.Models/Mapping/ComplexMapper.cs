@@ -25,8 +25,8 @@ namespace SLAM.Models.Mapping {
             Point[] buffer;
             DataProvider.GetNextFrameTo(out buffer);
 
-            //ResultMap = new List<Point>(buffer);
-            //return;
+            ResultMap = new List<Point>(buffer);
+            return;
 
             currFrame =
                 dataBeautifier.RemoveArtifacts(

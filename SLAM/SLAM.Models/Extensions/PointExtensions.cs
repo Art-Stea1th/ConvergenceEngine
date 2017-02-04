@@ -1,6 +1,6 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Windows;
+
 
 namespace SLAM.Models.Extensions {
 
@@ -8,9 +8,15 @@ namespace SLAM.Models.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double DistanceTo(this Point p, Point point) {
-            return Math.Sqrt(
-                Math.Pow(point.X - p.X, 2.0) +
-                Math.Pow(point.Y - p.Y, 2.0));
+            return (point - p).Length;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double DistanceTo(this Point pointC, Point pointA, Point pointB) {
+            Vector ab = pointB - pointA;
+            Vector ac = pointC - pointA;
+            ab.Normalize();
+            return (pointC - (Vector.Multiply(ab, ac) * ab + pointA)).Length;
         }
     }
 }

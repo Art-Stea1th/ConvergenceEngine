@@ -8,10 +8,12 @@ using System.Windows;
 
 namespace SLAM.Models.Mapping.Data {
 
+    using Navigation;
+
     internal sealed class Frame : IEnumerable<Point> {
 
         private List<Point> points;
-        private NavSkeleton navSkeleton;
+        private Skeleton navSkeleton;
 
 
 

@@ -9,6 +9,7 @@ namespace SLAM.Models {
     using IO.Readers;
     using IO.Writers;
     using Mapping;
+    using System.Collections.Generic;
 
     public class Model : IDisposable {
 
@@ -73,6 +74,18 @@ namespace SLAM.Models {
             reader?.Stop();
         }
 
+        public byte[] GetActualRawFrame() {
+            return framesProvider.GetActualRawFrame();
+        }
+
+        public Point[] GetActualPointsFrame() {
+            return framesProvider.GetActualPointsFrame();
+        }
+
+        public IEnumerable<IEnumerable<Point>> GetActualLinearFrame() {
+            return framesProvider.GetActualLinearFrame();
+        }
+
         public Point[] GetActualMapFrame() {
             return framesProvider.GetActualMapFrame();
         }
@@ -88,17 +101,8 @@ namespace SLAM.Models {
             return getActualMapFrame;
         }
 
-        public Point[] GetActualTopDepthFrame() {
-            return framesProvider.GetActualTopDepthFrame();
-        }
-
-        public byte[] GetActualFrontDepthFrame() {
-            return framesProvider.GetActualFrontDepthFrame();
-        }
-
         public void Dispose() {
             reader?.Dispose();
-
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 
@@ -7,6 +9,7 @@ namespace SLAM.Models {
 
     using IO.Readers;
     using Mapping;
+    using Mapping.Data.Navigation;
 
     internal sealed class FramesProvider {
 
@@ -54,19 +57,7 @@ namespace SLAM.Models {
             
         }
 
-        internal Point[] GetActualMapFrame() {
-            Initialize();
-            return mapper.ResultMap.ToArray();
-        }
-
-        internal Point[] GetActualTopDepthFrame() {
-            Initialize();
-            Point[] nextFrameData;
-            dataProvider.GetNextFrameTo(out nextFrameData);
-            return nextFrameData;
-        }
-
-        internal byte[] GetActualFrontDepthFrame() {
+        internal byte[] GetActualRawFrame() {
             Initialize();
 
             byte[] nextRawFrameData;
@@ -112,6 +103,29 @@ namespace SLAM.Models {
             viewportByteArray[++startIndex] = color.G;
             viewportByteArray[++startIndex] = color.R;
             viewportByteArray[++startIndex] = color.A;
+        }
+
+        internal Point[] GetActualPointsFrame() {
+            Initialize();
+            Point[] nextFrameData;
+            dataProvider.GetNextFrameTo(out nextFrameData);
+            return nextFrameData;
+        }
+
+        internal List<List<Point>> GetActualLinearFrame() {
+            Initialize();
+
+            Point[] nextFrameData;
+            dataProvider.GetNextFrameTo(out nextFrameData);
+
+            Skeleton ns = new Skeleton(nextFrameData);
+            return ns.Segments;
+            //throw new NotImplementedException();
+        }
+
+        internal Point[] GetActualMapFrame() {
+            Initialize();
+            return mapper.ResultMap.ToArray();
         }
     }
 }

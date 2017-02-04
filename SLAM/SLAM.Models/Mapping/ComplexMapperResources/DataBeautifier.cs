@@ -35,14 +35,14 @@ namespace SLAM.Models.Mapping.ComplexMapperResources {
 
         public IEnumerable<Point> NormalizeFrame(IEnumerable<Point> points, double threshold) {
 
-            Point lastPoint = points.First();
-            yield return lastPoint;
+            Point firstPoint = points.First();
+            yield return firstPoint;
 
-            foreach (var point in points) {
+            foreach (var point in points.Skip(1)) {
                 
-                if (lastPoint.DistanceTo(point) >= threshold) {
+                if (firstPoint.DistanceTo(point) >= threshold) {
                     yield return point;
-                    lastPoint = point;
+                    firstPoint = point;
                 }
             }
         }

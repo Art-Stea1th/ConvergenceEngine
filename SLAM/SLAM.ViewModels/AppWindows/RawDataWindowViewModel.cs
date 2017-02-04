@@ -26,7 +26,7 @@ namespace SLAM.ViewModels.AppWindows {
         }
 
         public override void UpdateFrom(Model model) {
-            byte[] rawPixels = model.GetActualFrontDepthFrame();
+            byte[] rawPixels = model.GetActualRawFrame();
 
             if (rawPixels != null) {
                 rawData.WritePixels(new Int32Rect(0, 0, 640, 480), rawPixels, rawData.PixelWidth * sizeof(int), 0);
