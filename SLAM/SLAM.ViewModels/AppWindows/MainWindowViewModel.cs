@@ -51,6 +51,7 @@ namespace SLAM.ViewModels.AppWindows {
             MapViewportData = null;
             rawDataWindowViewModel.Initialize();
             pointsDataWindowViewModel.Initialize();
+            linearDataWindowViewModel.Initialize();
         }
 
         protected override async void UpdateViewports() {
@@ -64,6 +65,7 @@ namespace SLAM.ViewModels.AppWindows {
                 MapViewportData = await model.GetActualMapFrameAsync();
                 rawDataWindowViewModel.UpdateFrom(model);
                 pointsDataWindowViewModel.UpdateFrom(model);
+                linearDataWindowViewModel.UpdateFrom(model);
 
                 lastTimeOfFrameUpdate = DateTime.Now;
             }

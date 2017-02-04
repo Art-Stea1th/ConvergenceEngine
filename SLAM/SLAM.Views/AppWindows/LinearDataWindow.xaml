@@ -3,6 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:cc="clr-namespace:SLAM.Views.Controls.Custom"
         Title="{Binding Title}" Width="480" Height="480">
-    <Grid>
+    <Grid Background="Black">
+        <Viewbox>
+            <Path
+                Data="{Binding Segments,
+                Converter={StaticResource PointSegmentsToPath}}"/>
+        </Viewbox>
     </Grid>
 </Window>

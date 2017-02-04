@@ -11,6 +11,7 @@
         <cv:BoolToVisibilityConverterInverse x:Key="BoolToVisibilityInverse"/>
         <cv:IntToVisibilityConverter x:Key="IntToVisibility"/>
         <cv:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
+        <cv:PointSegmentsToPathConverter x:Key="PointSegmentsToPath"/>
 
         <Style TargetType="{x:Type Viewbox}">
             <Setter Property="Stretch" Value="Uniform"/>
@@ -31,8 +32,7 @@
             <Setter Property="Background" Value="#0F0F0F"/>
             <Setter Property="Proportions" Value="4, 3"/>
             <Setter Property="DataColor" Value="Red"/>
-            <Setter Property="AxisColor" Value="#3F3F3F"/>            
-            <!--<Setter Property="AxisVisible" Value="False"/>-->
+            <Setter Property="AxisColor" Value="#3F3F3F"/>
         </Style>
     </Application.Resources>
 </Application>
