@@ -8,63 +8,74 @@ using System.Windows;
 namespace SLAM.Models.Mapping.Data.Navigation {
 
     using Extensions;
+    using System.Runtime.CompilerServices;
 
     internal sealed class Skeleton {
 
         private IList<Point> points;
-
-        //private double threshold = 1.0;
-        public List<Tuple<int, int>> segmentIndexes;
-        //private List<List<Point>> segments;
-
-        internal List<List<Point>> Segments {
-            get {
-                List<List<Point>> result = new List<List<Point>>();
-                foreach (var segment in segmentIndexes) {
-                    result.Add(new List<Point> { points[segment.Item1], points[segment.Item2] });
-                }
-                return result;
-            }
-        }
+        internal IList<IList<Point>> Segments { get { return QuickInterpolation(points); } }
 
         internal Skeleton(IList<Point> points) {
-            BuildFrom(points);
-        }
-
-        private void BuildFrom(IList<Point> points) {
             this.points = points;
-            segmentIndexes = new List<Tuple<int, int>>();
-            FindInterpolationIndexes(/*points,*/ 0, points.Count - 1);
-            segmentIndexes.Sort();
         }
 
-        private void FindInterpolationIndexes(/*IList<Point> points,*/ int firstIndex, int lastIndex) { // quick impl.
+        private IList<IList<Point>> QuickInterpolation(IList<Point> sequence) {
 
-            if (!segmentIndexes.Exists(si => si.Item1 == firstIndex && si.Item2 == lastIndex)) {
-                segmentIndexes.Add(new Tuple<int, int>(firstIndex, lastIndex));
+            List<IList<Point>> result = new List<IList<Point>>();
+
+            var pair = SplitByMaxPoint(sequence);
+
+            if (pair == null) {
+                result.Add(new List<Point> { sequence.First(), sequence.Last() }); // <--- Linear
             }
+            else {
+                result.AddRange(QuickInterpolation(pair.Item1));
+                result.AddRange(QuickInterpolation(pair.Item2));
+            }
+            return result;
+        }
 
-            double maxDistance = 0.0;
-            int maxDistancePointIndex = 0;
+        private Tuple<IList<Point>, IList<Point>> SplitByMaxPoint(IList<Point> sequence) {
 
-            for (int i = firstIndex; i < lastIndex; ++i) {
-                double currentDistance = points[i].DistanceTo(points[firstIndex], points[lastIndex]);
+            if (sequence.Count >= 4) {
+                var maxDistancePointIndex = FindIndexOfMaxDistancePoint(sequence);
+                var maxDistancePoint = sequence[maxDistancePointIndex];
+                var maxDistance = sequence[maxDistancePointIndex].DistanceTo(sequence.First(), sequence.Last());
+
+                if (maxDistance > PercentOfNumber(2, maxDistancePoint.Y)) {
+                    var left = sequence.TakeWhile((p, i) => i <= maxDistancePointIndex).ToList();
+                    var right = sequence.SkipWhile((p, i) => i < maxDistancePointIndex).ToList();
+                    return new Tuple<IList<Point>, IList<Point>>(left, right);
+                }
+            }
+            return null;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private double PercentOfNumber(double percent, double number) {
+            return number * 0.01 * percent;
+        }
+
+        private int FindIndexOfMaxDistancePoint(IList<Point> sequence) {
+
+            var maxDistance = 0.0;
+            var maxDistancePointIndex = 0;
+
+            for (int i = 0; i < sequence.Count; ++i) {
+                double currentDistance = sequence[i].DistanceTo(sequence.First(), sequence.Last());
                 if (currentDistance > maxDistance) {
                     maxDistance = currentDistance;
                     maxDistancePointIndex = i;
                 }
             }
+            return maxDistancePointIndex;
+        }
 
-            if (maxDistance >= points[maxDistancePointIndex].Y * 0.02) {
-                segmentIndexes.RemoveAll(si => si.Item1 == firstIndex && si.Item2 == lastIndex);
+        private void RemoveBadSegments() { }
 
-                segmentIndexes.Add(new Tuple<int, int>(firstIndex, maxDistancePointIndex));
-                segmentIndexes.Add(new Tuple<int, int>(maxDistancePointIndex, lastIndex));
-
-                FindInterpolationIndexes(/*points,*/ firstIndex, maxDistancePointIndex);
-                FindInterpolationIndexes(/*points,*/ maxDistancePointIndex, lastIndex);
-            }
-            //segmentIndexes.RemoveAll(i => points[i.Item1].DistanceTo(points[i.Item2]) / (i.Item2 - i.Item1) > points[maxDistancePointIndex].Y * 0.03);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private double AveragePointsDestiny(ICollection<Point> points) {
+            return points.First().DistanceTo(points.Last()) / points.Count;
         }
     }
 }
