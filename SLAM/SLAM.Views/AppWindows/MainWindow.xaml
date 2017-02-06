@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:cc="clr-namespace:SLAM.Views.Controls.Custom"
         Title="SLAM On Kinect Data: Preview Window"
-        Width="660" Height="540">
+        Width="660" Height="540" MinWidth="396" MinHeight="124">
     <DockPanel>
 
         <Menu DockPanel.Dock="Top"

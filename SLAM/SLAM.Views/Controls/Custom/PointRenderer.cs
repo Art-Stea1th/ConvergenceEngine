@@ -47,7 +47,7 @@ namespace SLAM.Views.Controls.Custom {
             OffsetY = max.Y + 1;
 
             width = ((int)OffsetX) * 2 + 1;
-            height = ((int)OffsetY) * 2 + 1;
+            height = ((int)OffsetY) /** 2 + 1*/;
         }
 
         private ImageSource CreateBitmap(Point[] points, Color color) {
@@ -58,7 +58,7 @@ namespace SLAM.Views.Controls.Custom {
             byte[] fullFrameBuffer = new byte[width * height * sizeof(int)];
 
             foreach (var point in points) {
-                point.Offset(OffsetX, OffsetY);
+                point.Offset(OffsetX, /*OffsetY*/0);
                 int index = GetLinearIndex((int)point.X, height - ((int)point.Y), width);
                 SetColorToViewportByteArray(fullFrameBuffer, index * sizeof(int), color);
             }

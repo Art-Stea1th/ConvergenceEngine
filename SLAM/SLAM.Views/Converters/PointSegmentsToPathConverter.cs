@@ -13,9 +13,20 @@ namespace SLAM.Views.Converters {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 
             var segments = (IEnumerable<IEnumerable<Point>>)value;
+            PathGeometry geometry = new PathGeometry();
+            
+            // Border
+            geometry.Figures.Add(new PathFigure(
+                        new Point(-224, -60),
+                        new List<LineSegment> {
+                            new LineSegment(new Point(224, -60), true),
+                            new LineSegment(new Point(224, -410), true),
+                            new LineSegment(new Point(-224, -410), true),
+                            new LineSegment(new Point(-224, -60), true)
+                        }, false));
+            
+            // Linear Data
             if (segments != null) {
-
-                PathGeometry geometry = new PathGeometry();
                 foreach (var segment in segments) {
 
                     if (segment != null) {
@@ -28,9 +39,8 @@ namespace SLAM.Views.Converters {
                         geometry.Figures.Add(figure);
                     }                    
                 }
-                return geometry;
             }
-            return null;
+            return geometry;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

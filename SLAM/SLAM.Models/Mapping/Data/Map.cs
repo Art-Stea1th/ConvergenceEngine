@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 
 namespace SLAM.Models.Mapping.Data {
 
+    using Navigation;
+
     internal sealed class Map {
 
-        private List<Frame> frames;
+        private Segmenter segmenter;
+        private List<PointSequence> frames;
 
+        internal void AddFrame(PointSequence frame) {
+
+        }
+
+        internal Map() {
+            frames = new List<PointSequence>();
+        }
     }
 }
