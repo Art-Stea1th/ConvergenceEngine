@@ -112,7 +112,7 @@ namespace SLAM.Models {
             return nextFrameData;
         }
 
-        internal IList<IList<Point>> GetActualLinearFrame() {
+        internal IEnumerable<IEnumerable<Point>> GetActualLinearFrame() {
             Initialize();
 
             Point[] nextFrameData;

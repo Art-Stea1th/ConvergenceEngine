@@ -78,6 +78,7 @@
     <Compile Include="FramesProvider.cs" />
     <Compile Include="Mapping\BaseMapper.cs" />
     <Compile Include="Mapping\ComplexMapperResources\DataBeautifier.cs" />
+    <Compile Include="Mapping\Data\Navigation\Approximator.cs" />
     <Compile Include="Mapping\Data\PointSequence.cs" />
     <Compile Include="Mapping\Data\Map.cs" />
     <Compile Include="Mapping\Data\Navigation\Segmenter.cs" />

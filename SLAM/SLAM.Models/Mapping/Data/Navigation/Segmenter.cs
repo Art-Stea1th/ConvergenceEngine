@@ -11,7 +11,9 @@ namespace SLAM.Models.Mapping.Data.Navigation {
 
     internal sealed class Segmenter {
 
-        internal IList<IList<Point>> ToSegment(IList<Point> sequence) {
+        private Approximator approximator = new Approximator();
+
+        internal ICollection<IList<Point>> ToSegment(IList<Point> sequence) {
 
             List<IList<Point>> result = new List<IList<Point>>();
 
@@ -19,7 +21,9 @@ namespace SLAM.Models.Mapping.Data.Navigation {
 
             if (pair == null) {
                 if (IsValidSequence(sequence.First(), sequence.Last(), sequence.Count)) {
-                    result.Add(new List<Point> { sequence.First(), sequence.Last() }); // <--- Linear
+                    //result.Add(new List<Point> { sequence.First(), sequence.Last() });       // <--- Linear
+                    var resultLine = approximator.ApproximateByOrdinaryLeastSquares(sequence); // <--- OLS
+                    result.Add(new List<Point> { resultLine.Item1, resultLine.Item2 });
                 }
             }
             else {
