@@ -58,7 +58,7 @@
                                 Data="M-1,0 L1,0 M0,0 L0,-1"/>
 
                             <Label
-                                Grid.Row="1"
+                                Grid.Row="2"
                                 Grid.Column="2"
                                 Style="{StaticResource AxisValuesStyle}"
                                 x:Name="PART_XPositive"
@@ -66,7 +66,7 @@
                                 VerticalContentAlignment="Center"/>
 
                             <Label
-                                Grid.Row="1"
+                                Grid.Row="2"
                                 Grid.Column="0"
                                 Style="{StaticResource AxisValuesStyle}"
                                 x:Name="PART_XNegative"
@@ -81,13 +81,13 @@
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Bottom"/>
 
-                            <Label
+                            <!--<Label
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 Style="{StaticResource AxisValuesStyle}"
                                 x:Name="PART_YNegative"
                                 HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Top"/>
+                                VerticalContentAlignment="Top"/>-->
                         </Grid>
                     </Border>
                 </ControlTemplate>

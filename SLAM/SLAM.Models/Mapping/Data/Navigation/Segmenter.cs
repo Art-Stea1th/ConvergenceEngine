@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace SLAM.Models.Mapping.Data.Navigation {
 
-    using Extensions;    
+    using Extensions;
 
     internal sealed class Segmenter {
 
@@ -17,25 +17,34 @@ namespace SLAM.Models.Mapping.Data.Navigation {
 
             List<IList<Point>> result = new List<IList<Point>>();
 
-            var pair = SplitByMaxPoint(sequence);
+            if (!sequence.IsNullOrEmpty()) {
+                var pair = SplitByMaxPoint(sequence);
 
-            if (pair == null) {
-                if (IsValidSequence(sequence.First(), sequence.Last(), sequence.Count)) {
-                    //result.Add(new List<Point> { sequence.First(), sequence.Last() });       // <--- Linear
-                    var resultLine = approximator.ApproximateByOrdinaryLeastSquares(sequence); // <--- OLS
-                    result.Add(new List<Point> { resultLine.Item1, resultLine.Item2 });
+                if (pair == null) {
+                    if (IsValidSequence(sequence)) {
+                        result.Add(new List<Point> { sequence.First(), sequence.Last() });       // <--- Linear
+                        //var resultLine = approximator.ApproximateByOrdinaryLeastSquares(sequence); // <--- OLS
+                        //result.Add(new List<Point> { resultLine.Item1, resultLine.Item2 });
+                    }
                 }
-            }
-            else {
-                result.AddRange(ToSegment(pair.Item1));
-                result.AddRange(ToSegment(pair.Item2));
+                else {
+                    result.AddRange(ToSegment(pair.Item1));
+                    result.AddRange(ToSegment(pair.Item2));
+                }
             }
             return result;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool IsValidSequence(Point first, Point last, int pointsCount) {
-            return first.DistanceTo(last) / pointsCount <= 3.0 ? true : false;
+        private bool IsValidSequence(ICollection<Point> sequence) {
+            var averageDistanceBetweenPoints = sequence.First().DistanceTo(sequence.Last()) / (sequence.Count - 1);
+            return averageDistanceBetweenPoints <= ExpectedDistanceBetweenPoints(sequence.Average(p => p.Y));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private double ExpectedDistanceBetweenPoints(double segmentPositionY) {
+            double a = 100.0 * (2.0 / 3.0), b = a; // magic coefficients // a=b = 100.0 * (2.0 / 3.0);
+            return (segmentPositionY - b) / a;     // y = ax + b; => x = (y - b) / a;
         }
 
         private Tuple<IList<Point>, IList<Point>> SplitByMaxPoint(IList<Point> sequence) {

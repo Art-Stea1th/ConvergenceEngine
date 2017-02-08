@@ -23,12 +23,12 @@
             </MenuItem>
             <MenuItem Header="VIEW"
                       Margin="4,0,4,0">
-                <MenuItem Header="Raw"
-                          Command="{Binding ShowRawDataWindow}"/>
-                <MenuItem Header="Points"
-                          Command="{Binding ShowPointsDataWindow}"/>
                 <MenuItem Header="Lines"
                           Command="{Binding ShowLinearDataWindow}"/>
+                <MenuItem Header="Points"
+                          Command="{Binding ShowPointsDataWindow}"/>
+                <MenuItem Header="Raw"
+                          Command="{Binding ShowRawDataWindow}"/>
             </MenuItem>
         </Menu>
 

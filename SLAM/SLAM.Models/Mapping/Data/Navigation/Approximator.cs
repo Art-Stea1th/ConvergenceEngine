@@ -20,7 +20,7 @@ namespace SLAM.Models.Mapping.Data.Navigation {
             double A = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
             double B = avgY - A * avgX;
 
-            return new Tuple<Point, Point>(new Point(p0.X, A * p0.X + B), new Point(pN.X, A * pN.X + B)); // y = ax + b
+            return new Tuple<Point, Point>(new Point(p0.X, A * p0.X + B), new Point(pN.X, A * pN.X + B));
         }
     }
 }

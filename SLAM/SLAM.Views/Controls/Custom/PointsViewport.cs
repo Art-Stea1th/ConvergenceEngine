@@ -15,7 +15,7 @@ namespace SLAM.Views.Controls.Custom {
         private const string XPositiveLabelName = "PART_XPositive";
         private const string XNegativeLabelName = "PART_XNegative";
         private const string YPositiveLabelName = "PART_YPositive";
-        private const string YNegativeLabelName = "PART_YNegative";
+        //private const string YNegativeLabelName = "PART_YNegative";
 
         private Image viewportSurface;
         private Path axis;
@@ -123,7 +123,7 @@ namespace SLAM.Views.Controls.Custom {
             xPositive = GetTemplateChild(XPositiveLabelName) as Label;
             xNegative = GetTemplateChild(XNegativeLabelName) as Label;
             yPositive = GetTemplateChild(YPositiveLabelName) as Label;
-            yNegative = GetTemplateChild(YNegativeLabelName) as Label;
+            //yNegative = GetTemplateChild(YNegativeLabelName) as Label;
             OnRender(null);
         }
 
@@ -155,23 +155,23 @@ namespace SLAM.Views.Controls.Custom {
                 xPositive.Foreground = new SolidColorBrush(DataColor);
                 xNegative.Foreground = new SolidColorBrush(DataColor);
                 yPositive.Foreground = new SolidColorBrush(DataColor);
-                yNegative.Foreground = new SolidColorBrush(DataColor);
+                //yNegative.Foreground = new SolidColorBrush(DataColor);
 
                 xPositive.Content = (int)renderer.MaxX;
                 xNegative.Content = (int)renderer.MinX;
                 yPositive.Content = (int)renderer.MaxY;
-                yNegative.Content = (int)renderer.MinY;
+                //yNegative.Content = (int)renderer.MinY;
 
                 xPositive.Visibility = Visibility.Visible;
                 xNegative.Visibility = Visibility.Visible;
                 yPositive.Visibility = Visibility.Visible;
-                yNegative.Visibility = Visibility.Visible;
+                //yNegative.Visibility = Visibility.Visible;
                 return;
             }
             xPositive.Visibility = Visibility.Collapsed;
             xNegative.Visibility = Visibility.Collapsed;
             yPositive.Visibility = Visibility.Collapsed;
-            yNegative.Visibility = Visibility.Collapsed;
+            //yNegative.Visibility = Visibility.Collapsed;
         }
     }
 }

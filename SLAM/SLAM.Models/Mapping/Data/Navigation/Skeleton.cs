@@ -15,6 +15,7 @@ namespace SLAM.Models.Mapping.Data.Navigation {
         private Segmenter segmenter;
 
         private IList<Point> points;
+
         internal IEnumerable<IEnumerable<Point>> Segments { get { return segmenter.ToSegment(points); } }
 
         internal Skeleton(IList<Point> points) {
