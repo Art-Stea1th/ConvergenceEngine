@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using Microsoft.Win32;
+using System.Windows;
 
 namespace SLAM.ViewModels {
-    using Helpers;
-    using Microsoft.Win32;
-    using Models;
-    using System.Windows;
+
+    using Models.Mapping;
 
     public abstract class ApplicationViewModel : CommandsViewModel {
 
@@ -43,7 +42,7 @@ namespace SLAM.ViewModels {
         }
 
         protected void InitializeProperties() {
-            ModelCurrentState = model.CurrentState;
+            ModelCurrentState = model.CurrentStateInfo;
             ModelReady = model.Ready;
             TotalFramesCount = model.FramesCount;
         }

@@ -1,7 +1,6 @@
-﻿using SLAM.Models;
+﻿namespace SLAM.ViewModels {
 
-
-namespace SLAM.ViewModels {
+    using Models.Mapping;
 
     public abstract class ViewportWindowViewModel : ViewModelBase {
 

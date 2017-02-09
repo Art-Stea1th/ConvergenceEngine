@@ -7,7 +7,7 @@ namespace SLAM.ViewModels.AppWindows {
 
     public class MainWindowViewModel : ApplicationViewModel {
 
-        private ViewportWindowViewModel rawDataWindowViewModel;
+        private ViewportWindowViewModel coloredDepthDataWindowViewModel;
         private ViewportWindowViewModel pointsDataWindowViewModel;
         private ViewportWindowViewModel linearDataWindowViewModel;
 
@@ -30,13 +30,13 @@ namespace SLAM.ViewModels.AppWindows {
         }        
 
         private void InitializeWindows() {
-            rawDataWindowViewModel = new RawDataWindowViewModel();
+            coloredDepthDataWindowViewModel = new ColoredDepthDataWindowViewModel();
             pointsDataWindowViewModel = new PointsDataWindowViewModel();
             linearDataWindowViewModel = new LinearDataWindowViewModel();
 
             ShowRawDataWindow = new RelayCommand(
-                ex => ExecuteNewWindowCommand(rawDataWindowViewModel),
-                canEx => CanExecuteNewWindowCommand(rawDataWindowViewModel));
+                ex => ExecuteNewWindowCommand(coloredDepthDataWindowViewModel),
+                canEx => CanExecuteNewWindowCommand(coloredDepthDataWindowViewModel));
 
             ShowPointsDataWindow = new RelayCommand(
                 ex => ExecuteNewWindowCommand(pointsDataWindowViewModel),
@@ -49,7 +49,7 @@ namespace SLAM.ViewModels.AppWindows {
 
         protected override void InitializeViewports() {
             MapViewportData = null;
-            rawDataWindowViewModel.Initialize();
+            coloredDepthDataWindowViewModel.Initialize();
             pointsDataWindowViewModel.Initialize();
             linearDataWindowViewModel.Initialize();
         }
@@ -63,7 +63,7 @@ namespace SLAM.ViewModels.AppWindows {
                 model.MoveToPosition(CurrentFrame);
 
                 MapViewportData = await model.GetActualMapFrameAsync();
-                rawDataWindowViewModel.UpdateFrom(model);
+                coloredDepthDataWindowViewModel.UpdateFrom(model);
                 pointsDataWindowViewModel.UpdateFrom(model);
                 linearDataWindowViewModel.UpdateFrom(model);
 

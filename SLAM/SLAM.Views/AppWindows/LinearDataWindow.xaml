@@ -4,11 +4,37 @@
         xmlns:cc="clr-namespace:SLAM.Views.Controls.Custom"
         Title="{Binding Title}" Width="420" Height="354">
     <Grid Background="Black">
+        <Grid.Resources>
+        </Grid.Resources>
         <Viewbox>
             <Path
-                Stroke="Orange"
+                Stroke="Orange" Opacity="1"
                 Data="{Binding Segments,
                 Converter={StaticResource PointSegmentsToPath}}"/>
         </Viewbox>
+        <Viewbox>
+            <Path
+                Stroke="DodgerBlue" Opacity="0.75"
+                Data="{Binding PreviousGhostSegments,
+                Converter={StaticResource PointSegmentsToPath}}"/>
+        </Viewbox>
+        <Grid Width="Auto" Height="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Padding="8,4"
+                Text="Current Frame"
+                Foreground="Orange"
+                Opacity="1"/>
+            <TextBlock
+                Grid.Row="1"
+                Padding="8,4"
+                Text="Previous Ghost"
+                Foreground="DodgerBlue"
+                Opacity="0.75"/>
+        </Grid>        
     </Grid>
 </Window>

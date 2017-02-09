@@ -81,8 +81,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppWindows\WindowManager.cs" />
-    <Compile Include="AppWindows\RawDataWindow.xaml.cs">
-      <DependentUpon>RawDataWindow.xaml</DependentUpon>
+    <Compile Include="AppWindows\ColoredDepthDataWindow.xaml.cs">
+      <DependentUpon>ColoredDepthDataWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -147,7 +147,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppWindows\RawDataWindow.xaml">
+    <Page Include="AppWindows\ColoredDepthDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

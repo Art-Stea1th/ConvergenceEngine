@@ -86,7 +86,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="AppWindows\RawDataWindowViewModel.cs" />
+    <Compile Include="AppWindows\ColoredDepthDataWindowViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewportWindowViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -100,12 +100,11 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SLAM.Models\SLAM.Models.csproj">
-      <Project>{2e2cbeaf-8d2f-464c-81f3-b6c8411ec8d2}</Project>
-      <Name>SLAM.Models</Name>
+    <ProjectReference Include="..\SLAM.Models.Mapping\SLAM.Models.Mapping.csproj">
+      <Project>{a5b42196-ec37-4a47-8f79-7aa24c73d630}</Project>
+      <Name>SLAM.Models.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

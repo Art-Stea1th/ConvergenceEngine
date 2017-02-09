@@ -3,7 +3,7 @@
 
 namespace SLAM.ViewModels.AppWindows {
 
-    using Models;
+    using Models.Mapping;
 
     internal class PointsDataWindowViewModel : ViewportWindowViewModel {
 
