@@ -27,14 +27,14 @@ namespace SLAM.ViewModels.AppWindows {
         }
 
         public void Update() {
-            byte[] rawPixels = model.GetActualColoredDepthFrame(Color.FromArgb(255, 0, 128, 192), Color.FromArgb(255, 0, 0, 30));
+            rawData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
 
+            byte[] rawPixels = model.GetActualColoredDepthFrame(Color.FromArgb(255, 0, 128, 192), Color.FromArgb(255, 0, 0, 30));
             if (rawPixels != null) {
-                rawData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
                 rawData.WritePixels(new Int32Rect(0, 0, 640, 480), rawPixels, rawData.PixelWidth * sizeof(int), 0);
-                RawData.Freeze();
-                RawData = rawData;
             }
+            RawData.Freeze();
+            RawData = rawData;
         }
     }
 }

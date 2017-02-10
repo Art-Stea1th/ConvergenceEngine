@@ -23,6 +23,10 @@ namespace SLAM.Models.IO.DataExtractors {
 
         internal byte[] ExtractColored(Color nearColor, Color farColor) {
 
+            if (dataProvider == null || dataProvider.FrameInfo == null || !dataProvider.FrameInfo.IsCorrect) {
+                return null;
+            }
+
             Initialize(nearColor, farColor);
 
             byte[] nextRawFrameData;
