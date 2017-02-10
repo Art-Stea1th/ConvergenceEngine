@@ -17,13 +17,13 @@ namespace SLAM.ViewModels.AppWindows {
         }
 
         internal ColoredDepthDataWindowViewModel(Model model) {
+            Initialize();
             this.model = model;
             model.OnModelUpdated += Update;
-            Initialize();
         }
 
         public void Initialize() {
-            RawData = null;
+            RawData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
         }
 
         public void Update() {
@@ -32,6 +32,7 @@ namespace SLAM.ViewModels.AppWindows {
             if (rawPixels != null) {
                 rawData = new WriteableBitmap(640, 480, 96.0, 96.0, PixelFormats.Bgr32, null);
                 rawData.WritePixels(new Int32Rect(0, 0, 640, 480), rawPixels, rawData.PixelWidth * sizeof(int), 0);
+                RawData.Freeze();
                 RawData = rawData;
             }
         }
