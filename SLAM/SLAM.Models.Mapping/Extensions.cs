@@ -6,8 +6,7 @@ using System.Windows;
 
 namespace SLAM.Models.Mapping {
 
-    using PointSequence = IList<Point>;
-    using SegmentSequence = IList<Segment>;
+    using PointSequence = List<Point>;
 
     internal static partial class Extensions {
 
@@ -25,18 +24,18 @@ namespace SLAM.Models.Mapping {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsNullOrEmpty<T>(this ICollection<T> list) {
-            return list.IsNull() || list.IsEmpty();
+        public static bool IsNullOrEmpty<T>(this ICollection<T> sequence) {
+            return sequence.IsNull() || sequence.IsEmpty();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsNull<T>(this ICollection<T> list) {
-            return list == null;
+        public static bool IsNull<T>(this ICollection<T> sequence) {
+            return sequence == null;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsEmpty<T>(this ICollection<T> list) {
-            return list.Count < 1;
+        public static bool IsEmpty<T>(this ICollection<T> sequence) {
+            return sequence.Count < 1;
         }
 
         public static Segment GetApproximated(this ICollection<Point> sequence) {
@@ -55,17 +54,17 @@ namespace SLAM.Models.Mapping {
             return new Segment(new Point(p0.X, A * p0.X + B), new Point(pN.X, A * pN.X + B));
         }
 
-        public static SegmentSequence Segmentate(this PointSequence sequence) {
+        public static IEnumerable<PointSequence> Segmentate(this PointSequence sequence) {
 
-            List<Segment> result = new List<Segment>(null);
+            List<PointSequence> result = new List<PointSequence>();
 
             if (!sequence.IsNullOrEmpty()) {
                 var pair = SplitByMaxPoint(sequence);
 
                 if (pair == null) {
                     if (IsValidSequence(sequence)) {
-                        result.Add(new Segment(sequence.First(), sequence.Last())); // <--- Linear
-                        //result.Add(sequence.GetApproximated());                     // <--- OLS
+                        result.Add(new Segment(sequence).ToList()); // <--- Linear
+                        //result.Add(sequence.GetApproximated());     // <--- OLS
                     }
                 }
                 else {

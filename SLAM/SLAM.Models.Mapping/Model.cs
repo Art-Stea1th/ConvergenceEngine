@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -14,8 +15,8 @@ namespace SLAM.Models.Mapping {
         private Action onModelUpdated;
 
         private DataProvider dataProvider;
-        private KinectColoredFrameExtractor coloredFrameExtractor;
-        private Mapper mapper;
+        private ColoredFrameExtractor coloredExtractor;
+        private Map map;
 
         public string CurrentStateInfo { get; private set; } = "Ready";
         public bool Ready { get; private set; } = true;
@@ -37,8 +38,8 @@ namespace SLAM.Models.Mapping {
         }
 
         private void Initialize() {
-            mapper = new Mapper(dataProvider);
-            coloredFrameExtractor = new KinectColoredFrameExtractor(dataProvider);
+            map = new Map(dataProvider);
+            coloredExtractor = new ColoredFrameExtractor(dataProvider);
         }
 
         public bool Start(string fileName) {
@@ -71,17 +72,15 @@ namespace SLAM.Models.Mapping {
         }
 
         public byte[] GetActualColoredDepthFrame(Color nearColor, Color farColor) {
-            return coloredFrameExtractor.ExtractActualColoredDepthFrame(nearColor, farColor);
+            return coloredExtractor.ExtractColored(nearColor, farColor);
         }
 
         public Point[] GetActualPointsFrame() {
-            //throw new NotImplementedException();
-            return null;
+            return map.FramePoints.ToArray();
         }
 
         public IEnumerable<IEnumerable<Point>> GetActualLinearFrame() {
-            //throw new NotImplementedException();
-            return null;
+            return map.FrameSegments;
         }
 
         public IEnumerable<IEnumerable<Point>> GetPreviousGhostLinearFrame() {
@@ -91,9 +90,9 @@ namespace SLAM.Models.Mapping {
 
         public Task<Point[]> GetActualMapFrameAsync() {
             Task<Point[]> getActualMapFrame = new Task<Point[]>(() => {
-                ChangeState("Calculate Map", true);
-                Point[] result = mapper.GetActualMapFrame();
-                ChangeState("Ready");
+                //ChangeState("Calculate Map", true);
+                Point[] result = map.MapPoints.ToArray();
+                //ChangeState("Ready");
                 return result;
             });
             getActualMapFrame.Start();

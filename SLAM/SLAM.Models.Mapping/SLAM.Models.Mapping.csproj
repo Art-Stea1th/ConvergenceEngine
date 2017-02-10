@@ -47,7 +47,6 @@
     <Compile Include="Frame.cs" />
     <Compile Include="Segment.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Mapper.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

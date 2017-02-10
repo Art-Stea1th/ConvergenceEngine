@@ -44,8 +44,8 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataExtractors\KinectColoredFrameExtractor.cs" />
-    <Compile Include="DataExtractors\KinectMiddleLineFrameExtractor.cs" />
+    <Compile Include="DataExtractors\ColoredFrameExtractor.cs" />
+    <Compile Include="DataExtractors\LinearFrameExtractor.cs" />
     <Compile Include="FrameSequenceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -5,7 +5,7 @@ namespace SLAM.Models.IO.DataExtractors {
 
     using Readers;
 
-    internal sealed class KinectColoredFrameExtractor {
+    internal sealed class ColoredFrameExtractor {
 
         private DataProvider dataProvider;
 
@@ -17,11 +17,11 @@ namespace SLAM.Models.IO.DataExtractors {
 
         private byte[] frontDepthFrameBuffer;
 
-        public KinectColoredFrameExtractor(DataProvider dataProvider) {
+        public ColoredFrameExtractor(DataProvider dataProvider) {
             this.dataProvider = dataProvider;
         }
 
-        internal byte[] ExtractActualColoredDepthFrame(Color nearColor, Color farColor) {
+        internal byte[] ExtractColored(Color nearColor, Color farColor) {
 
             Initialize(nearColor, farColor);
 

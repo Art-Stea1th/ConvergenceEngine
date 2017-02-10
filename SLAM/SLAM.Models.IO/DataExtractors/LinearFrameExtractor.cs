@@ -6,15 +6,15 @@ namespace SLAM.Models.IO.DataExtractors {
 
     using Readers;
 
-    internal sealed class KinectMiddleLineFrameExtractor {
+    internal sealed class LinearFrameExtractor {
 
         private DataProvider dataProvider;
 
-        internal KinectMiddleLineFrameExtractor(DataProvider dataProvider) {
+        internal LinearFrameExtractor(DataProvider dataProvider) {
             this.dataProvider = dataProvider;
         }
 
-        internal Point[] ExtractActualMiddleLineDepthFrame(byte[] rawFrameBuffer) {
+        internal Point[] ExtractMiddleLine(byte[] rawFrameBuffer) {
 
             Point[] result = new Point[dataProvider.FrameInfo.Width];
 

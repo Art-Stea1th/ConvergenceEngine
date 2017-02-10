@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
 namespace SLAM.Models.Mapping {
 
-    internal sealed class Segment {
+    internal sealed class Segment : IEnumerable<Point> {
 
         public Point PointA { get; }
         public Point PointB { get; }
@@ -32,5 +33,20 @@ namespace SLAM.Models.Mapping {
             PointA = pointA;
             PointB = PointB;
         }
+
+        #region IEnumerable<Point>
+        IEnumerator IEnumerable.GetEnumerator() {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<Point> GetEnumerator() {
+            return AllPoints().GetEnumerator();
+        }
+
+        private IEnumerable<Point> AllPoints() {
+            yield return PointA;
+            yield return PointB;
+        }
+        #endregion
     }
 }
