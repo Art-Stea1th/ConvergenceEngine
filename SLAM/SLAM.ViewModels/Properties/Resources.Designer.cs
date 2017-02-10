@@ -6,7 +6,7 @@ using System.CodeDom.Compiler;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 
-namespace SLAM.ViewModels.Properties {
+namespace SLAM.ViewModelsOld.Properties {
 
     [GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [DebuggerNonUserCode()]

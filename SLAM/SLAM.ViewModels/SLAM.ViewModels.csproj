@@ -67,12 +67,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationViewModel.cs" />
-    <Compile Include="CommandsViewModel.cs" />
-    <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="ApplicationDataViewModel.cs" />
+    <Compile Include="AppWindows\ColoredDepthDataWindowViewModel.cs" />
     <Compile Include="AppWindows\LinearDataWindowViewModel.cs" />
     <Compile Include="AppWindows\MainWindowViewModel.cs" />
     <Compile Include="AppWindows\PointsDataWindowViewModel.cs" />
+    <Compile Include="CommandsViewModel.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -86,9 +87,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="AppWindows\ColoredDepthDataWindowViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
-    <Compile Include="ViewportWindowViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -105,6 +104,7 @@
       <Name>SLAM.Models.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

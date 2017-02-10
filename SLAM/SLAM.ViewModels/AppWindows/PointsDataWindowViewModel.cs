@@ -1,30 +1,33 @@
-﻿using System.Windows;
-
+﻿using System.Collections.Generic;
+using System.Windows;
 
 namespace SLAM.ViewModels.AppWindows {
 
     using Models.Mapping;
 
-    internal class PointsDataWindowViewModel : ViewportWindowViewModel {
+    public sealed class PointsDataWindowViewModel : ViewModelBase {
 
-        private Point[] pointsData;
+        private Model model;
 
-        public Point[] PointsData {
+        private IEnumerable<Point> pointsData;
+
+        public IEnumerable<Point> PointsData {
             get { return pointsData; }
             set { Set(ref pointsData, value); }
         }
 
-        internal PointsDataWindowViewModel() {
-            Title = "Points Data";
+        internal PointsDataWindowViewModel(Model model) {
+            this.model = model;
+            model.OnModelUpdated += Update;
             Initialize();
         }
 
-        public override void Initialize() {
+        public void Initialize() {
             PointsData = null;
         }
 
-        public override void UpdateFrom(Model model) {
-            PointsData = model.GetActualPointsFrame();
+        public void Update() {
+            PointsData = model.Map.FramePoints;
         }
     }
 }

@@ -95,13 +95,12 @@
     <Compile Include="AppWindows\PointsDataWindow.xaml.cs">
       <DependentUpon>PointsDataWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Custom\PointRenderer.cs" />
-    <Compile Include="Controls\Custom\PointsViewport.cs" />
     <Compile Include="Converters\BoolInverseConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Converters\PointSegmentsToPathConverter.cs" />
+    <Compile Include="Converters\PointSequenceToImageSourceConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -148,10 +147,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppWindows\ColoredDepthDataWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

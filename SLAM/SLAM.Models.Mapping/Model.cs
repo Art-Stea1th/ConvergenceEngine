@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
 
 namespace SLAM.Models.Mapping {
@@ -12,53 +9,50 @@ namespace SLAM.Models.Mapping {
 
     public sealed class Model {
 
-        private Action onModelUpdated;
+        public event Action OnModelUpdated;
 
         private DataProvider dataProvider;
         private ColoredFrameExtractor coloredExtractor;
-        private Map map;
+
+        public Map Map { get; private set; }
 
         public string CurrentStateInfo { get; private set; } = "Ready";
         public bool Ready { get; private set; } = true;
         public int FramesCount { get { return dataProvider.TotalFrames; } }
 
         public Model(Action onModelUpdated) {
-            this.onModelUpdated = onModelUpdated;
-            MapperSwitchOffline();
-        }
-
-        public void MapperSwitchOnline() {
-            dataProvider = new KinectDeviceReader();
-            Initialize();
-        }
-
-        public void MapperSwitchOffline() {
-            dataProvider = new KinectFileReader();
+            OnModelUpdated += onModelUpdated;
             Initialize();
         }
 
         private void Initialize() {
-            map = new Map(dataProvider);
+            dataProvider = new KinectFileReader();
+            Map = new Map(dataProvider);
             coloredExtractor = new ColoredFrameExtractor(dataProvider);
         }
 
         public bool Start(string fileName) {
-            MapperSwitchOffline();
-            return (bool)(dataProvider as FileReader)?.Start(fileName);
+            Initialize();
+            bool result = (bool)(dataProvider as FileReader)?.Start(fileName);
+            OnModelUpdated?.Invoke();
+            return result;
         }
 
         public void MoveToPosition(int frameIndex) {
             (dataProvider as FileReader)?.MoveToPosition(frameIndex);
+            OnModelUpdated?.Invoke();
         }
 
         public void Stop() {
             dataProvider?.Stop();
+            Initialize();
+            ChangeState("Ready");
         }
 
         private void ChangeState(string newModelStateInfo, bool lockModel = false) {
             CurrentStateInfo = newModelStateInfo;
             Ready = !lockModel;
-            onModelUpdated?.Invoke();
+            OnModelUpdated?.Invoke();
         }
 
         public Task CalculateFramesCountAsync() {
@@ -73,30 +67,6 @@ namespace SLAM.Models.Mapping {
 
         public byte[] GetActualColoredDepthFrame(Color nearColor, Color farColor) {
             return coloredExtractor.ExtractColored(nearColor, farColor);
-        }
-
-        public Point[] GetActualPointsFrame() {
-            return map.FramePoints.ToArray();
-        }
-
-        public IEnumerable<IEnumerable<Point>> GetActualLinearFrame() {
-            return map.FrameSegments;
-        }
-
-        public IEnumerable<IEnumerable<Point>> GetPreviousGhostLinearFrame() {
-            //throw new NotImplementedException();
-            return null;
-        }
-
-        public Task<Point[]> GetActualMapFrameAsync() {
-            Task<Point[]> getActualMapFrame = new Task<Point[]>(() => {
-                //ChangeState("Calculate Map", true);
-                Point[] result = map.MapPoints.ToArray();
-                //ChangeState("Ready");
-                return result;
-            });
-            getActualMapFrame.Start();
-            return getActualMapFrame;
         }
     }
 }

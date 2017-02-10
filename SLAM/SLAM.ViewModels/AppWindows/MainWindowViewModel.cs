@@ -1,38 +1,50 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace SLAM.ViewModels.AppWindows {
 
+    using Models.Mapping;
     using Helpers;
 
-    public class MainWindowViewModel : ApplicationViewModel {
-
-        private ViewportWindowViewModel coloredDepthDataWindowViewModel;
-        private ViewportWindowViewModel pointsDataWindowViewModel;
-        private ViewportWindowViewModel linearDataWindowViewModel;
-
-        private Point[] mapViewportData;
+    public sealed class MainWindowViewModel : CommandsViewModel {
 
         private DateTime lastTimeOfFrameUpdate;
         private TimeSpan frameUpdateLimit;
 
-        public Point[] MapViewportData {
+        private IEnumerable<Point> mapViewportData;
+
+        public IEnumerable<Point> MapViewportData {
             get { return mapViewportData; }
             set { Set(ref mapViewportData, value); }
         }
 
-        public MainWindowViewModel() {            
+        private ViewModelBase coloredDepthDataWindowViewModel;
+        private ViewModelBase pointsDataWindowViewModel;
+        private ViewModelBase linearDataWindowViewModel;
+
+        public MainWindowViewModel() {
+            model = new Model(Update);
+            Initialize();
+        }
+
+        private void Initialize() {
             lastTimeOfFrameUpdate = DateTime.Now;
             frameUpdateLimit = TimeSpan.FromMilliseconds(1000.0 / 29.97);
-            InitializeWindows();
-            InitializeViewports();            
-            UpdateUI();
-        }        
+            InitializeData();
+            CreateViewModelsForChildWindows();
+            InitializeCommands();
+        }
 
-        private void InitializeWindows() {
-            coloredDepthDataWindowViewModel = new ColoredDepthDataWindowViewModel();
-            pointsDataWindowViewModel = new PointsDataWindowViewModel();
-            linearDataWindowViewModel = new LinearDataWindowViewModel();
+        private void CreateViewModelsForChildWindows() {
+            coloredDepthDataWindowViewModel = new ColoredDepthDataWindowViewModel(model);
+            pointsDataWindowViewModel = new PointsDataWindowViewModel(model);
+            linearDataWindowViewModel = new LinearDataWindowViewModel(model);
+        }
+
+        protected override void InitializeCommands() {
+            base.InitializeCommands();
 
             ShowRawDataWindow = new RelayCommand(
                 ex => ExecuteNewWindowCommand(coloredDepthDataWindowViewModel),
@@ -47,28 +59,17 @@ namespace SLAM.ViewModels.AppWindows {
                 canEx => CanExecuteNewWindowCommand(linearDataWindowViewModel));
         }
 
-        protected override void InitializeViewports() {
-            MapViewportData = null;
-            coloredDepthDataWindowViewModel.Initialize();
-            pointsDataWindowViewModel.Initialize();
-            linearDataWindowViewModel.Initialize();
-        }
-
-        protected override async void UpdateViewports() {
+        private void Update() {
 
             ModelReady = model.Ready;
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit && ModelReady) {
-
-                model.MoveToPosition(CurrentFrame);
-
-                MapViewportData = await model.GetActualMapFrameAsync();
-                coloredDepthDataWindowViewModel.UpdateFrom(model);
-                pointsDataWindowViewModel.UpdateFrom(model);
-                linearDataWindowViewModel.UpdateFrom(model);
-
-                lastTimeOfFrameUpdate = DateTime.Now;
-            }
-        }        
+                IEnumerable<Point> mapPoints = null;// model.Map.MapPoints;
+                if (mapPoints != null) {
+                    MapViewportData = mapPoints;
+                    lastTimeOfFrameUpdate = DateTime.Now;
+                }
+            }            
+        }
     }
 }

@@ -1,56 +1,44 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace SLAM.Views.Controls.Custom {
+namespace SLAM.Views.Converters {
 
-    internal sealed class PointRenderer {
+    public class PointSequenceToImageSourceConverter : IValueConverter {
 
         private Point min, max;
         private int width, height;
+        private double offsetX, offsetY;
 
-        internal double MinX { get { return min.X; } }
-        internal double MinY { get { return min.Y; } }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            IEnumerable<Point> newPoints = value as IEnumerable<Point>;
+            Color newColor = (Color)parameter;
 
-        internal double MaxX { get { return max.X; } }
-        internal double MaxY { get { return max.Y; } }
-
-        internal double OffsetX { get; private set; }
-        internal double OffsetY { get; private set; }
-
-        internal ImageSource Render(Point[] newPoints, Color newColor) {
-
-            if (newPoints == null || newPoints.Length < 1) { return null; }
+            if (newPoints == null || newPoints.Count() < 1) { return null; }
 
             UpdateLimits(newPoints);
             return CreateBitmap(newPoints, newColor);
         }
 
-        private void UpdateLimits(Point[] points) {
+        private void UpdateLimits(IEnumerable<Point> points) {
 
-            max = new Point(0, 0);
-
-            foreach (var point in points) {
-                double
-                    x = Math.Abs(point.X),
-                    y = Math.Abs(point.Y);
-
-                if (x > max.X) { max.X = x; }
-                if (y > max.Y) { max.Y = y; }
-            }
-
+            max = new Point(points.Max(p => Math.Abs(p.X)), points.Max(p => Math.Abs(p.Y)));
             min = new Point(-max.X, -max.Y);
 
-            OffsetX = max.X + 1;
-            OffsetY = max.Y + 1;
+            offsetX = max.X + 1;
+            offsetY = max.Y + 1;
 
-            width = ((int)OffsetX) * 2 + 1;
-            height = ((int)OffsetY) /** 2 + 1*/;
+            width = ((int)offsetX) * 2 + 1;
+            height = ((int)offsetY) /** 2 + 1*/;
         }
 
-        private ImageSource CreateBitmap(Point[] points, Color color) {
+        private ImageSource CreateBitmap(IEnumerable<Point> points, Color color) {
 
             if (max.X < 1 || max.Y < 1) { return null; }
 
@@ -58,7 +46,7 @@ namespace SLAM.Views.Controls.Custom {
             byte[] fullFrameBuffer = new byte[width * height * sizeof(int)];
 
             foreach (var point in points) {
-                point.Offset(OffsetX, /*OffsetY*/0);
+                point.Offset(offsetX, /*offsetY*/0);
                 int index = GetLinearIndex((int)point.X, height - ((int)point.Y), width);
                 SetColorToViewportByteArray(fullFrameBuffer, index * sizeof(int), color);
             }
@@ -78,6 +66,10 @@ namespace SLAM.Views.Controls.Custom {
             viewportByteArray[++startIndex] = color.G;
             viewportByteArray[++startIndex] = color.R;
             viewportByteArray[++startIndex] = color.A;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
         }
     }
 }

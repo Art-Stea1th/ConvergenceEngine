@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace SLAM.Models.Mapping {
 
@@ -17,14 +19,17 @@ namespace SLAM.Models.Mapping {
         private byte[] currentFrameBuffer;
 
         private LinearFrameExtractor linearExtractor;
+        private ColoredFrameExtractor coloredExtractor;
 
         private FrameSequence frameSequence;
         private Frame currentFrame;
 
-        public byte[] Buffer { get { return currentFrameBuffer; } }
-        public IEnumerable<Point> MapPoints { get { return frameSequence.SelectMany(f => f.Value.Points); } }
-        public IEnumerable<Point> FramePoints { get { return currentFrame.Points; } }
-        public IEnumerable<IEnumerable<Point>> FrameSegments { get { return currentFrame.GetFrameSegments(); } }
+        public event Action OnFrameUpdate;
+
+        public byte[] Buffer { get { return coloredExtractor.ExtractColored(Color.FromArgb(255, 0, 128, 192), Color.FromArgb(255, 0, 0, 30)); } }
+        public IEnumerable<Point> MapPoints { get { return frameSequence?.SelectMany(f => f.Value.Points); } }
+        public IEnumerable<Point> FramePoints { get { return currentFrame?.Points; } }
+        public IEnumerable<IEnumerable<Point>> FrameSegments { get { return currentFrame?.GetFrameSegments(); } }
 
         internal Map(DataProvider dataProvider) {
             this.dataProvider = dataProvider;
@@ -33,6 +38,7 @@ namespace SLAM.Models.Mapping {
 
         private void Initialize() {
             linearExtractor = new LinearFrameExtractor(dataProvider);
+            coloredExtractor = new ColoredFrameExtractor(dataProvider);
             dataProvider.OnNextFrameReady += Update;
         }
 
@@ -51,6 +57,7 @@ namespace SLAM.Models.Mapping {
             else {
                 currentFrame = frameSequence.Single(f => f.Key == dataProvider.FrameIndex).Value;
             }
+            OnFrameUpdate?.Invoke();
         }
     }
 }
