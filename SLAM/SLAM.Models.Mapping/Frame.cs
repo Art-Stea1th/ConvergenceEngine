@@ -8,26 +8,28 @@ using System.Windows;
 namespace SLAM.Models.Mapping {
 
     using PointSequence = List<Point>;
-    using SegmentSequence = List<Segment>;
 
     internal sealed class Frame {
 
-        private PointSequence points;
-        private SegmentSequence segments;
+        private readonly PointSequence points;
+        private readonly Lazy<SegmentSequence> segments;
 
         public IEnumerable<Point> Points { get { return points; } }
 
-        public IEnumerable<IEnumerable<Point>> GetFrameSegments() {
-            List<List<Point>> result = new List<List<Point>>();
-            foreach (var segment in segments) {
-                result.Add(segment.ToList());
-            }
-            return result;
+        public SegmentSequence Segments {
+            get { return segments.Value; }
         }
+
+        public IEnumerable<Tuple<Point, Point>> SegmentsAsEnumerableOfTuple {
+            get { return Segments.Select(s => (Tuple<Point, Point>)s); }
+        }
+
+        public Vector Location { get; set; }
+        public Vector Direction { get; set; }
 
         public Frame(IEnumerable<Point> sequence) {
             points = new PointSequence(sequence);
-            segments = points.Segmentate().Select(psq => new Segment(psq)).ToList();
+            segments = new Lazy<SegmentSequence>(() => SegmentSequence.Segmentate(points));
         }
     }
 }

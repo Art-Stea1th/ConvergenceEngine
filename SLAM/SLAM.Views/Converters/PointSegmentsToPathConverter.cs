@@ -13,7 +13,7 @@ namespace SLAM.Views.Converters {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 
-            var segments = (IEnumerable<IEnumerable<Point>>)value;
+            var segments = (IEnumerable<Tuple<Point, Point>>)value;
             PathGeometry geometry = new PathGeometry();
             
             // Border
@@ -31,11 +31,8 @@ namespace SLAM.Views.Converters {
                 foreach (var segment in segments) {
 
                     if (segment != null) {
-                        Point startPoint = FlipVertical(segment.First());
-                        List<LineSegment> lineSegments = new List<LineSegment>();
-                        foreach (var point in segment.Skip(1)) {
-                            lineSegments.Add(new LineSegment(FlipVertical(point), true));
-                        }
+                        Point startPoint = FlipVertical(segment.Item1);
+                        var lineSegments = new List<LineSegment> { new LineSegment(FlipVertical(segment.Item2), true) };
                         PathFigure figure = new PathFigure(startPoint, lineSegments, false);
                         geometry.Figures.Add(figure);
                     }                    

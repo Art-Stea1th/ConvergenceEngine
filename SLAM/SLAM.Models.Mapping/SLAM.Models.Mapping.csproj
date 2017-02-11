@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Frame.cs" />
+    <Compile Include="FrameSequence.cs" />
+    <Compile Include="NavigationInfo.cs" />
     <Compile Include="Segment.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Model.cs" />
@@ -53,6 +55,7 @@
     </Compile>
     <AppDesigner Include="Properties\" />
     <Compile Include="Map.cs" />
+    <Compile Include="SegmentSequence.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SLAM.Models.IO\SLAM.Models.IO.csproj">

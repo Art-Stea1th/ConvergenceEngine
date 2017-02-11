@@ -12,26 +12,32 @@
         <Viewbox>
             <Path
                 Stroke="DodgerBlue" Opacity="0.75"
-                Data="{Binding PreviousGhostSegments,
+                Data="{Binding PreviousSegments,
                 Converter={StaticResource PointSegmentsToPath}}"/>
         </Viewbox>
         <Grid Width="Auto" Height="Auto">
             <Grid.RowDefinitions>
+                <RowDefinition/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock
-                Grid.Row="0"
-                Padding="8,4"
-                Text="Current Frame"
-                Foreground="Orange"
-                Opacity="1"/>
-            <TextBlock
                 Grid.Row="1"
-                Padding="8,4"
+                Padding="4"
+                Text="Current Frame"
+                FontSize="10"
+                Foreground="Orange"
+                Opacity="1"
+                HorizontalAlignment="Center"/>
+            <TextBlock
+                Grid.Row="2"
+                Padding="4"
                 Text="Previous Ghost"
+                FontSize="10"
                 Foreground="DodgerBlue"
-                Opacity="0.75"/>
+                Opacity="0.75"
+                HorizontalAlignment="Center"/>
         </Grid>        
     </Grid>
 </Window>

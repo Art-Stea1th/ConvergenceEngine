@@ -11,7 +11,6 @@ namespace SLAM.Models.Mapping {
 
     using IO.DataExtractors;
     using IO.Readers;
-    using FrameSequence = SortedList<int, Frame>;
 
     public sealed class Map {
 
@@ -22,14 +21,15 @@ namespace SLAM.Models.Mapping {
         private ColoredFrameExtractor coloredExtractor;
 
         private FrameSequence frameSequence;
-        private Frame currentFrame;
+        private Frame currentFrame, previousFrame;
 
         public event Action OnFrameUpdate;
 
         public byte[] Buffer { get { return coloredExtractor.ExtractColored(Color.FromArgb(255, 0, 128, 192), Color.FromArgb(255, 0, 0, 30)); } }
         public IEnumerable<Point> MapPoints { get { return frameSequence?.SelectMany(f => f.Value.Points); } }
         public IEnumerable<Point> FramePoints { get { return currentFrame?.Points; } }
-        public IEnumerable<IEnumerable<Point>> FrameSegments { get { return currentFrame?.GetFrameSegments(); } }
+        public IEnumerable<Tuple<Point, Point>> FrameSegments { get { return currentFrame?.SegmentsAsEnumerableOfTuple; } }
+        public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get { return previousFrame?.SegmentsAsEnumerableOfTuple; } }
 
         internal Map(DataProvider dataProvider) {
             this.dataProvider = dataProvider;
@@ -46,13 +46,15 @@ namespace SLAM.Models.Mapping {
 
             dataProvider.GetNextRawFrameTo(out currentFrameBuffer);
 
-            if (frameSequence.IsNullOrEmpty()) {
+            if (frameSequence == null) {
                 frameSequence = new FrameSequence(dataProvider.TotalFrames);
             }
 
-            if (!frameSequence.ContainsKey(dataProvider.FrameIndex)) {
+            previousFrame = currentFrame;
+
+            if (!frameSequence.ContainsFrameIndex(dataProvider.FrameIndex)) {
                 currentFrame = new Frame(linearExtractor.ExtractMiddleLine(currentFrameBuffer));
-                frameSequence.Add(dataProvider.FrameIndex, currentFrame);
+                frameSequence.AddFrame(dataProvider.FrameIndex, currentFrame);
             }
             else {
                 currentFrame = frameSequence.Single(f => f.Key == dataProvider.FrameIndex).Value;
