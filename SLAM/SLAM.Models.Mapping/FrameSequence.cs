@@ -25,11 +25,10 @@ namespace SLAM.Models.Mapping {
         }
 
         internal void AddFrame(int index, Frame frame) {
-            //SetFramePositionAbsolute(index, frame);
             sequence.Add(index, frame);
         }
 
-        private void SetFramePositionAbsolute(int index, Frame frame) {
+        public void SetFramePositionAbsolute(int index, Frame frame) {
 
             var prev = sequence.LastOrDefault(f => f.Key < index).Value;
             var next = sequence.FirstOrDefault(f => f.Key > index).Value;
@@ -38,7 +37,7 @@ namespace SLAM.Models.Mapping {
                 frame.Location = prev.Location;
                 frame.Direction = prev.Direction;
 
-                //frame.Segments.Difference(prev.Segments);
+                frame.Segments.Difference(prev.Segments);
 
                 //Console.WriteLine(Segment.AngleBetween(prev.Segments.First(), frame.Segments.First()));
 

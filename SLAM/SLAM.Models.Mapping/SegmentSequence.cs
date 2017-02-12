@@ -13,14 +13,34 @@ namespace SLAM.Models.Mapping {
 
         public NavigationInfo Difference(SegmentSequence sequence) {
 
-            IEnumerable<Segment> res;
+
+            List<Tuple<Segment, Segment>> similarSegments = new List<Tuple<Segment, Segment>>();
 
             foreach (var segment in this) {
-                res = segment.FindSegmentsWithNearestPoints(sequence, ((segment.PointA.Y + segment.PointB.Y) / 2) * 0.05);
-                Console.WriteLine(res);
+
+                Segment similar = null;
+
+                var radius = Math.Min(segment.PointA.Y, segment.PointB.Y) * 0.05;
+
+                IEnumerable<Segment> nearestByDistance = segment.FindSegmentsWithNearestPoints(sequence, radius);
+                if (nearestByDistance.Count() > 0) {
+
+                    IEnumerable<Segment> nearestByAndle = segment.FindSegmentsWithMinimalAngle(nearestByDistance, 3.0);
+                    if (nearestByAndle.Count() > 1) {
+                        similar = segment.FindSegmentWithMinimalLengthDifference(nearestByAndle);
+                    }
+                    else {
+                        similar = nearestByAndle.FirstOrDefault();
+                    }
+                }
+                if (similar != null) {
+                    similarSegments.Add(new Tuple<Segment, Segment>(segment, similar));
+                }
             }
 
-            
+            //Vector resultLocationOffset;
+            //double resultDirectionOffset = similarSegments.Average(ss => Segment.AngleBetween(ss.Item1, ss.Item2));
+
             return new NavigationInfo();
         }
 

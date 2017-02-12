@@ -59,6 +59,10 @@ namespace SLAM.Models.Mapping {
             else {
                 currentFrame = frameSequence.Single(f => f.Key == dataProvider.FrameIndex).Value;
             }
+
+            // ---
+            frameSequence.SetFramePositionAbsolute(dataProvider.FrameIndex, currentFrame);
+            // ---
             OnFrameUpdate?.Invoke();
         }
     }

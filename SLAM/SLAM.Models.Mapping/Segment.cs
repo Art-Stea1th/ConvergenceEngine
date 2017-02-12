@@ -22,7 +22,11 @@ namespace SLAM.Models.Mapping {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IEnumerable<Segment> FindSegmentsWithMinimalAngle(IEnumerable<Segment> sequence, double angleLimit) {
-            return sequence.Where(s => AngleBetween(this, s) < angleLimit);
+            return sequence.Where(s => Math.Abs(AngleBetween(this, s)) < angleLimit);
+        }
+
+        public Segment FindSegmentWithMinimalLengthDifference(IEnumerable<Segment> sequence) {
+            return sequence.Where(ss => Math.Abs(Length - ss.Length) == sequence.Min(s => Math.Abs(Length - s.Length))).SingleOrDefault();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -36,8 +40,7 @@ namespace SLAM.Models.Mapping {
         }
 
         public static double AngleBetween(Segment segmentA, Segment segmentB) {
-            double angle = Vector.AngleBetween((segmentA.PointA - segmentA.PointB), (segmentB.PointA - segmentB.PointB));
-            return angle <= 180.0 ? angle : 360.0 - angle;
+            return Vector.AngleBetween((segmentA.PointB - segmentA.PointA), (segmentB.PointB - segmentB.PointA));
         }
 
         public static implicit operator Segment(Tuple<Point, Point> poinsPair) {
