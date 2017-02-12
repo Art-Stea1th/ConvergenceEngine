@@ -3,16 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Linear Data" Width="420" Height="354">
     <Grid Background="Black">
+        <Grid.Resources>
+            <SolidColorBrush x:Key="SegmentsColor" Color="White" Opacity="0.5"/>
+            <SolidColorBrush x:Key="GhostColor" Color="Gray" Opacity="0.5"/>
+            <SolidColorBrush x:Key="SimilarColor" Color="Red" Opacity="0.5"/>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="4"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+        </Grid.Resources>
         <Viewbox>
             <Path
-                Stroke="Orange" Opacity="1"
+                Stroke="{StaticResource SegmentsColor}"
                 Data="{Binding Segments,
                 Converter={StaticResource PointSegmentsToPath}}"/>
         </Viewbox>
         <Viewbox>
             <Path
-                Stroke="DodgerBlue" Opacity="0.75"
+                Stroke="{StaticResource GhostColor}"
                 Data="{Binding PreviousSegments,
+                Converter={StaticResource PointSegmentsToPath}}"/>
+        </Viewbox>
+        <Viewbox>
+            <Path
+                Stroke="{StaticResource SimilarColor}"
+                Data="{Binding SimilarSegments,
                 Converter={StaticResource PointSegmentsToPath}}"/>
         </Viewbox>
         <Grid Width="Auto" Height="Auto">
@@ -20,24 +36,21 @@
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock
                 Grid.Row="1"
-                Padding="4"
-                Text="Current Frame"
-                FontSize="10"
-                Foreground="Orange"
-                Opacity="1"
-                HorizontalAlignment="Center"/>
+                Text="Current"
+                Foreground="{StaticResource SegmentsColor}"/>
             <TextBlock
                 Grid.Row="2"
-                Padding="4"
-                Text="Previous Ghost"
-                FontSize="10"
-                Foreground="DodgerBlue"
-                Opacity="0.75"
-                HorizontalAlignment="Center"/>
+                Text="Ghost"
+                Foreground="{StaticResource GhostColor}"/>
+            <TextBlock
+                Grid.Row="3"
+                Text="Similar"
+                Foreground="{StaticResource SimilarColor}"/>
         </Grid>        
     </Grid>
 </Window>

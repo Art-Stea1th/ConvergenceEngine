@@ -5,28 +5,23 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
-namespace SLAM.Models.Mapping {
+namespace SLAM.Models.Mapping.Navigation {
+
+    using Extensions;
 
     internal sealed class Segment : IEnumerable<Point> {
 
-        public Point PointA { get; }
-        public Point PointB { get; }
-        public Point Average { get; }
+        public Point PointA { get; private set; }
+        public Point PointB { get; private set; }
 
         public double Length { get { return (PointA - PointB).Length; } }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public IEnumerable<Segment> FindSegmentsWithNearestPoints(IEnumerable<Segment> sequence, double pointsDistanceLimit) {
-            return sequence.Where(s => DistanceBetweenNearestPoints(this, s) < pointsDistanceLimit);
+        public Segment Rotate(double angle) {
+            return new Segment(PointA.Rotate(angle), PointB.Rotate(angle));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public IEnumerable<Segment> FindSegmentsWithMinimalAngle(IEnumerable<Segment> sequence, double angleLimit) {
-            return sequence.Where(s => Math.Abs(AngleBetween(this, s)) < angleLimit);
-        }
-
-        public Segment FindSegmentWithMinimalLengthDifference(IEnumerable<Segment> sequence) {
-            return sequence.Where(ss => Math.Abs(Length - ss.Length) == sequence.Min(s => Math.Abs(Length - s.Length))).SingleOrDefault();
+        public Segment RotateAt(Point point, double angle) {
+            return new Segment(PointA.RotateAt(point, angle), PointB.RotateAt(point, angle));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -71,16 +66,14 @@ namespace SLAM.Models.Mapping {
             return new Segment(new Point(p0.X, A * p0.X + B), new Point(pN.X, A * pN.X + B));
         }
 
-        public Segment(Tuple<Point, Point> pointsPair) {
-            PointA = pointsPair.Item1;
-            PointB = pointsPair.Item2;
-            Average = new Point((PointA.X + PointB.X) * 0.5, (PointA.Y + PointB.Y) * 0.5);
-        }
-
         public Segment(Point pointA, Point pointB) {
             PointA = pointA;
             PointB = pointB;
-            Average = new Point((PointA.X + PointB.X) * 0.5, (PointA.Y + PointB.Y) * 0.5);
+        }
+
+        public Segment(Tuple<Point, Point> pointsPair) {
+            PointA = pointsPair.Item1;
+            PointB = pointsPair.Item2;
         }
 
         #region IEnumerable<Point>

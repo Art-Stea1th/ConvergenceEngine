@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace SLAM.Models.Mapping {
 
+    using Navigation;
     using PointSequence = List<Point>;
 
     internal sealed class Frame {

@@ -31,6 +31,14 @@ namespace SLAM.Models.Mapping {
         public IEnumerable<Tuple<Point, Point>> FrameSegments { get { return currentFrame?.SegmentsAsEnumerableOfTuple; } }
         public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get { return previousFrame?.SegmentsAsEnumerableOfTuple; } }
 
+
+        public IEnumerable<Tuple<Point, Point>> SimilarFrameSegments {
+            get {
+                return currentFrame != null && previousFrame != null ?
+                    currentFrame.Segments.Similar(previousFrame.Segments) : null;
+            }
+        }
+
         internal Map(DataProvider dataProvider) {
             this.dataProvider = dataProvider;
             Initialize();
@@ -59,10 +67,6 @@ namespace SLAM.Models.Mapping {
             else {
                 currentFrame = frameSequence.Single(f => f.Key == dataProvider.FrameIndex).Value;
             }
-
-            // ---
-            frameSequence.SetFramePositionAbsolute(dataProvider.FrameIndex, currentFrame);
-            // ---
             OnFrameUpdate?.Invoke();
         }
     }

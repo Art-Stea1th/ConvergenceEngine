@@ -46,16 +46,16 @@
   <ItemGroup>
     <Compile Include="Frame.cs" />
     <Compile Include="FrameSequence.cs" />
-    <Compile Include="NavigationInfo.cs" />
-    <Compile Include="Segment.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Navigation\NavigationInfo.cs" />
+    <Compile Include="Navigation\Segment.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <AppDesigner Include="Properties\" />
     <Compile Include="Map.cs" />
-    <Compile Include="SegmentSequence.cs" />
+    <Compile Include="Navigation\SegmentSequence.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SLAM.Models.IO\SLAM.Models.IO.csproj">

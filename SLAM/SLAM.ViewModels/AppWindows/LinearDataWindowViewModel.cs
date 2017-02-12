@@ -9,8 +9,9 @@ namespace SLAM.ViewModels.AppWindows {
     public sealed class LinearDataWindowViewModel : ViewModelBase {
 
         private Model model;
-        IEnumerable<Tuple<Point, Point>> previousSegments;
         IEnumerable<Tuple<Point, Point>> segments;
+        IEnumerable<Tuple<Point, Point>> previousSegments;
+        IEnumerable<Tuple<Point, Point>> similarSegments;
 
         public IEnumerable<Tuple<Point, Point>> Segments {
             get { return segments; }
@@ -22,6 +23,11 @@ namespace SLAM.ViewModels.AppWindows {
             set { Set(ref previousSegments, value); }
         }
 
+        public IEnumerable<Tuple<Point, Point>> SimilarSegments {
+            get { return similarSegments; }
+            set { Set(ref similarSegments, value); }
+        }
+
         internal LinearDataWindowViewModel(Model model) {
             this.model = model;
             model.OnModelUpdated += Update;
@@ -31,11 +37,13 @@ namespace SLAM.ViewModels.AppWindows {
         public void Initialize() {
             Segments = null;
             PreviousSegments = null;
+            SimilarSegments = null;
         }
 
         public void Update() {
             Segments = model.Map.FrameSegments;
             PreviousSegments = model.Map.PreviousFrameSegments;
+            SimilarSegments = model.Map.SimilarFrameSegments;
         }
     }
 }

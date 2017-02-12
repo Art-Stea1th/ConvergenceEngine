@@ -3,47 +3,83 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Media;
 
+namespace SLAM.Models.Mapping.Navigation {
 
-namespace SLAM.Models.Mapping {
+    using Extensions;
 
     internal sealed class SegmentSequence : List<Segment> {
 
-        private SegmentSequence() { }
+        public SegmentSequence(IEnumerable<Segment> sequence) : base(sequence) { }
+        public SegmentSequence(int capacity) : base(capacity) { }
+        public SegmentSequence() { }
 
-        public NavigationInfo Difference(SegmentSequence sequence) {
+        public IEnumerable<Tuple<Point, Point>> Similar(SegmentSequence sequence) {
 
 
             List<Tuple<Segment, Segment>> similarSegments = new List<Tuple<Segment, Segment>>();
 
             foreach (var segment in this) {
 
-                Segment similar = null;
+                var maxDistance = Math.Min(segment.PointA.Y, segment.PointB.Y) * 0.05;
+                var maxAngle = 3.0;
 
-                var radius = Math.Min(segment.PointA.Y, segment.PointB.Y) * 0.05;
+                Segment similar = sequence.FindSimilarSegmentFor(segment, maxDistance, maxAngle);
 
-                IEnumerable<Segment> nearestByDistance = segment.FindSegmentsWithNearestPoints(sequence, radius);
-                if (nearestByDistance.Count() > 0) {
-
-                    IEnumerable<Segment> nearestByAndle = segment.FindSegmentsWithMinimalAngle(nearestByDistance, 3.0);
-                    if (nearestByAndle.Count() > 1) {
-                        similar = segment.FindSegmentWithMinimalLengthDifference(nearestByAndle);
-                    }
-                    else {
-                        similar = nearestByAndle.FirstOrDefault();
-                    }
-                }
                 if (similar != null) {
                     similarSegments.Add(new Tuple<Segment, Segment>(segment, similar));
                 }
             }
 
-            //Vector resultLocationOffset;
-            //double resultDirectionOffset = similarSegments.Average(ss => Segment.AngleBetween(ss.Item1, ss.Item2));
-
-            return new NavigationInfo();
+            if (similarSegments.Count < 1) {
+                return null;
+                //return new NavigationInfo();
+            }
+            return similarSegments.Select(sq => new Tuple<Point, Point>(sq.Item2.PointA, sq.Item2.PointB));
+            //return new NavigationInfo();
         }
 
+        private double FindAngle(SegmentSequence sequence) {
+            return 0;
+        }
+
+        public Segment FindSimilarSegmentFor(Segment segment, double maxDistance, double maxAngle) {
+            if (segment != null) {
+                var selection = FindSegmentsByDistanceTo(segment, maxDistance).Intersect(FindSegmentsByAngleTo(segment, maxAngle));
+                if (selection.Count() > 1) {
+                    return new SegmentSequence(selection).FindSegmentWithNearestLengthTo(segment);
+                }
+                return selection.FirstOrDefault();
+            }
+            throw new ArgumentNullException(segment.ToString());
+        }
+
+        public Segment FindSegmentWithNearestLengthTo(Segment segment) {
+            if (segment != null) {
+                var minDifference = this.Min(s => Math.Abs(segment.Length - s.Length));
+                return this.Where(sg => Math.Abs(segment.Length - sg.Length) == minDifference).FirstOrDefault();
+            }
+            throw new ArgumentNullException(segment.ToString());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public IEnumerable<Segment> FindSegmentsByAngleTo(Segment segment, double maxAngle) {
+            if (segment != null) {
+                return this.Where(s => Math.Abs(Segment.AngleBetween(segment, s)) < maxAngle);
+            }
+            throw new ArgumentNullException(segment.ToString());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public IEnumerable<Segment> FindSegmentsByDistanceTo(Segment segment, double maxDistance) {
+            if (segment != null) {
+                return this.Where(s => Segment.DistanceBetweenNearestPoints(segment, s) < maxDistance);
+            }
+            throw new ArgumentNullException(segment.ToString());
+        }
+
+        #region Segmentate
         public static SegmentSequence Segmentate(IList<Point> sequence) {
 
             SegmentSequence result = new SegmentSequence();
@@ -111,5 +147,6 @@ namespace SLAM.Models.Mapping {
             }
             return maxDistancePointIndex;
         }
+        #endregion
     }
 }
