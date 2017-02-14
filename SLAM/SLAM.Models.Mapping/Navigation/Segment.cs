@@ -63,7 +63,13 @@ namespace SLAM.Models.Mapping.Navigation {
             double A = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
             double B = avgY - A * avgX;
 
-            return new Segment(new Point(p0.X, A * p0.X + B), new Point(pN.X, A * pN.X + B));
+            Point olsP0 = new Point(p0.X, A * p0.X + B), olsPN = new Point(pN.X, A * pN.X + B);
+
+            // Trim Y
+            Point resultP0 = new Point(p0.X, p0.DistancePointTo(olsP0, olsPN).Y);
+            Point resultPN = new Point(pN.X, pN.DistancePointTo(olsP0, olsPN).Y);
+
+            return new Segment(resultP0, resultPN);
         }
 
         public Segment(Point pointA, Point pointB) {

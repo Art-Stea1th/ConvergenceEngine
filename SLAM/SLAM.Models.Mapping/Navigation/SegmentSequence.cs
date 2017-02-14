@@ -40,10 +40,6 @@ namespace SLAM.Models.Mapping.Navigation {
             //return new NavigationInfo();
         }
 
-        private double FindAngle(SegmentSequence sequence) {
-            return 0;
-        }
-
         public Segment FindSimilarSegmentFor(Segment segment, double maxDistance, double maxAngle) {
             if (segment != null) {
                 var selection = FindSegmentsByDistanceTo(segment, maxDistance).Intersect(FindSegmentsByAngleTo(segment, maxAngle));
@@ -89,8 +85,7 @@ namespace SLAM.Models.Mapping.Navigation {
 
                 if (pair == null) {
                     if (IsValidSequence(sequence)) {
-                        result.Add(Segment.CreateByFirstAndLastFrom(sequence)); // <--- Linear
-                        //result.Add(Segment.ApproximateFrom(sequence));          // <--- OLS
+                        result.Add(Segment.ApproximateFrom(sequence));
                     }
                 }
                 else {

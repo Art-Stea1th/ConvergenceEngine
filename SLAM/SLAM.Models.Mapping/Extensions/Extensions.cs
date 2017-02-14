@@ -79,10 +79,15 @@ namespace SLAM.Models.Mapping.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double DistanceTo(this Point pointC, Point pointA, Point pointB) {
+            return (pointC - pointC.DistancePointTo(pointA, pointB)).Length;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Point DistancePointTo(this Point pointC, Point pointA, Point pointB) {
             Vector ab = pointB - pointA;
             Vector ac = pointC - pointA;
             ab.Normalize();
-            return (pointC - (Vector.Multiply(ab, ac) * ab + pointA)).Length;
-        }        
+            return Vector.Multiply(ab, ac) * ab + pointA;
+        }
     }
 }
