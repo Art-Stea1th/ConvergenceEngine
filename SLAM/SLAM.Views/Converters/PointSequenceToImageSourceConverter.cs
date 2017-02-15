@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace SLAM.Views.Converters {
 
+    [ValueConversion(typeof(IEnumerable<Point>), typeof(ImageSource))]
     public class PointSequenceToImageSourceConverter : IValueConverter {
 
         private Point min, max;
@@ -69,7 +70,7 @@ namespace SLAM.Views.Converters {
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

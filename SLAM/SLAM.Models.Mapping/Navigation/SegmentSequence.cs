@@ -15,30 +15,52 @@ namespace SLAM.Models.Mapping.Navigation {
         public SegmentSequence(int capacity) : base(capacity) { }
         public SegmentSequence() { }
 
-        public IEnumerable<Tuple<Point, Point>> Similar(SegmentSequence sequence) {
+        public NavigationInfo GetDifference(SegmentSequence sequence) {
 
+            var similar = FindSimilarSegmentsTo(sequence);
 
-            List<Tuple<Segment, Segment>> similarSegments = new List<Tuple<Segment, Segment>>();
+            var lehgths = similar.Select(sp => (sp.Item1.Length + sp.Item2.Length) / 2);
+            var angles = similar.Select(sp => Segment.AngleBetween(sp.Item1, sp.Item2));
+
+            NavigationInfo result = new NavigationInfo(angle: AverageWeightedByLengthsAngle(lehgths, angles));
+
+            similar = similar.Select(sp => new Tuple<Segment, Segment>(sp.Item1, sp.Item1.Rotate(result.Angle)));
+
+            var directions = similar.Select(sp => sp.Item1.ConvergenceToNearestPoint(sp.Item2));
+
+            result.Direction = AverageWeightedByLengthsDirection(lehgths, directions);
+
+            return result;
+        }
+
+        private double AverageWeightedByLengthsAngle(IEnumerable<double> lengths, IEnumerable<double> angles) {
+
+            var fullLength = lengths.Sum();
+            var weights = lengths.Select(s => s * 100 / fullLength);
+
+            return angles.DoSequential(weights, (a, w) => a / 100 * w).Sum();
+        }
+
+        private Vector AverageWeightedByLengthsDirection(IEnumerable<double> lengths, IEnumerable<Vector> directions) {
+
+            var fullLength = lengths.Sum();
+            var weights = lengths.Select(s => s * 100 / fullLength).ToArray();
+
+            return directions.DoSequential(weights, (d, w) => d / 100.0 * w).Sum();
+        }
+
+        public IEnumerable<Tuple<Segment, Segment>> FindSimilarSegmentsTo(SegmentSequence sequence) {
 
             foreach (var segment in this) {
-
                 var maxDistance = Math.Min(segment.PointA.Y, segment.PointB.Y) * 0.05;
                 var maxAngle = 3.0;
 
                 Segment similar = sequence.FindSimilarSegmentFor(segment, maxDistance, maxAngle);
-
                 if (similar != null) {
-                    similarSegments.Add(new Tuple<Segment, Segment>(segment, similar));
+                    yield return new Tuple<Segment, Segment>(segment, similar);
                 }
             }
-
-            if (similarSegments.Count < 1) {
-                return null;
-                //return new NavigationInfo();
-            }
-            return similarSegments.Select(sq => new Tuple<Point, Point>(sq.Item2.PointA, sq.Item2.PointB));
-            //return new NavigationInfo();
-        }
+        }        
 
         public Segment FindSimilarSegmentFor(Segment segment, double maxDistance, double maxAngle) {
             if (segment != null) {
@@ -70,7 +92,7 @@ namespace SLAM.Models.Mapping.Navigation {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IEnumerable<Segment> FindSegmentsByDistanceTo(Segment segment, double maxDistance) {
             if (segment != null) {
-                return this.Where(s => Segment.DistanceBetweenNearestPoints(segment, s) < maxDistance);
+                return this.Where(s => segment.DistanceToNearestPoint(s) < maxDistance);
             }
             throw new ArgumentNullException(segment.ToString());
         }

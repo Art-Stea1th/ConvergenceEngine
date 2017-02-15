@@ -35,7 +35,8 @@ namespace SLAM.Models.Mapping {
         public IEnumerable<Tuple<Point, Point>> SimilarFrameSegments {
             get {
                 return currentFrame != null && previousFrame != null ?
-                    currentFrame.Segments.Similar(previousFrame.Segments) : null;
+                    currentFrame.Segments.FindSimilarSegmentsTo(previousFrame.Segments)
+                    .Select(sq => new Tuple<Point, Point>(sq.Item2.PointA, sq.Item2.PointB)) : null;
             }
         }
 

@@ -5,6 +5,7 @@ using System.Windows.Data;
 
 namespace SLAM.Views.Converters {
 
+    [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BoolToVisibilityConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -26,6 +27,7 @@ namespace SLAM.Views.Converters {
         }
     }
 
+    [ValueConversion(typeof(bool), typeof(Visibility))]
     public class BoolToVisibilityConverterInverse : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {

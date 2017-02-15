@@ -24,13 +24,32 @@ namespace SLAM.Models.Mapping.Navigation {
             return new Segment(PointA.RotateAt(point, angle), PointB.RotateAt(point, angle));
         }
 
+        public Vector ConvergenceToNearestPoint(Segment segment) { // <-- :\
+
+            Vector result = PointA.ConvergenceTo(segment.PointA);
+
+            var comparable = PointA.ConvergenceTo(segment.PointB);
+            if (comparable.Length < result.Length) {
+                result = comparable;
+            }
+            comparable = PointB.ConvergenceTo(segment.PointA);
+            if (comparable.Length < result.Length) {
+                result = comparable;
+            }
+            comparable = PointB.ConvergenceTo(segment.PointB);
+            if (comparable.Length < result.Length) {
+                result = comparable;
+            }
+            return result;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double DistanceBetweenNearestPoints(Segment segmentA, Segment segmentB) {
+        public double DistanceToNearestPoint(Segment segment) {
             return new[] {
-                segmentA.PointA.DistanceTo(segmentB.PointA),
-                segmentA.PointA.DistanceTo(segmentB.PointB),
-                segmentA.PointB.DistanceTo(segmentB.PointA),
-                segmentA.PointB.DistanceTo(segmentB.PointB)
+                PointA.DistanceTo(segment.PointA),
+                PointA.DistanceTo(segment.PointB),
+                PointB.DistanceTo(segment.PointA),
+                PointB.DistanceTo(segment.PointB)
             }.Min();
         }
 

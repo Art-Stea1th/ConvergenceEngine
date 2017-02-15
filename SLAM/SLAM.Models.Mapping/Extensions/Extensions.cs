@@ -44,6 +44,30 @@ namespace SLAM.Models.Mapping.Extensions {
         public static bool IsEmpty<T>(this IEnumerable<T> sequence) {
             return sequence.Count() < 1;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerable<TResult> DoSequential<T1, T2, TResult>(
+            this IEnumerable<T1> sq, IEnumerable<T2> sequence, Func<T1, T2, TResult> selector) {
+
+            var sqEnumerator = sq.GetEnumerator();
+            var sequenceEnumerator = sequence.GetEnumerator();
+
+            while (sqEnumerator.MoveNext() && sequenceEnumerator.MoveNext()) {
+                yield return selector.Invoke(sqEnumerator.Current, sequenceEnumerator.Current);
+            }
+        }
+
+        public static Vector Sum(this IEnumerable<Vector> sequence) {
+            var enumerator = sequence.GetEnumerator();
+
+            enumerator.MoveNext();
+            var result = enumerator.Current;
+
+            while (enumerator.MoveNext()) {
+                result += enumerator.Current;
+            }
+            return result;
+        }
     }
 
     // Point
@@ -74,7 +98,7 @@ namespace SLAM.Models.Mapping.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double DistanceTo(this Point p, Point point) {
-            return (point - p).Length;
+            return p.ConvergenceTo(point).Length;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -84,10 +108,15 @@ namespace SLAM.Models.Mapping.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point DistancePointTo(this Point pointC, Point pointA, Point pointB) {
-            Vector ab = pointB - pointA;
-            Vector ac = pointC - pointA;
+            Vector ab = pointA.ConvergenceTo(pointB);
+            Vector ac = pointA.ConvergenceTo(pointC);
             ab.Normalize();
             return Vector.Multiply(ab, ac) * ab + pointA;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector ConvergenceTo(this Point p, Point point) {
+            return point - p;
         }
     }
 }

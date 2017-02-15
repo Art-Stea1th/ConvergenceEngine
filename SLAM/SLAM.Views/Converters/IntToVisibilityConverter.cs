@@ -6,6 +6,7 @@ using System.Windows.Data;
 
 namespace SLAM.Views.Converters {
 
+    [ValueConversion(typeof(int), typeof(Visibility))]
     public class IntToVisibilityConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -13,10 +14,11 @@ namespace SLAM.Views.Converters {
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 
+    [ValueConversion(typeof(int), typeof(Visibility))]
     public class IntToVisibilityConverterInverse : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -24,7 +26,7 @@ namespace SLAM.Views.Converters {
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }
