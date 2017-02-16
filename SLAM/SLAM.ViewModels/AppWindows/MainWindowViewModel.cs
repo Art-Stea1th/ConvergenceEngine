@@ -64,7 +64,7 @@ namespace SLAM.ViewModels.AppWindows {
             ModelReady = model.Ready;
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit && ModelReady) {
-                IEnumerable<Point> mapPoints = null;// model.Map.MapPoints;
+                IEnumerable<Point> mapPoints = /*null;*/ model.Map.MapPoints;
                 if (mapPoints != null) {
                     MapViewportData = mapPoints;
                     lastTimeOfFrameUpdate = DateTime.Now;

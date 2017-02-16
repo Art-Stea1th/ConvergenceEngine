@@ -7,10 +7,19 @@ namespace SLAM.Models.Mapping.Navigation {
 
     internal struct NavigationInfo {
 
-        public Vector Direction { get; set; }
-        public double Angle { get; set; }
+        public Vector Direction { get; }
+        public double Angle { get; }
 
         public double NormalizedDirection { get { return Angle.AsNormalizedAngle(); } }
+
+        public override string ToString() {
+            return $"{Direction}, {Angle}";
+        }
+
+        internal NavigationInfo(NavigationInfo navigationInfo) {
+            Direction = navigationInfo.Direction;
+            Angle = navigationInfo.Angle;
+        }
 
         internal NavigationInfo(Vector direction, double angle) {
             Direction = direction;
@@ -21,5 +30,14 @@ namespace SLAM.Models.Mapping.Navigation {
             Direction = new Vector(offsetX, offsetY);
             Angle = angle;
         }
+
+        public static NavigationInfo operator +(NavigationInfo navInfoA, NavigationInfo navInfoB) {
+            return new NavigationInfo(navInfoA.Direction + navInfoB.Direction, navInfoA.Angle + navInfoB.Angle);
+        }
+
+        public static NavigationInfo operator -(NavigationInfo navInfoA, NavigationInfo navInfoB) {
+            return new NavigationInfo(navInfoA.Direction - navInfoB.Direction, navInfoA.Angle - navInfoB.Angle);
+        }
+
     }
 }

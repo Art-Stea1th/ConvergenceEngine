@@ -4,25 +4,34 @@ using System.Windows;
 
 namespace SLAM.Models.IO.DataExtractors {
 
-    using Readers;
+    internal sealed class MiddleLineFrameExtractor {
 
-    internal sealed class LinearFrameExtractor {
+        private readonly int frameWidth, frameHeight;
+        private readonly int frameMinDepth, frameMaxDepth;
 
-        private DataProvider dataProvider;
+        internal MiddleLineFrameExtractor(FrameSequenceInfo frameInfo) {
+            frameWidth = frameInfo.Width;
+            frameHeight = frameInfo.Height;
+            frameMinDepth = frameInfo.MinDepth;
+            frameMaxDepth = frameInfo.MaxDepth;
+        }
 
-        internal LinearFrameExtractor(DataProvider dataProvider) {
-            this.dataProvider = dataProvider;
+        internal MiddleLineFrameExtractor(int width, int height, int minDepth, int maxDepth) {
+            frameWidth = width;
+            frameHeight = height;
+            frameMinDepth = minDepth;
+            frameMaxDepth = maxDepth;
         }
 
         internal Point[] ExtractMiddleLine(byte[] rawFrameBuffer) {
 
-            Point[] result = new Point[dataProvider.FrameInfo.Width];
+            Point[] result = new Point[frameWidth];
 
             int i = 0;
             foreach (var nextPoint in AdaptedSequenceFrom(rawFrameBuffer)) {
                 result[i] = nextPoint; ++i;
             }
-            if (i < dataProvider.FrameInfo.Width) {
+            if (i < frameWidth) {
                 TruncateResultSequence(ref result, i);
             }
             return result;
@@ -39,17 +48,17 @@ namespace SLAM.Models.IO.DataExtractors {
         private IEnumerable<Point> AdaptedSequenceFrom(byte[] rawFrameBuffer) {
 
             Point bufferedPoint = new Point(0.0, 0.0);
-            int middleLineX = dataProvider.FrameInfo.Width / 2;
-            int middleLineY = dataProvider.FrameInfo.Height / 2;
-            int offset = GetLinearIndex(0, middleLineY, dataProvider.FrameInfo.Width);
+            int middleLineX = frameWidth / 2;
+            int middleLineY = frameHeight / 2;
+            int offset = GetLinearIndex(0, middleLineY, frameWidth);
 
-            for (int i = 0; i < dataProvider.FrameInfo.Width; ++i) {
+            for (int i = 0; i < frameWidth; ++i) {
 
                 double x = i;                                                                    //   0 - 639
                 double y = middleLineY;                                                          // 240 - 240
                 double z = GetDepthFromRawFrameAt(rawFrameBuffer, (i + offset) * sizeof(short)); // 800 - 4000
 
-                if (z < dataProvider.FrameInfo.MinDepth || z > dataProvider.FrameInfo.MaxDepth) { continue; }
+                if (z < frameMinDepth || z > frameMaxDepth) { continue; }
 
                 double resultX, resultY, resultZ;
                 PerspectiveToRectangle(x, y, z, out resultX, out resultY, out resultZ);

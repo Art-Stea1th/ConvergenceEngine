@@ -36,7 +36,7 @@ namespace SLAM.Views.Converters {
             offsetY = max.Y + 1;
 
             width = ((int)offsetX) * 2 + 1;
-            height = ((int)offsetY) /** 2 + 1*/;
+            height = ((int)offsetY) * 2 + 1;
         }
 
         private ImageSource CreateBitmap(IEnumerable<Point> points, Color color) {
@@ -47,7 +47,7 @@ namespace SLAM.Views.Converters {
             byte[] fullFrameBuffer = new byte[width * height * sizeof(int)];
 
             foreach (var point in points) {
-                point.Offset(offsetX, /*offsetY*/0);
+                point.Offset(offsetX, offsetY/*0*/);
                 int index = GetLinearIndex((int)point.X, height - ((int)point.Y), width);
                 SetColorToViewportByteArray(fullFrameBuffer, index * sizeof(int), color);
             }

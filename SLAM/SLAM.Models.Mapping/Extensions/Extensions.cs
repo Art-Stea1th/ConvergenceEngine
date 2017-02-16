@@ -46,14 +46,14 @@ namespace SLAM.Models.Mapping.Extensions {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<TResult> DoSequential<T1, T2, TResult>(
-            this IEnumerable<T1> sq, IEnumerable<T2> sequence, Func<T1, T2, TResult> selector) {
+        public static IEnumerable<TResult> DoSequential<TSource, TAnother, TResult>(
+            this IEnumerable<TSource> sourceSequence, IEnumerable<TAnother> anotherSequence, Func<TSource, TAnother, TResult> selector) {
 
-            var sqEnumerator = sq.GetEnumerator();
-            var sequenceEnumerator = sequence.GetEnumerator();
+            var ssEnumerator = sourceSequence.GetEnumerator();
+            var asEnumerator = anotherSequence.GetEnumerator();
 
-            while (sqEnumerator.MoveNext() && sequenceEnumerator.MoveNext()) {
-                yield return selector.Invoke(sqEnumerator.Current, sequenceEnumerator.Current);
+            while (ssEnumerator.MoveNext() && asEnumerator.MoveNext()) {
+                yield return selector.Invoke(ssEnumerator.Current, asEnumerator.Current);
             }
         }
 

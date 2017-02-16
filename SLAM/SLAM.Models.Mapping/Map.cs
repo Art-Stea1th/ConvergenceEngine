@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace SLAM.Models.Mapping {
 
@@ -17,7 +14,6 @@ namespace SLAM.Models.Mapping {
         private DataProvider dataProvider;
         private byte[] currentFrameBuffer;
 
-        private LinearFrameExtractor linearExtractor;
         private ColoredFrameExtractor coloredExtractor;
 
         private FrameSequence frameSequence;
@@ -26,7 +22,8 @@ namespace SLAM.Models.Mapping {
         public event Action OnFrameUpdate;
 
         public byte[] Buffer { get { return coloredExtractor.ExtractColored(Color.FromArgb(255, 0, 128, 192), Color.FromArgb(255, 0, 0, 30)); } }
-        public IEnumerable<Point> MapPoints { get { return frameSequence?.SelectMany(f => f.Value.Points); } }
+        //public IEnumerable<Point> MapPoints { get { return frameSequence?.SelectMany(f => f.Value.Points); } }
+        public IEnumerable<Point> MapPoints { get { return frameSequence?.GetMapPoints(); } }
         public IEnumerable<Point> FramePoints { get { return currentFrame?.Points; } }
         public IEnumerable<Tuple<Point, Point>> FrameSegments { get { return currentFrame?.SegmentsAsEnumerableOfTuple; } }
         public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get { return previousFrame?.SegmentsAsEnumerableOfTuple; } }
@@ -46,7 +43,7 @@ namespace SLAM.Models.Mapping {
         }
 
         private void Initialize() {
-            linearExtractor = new LinearFrameExtractor(dataProvider);
+            //middleLineExtractor = new MiddleLineFrameExtractor(dataProvider.FrameInfo);
             coloredExtractor = new ColoredFrameExtractor(dataProvider);
             dataProvider.OnNextFrameReady += Update;
         }
@@ -56,18 +53,12 @@ namespace SLAM.Models.Mapping {
             dataProvider.GetNextRawFrameTo(out currentFrameBuffer);
 
             if (frameSequence == null) {
-                frameSequence = new FrameSequence(dataProvider.TotalFrames);
+                frameSequence = new FrameSequence(dataProvider.TotalFrames, new MiddleLineFrameExtractor(dataProvider.FrameInfo));
             }
 
             previousFrame = currentFrame;
 
-            if (!frameSequence.ContainsFrameIndex(dataProvider.FrameIndex)) {
-                currentFrame = new Frame(linearExtractor.ExtractMiddleLine(currentFrameBuffer));
-                frameSequence.AddFrame(dataProvider.FrameIndex, currentFrame);
-            }
-            else {
-                currentFrame = frameSequence.Single(f => f.Key == dataProvider.FrameIndex).Value;
-            }
+            currentFrame = frameSequence.AppendData(dataProvider.FrameIndex, currentFrameBuffer);
             OnFrameUpdate?.Invoke();
         }
     }

@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataExtractors\ColoredFrameExtractor.cs" />
-    <Compile Include="DataExtractors\LinearFrameExtractor.cs" />
+    <Compile Include="DataExtractors\MiddleLineFrameExtractor.cs" />
     <Compile Include="FrameSequenceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

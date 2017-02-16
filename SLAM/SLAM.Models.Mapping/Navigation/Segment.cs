@@ -24,6 +24,14 @@ namespace SLAM.Models.Mapping.Navigation {
             return new Segment(PointA.RotateAt(point, angle), PointB.RotateAt(point, angle));
         }
 
+        public Vector ConvergenceTo(Segment segment) {
+
+            Point middle = new Point((PointA.X + PointB.X) / 2, (PointA.Y + PointB.Y) / 2);
+            Point distance = middle.DistancePointTo(segment.PointA, segment.PointB);
+
+            return middle - distance;
+        }
+
         public Vector ConvergenceToNearestPoint(Segment segment) { // <-- :\
 
             Vector result = PointA.ConvergenceTo(segment.PointA);
