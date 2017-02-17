@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C1D7BF97-0AFF-4038-8B99-3EF9EE41CC70}</ProjectGuid>
+    <ProjectGuid>{3316DC31-30A7-42C8-87F6-4D3D3FEBC06E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SLAM.Models.UnitTests</RootNamespace>
-    <AssemblyName>SLAM.Models.UnitTests</AssemblyName>
+    <RootNamespace>SLAM.Models.Mapping.UnitTests</RootNamespace>
+    <AssemblyName>SLAM.Models.Mapping.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -51,14 +51,21 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\ExtensionDoubleTests.cs" />
+    <Compile Include="Extensions\ExtensionsPointTests.cs" />
+    <Compile Include="Extensions\ExtensionTests.cs" />
+    <Compile Include="Navigation\NavigationInfoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Navigation\" />
+    <ProjectReference Include="..\SLAM.Models.Mapping\SLAM.Models.Mapping.csproj">
+      <Project>{a5b42196-ec37-4a47-8f79-7aa24c73d630}</Project>
+      <Name>SLAM.Models.Mapping</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

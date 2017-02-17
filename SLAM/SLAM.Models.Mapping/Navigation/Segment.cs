@@ -20,8 +20,8 @@ namespace SLAM.Models.Mapping.Navigation {
             return new Segment(PointA.Rotate(angle), PointB.Rotate(angle));
         }
 
-        public Segment RotateAt(Point point, double angle) {
-            return new Segment(PointA.RotateAt(point, angle), PointB.RotateAt(point, angle));
+        public Segment RotateAt(double angle, double centerX, double centerY) {
+            return new Segment(PointA.RotateAt(angle, centerX, centerY), PointB.RotateAt(angle, centerX, centerY));
         }
 
         public Vector ConvergenceTo(Segment segment) {

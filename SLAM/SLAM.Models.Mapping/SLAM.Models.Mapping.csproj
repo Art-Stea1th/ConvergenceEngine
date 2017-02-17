@@ -44,11 +44,13 @@
     <Reference Include="PresentationCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ExtensionsDouble.cs" />
+    <Compile Include="Extensions\ExtensionsPoint.cs" />
     <Compile Include="Frame.cs" />
     <Compile Include="FrameSequence.cs" />
     <Compile Include="Navigation\NavigationInfo.cs" />
     <Compile Include="Navigation\Segment.cs" />
-    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\ExtensionsIEnumerable.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

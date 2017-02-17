@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
-[assembly: InternalsVisibleTo("SLAM.Models.UnitTests")]
+[assembly: InternalsVisibleTo("SLAM.Models.Mapping.UnitTests")]
 [assembly: Guid("62a05ef9-48a4-4435-8923-f7c0273cab89")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
