@@ -27,12 +27,7 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
             maxDivergencePointIndex = new Lazy<int>(() => FindMaxDivergencePointIndex(this));
         }
 
-        internal Segment(Tuple<Point, Point> pointsPair) : base(new List<Point> { pointsPair.Item1, pointsPair.Item2 }) { // <-- !!!
-            approximated = new Lazy<Tuple<Point, Point>>(() => pointsPair);
-            maxDivergencePointIndex = new Lazy<int>(() => 0);
-        }
-
-        public static double AngleBetween(Segment segmentA, Segment segmentB) {
+        public static double AngleBetween(Segment segmentA, Segment segmentB) { // TMP
             return Vector.AngleBetween((segmentA.PointB - segmentA.PointA), (segmentB.PointB - segmentB.PointA));
         }
 

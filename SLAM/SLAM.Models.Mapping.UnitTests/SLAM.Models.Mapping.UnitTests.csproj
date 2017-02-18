@@ -56,6 +56,8 @@
     <Compile Include="Extensions\ExtensionsIEnumerableTests.cs" />
     <Compile Include="Extensions\ExtensionsPointTests.cs" />
     <Compile Include="Navigation\NavigationInfoTests.cs" />
+    <Compile Include="Navigation\Segmentation\ReadOnlyPointSequenceTests.cs" />
+    <Compile Include="Navigation\Segmentation\SegmentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

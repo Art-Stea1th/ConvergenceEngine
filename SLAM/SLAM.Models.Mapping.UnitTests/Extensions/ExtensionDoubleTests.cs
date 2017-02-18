@@ -12,30 +12,30 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
 
         [Test]
         public void RadiansToDegrees_ExtremeAngles_MaximalAccuracy() {
-            Assert.AreEqual(Common.DegreesInRadian, 1.0.ToDegrees(), Common.PrecisionMax);
+            Assert.AreEqual(Common.DegreesInRadian, 1.0.ToDegrees(), Common.PrecisionMaximum); // Act-Assert
         }
 
         [Test]
         public void DegreesToRadians_ExtremeAngles_MaximalAccuracy() {
-            Assert.AreEqual(Common.RadiansInDegree, 1.0.ToRadians(), Common.PrecisionMax);
+            Assert.AreEqual(Common.RadiansInDegree, 1.0.ToRadians(), Common.PrecisionMaximum); // Act-Assert
         }
 
         [Test]
         public void AsNormalizedAngle_ExtremeAngles_EqualExpected() {
 
-            foreach (var param in AsNormalizedAngle_ExtremeAngles_EqualExpected_Params) {
+            foreach (var param in AsNormalizedAngle_ExtremeAngles_EqualExpected_Arrange) { // Arrange
 
                 double expectedAngle = param.Item2;
-                double actualAngle = param.Item1.AsNormalizedAngle();
+                double actualAngle = param.Item1.AsNormalizedAngle(); // Act
 
+                // Assert
                 Assert.AreEqual(expectedAngle, actualAngle);
             }
 
         }
-
-        private static IEnumerable<Tuple<double, double>> AsNormalizedAngle_ExtremeAngles_EqualExpected_Params {
+        
+        private static IEnumerable<Tuple<double, double>> AsNormalizedAngle_ExtremeAngles_EqualExpected_Arrange {
             get {
-
                 // normal case:
                 double range = 360.0 * 16.0, step = 0.1;
                 for (double a = -range; a < range + step; a += step) {

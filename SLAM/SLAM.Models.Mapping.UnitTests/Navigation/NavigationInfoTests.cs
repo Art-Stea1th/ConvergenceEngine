@@ -10,29 +10,33 @@ namespace SLAM.Models.Mapping.UnitTests.Navigation {
         [Test]
         public void OperatorPlus_EqualExpected() {
 
-            NavigationInfo navInfoA = new NavigationInfo(150.4, 200.9, 570.2);
+            // Arrange
+            NavigationInfo navInfoA = new NavigationInfo(150.4, 1200.9, 2570.2);
             NavigationInfo navInfoB = new NavigationInfo(849.6, 799.1, 429.8);
 
-            var expected = new NavigationInfo(1000.0, 1000.0, 1000.0);
-            var actual = navInfoA + navInfoB;
+            var expected = new NavigationInfo(1000.0, 2000.0, 3000.0);
+            var actual = navInfoA + navInfoB; // Act
 
-            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Common.PrecisionMax);
-            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Common.PrecisionMax);
-            Assert.AreEqual(expected.Angle, actual.Angle, Common.PrecisionMax);
+            // Assert
+            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Common.PrecisionMaximum);
+            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Common.PrecisionMaximum);
+            Assert.AreEqual(expected.Angle, actual.Angle, Common.PrecisionMaximum);
         }
 
         [Test]
         public void OperatorMinus_EqualExpected() {
 
-            NavigationInfo navInfoA = new NavigationInfo(-150.4, -200.9, -570.2);
+            // Arrange
+            NavigationInfo navInfoA = new NavigationInfo(-150.4, -1200.9, -2570.2);
             NavigationInfo navInfoB = new NavigationInfo(849.6, 799.1, 429.8);
 
-            var expected = new NavigationInfo(-1000.0, -1000.0, -1000.0);
-            var actual = navInfoA - navInfoB;
+            var expected = new NavigationInfo(-1000.0, -2000.0, -3000.0);
+            var actual = navInfoA - navInfoB; // Act
 
-            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Common.PrecisionMax);
-            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Common.PrecisionMax);
-            Assert.AreEqual(expected.Angle, actual.Angle, Common.PrecisionMax);
+            // Assert
+            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Common.PrecisionMaximum);
+            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Common.PrecisionMaximum);
+            Assert.AreEqual(expected.Angle, actual.Angle, Common.PrecisionMaximum);
         }
     }
 }

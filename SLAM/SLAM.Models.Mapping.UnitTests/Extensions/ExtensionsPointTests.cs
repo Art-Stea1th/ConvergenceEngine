@@ -13,23 +13,28 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
         [Test]
         public void Rotate_ExtremeAngles_EqualExpected() {
 
+            // Arrange
             double range = 360.0 * 16.0, step = 0.1;
 
             for (double a = -range; a < range + step; a += step) {
+
+                // Arrange
                 Matrix m = new Matrix();
                 m.Rotate(a);
 
                 Point expected = m.Transform(new Point(1.0, 0.0));
-                Point actual = new Point(1.0, 0.0).Rotate(a);
+                Point actual = new Point(1.0, 0.0).Rotate(a); // Act
 
-                Assert.AreEqual(expected.X, actual.X, Common.PrecisionMax);
-                Assert.AreEqual(expected.Y, actual.Y, Common.PrecisionMax);
+                // Assert
+                Assert.AreEqual(expected.X, actual.X, Common.PrecisionMaximum);
+                Assert.AreEqual(expected.Y, actual.Y, Common.PrecisionMaximum);
             }
         }
 
         [Test]
         public void RotateAt_ExtremeAngles_EqualExpected() {
 
+            // Arrange
             double rangeXY = 500.0, stepXY = 1.0;
             double rangeA = 360.0 * 16.0, stepA = 0.1;
 
@@ -37,14 +42,16 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
                 for (double atX = -rangeXY; atX < rangeXY + stepXY; atX += stepXY) {
                     for (double atY = -rangeXY; atY < rangeXY + stepXY; atY += stepXY) {
 
+                        // Arrange
                         Matrix m = new Matrix();
                         m.RotateAt(angle, atX, atY);
 
                         Point expected = m.Transform(new Point(1.0, 0.0));
-                        Point actual = new Point(1.0, 0.0).RotateAt(angle, atX, atY);
+                        Point actual = new Point(1.0, 0.0).RotateAt(angle, atX, atY); // Act
 
-                        Assert.AreEqual(expected.X, actual.X, Common.PrecisionMax);
-                        Assert.AreEqual(expected.Y, actual.Y, Common.PrecisionMax);
+                        // Assert
+                        Assert.AreEqual(expected.X, actual.X, Common.PrecisionMaximum);
+                        Assert.AreEqual(expected.Y, actual.Y, Common.PrecisionMaximum);
                     }
                 }
             }
@@ -53,12 +60,15 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
         [Test]
         public void ConvergenceTo_ValidDirection() {
 
+            // Arrange
             Point sourcePoint = new Point(-1.0, -1.0);
             Point targetPoint = new Point(1.0, 1.0);
 
-            Vector convergence = sourcePoint.ConvergenceTo(targetPoint);
+            Vector expectedConvergence = new Vector(2.0, 2.0);
+            Vector actualConvergence = sourcePoint.ConvergenceTo(targetPoint); // Act
 
-            Assert.AreEqual(new Vector(2.0, 2.0), convergence);
+            // Assert
+            Assert.AreEqual(expectedConvergence, actualConvergence);
         }
     }
 }

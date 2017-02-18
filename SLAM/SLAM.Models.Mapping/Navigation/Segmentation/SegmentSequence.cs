@@ -38,7 +38,7 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
 
             similar = similar.Select(sp => new Tuple<Segment, Segment>(
                 sp.Item1,
-                new Segment(new Tuple<Point, Point>(m.Transform(sp.Item2.PointA), m.Transform(sp.Item2.PointB))))); // <-- TMP
+                new Segment(new List<Point> { m.Transform(sp.Item2.PointA), m.Transform(sp.Item2.PointB) }))); // <-- TMP
 
             var directions = similar.Select(sp => sp.Item2.ConvergenceToNearestPoint(sp.Item1));
             Vector resultDirection = AverageWeightedByLengthsDirection(lehgths, directions);
