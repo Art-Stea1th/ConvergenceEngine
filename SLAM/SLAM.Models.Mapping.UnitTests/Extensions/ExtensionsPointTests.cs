@@ -22,8 +22,8 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
                 Point expected = m.Transform(new Point(1.0, 0.0));
                 Point actual = new Point(1.0, 0.0).Rotate(a);
 
-                Assert.AreEqual(expected.X, actual.X, PrecisionMax);
-                Assert.AreEqual(expected.Y, actual.Y, PrecisionMax);
+                Assert.AreEqual(expected.X, actual.X, Common.PrecisionMax);
+                Assert.AreEqual(expected.Y, actual.Y, Common.PrecisionMax);
             }
         }
 
@@ -43,8 +43,8 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
                         Point expected = m.Transform(new Point(1.0, 0.0));
                         Point actual = new Point(1.0, 0.0).RotateAt(angle, atX, atY);
 
-                        Assert.AreEqual(expected.X, actual.X, PrecisionMax);
-                        Assert.AreEqual(expected.Y, actual.Y, PrecisionMax);
+                        Assert.AreEqual(expected.X, actual.X, Common.PrecisionMax);
+                        Assert.AreEqual(expected.Y, actual.Y, Common.PrecisionMax);
                     }
                 }
             }

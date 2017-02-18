@@ -39,12 +39,14 @@ namespace SLAM.Models.Mapping.Extensions {
             var enumerator = sequence.GetEnumerator();
 
             enumerator.MoveNext();
-            var result = enumerator.Current;
+            decimal resultX = (decimal)enumerator.Current.X;
+            decimal resultY = (decimal)enumerator.Current.Y;
 
             while (enumerator.MoveNext()) {
-                result += enumerator.Current;
+                resultX += (decimal)enumerator.Current.X;
+                resultY += (decimal)enumerator.Current.Y;
             }
-            return result;
+            return new Vector((double)resultX, (double)resultY);
         }
     }    
 }

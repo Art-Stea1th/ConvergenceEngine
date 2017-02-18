@@ -32,11 +32,17 @@ namespace SLAM.Models.Mapping.Navigation {
         }
 
         public static NavigationInfo operator +(NavigationInfo navInfoA, NavigationInfo navInfoB) {
-            return new NavigationInfo(navInfoA.Direction + navInfoB.Direction, navInfoA.Angle + navInfoB.Angle);
+            decimal resultDirectionX = (decimal)navInfoA.Direction.X + (decimal)navInfoB.Direction.X;
+            decimal resultDirectionY = (decimal)navInfoA.Direction.Y + (decimal)navInfoB.Direction.Y;
+            decimal resultAngle = (decimal)navInfoA.Angle + (decimal)navInfoB.Angle;
+            return new NavigationInfo((double)resultDirectionX, (double)resultDirectionY, (double)resultAngle);
         }
 
         public static NavigationInfo operator -(NavigationInfo navInfoA, NavigationInfo navInfoB) {
-            return new NavigationInfo(navInfoA.Direction - navInfoB.Direction, navInfoA.Angle - navInfoB.Angle);
+            decimal resultDirectionX = (decimal)navInfoA.Direction.X - (decimal)navInfoB.Direction.X;
+            decimal resultDirectionY = (decimal)navInfoA.Direction.Y - (decimal)navInfoB.Direction.Y;
+            decimal resultAngle = (decimal)navInfoA.Angle - (decimal)navInfoB.Angle;
+            return new NavigationInfo((double)resultDirectionX, (double)resultDirectionY, (double)resultAngle);
         }
 
     }

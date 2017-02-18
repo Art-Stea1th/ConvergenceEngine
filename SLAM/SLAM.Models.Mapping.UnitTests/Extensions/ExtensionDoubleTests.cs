@@ -12,12 +12,12 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
 
         [Test]
         public void RadiansToDegrees_ExtremeAngles_MaximalAccuracy() {
-            Assert.AreEqual(DegreesInRadian, 1.0.ToDegrees(), PrecisionMax);
+            Assert.AreEqual(Common.DegreesInRadian, 1.0.ToDegrees(), Common.PrecisionMax);
         }
 
         [Test]
         public void DegreesToRadians_ExtremeAngles_MaximalAccuracy() {
-            Assert.AreEqual(RadiansInDegree, 1.0.ToRadians(), PrecisionMax);
+            Assert.AreEqual(Common.RadiansInDegree, 1.0.ToRadians(), Common.PrecisionMax);
         }
 
         [Test]

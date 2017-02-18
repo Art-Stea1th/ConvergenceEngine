@@ -46,10 +46,11 @@
   <ItemGroup>
     <Compile Include="Extensions\ExtensionsDouble.cs" />
     <Compile Include="Extensions\ExtensionsPoint.cs" />
-    <Compile Include="Frame.cs" />
-    <Compile Include="FrameSequence.cs" />
+    <Compile Include="Navigation\Frame.cs" />
+    <Compile Include="Navigation\FrameSequence.cs" />
     <Compile Include="Navigation\NavigationInfo.cs" />
-    <Compile Include="Navigation\Segment.cs" />
+    <Compile Include="Navigation\Segmentation\ReadOnlyPointSequence.cs" />
+    <Compile Include="Navigation\Segmentation\Segment.cs" />
     <Compile Include="Extensions\ExtensionsIEnumerable.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -57,7 +58,7 @@
     </Compile>
     <AppDesigner Include="Properties\" />
     <Compile Include="Map.cs" />
-    <Compile Include="Navigation\SegmentSequence.cs" />
+    <Compile Include="Navigation\Segmentation\SegmentSequence.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SLAM.Models.IO\SLAM.Models.IO.csproj">

@@ -8,57 +8,43 @@ namespace SLAM.Models.Mapping {
 
     using IO.DataExtractors;
     using IO.Readers;
+    using Navigation;
 
-    public sealed class Map {
+    public sealed class Map : FrameSequence {
 
         private DataProvider dataProvider;
         private byte[] currentFrameBuffer;
 
-        private ColoredFrameExtractor coloredExtractor;
-
-        private FrameSequence frameSequence;
-        private Frame currentFrame, previousFrame;
+        private MiddleLineFrameExtractor middleLineExtractor;
 
         public event Action OnFrameUpdate;
 
-        public byte[] Buffer { get { return coloredExtractor.ExtractColored(Color.FromArgb(255, 0, 128, 192), Color.FromArgb(255, 0, 0, 30)); } }
-        //public IEnumerable<Point> MapPoints { get { return frameSequence?.SelectMany(f => f.Value.Points); } }
-        public IEnumerable<Point> MapPoints { get { return frameSequence?.GetMapPoints(); } }
-        public IEnumerable<Point> FramePoints { get { return currentFrame?.Points; } }
-        public IEnumerable<Tuple<Point, Point>> FrameSegments { get { return currentFrame?.SegmentsAsEnumerableOfTuple; } }
-        public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get { return previousFrame?.SegmentsAsEnumerableOfTuple; } }
-
-
-        public IEnumerable<Tuple<Point, Point>> SimilarFrameSegments {
-            get {
-                return currentFrame != null && previousFrame != null ?
-                    currentFrame.Segments.FindSimilarSegmentsTo(previousFrame.Segments)
-                    .Select(sq => new Tuple<Point, Point>(sq.Item2.PointA, sq.Item2.PointB)) : null;
-            }
-        }
+        // --> TMP
+        public IEnumerable<Point> MapPoints { get { return GetMapPoints(); } }
+        public IEnumerable<Point> FramePoints { get { return ActualFrame?.Points; } }
+        public IEnumerable<Tuple<Point, Point>> FrameSegments { get { return ActualFrame?.Select(s => new Tuple<Point, Point>(s.PointA, s.PointB)); } }
+        public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get; set; }
+        public IEnumerable<Tuple<Point, Point>> SimilarFrameSegments { get; set; }
+        // <-- TMP
 
         internal Map(DataProvider dataProvider) {
             this.dataProvider = dataProvider;
             Initialize();
         }
 
-        private void Initialize() {
-            //middleLineExtractor = new MiddleLineFrameExtractor(dataProvider.FrameInfo);
-            coloredExtractor = new ColoredFrameExtractor(dataProvider);
+        private void Initialize() {            
             dataProvider.OnNextFrameReady += Update;
         }
 
         private void Update() {
-
-            dataProvider.GetNextRawFrameTo(out currentFrameBuffer);
-
-            if (frameSequence == null) {
-                frameSequence = new FrameSequence(dataProvider.TotalFrames, new MiddleLineFrameExtractor(dataProvider.FrameInfo));
+            if (middleLineExtractor == null) { // TMP
+                middleLineExtractor = new MiddleLineFrameExtractor(dataProvider.FrameInfo);
             }
 
-            previousFrame = currentFrame;
+            dataProvider.GetNextRawFrameTo(out currentFrameBuffer);
+            var points = middleLineExtractor.ExtractMiddleLine(currentFrameBuffer);
 
-            currentFrame = frameSequence.AppendData(dataProvider.FrameIndex, currentFrameBuffer);
+            NextFrameProceed(dataProvider.FrameIndex, new Frame(new List<Point>(points)));
             OnFrameUpdate?.Invoke();
         }
     }

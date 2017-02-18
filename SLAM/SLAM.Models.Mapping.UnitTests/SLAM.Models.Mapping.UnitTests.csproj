@@ -51,9 +51,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="Extensions\ExtensionDoubleTests.cs" />
+    <Compile Include="Extensions\ExtensionsIEnumerableTests.cs" />
     <Compile Include="Extensions\ExtensionsPointTests.cs" />
-    <Compile Include="Extensions\ExtensionTests.cs" />
     <Compile Include="Navigation\NavigationInfoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
