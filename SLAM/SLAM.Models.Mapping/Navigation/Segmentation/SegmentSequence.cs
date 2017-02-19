@@ -148,8 +148,8 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double AveragePositionY(Point point, Point lineStart, Point lineEnd) {
-            return ((point.Y + lineStart.Y + lineEnd.Y) / 3);
-        }
+            return Math.Abs((point.Y + lineStart.Y + lineEnd.Y) / 3);
+        }        
         #endregion
 
         #region Generic Interfaces
@@ -157,12 +157,9 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
         public Segment this[int index] { get { return segments.Value[index]; } }
         public int Count { get { return segments.Value.Count; } }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        IEnumerator<Segment> IEnumerable<Segment>.GetEnumerator() {
+        public IEnumerator<Segment> GetEnumerator() {
             return segments.Value.GetEnumerator();
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerator IEnumerable.GetEnumerator() {
             return segments.Value.GetEnumerator();
         }

@@ -58,6 +58,46 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
         }
 
         [Test]
+        public void DistancePointTo_PointIsTheStartOrEndOfTheSegment_ReturnSourcePoint() {
+
+            // Arrange
+            Point pointA = new Point(-1.0, 1.0);
+            Point pointB = new Point(1.0, -1.0);
+            Point pointC1 = pointA;
+            Point pointC2 = pointB;
+
+            Point expectedPoint1 = pointC1;
+            Point expectedPoint2 = pointC2;
+
+            // Act
+            Point actualPoint1 = pointC1.DistancePointTo(pointA, pointB);
+            Point actualPoint2 = pointC2.DistancePointTo(pointA, pointB);
+
+            // Assert
+            Assert.AreEqual(expectedPoint1, actualPoint1);
+            Assert.AreEqual(expectedPoint2, actualPoint2);
+        }
+
+        [Test]
+        public void DistancePointTo_ZeroLengthSegment_ReturnAnyPointOfSegment() {
+
+            // Arrange
+            Point pointA = new Point(-1.0, -1.0);
+            Point pointB = new Point(-1.0, -1.0);
+            Point pointC = new Point(1.0, 1.0);
+
+            Point expectedPoint1 = pointA;
+            Point expectedPoint2 = pointB;
+
+            // Act
+            Point actualPoint = pointC.DistancePointTo(pointA, pointB);
+
+            // Assert
+            Assert.AreEqual(expectedPoint1, actualPoint);
+            Assert.AreEqual(expectedPoint2, actualPoint);
+        }
+
+        [Test]
         public void ConvergenceTo_ValidDirection() {
 
             // Arrange

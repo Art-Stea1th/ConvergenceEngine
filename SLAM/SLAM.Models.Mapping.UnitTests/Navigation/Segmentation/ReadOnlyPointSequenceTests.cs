@@ -29,7 +29,7 @@ namespace SLAM.Models.Mapping.UnitTests.Navigation.Segmentation {
             for (int i = 0; i < count; ++i) {
                 seed.Add(new Point(i, i));
             }
-            ReadOnlyPointSequenceDerived sequence = new ReadOnlyPointSequenceDerived(seed);
+            ReadOnlyPointSequence sequence = new ReadOnlyPointSequenceDerived(seed);
 
             // Act
             var sequencesPair = sequence.SplitBy(index);

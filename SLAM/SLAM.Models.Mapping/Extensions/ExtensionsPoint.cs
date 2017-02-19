@@ -31,17 +31,23 @@ namespace SLAM.Models.Mapping.Extensions {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double DistanceTo(this Point p, Point point) {
-            return p.ConvergenceTo(point).Length;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double DistanceTo(this Point pointC, Point pointA, Point pointB) {
             return (pointC - pointC.DistancePointTo(pointA, pointB)).Length;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double DistanceTo(this Point p, Point point) {
+            return p.ConvergenceTo(point).Length;
+        }
+
         public static Point DistancePointTo(this Point pointC, Point pointA, Point pointB) {
+
+            if (pointC == pointA || pointC == pointB) {
+                return pointC;
+            }
+            if (pointA == pointB) {
+                return pointA;
+            }
             Vector ab = pointA.ConvergenceTo(pointB);
             Vector ac = pointA.ConvergenceTo(pointC);
             ab.Normalize();
