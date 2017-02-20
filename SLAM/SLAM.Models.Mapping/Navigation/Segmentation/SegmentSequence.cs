@@ -157,9 +157,11 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
         public Segment this[int index] { get { return segments.Value[index]; } }
         public int Count { get { return segments.Value.Count; } }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IEnumerator<Segment> GetEnumerator() {
             return segments.Value.GetEnumerator();
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerator IEnumerable.GetEnumerator() {
             return segments.Value.GetEnumerator();
         }

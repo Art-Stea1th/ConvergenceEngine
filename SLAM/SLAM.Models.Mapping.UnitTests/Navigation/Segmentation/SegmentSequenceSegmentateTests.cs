@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -8,19 +7,7 @@ namespace SLAM.Models.Mapping.UnitTests.Navigation.Segmentation {
     using Mapping.Navigation.Segmentation;
 
     [TestFixture]
-    public sealed class SegmentSequenceTests {
-
-        [Test]
-        public void FindSegmentsByAngleTo_ReturnValidMatchingSegments() {
-
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void FindSegmentsByDistanceTo_ReturnValidMatchingSegments() {
-
-            throw new NotImplementedException();
-        }
+    public sealed partial class SegmentSequenceTests {        
 
         [Test]
         public void SegmentSequence_SegmentateInCtor_EqualExpected() {

@@ -33,14 +33,14 @@ namespace SLAM.Models.Mapping.Navigation {
             for (int i = 0; i < points.Count; i++) {
 
                 Point p = new Point(points[i].X, points[i].Y);
-                //p.Rotate(Absolute.Angle);
-                //p.X += Absolute.Direction.X;
-                //p.Y += Absolute.Direction.Y;
+                p = p.Rotate(Absolute.Angle);
 
-                Matrix m = new Matrix();
-                m.Rotate(Absolute.Angle);
-                m.Translate(Absolute.Direction.X, Absolute.Direction.Y);
-                p = m.Transform(p);
+                p = new Point(p.X + Absolute.Direction.X, p.Y + Absolute.Direction.Y);
+
+                //Matrix m = new Matrix();
+                //m.Translate(Absolute.Direction.X, Absolute.Direction.Y);
+                //m.Rotate(Absolute.Angle);
+                //p = m.Transform(p);
 
                 transformedPoints.Add(p);
                 //Console.WriteLine(p);

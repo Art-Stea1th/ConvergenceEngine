@@ -2,6 +2,7 @@
 
 namespace SLAM.Models.Mapping.UnitTests.Navigation {
 
+    using Common;
     using Mapping.Navigation;
 
     [TestFixture]
@@ -18,9 +19,9 @@ namespace SLAM.Models.Mapping.UnitTests.Navigation {
             var actual = navInfoA + navInfoB; // Act
 
             // Assert
-            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Common.PrecisionMaximum);
-            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Common.PrecisionMaximum);
-            Assert.AreEqual(expected.Angle, actual.Angle, Common.PrecisionMaximum);
+            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Constants.PrecisionMaximum);
+            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Constants.PrecisionMaximum);
+            Assert.AreEqual(expected.Angle, actual.Angle, Constants.PrecisionMaximum);
         }
 
         [Test]
@@ -34,9 +35,9 @@ namespace SLAM.Models.Mapping.UnitTests.Navigation {
             var actual = navInfoA - navInfoB; // Act
 
             // Assert
-            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Common.PrecisionMaximum);
-            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Common.PrecisionMaximum);
-            Assert.AreEqual(expected.Angle, actual.Angle, Common.PrecisionMaximum);
+            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Constants.PrecisionMaximum);
+            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Constants.PrecisionMaximum);
+            Assert.AreEqual(expected.Angle, actual.Angle, Constants.PrecisionMaximum);
         }
     }
 }

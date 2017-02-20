@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Media;
 
-
 namespace SLAM.Models.Mapping.UnitTests.Extensions {
 
+    using Common;
     using Mapping.Extensions;
 
     [TestFixture]
@@ -26,8 +26,8 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
                 Point actual = new Point(1.0, 0.0).Rotate(a); // Act
 
                 // Assert
-                Assert.AreEqual(expected.X, actual.X, Common.PrecisionMaximum);
-                Assert.AreEqual(expected.Y, actual.Y, Common.PrecisionMaximum);
+                Assert.AreEqual(expected.X, actual.X, Constants.PrecisionMaximum);
+                Assert.AreEqual(expected.Y, actual.Y, Constants.PrecisionMaximum);
             }
         }
 
@@ -50,8 +50,8 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
                         Point actual = new Point(1.0, 0.0).RotateAt(angle, atX, atY); // Act
 
                         // Assert
-                        Assert.AreEqual(expected.X, actual.X, Common.PrecisionMaximum);
-                        Assert.AreEqual(expected.Y, actual.Y, Common.PrecisionMaximum);
+                        Assert.AreEqual(expected.X, actual.X, Constants.PrecisionMaximum);
+                        Assert.AreEqual(expected.Y, actual.Y, Constants.PrecisionMaximum);
                     }
                 }
             }

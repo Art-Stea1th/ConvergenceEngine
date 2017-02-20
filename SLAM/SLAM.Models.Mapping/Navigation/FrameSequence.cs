@@ -52,7 +52,11 @@ namespace SLAM.Models.Mapping.Navigation {
             else {
                 var convergence = frame.ConvergenceTo(prev.Value);
                 frame.SetPosition(prev.Value.Absolute + convergence);
+
+                Console.WriteLine($"{prev.Value.Absolute} | {convergence} | {frame.Absolute}");
             }
+
+            
 
             if (true/*next.Value == null*/) {
                 frames.Add(index, frame);

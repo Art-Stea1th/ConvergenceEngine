@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace SLAM.Models.Mapping.UnitTests.Extensions {
 
+    using Common;
     using Mapping.Extensions;
 
     [TestFixture]
@@ -12,12 +12,12 @@ namespace SLAM.Models.Mapping.UnitTests.Extensions {
 
         [Test]
         public void RadiansToDegrees_ExtremeAngles_MaximalAccuracy() {
-            Assert.AreEqual(Common.DegreesInRadian, 1.0.ToDegrees(), Common.PrecisionMaximum); // Act-Assert
+            Assert.AreEqual(Constants.DegreesInRadian, 1.0.ToDegrees(), Constants.PrecisionMaximum); // Act-Assert
         }
 
         [Test]
         public void DegreesToRadians_ExtremeAngles_MaximalAccuracy() {
-            Assert.AreEqual(Common.RadiansInDegree, 1.0.ToRadians(), Common.PrecisionMaximum); // Act-Assert
+            Assert.AreEqual(Constants.RadiansInDegree, 1.0.ToRadians(), Constants.PrecisionMaximum); // Act-Assert
         }
 
         [Test]

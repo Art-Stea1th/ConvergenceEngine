@@ -4,6 +4,7 @@ using System.Windows;
 
 namespace SLAM.Models.Mapping.UnitTests.Navigation.Segmentation {
 
+    using Common;
     using Mapping.Navigation.Segmentation;
 
     [TestFixture]
@@ -24,8 +25,8 @@ namespace SLAM.Models.Mapping.UnitTests.Navigation.Segmentation {
             double actualAngleBToA = Segment.AngleBetween(segmentB, segmentA);
 
             // Assert
-            Assert.AreEqual(expectedAngleAToB, actualAngleAToB, Common.PrecisionAcceptable);
-            Assert.AreEqual(expectedAngleBToA, actualAngleBToA, Common.PrecisionAcceptable);
+            Assert.AreEqual(expectedAngleAToB, actualAngleAToB, Constants.PrecisionAcceptable);
+            Assert.AreEqual(expectedAngleBToA, actualAngleBToA, Constants.PrecisionAcceptable);
         }
 
         [Test]
