@@ -33,22 +33,20 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
 
             double resultAngle = AverageWeightedByLengthsAngle(lehgths, angles);
 
-            Matrix m = new Matrix();
-            m.Rotate(resultAngle);
+            similar = similar.DoSequential(angles, (s, a) => new Tuple<Segment, Segment>(
+                s.Item1, new Segment(new List<Point> { s.Item2.PointA.Rotate(-a), s.Item2.PointB.Rotate(-a) })));
 
-            similar = similar.Select(sp => new Tuple<Segment, Segment>(
-                sp.Item1,
-                new Segment(new List<Point> { m.Transform(sp.Item2.PointA), m.Transform(sp.Item2.PointB) }))); // <-- TMP
+            // -------- WARNING -------- is not valid method of finding the offset -----------------------------------------
+            var directions = similar.Select(sp => sp.Item1.ConvergenceToNearestPoint(sp.Item2));
+            // -------- WARNING -------- is not valid method of finding the offset -----------------------------------------
 
-            var directions = similar.Select(sp => sp.Item2.ConvergenceToNearestPoint(sp.Item1));
             Vector resultDirection = AverageWeightedByLengthsDirection(lehgths, directions);
 
             NavigationInfo result = new NavigationInfo(resultDirection, resultAngle);
-
             return result;
         }
 
-        private double AverageWeightedByLengthsAngle(IEnumerable<double> lengths, IEnumerable<double> angles) {
+        public double AverageWeightedByLengthsAngle(IEnumerable<double> lengths, IEnumerable<double> angles) {
 
             var fullLength = lengths.Sum();
             var weights = lengths.Select(s => s * 100 / fullLength);
@@ -56,7 +54,7 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
             return angles.DoSequential(weights, (a, w) => a / 100 * w).Sum();
         }
 
-        private Vector AverageWeightedByLengthsDirection(IEnumerable<double> lengths, IEnumerable<Vector> directions) {
+        public Vector AverageWeightedByLengthsDirection(IEnumerable<double> lengths, IEnumerable<Vector> directions) {
 
             var fullLength = lengths.Sum();
             var weights = lengths.Select(s => s * 100 / fullLength);

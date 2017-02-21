@@ -4,25 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SLAM.Models.Mapping.UnitTests.Navigation.Segmentation {
 
     using Common;
+    using Mapping.Navigation.Segmentation;
 
     [TestFixture]
     public sealed partial class SegmentSequenceTests {
-
-
-        [Test]
-        public void FindSegmentsByAngleTo_ReturnValidMatchingSegments() {
-
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void FindSegmentsByDistanceTo_ReturnValidMatchingSegments() {
-
-            throw new NotImplementedException();
-        }
+        
     }
 }

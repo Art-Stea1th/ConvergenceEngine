@@ -27,20 +27,14 @@ namespace SLAM.Models.Mapping.Navigation {
 
         private void UpdateTransformedPoints() { // TMP
 
-            var points  = new List<Point>(Points);
+            var points = new List<Point>(Points);
             transformedPoints = new List<Point>(points.Count);
 
             for (int i = 0; i < points.Count; i++) {
 
                 Point p = new Point(points[i].X, points[i].Y);
                 p = p.Rotate(Absolute.Angle);
-
                 p = new Point(p.X + Absolute.Direction.X, p.Y + Absolute.Direction.Y);
-
-                //Matrix m = new Matrix();
-                //m.Translate(Absolute.Direction.X, Absolute.Direction.Y);
-                //m.Rotate(Absolute.Angle);
-                //p = m.Transform(p);
 
                 transformedPoints.Add(p);
                 //Console.WriteLine(p);

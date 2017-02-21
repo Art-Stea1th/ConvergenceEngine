@@ -30,7 +30,7 @@ namespace SLAM.Models.Mapping.Navigation {
 
             foreach (var item in frames) {
                 foreach (var point in item.Value.PointsTransformed) {
-                    if (point.DistanceTo(prevPoint) >= 3) {
+                    if (point.DistanceTo(prevPoint) >= 5.0) {
                         yield return point;
                         prevPoint = point;
                     }
@@ -38,13 +38,12 @@ namespace SLAM.Models.Mapping.Navigation {
             }
         }
 
-        internal void NextFrameProceed(int index, Frame frame) {
+        internal void NextFrameProceed(int index, Frame frame) { // TMP
 
             ActualIndex = index;
             ActualFrame = frame;
 
             var prev = frames.LastOrDefault(f => f.Key < index);
-            //var next = frames.FirstOrDefault(f => f.Key > index);
 
             if (prev.Value == null) {
                 frame.SetPosition(new NavigationInfo());
@@ -52,27 +51,9 @@ namespace SLAM.Models.Mapping.Navigation {
             else {
                 var convergence = frame.ConvergenceTo(prev.Value);
                 frame.SetPosition(prev.Value.Absolute + convergence);
-
-                Console.WriteLine($"{prev.Value.Absolute} | {convergence} | {frame.Absolute}");
+                //Console.WriteLine($"{prev.Value.Absolute} | {convergence} | {frame.Absolute}");
             }
-
-            
-
-            if (true/*next.Value == null*/) {
-                frames.Add(index, frame);
-                return;
-            }
-            //else {
-            //    var newNextPosition = next.Value.ConvergenceTo(frame);
-            //    var offset = newNextPosition - next.Value.Absolute;
-
-            //    foreach (var item in frames) {
-            //        if (item.Key > index) {
-            //            item.Value.SetPosition(item.Value.Absolute + offset);
-            //        }
-            //    }
-            //}
-            //frames.Add(index, frame);
+            frames.Add(index, frame);
         }        
 
         IEnumerator<KeyValuePair<int, Frame>> IEnumerable<KeyValuePair<int, Frame>>.GetEnumerator() {

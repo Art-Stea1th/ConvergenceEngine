@@ -35,7 +35,8 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
             return new Tuple<Point, Point>(segment.PointA, segment.PointB);
         }
 
-        public Vector ConvergenceToNearestPoint(Segment segment) { // <-- :\
+        // -------- WARNING -------- is not valid method of finding the offset -----------------------------------------
+        public Vector ConvergenceToNearestPoint(Segment segment) { // !!! It may be not valid
 
             Vector result = PointA.ConvergenceTo(segment.PointA);
 
@@ -53,6 +54,7 @@ namespace SLAM.Models.Mapping.Navigation.Segmentation {
             }
             return result;
         }
+        // -------- WARNING -------- is not valid method of finding the offset -----------------------------------------
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double DistanceToNearestPoint(Segment segment) {

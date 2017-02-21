@@ -56,7 +56,6 @@
     <Compile Include="Extensions\ExtensionsIEnumerableTests.cs" />
     <Compile Include="Extensions\ExtensionsPointTests.cs" />
     <Compile Include="Navigation\NavigationInfoTests.cs" />
-    <Compile Include="Navigation\Segmentation\PointSequenceGenerator.cs" />
     <Compile Include="Navigation\Segmentation\ReadOnlyPointSequenceTests.cs" />
     <Compile Include="Navigation\Segmentation\SegmentSequenceSegmentateTests.cs" />
     <Compile Include="Navigation\Segmentation\SegmentSequenceConvergenceTests.cs" />
