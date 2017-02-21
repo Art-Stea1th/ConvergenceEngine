@@ -1,0 +1,14 @@
+﻿<Window x:Class="ConvergenceEngine.Views.AppWindows.PointsDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Points Data" Width="420" Height="354">
+    <Grid Background="Black">
+        <Border BorderBrush="Red" BorderThickness="1"/>
+        <Viewbox>
+            <Image
+                Source="{Binding PointsData,
+                Converter={StaticResource PointSequenceToImageSource},
+                ConverterParameter={x:Static Colors.Red}}"/>
+        </Viewbox>
+    </Grid>
+</Window>
