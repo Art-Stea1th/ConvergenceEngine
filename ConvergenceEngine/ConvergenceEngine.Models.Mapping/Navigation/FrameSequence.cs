@@ -43,6 +43,10 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
             ActualIndex = index;
             ActualFrame = frame;
 
+            if (frames.ContainsKey(index)) {
+                return;
+            }
+
             var prev = frames.LastOrDefault(f => f.Key < index);
 
             if (prev.Value == null) {
