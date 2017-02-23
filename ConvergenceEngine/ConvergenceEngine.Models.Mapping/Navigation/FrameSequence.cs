@@ -19,6 +19,7 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
 
         internal int ActualIndex { get; set; }
         internal Frame ActualFrame { get; set; }
+        internal Frame PreviousFrame { get; set; }
 
         internal FrameSequence() {
             frames = new SortedList<int, Frame>();
@@ -40,6 +41,8 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
 
         internal void NextFrameProceed(int index, Frame frame) { // TMP
 
+            PreviousFrame = ActualFrame;
+
             ActualIndex = index;
             ActualFrame = frame;
 
@@ -58,7 +61,7 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
                 //Console.WriteLine($"{prev.Value.Absolute} | {convergence} | {frame.Absolute}");
             }
             frames.Add(index, frame);
-        }        
+        }
 
         IEnumerator<KeyValuePair<int, Frame>> IEnumerable<KeyValuePair<int, Frame>>.GetEnumerator() {
             return frames.GetEnumerator();

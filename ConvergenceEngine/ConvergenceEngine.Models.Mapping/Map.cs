@@ -23,8 +23,8 @@ namespace ConvergenceEngine.Models.Mapping {
         public IEnumerable<Point> MapPoints { get { return GetMapPoints(); } }
         public IEnumerable<Point> FramePoints { get { return ActualFrame?.Points; } }
         public IEnumerable<Tuple<Point, Point>> FrameSegments { get { return ActualFrame?.Select(s => new Tuple<Point, Point>(s.PointA, s.PointB)); } }
-        public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get; set; }
-        public IEnumerable<Tuple<Point, Point>> SimilarFrameSegments { get; set; }
+        public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get { return PreviousFrame?.Select(s => new Tuple<Point, Point>(s.PointA, s.PointB)); } }
+        public IEnumerable<Tuple<Point, Point>> TrackedFrameSegments { get { return ActualFrame?.SelectTrackedTo(PreviousFrame).Select(s => new Tuple<Point, Point>(s.Item2.PointA, s.Item2.PointB)); } }
         // <-- TMP
 
         internal Map(DataProvider dataProvider) {

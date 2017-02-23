@@ -35,8 +35,39 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
             return new Tuple<Point, Point>(segment.PointA, segment.PointB);
         }
 
-        // -------- WARNING -------- is not valid method of finding the offset -----------------------------------------
-        public Vector ConvergenceToNearestPoint(Segment segment) { // !!! It may be not valid
+        public Point? IntersectionPointWith(Segment segment) {
+
+            var lineCoefficients1 = CalculateLineCoefficients();
+            var lineCoefficients2 = segment.CalculateLineCoefficients();
+
+            double A1 = lineCoefficients1.Item1;
+            double B1 = lineCoefficients1.Item2;
+            double C1 = lineCoefficients1.Item3;
+
+            double A2 = lineCoefficients2.Item1;
+            double B2 = lineCoefficients2.Item2;
+            double C2 = lineCoefficients2.Item3;
+
+            double commonDenominator = A1 * B2 - A2 * B1;
+
+            if (commonDenominator == 0.0) {
+                return null;
+            }
+
+            double resultX = -(C1 * B2 - C2 * B1) / commonDenominator;
+            double resultY = -(A1 * C2 - A2 * C1) / commonDenominator;
+
+            return new Point(resultX, resultY);
+        }
+
+        private Tuple<double, double, double> CalculateLineCoefficients() { // Ax + By + C
+            double A = PointA.Y - PointB.Y;
+            double B = PointB.X - PointA.X;
+            double C = -(A * PointA.X) - (B * PointA.Y);
+            return new Tuple<double, double, double>(A, B, C);
+        }
+
+        public Vector ConvergenceToNearestPoint(Segment segment) {
 
             Vector result = PointA.ConvergenceTo(segment.PointA);
 
@@ -54,7 +85,6 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
             }
             return result;
         }
-        // -------- WARNING -------- is not valid method of finding the offset -----------------------------------------
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double DistanceToNearestPoint(Segment segment) {

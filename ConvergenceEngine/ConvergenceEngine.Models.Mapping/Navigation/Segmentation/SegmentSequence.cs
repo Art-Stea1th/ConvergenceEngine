@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media;
-
 
 namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
 
     using Extensions;
+    using Convergence;
+    using Convergence.Searchers;
 
     internal abstract class SegmentSequence : IReadOnlyList<Segment>, IReadOnlyCollection<Segment>, IEnumerable<Segment> {
 
@@ -26,91 +26,37 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
 
         public NavigationInfo ConvergenceTo(SegmentSequence sequence) {
 
-            var similar = FindSimilarSegmentsTo(sequence);
+            var trackedPairs = SelectTrackedTo(sequence);
+            var trackedCurrent = trackedPairs.Select(s => s.Item1);
+            var trackedAnother = trackedPairs.Select(s => s.Item2);
 
-            var lehgths = similar.Select(sp => (sp.Item1.Length + sp.Item2.Length) / 2);
-            var angles = similar.Select(sp => Segment.AngleBetween(sp.Item1, sp.Item2));
+            double resultAngle = AngleByLines.SearchBetween(trackedCurrent, trackedAnother);
+            trackedAnother = trackedAnother.Select(
+                s => new Segment(new List<Point> { s.PointA.Rotate(-resultAngle), s.PointB.Rotate(-resultAngle) }));
 
-            double resultAngle = AverageWeightedByLengthsAngle(lehgths, angles);
+            Vector resultDirection;
+            int trackedPairsCount = trackedPairs.Count();
 
-            similar = similar.DoSequential(angles, (s, a) => new Tuple<Segment, Segment>(
-                s.Item1, new Segment(new List<Point> { s.Item2.PointA.Rotate(-a), s.Item2.PointB.Rotate(-a) })));
-
-            // -------- WARNING -------- is not valid method of finding the offset -----------------------------------------
-            var directions = similar.Select(sp => sp.Item1.ConvergenceToNearestPoint(sp.Item2));
-            // -------- WARNING -------- is not valid method of finding the offset -----------------------------------------
-
-            Vector resultDirection = AverageWeightedByLengthsDirection(lehgths, directions);
-
-            NavigationInfo result = new NavigationInfo(resultDirection, resultAngle);
-            return result;
-        }
-
-        public double AverageWeightedByLengthsAngle(IEnumerable<double> lengths, IEnumerable<double> angles) {
-
-            var fullLength = lengths.Sum();
-            var weights = lengths.Select(s => s * 100 / fullLength);
-
-            return angles.DoSequential(weights, (a, w) => a / 100 * w).Sum();
-        }
-
-        public Vector AverageWeightedByLengthsDirection(IEnumerable<double> lengths, IEnumerable<Vector> directions) {
-
-            var fullLength = lengths.Sum();
-            var weights = lengths.Select(s => s * 100 / fullLength);
-
-            return directions.DoSequential(weights, (d, w) => d / 100.0 * w).Sum();
-        }
-
-        public IEnumerable<Tuple<Segment, Segment>> FindSimilarSegmentsTo(SegmentSequence sequence) {
-
-            foreach (var segment in this) {
-
-                var maxDistance = Math.Min(segment.PointA.Y, segment.PointB.Y) * 0.05;
-                var maxAngle = 3.0;
-
-                Segment similar = sequence.FindSimilarSegmentFor(segment, maxDistance, maxAngle);
-                if (similar != null) {
-                    yield return new Tuple<Segment, Segment>(segment, similar);
-                }
+            if (trackedPairsCount > 1) {
+                resultDirection = OffsetByIntersectionPoints.SearchBetween(new List<Segment>(trackedCurrent), new List<Segment>(trackedAnother));
+                return new NavigationInfo(resultDirection, resultAngle);
             }
-        }
 
-        public Segment FindSimilarSegmentFor(Segment segment, double maxDistance, double maxAngle) {
-            if (segment != null) {
-                var selection = FindSegmentsByDistanceTo(segment, maxDistance).Intersect(FindSegmentsByAngleTo(segment, maxAngle));
-                if (selection.Count() > 1) {
-                    return FindSegmentWithNearestLengthTo(selection, segment);
-                }
-                return selection.FirstOrDefault();
+            if (trackedPairsCount == 1) {
+                var currentFirst = trackedCurrent.First();
+                var anotherFirst = trackedAnother.First();
+
+                resultDirection = OffsetByExtremePoints.SearchBetween(currentFirst, anotherFirst);
+                return new NavigationInfo(resultDirection, resultAngle);
             }
-            throw new ArgumentNullException(segment.ToString());
+
+            return new NavigationInfo(new Vector(0.0, 0.0), resultAngle);
         }
 
-        public Segment FindSegmentWithNearestLengthTo(IEnumerable<Segment> sequence, Segment segment) {
-            if (segment != null) {
-                var minDifference = sequence.Min(s => Math.Abs(segment.Length - s.Length));
-                return sequence.Where(sg => Math.Abs(segment.Length - sg.Length) == minDifference).FirstOrDefault();
-            }
-            throw new ArgumentNullException(segment.ToString());
+        public IEnumerable<Tuple<Segment, Segment>> SelectTrackedTo(SegmentSequence sequence) {
+            return SelectorOfTrackedSegmentsPairs.SelectTrackedPairs(this, sequence);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public IEnumerable<Segment> FindSegmentsByAngleTo(Segment segment, double maxAngle) {
-            if (segment != null) {
-                return this.Where(s => Math.Abs(Segment.AngleBetween(segment, s)) < maxAngle);
-            }
-            throw new ArgumentNullException(segment.ToString());
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public IEnumerable<Segment> FindSegmentsByDistanceTo(Segment segment, double maxDistance) {
-            if (segment != null) {
-                return this.Where(s => segment.DistanceToNearestPoint(s) < maxDistance);
-            }
-            throw new ArgumentNullException(segment.ToString());
-        }
-
+        
         #region Segmentation
 
         private List<Segment> Segmentate(IEnumerable<Point> points) {

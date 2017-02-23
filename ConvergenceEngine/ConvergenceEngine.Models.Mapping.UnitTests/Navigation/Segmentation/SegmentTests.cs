@@ -66,5 +66,17 @@ namespace ConvergenceEngine.Models.Mapping.UnitTests.Navigation.Segmentation {
             Assert.AreEqual(expectedDistanceAToB, actualDistanceAToB);
             Assert.AreEqual(expectedDistanceBToA, actualDistanceBToA);
         }
+
+        [Test]
+        public void IntersectionPointWith_EqualExpected() {
+
+            Segment segmentA = new Segment(new List<Point> { new Point(-3, 4), new Point(-2, 8) });
+            Segment segmentB = new Segment(new List<Point> { new Point(1, -7), new Point(3, -8) });
+
+            Point expectedPoint = new Point(-5, -4);
+            Point actualPoint = segmentA.IntersectionPointWith(segmentB).Value;
+
+            Assert.AreEqual(expectedPoint, actualPoint);
+        }
     }
 }

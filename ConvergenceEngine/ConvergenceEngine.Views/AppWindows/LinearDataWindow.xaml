@@ -6,7 +6,7 @@
         <Grid.Resources>
             <SolidColorBrush x:Key="SegmentsColor" Color="White" Opacity="0.5"/>
             <SolidColorBrush x:Key="GhostColor" Color="Gray" Opacity="0.5"/>
-            <SolidColorBrush x:Key="SimilarColor" Color="Red" Opacity="0.5"/>
+            <SolidColorBrush x:Key="TrackedColor" Color="Red" Opacity="0.5"/>
             <Style TargetType="{x:Type TextBlock}">
                 <Setter Property="HorizontalAlignment" Value="Center"/>
                 <Setter Property="Padding" Value="4"/>
@@ -27,8 +27,8 @@
         </Viewbox>
         <Viewbox>
             <Path
-                Stroke="{StaticResource SimilarColor}"
-                Data="{Binding SimilarSegments,
+                Stroke="{StaticResource TrackedColor}"
+                Data="{Binding TrackedSegments,
                 Converter={StaticResource PointSegmentsToPath}}"/>
         </Viewbox>
         <Grid Width="Auto" Height="Auto">
@@ -50,7 +50,7 @@
             <TextBlock
                 Grid.Row="3"
                 Text="Similar"
-                Foreground="{StaticResource SimilarColor}"/>
+                Foreground="{StaticResource TrackedColor}"/>
         </Grid>        
     </Grid>
 </Window>

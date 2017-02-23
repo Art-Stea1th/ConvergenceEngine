@@ -46,6 +46,10 @@
   <ItemGroup>
     <Compile Include="Extensions\ExtensionsDouble.cs" />
     <Compile Include="Extensions\ExtensionsPoint.cs" />
+    <Compile Include="Navigation\Convergence\Searchers\AngleByLines.cs" />
+    <Compile Include="Navigation\Convergence\Searchers\OffsetByIntersectionPoints.cs" />
+    <Compile Include="Navigation\Convergence\Searchers\OffsetByExtremePoints.cs" />
+    <Compile Include="Navigation\Convergence\SelectorOfTrackedSegmentsPairs.cs" />
     <Compile Include="Navigation\Frame.cs" />
     <Compile Include="Navigation\FrameSequence.cs" />
     <Compile Include="Navigation\NavigationInfo.cs" />
@@ -66,6 +70,7 @@
       <Name>ConvergenceEngine.Models.IO</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

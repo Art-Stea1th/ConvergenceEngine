@@ -11,7 +11,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
         private Model model;
         IEnumerable<Tuple<Point, Point>> segments;
         IEnumerable<Tuple<Point, Point>> previousSegments;
-        IEnumerable<Tuple<Point, Point>> similarSegments;
+        IEnumerable<Tuple<Point, Point>> trackedSegments;
 
         public IEnumerable<Tuple<Point, Point>> Segments {
             get { return segments; }
@@ -23,9 +23,9 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
             set { Set(ref previousSegments, value); }
         }
 
-        public IEnumerable<Tuple<Point, Point>> SimilarSegments {
-            get { return similarSegments; }
-            set { Set(ref similarSegments, value); }
+        public IEnumerable<Tuple<Point, Point>> TrackedSegments {
+            get { return trackedSegments; }
+            set { Set(ref trackedSegments, value); }
         }
 
         internal LinearDataWindowViewModel(Model model) {
@@ -37,13 +37,13 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
         public void Initialize() {
             Segments = null;
             PreviousSegments = null;
-            SimilarSegments = null;
+            TrackedSegments = null;
         }
 
         public void Update() {
             Segments = model.Map.FrameSegments;
             PreviousSegments = model.Map.PreviousFrameSegments;
-            SimilarSegments = model.Map.SimilarFrameSegments;
+            TrackedSegments = model.Map.TrackedFrameSegments;
         }
     }
 }
