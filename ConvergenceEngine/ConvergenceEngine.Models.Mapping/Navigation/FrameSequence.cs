@@ -41,16 +41,15 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
 
         internal void NextFrameProceed(int index, Frame frame) { // TMP
 
-            PreviousFrame = ActualFrame;
-
             ActualIndex = index;
             ActualFrame = frame;
+
+            var prev = frames.LastOrDefault(f => f.Key < index);
+            PreviousFrame = prev.Value;
 
             if (frames.ContainsKey(index)) {
                 return;
             }
-
-            var prev = frames.LastOrDefault(f => f.Key < index);
 
             if (prev.Value == null) {
                 frame.SetPosition(new NavigationInfo());

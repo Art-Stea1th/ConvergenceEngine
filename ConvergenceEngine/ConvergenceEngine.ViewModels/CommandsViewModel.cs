@@ -16,8 +16,7 @@ namespace ConvergenceEngine.ViewModels {
         private ICommand exitApplicationCommand;
 
         private ICommand showRawDataWindowCommand;
-        private ICommand showPointsDataWindowCommand;
-        private ICommand showLinearDataWindowCommand;
+        private ICommand showMixedDataWindowCommand;
 
         public ICommand OpenFile {
             get { return openFileCommand; }
@@ -43,13 +42,9 @@ namespace ConvergenceEngine.ViewModels {
             get { return showRawDataWindowCommand; }
             set { Set(ref showRawDataWindowCommand, value); }
         }
-        public ICommand ShowPointsDataWindow {
-            get { return showPointsDataWindowCommand; }
-            set { Set(ref showPointsDataWindowCommand, value); }
-        }
-        public ICommand ShowLinearDataWindow {
-            get { return showLinearDataWindowCommand; }
-            set { Set(ref showLinearDataWindowCommand, value); }
+        public ICommand ShowMixedDataWindow {
+            get { return showMixedDataWindowCommand; }
+            set { Set(ref showMixedDataWindowCommand, value); }
         }
 
         protected virtual void InitializeCommands() {

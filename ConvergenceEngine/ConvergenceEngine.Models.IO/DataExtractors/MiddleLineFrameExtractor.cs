@@ -54,17 +54,17 @@ namespace ConvergenceEngine.Models.IO.DataExtractors {
 
             for (int i = 0; i < frameWidth; ++i) {
 
-                double x = i;                                                                    //   0 - 639
-                double y = middleLineY;                                                          // 240 - 240
-                double z = GetDepthFromRawFrameAt(rawFrameBuffer, (i + offset) * sizeof(short)); // 800 - 4000
+                double x = i;                                                                    //   0 ... 639
+                double y = middleLineY;                                                          // 240 ... 240
+                double z = GetDepthFromRawFrameAt(rawFrameBuffer, (i + offset) * sizeof(short)); // 800 ... 4000
 
                 if (z < frameMinDepth || z > frameMaxDepth) { continue; }
 
                 double resultX, resultY, resultZ;
                 PerspectiveToRectangle(x, y, z, out resultX, out resultY, out resultZ);
 
-                bufferedPoint.X = resultX; // -320 - 319
-                bufferedPoint.Y = resultY; //    0 - 480
+                bufferedPoint.X = resultX; // -320 ... 319
+                bufferedPoint.Y = resultY; //    0 ... 480
 
                 yield return bufferedPoint;
             }

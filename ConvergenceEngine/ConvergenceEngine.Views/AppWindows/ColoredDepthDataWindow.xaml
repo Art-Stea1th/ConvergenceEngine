@@ -6,6 +6,10 @@
         <Viewbox>
             <Image Source="{Binding RawData}"/>
         </Viewbox>
-        <Path Data="M0,1 L1,1"/>
+        <Path
+            Data="M0,1 L1,1"
+            Stroke="Red"
+            StrokeThickness="1"
+            Stretch="Fill"/>
     </Grid>
 </Window>

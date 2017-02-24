@@ -6,27 +6,30 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace ConvergenceEngine.Views.Converters {
 
     [ValueConversion(typeof(IEnumerable<Tuple<Point, Point>>), typeof(PathGeometry))]
     public class PointSegmentsToPathConverter : IValueConverter {
 
+        private const int width = 640, height = 480;
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 
             var segments = (IEnumerable<Tuple<Point, Point>>)value;
             PathGeometry geometry = new PathGeometry();
-            
+
             // Border
             geometry.Figures.Add(new PathFigure(
-                        new Point(-224, -60),
+                        new Point(0, 0),
                         new List<LineSegment> {
-                            new LineSegment(new Point(224, -60), true),
-                            new LineSegment(new Point(224, -410), true),
-                            new LineSegment(new Point(-224, -410), true),
-                            new LineSegment(new Point(-224, -60), true)
+                            new LineSegment(new Point(width, 0), true),
+                            new LineSegment(new Point(width, height), true),
+                            new LineSegment(new Point(0, height), true),
+                            new LineSegment(new Point(0, 0), true)
                         }, false));
-            
+
             // Linear Data
             if (segments != null) {
                 foreach (var segment in segments) {
@@ -48,7 +51,8 @@ namespace ConvergenceEngine.Views.Converters {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Point FlipVertical(Point point) {
-            return new Point(point.X, -point.Y);
+            var result = new Point(point.X + width / 2, (height - 1) - point.Y);
+            return result;
         }
     }
 }

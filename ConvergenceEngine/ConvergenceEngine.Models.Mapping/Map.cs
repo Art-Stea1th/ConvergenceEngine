@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 
 namespace ConvergenceEngine.Models.Mapping {
 
@@ -22,8 +21,8 @@ namespace ConvergenceEngine.Models.Mapping {
 
         // --> TMP
         public IEnumerable<Point> MapPoints { get { return GetMapPoints(); } }
-        public IEnumerable<Point> FramePoints { get { return ActualFrame?.Points; } }
-        public IEnumerable<Tuple<Point, Point>> FrameSegments { get { return ActualFrame?.Select(s => new Tuple<Point, Point>(s.PointA, s.PointB)); } }
+        public IEnumerable<Point> SourceFramePoints { get { return ActualFrame?.Points; } }
+        public IEnumerable<Tuple<Point, Point>> CurrentFrameSegments { get { return ActualFrame?.Select(s => new Tuple<Point, Point>(s.PointA, s.PointB)); } }
         public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get { return PreviousFrame?.Select(s => new Tuple<Point, Point>(s.PointA, s.PointB)); } }
         public IEnumerable<Tuple<Point, Point>> TrackedFrameSegments {
             get {

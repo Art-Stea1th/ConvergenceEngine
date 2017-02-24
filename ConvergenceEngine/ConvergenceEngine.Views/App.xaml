@@ -4,6 +4,7 @@
              xmlns:cv="clr-namespace:ConvergenceEngine.Views.Converters"
              xmlns:local="clr-namespace:ConvergenceEngine.Views">
     <Application.Resources>
+        
         <cv:IntToBoolConverter x:Key="IntToBool"/>
         <cv:BoolInverseConverter x:Key="BoolInverse"/>
         <cv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
@@ -12,21 +13,16 @@
         <cv:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
         <cv:PointSegmentsToPathConverter x:Key="PointSegmentsToPath"/>
         <cv:PointSequenceToImageSourceConverter x:Key="PointSequenceToImageSource"/>
-
+        <cv:PointSequenceToImageSourceFixedConverter x:Key="PointSequenceToImageSourceFixed"/>
+        
         <Style TargetType="{x:Type Viewbox}">
             <Setter Property="Stretch" Value="Uniform"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
+        
         <Style TargetType="{x:Type Image}">
             <Setter Property="Width" Value="640"/>
             <Setter Property="Height" Value="480"/>
-        </Style>
-        <Style TargetType="{x:Type Path}">
-            <Setter Property="Stroke" Value="Red"/>
-            <Setter Property="Stretch" Value="Fill"/>
-            <Setter Property="StrokeThickness" Value="1"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-        </Style>
+        </Style>        
     </Application.Resources>
 </Application>

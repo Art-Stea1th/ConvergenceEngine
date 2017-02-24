@@ -36,7 +36,7 @@ namespace ConvergenceEngine.Views.AppWindows {
 
                 if (viewModelOwner != null) {
                     window.Owner = FindExistingWindowByViewModel(viewModelOwner);
-                    window.WindowStyle = WindowStyle.ToolWindow;
+                    // window.WindowStyle = WindowStyle.ToolWindow;
                     window.ShowInTaskbar = false;
                 }
                 window.Show();

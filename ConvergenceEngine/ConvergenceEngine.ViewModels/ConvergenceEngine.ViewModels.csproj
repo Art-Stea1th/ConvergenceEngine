@@ -69,9 +69,8 @@
   <ItemGroup>
     <Compile Include="ApplicationDataViewModel.cs" />
     <Compile Include="AppWindows\ColoredDepthDataWindowViewModel.cs" />
-    <Compile Include="AppWindows\LinearDataWindowViewModel.cs" />
     <Compile Include="AppWindows\MainWindowViewModel.cs" />
-    <Compile Include="AppWindows\PointsDataWindowViewModel.cs" />
+    <Compile Include="AppWindows\MixedDataWindowViewModel.cs" />
     <Compile Include="CommandsViewModel.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

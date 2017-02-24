@@ -69,7 +69,9 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
                 var segmentPair = SplitByMaxDivergencePoint(segment);
 
                 if (segmentPair == null) {
-                    result.Add(segment);
+                    if (IsValidSequence(segment)) {
+                        result.Add(segment);
+                    }                    
                 }
                 else {
                     result.AddRange(Segmentate(segmentPair.Item1));
@@ -77,6 +79,18 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
                 }
             }
             return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsValidSequence(IReadOnlyList<Point> sequence) {
+            var averageDistanceBetweenPoints = sequence.First().DistanceTo(sequence.Last()) / (sequence.Count - 1);
+            return averageDistanceBetweenPoints <= ExpectedDistanceBetweenPoints(sequence.Average(p => p.Y));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static double ExpectedDistanceBetweenPoints(double segmentPositionY) {
+            double a = 100.0 * (2.0 / 3.0), b = a; // magic coefficients // a = b = 100.0 * (2.0 / 3.0);
+            return (segmentPositionY - b) / a;     // y = ax + b; => x = (y - b) / a;
         }
 
         private Tuple<IEnumerable<Point>, IEnumerable<Point>> SplitByMaxDivergencePoint(Segment segment) {

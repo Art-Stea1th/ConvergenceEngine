@@ -80,26 +80,24 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppWindows\MixedDataWindow.xaml.cs">
+      <DependentUpon>MixedDataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppWindows\WindowManager.cs" />
     <Compile Include="AppWindows\ColoredDepthDataWindow.xaml.cs">
       <DependentUpon>ColoredDepthDataWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppWindows\LinearDataWindow.xaml.cs">
-      <DependentUpon>LinearDataWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AppWindows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AppWindows\PointsDataWindow.xaml.cs">
-      <DependentUpon>PointsDataWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolInverseConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\IntToBoolConverter.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Converters\PointSegmentsToPathConverter.cs" />
+    <Compile Include="Converters\PointSequenceToImageSourceFixedConverter.cs" />
     <Compile Include="Converters\PointSequenceToImageSourceConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -128,15 +126,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="AppWindows\LinearDataWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="AppWindows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppWindows\PointsDataWindow.xaml">
+    <Page Include="AppWindows\MixedDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

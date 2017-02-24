@@ -12,6 +12,9 @@ namespace ConvergenceEngine.Views.Converters {
             if ((bool)value) {
                 return Visibility.Visible;
             }
+            if (parameter != null && (bool)parameter) {
+                return Visibility.Collapsed;
+            }
             return Visibility.Hidden;
         }
 
@@ -33,6 +36,9 @@ namespace ConvergenceEngine.Views.Converters {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if ((bool)value) {
                 return Visibility.Hidden;
+            }
+            if (parameter != null && (bool)parameter) {
+                return Visibility.Collapsed;
             }
             return Visibility.Visible;
         }

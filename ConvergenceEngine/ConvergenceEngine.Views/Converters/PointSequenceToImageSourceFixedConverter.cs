@@ -11,36 +11,21 @@ using System.Windows.Media.Imaging;
 namespace ConvergenceEngine.Views.Converters {
 
     [ValueConversion(typeof(IEnumerable<Point>), typeof(ImageSource))]
-    public class PointSequenceToImageSourceConverter : IValueConverter {
+    public class PointSequenceToImageSourceFixedConverter : IValueConverter {
 
-        private Point max;
-        private int width, height;
-        private double offsetX, offsetY;
+        private const int width = 640, height = 480, offsetX = width / 2, offsetY = 0;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             IEnumerable<Point> newPoints = value as IEnumerable<Point>;
-            Color newColor = (Color)parameter;
+
+            Color newColor = (parameter as SolidColorBrush).Color;
 
             if (newPoints == null || newPoints.Count() < 1) { return null; }
 
-            UpdateLimits(newPoints);
             return CreateBitmap(newPoints, newColor);
         }
 
-        private void UpdateLimits(IEnumerable<Point> points) {
-
-            max = new Point(points.Max(p => Math.Abs(p.X)), points.Max(p => Math.Abs(p.Y)));
-
-            offsetX = max.X;
-            offsetY = max.Y;
-
-            width = (int)(max.X * 2) + 1;
-            height = (int)(max.Y * 2) + 1;
-        }
-
         private ImageSource CreateBitmap(IEnumerable<Point> points, Color color) {
-
-            if (max.X < 1 || max.Y < 1) { return null; }
 
             WriteableBitmap result = new WriteableBitmap(width, height, 96.0, 96.0, PixelFormats.Bgr32, null);
             byte[] fullFrameBuffer = new byte[width * height * sizeof(int)];

@@ -21,8 +21,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
         }
 
         private ViewModelBase coloredDepthDataWindowViewModel;
-        private ViewModelBase pointsDataWindowViewModel;
-        private ViewModelBase linearDataWindowViewModel;
+        private ViewModelBase mixedDataWindowViewModel;
 
         public MainWindowViewModel() {
             model = new Model(Update);
@@ -39,8 +38,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
 
         private void CreateViewModelsForChildWindows() {
             coloredDepthDataWindowViewModel = new ColoredDepthDataWindowViewModel(model);
-            pointsDataWindowViewModel = new PointsDataWindowViewModel(model);
-            linearDataWindowViewModel = new LinearDataWindowViewModel(model);
+            mixedDataWindowViewModel = new MixedDataWindowViewModel(model);
         }
 
         protected override void InitializeCommands() {
@@ -50,13 +48,9 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
                 ex => ExecuteNewWindowCommand(coloredDepthDataWindowViewModel),
                 canEx => CanExecuteNewWindowCommand(coloredDepthDataWindowViewModel));
 
-            ShowPointsDataWindow = new RelayCommand(
-                ex => ExecuteNewWindowCommand(pointsDataWindowViewModel),
-                canEx => CanExecuteNewWindowCommand(pointsDataWindowViewModel));
-
-            ShowLinearDataWindow = new RelayCommand(
-                ex => ExecuteNewWindowCommand(linearDataWindowViewModel),
-                canEx => CanExecuteNewWindowCommand(linearDataWindowViewModel));
+            ShowMixedDataWindow = new RelayCommand(
+                ex => ExecuteNewWindowCommand(mixedDataWindowViewModel),
+                canEx => CanExecuteNewWindowCommand(mixedDataWindowViewModel));
         }
 
         private void Update() {
