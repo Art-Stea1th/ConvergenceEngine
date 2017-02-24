@@ -31,7 +31,7 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence.Searchers {
             }
 
             if (resultDirections.IsEmpty()) {
-                return new Vector(0.0, 0.0);
+                return new Vector(0.0, 0.0); // if empty - run search by extreme points algorythm and calc weighted avg
             }
             return resultDirections.Sum() / resultDirections.Count; // TMP avg., will be weighted by lengths
         }
@@ -60,6 +60,8 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence.Searchers {
         }
 
         private static bool IsValidIntersectionPoint(Point point) {
+
+            // discard, if the intersection is too far or the angle is too acute or obtuse
 
             throw new NotImplementedException();
         }

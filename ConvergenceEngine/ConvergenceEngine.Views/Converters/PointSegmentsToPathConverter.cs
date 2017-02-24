@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace ConvergenceEngine.Views.Converters {
 
@@ -35,8 +33,8 @@ namespace ConvergenceEngine.Views.Converters {
                 foreach (var segment in segments) {
 
                     if (segment != null) {
-                        Point startPoint = FlipVertical(segment.Item1);
-                        var lineSegments = new List<LineSegment> { new LineSegment(FlipVertical(segment.Item2), true) };
+                        Point startPoint = FixPosition(segment.Item1);
+                        var lineSegments = new List<LineSegment> { new LineSegment(FixPosition(segment.Item2), true) };
                         PathFigure figure = new PathFigure(startPoint, lineSegments, false);
                         geometry.Figures.Add(figure);
                     }                    
@@ -50,7 +48,7 @@ namespace ConvergenceEngine.Views.Converters {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Point FlipVertical(Point point) {
+        private Point FixPosition(Point point) {
             var result = new Point(point.X + width / 2, (height - 1) - point.Y);
             return result;
         }

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 
 namespace ConvergenceEngine.Models.Mapping.Navigation {
 
-    using IO.DataExtractors;
     using Extensions;
-    using Segmentation;
 
     public abstract class FrameSequence : IEnumerable<KeyValuePair<int, Frame>> {
 
