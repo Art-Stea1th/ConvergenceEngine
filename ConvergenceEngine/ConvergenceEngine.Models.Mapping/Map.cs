@@ -16,29 +16,16 @@ namespace ConvergenceEngine.Models.Mapping {
         private byte[] currentFrameBuffer;
 
         private MiddleLineFrameExtractor middleLineExtractor;
-
         public event Action OnFrameUpdate;
 
-        // --> TMP
-        public IEnumerable<Point> MapPoints { get { return GetMapPoints(); } }
-        public IEnumerable<Point> SourceFramePoints { get { return ActualFrame?.Points; } }
-        public IEnumerable<Tuple<Point, Point>> CurrentFrameSegments { get { return ActualFrame?.Select(s => new Tuple<Point, Point>(s.PointA, s.PointB)); } }
-        public IEnumerable<Tuple<Point, Point>> PreviousFrameSegments { get { return PreviousFrame?.Select(s => new Tuple<Point, Point>(s.PointA, s.PointB)); } }
-        public IEnumerable<Tuple<Point, Point>> TrackedFrameSegments {
-            get {
-                if (ActualFrame.IsNull() || PreviousFrame.IsNull()) { return null; }
-                return ActualFrame.SelectTrackedTo(PreviousFrame).Select(s => new Tuple<Point, Point>(s.Item2.PointA, s.Item2.PointB));
-            }
-        }
-        // <-- TMP
-
         internal Map(DataProvider dataProvider) {
-            this.dataProvider = dataProvider;
-            Initialize();
+            ReInitializeData(dataProvider);
         }
 
-        private void Initialize() {            
+        internal void ReInitializeData(DataProvider dataProvider) {
+            this.dataProvider = dataProvider;
             dataProvider.OnNextFrameReady += Update;
+            ReInitializeData();
         }
 
         private void Update() {
@@ -50,7 +37,7 @@ namespace ConvergenceEngine.Models.Mapping {
             var points = middleLineExtractor.ExtractMiddleLine(currentFrameBuffer);
 
             NextFrameProceed(dataProvider.FrameIndex, new Frame(new List<Point>(points)));
-            OnFrameUpdate?.Invoke();
+            OnFrameUpdate.Invoke();
         }
     }
 }

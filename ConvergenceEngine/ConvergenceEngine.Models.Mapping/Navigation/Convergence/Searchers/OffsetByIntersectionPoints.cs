@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence.Searchers {
@@ -10,39 +11,69 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence.Searchers {
 
     internal static class OffsetByIntersectionPoints { // as static TMP
 
-        public static Vector SearchBetween(IReadOnlyList<Segment> current, IReadOnlyList<Segment> another) { // quick impl.
+        private const double AbsoluteMinDegrees = 30.0;
+        private const double AbsoluteMaxDegrees = 180.0 - AbsoluteMinDegrees;
+        private const double MaxDifferenceDegrees = 3.0;
+        private const double EtalonDegrees = 90.0;
 
-            //var lehgths = current.DoSequential(another, (c, a) => (c.Length + a.Length) * 0.5);
+        public static Vector? SearchBetween(IReadOnlyList<Segment> current, IReadOnlyList<Segment> another) { // quick impl.
 
+            if (current.IsNullOrEmpty() || another.IsNullOrEmpty()) {
+                return null;
+            }
             if (current.Count != another.Count) {
                 throw new ArgumentOutOfRangeException();
             }
+            if (current.Count < 2 || another.Count < 2) {
+                return null;
+            }
+
+            return CalculateDirection(current, another);
+        }
+
+        private static Vector? CalculateDirection(IReadOnlyList<Segment> current, IReadOnlyList<Segment> another) {
 
             var resultDirections = new List<Vector>();
+            var resultAngles = new List<double>();
 
             for (int i = 0; i < current.Count - 1; ++i) {
                 for (int j = i + 1; j < current.Count; ++j) {
 
-                    var currentDirection = Direction(current[i], current[j], another[i], another[j], limit: 3.0);
-                    if (currentDirection != null) {
-                        resultDirections.Add(currentDirection.Value);
+                    var currentAngle = Segment.AngleBetween(current[i], current[j]); // angle between Current Neighbourns
+                    var anotherAngle = Segment.AngleBetween(another[i], another[j]); // angle between Another Neighbourns
+
+                    if (IsPermissibleAngleError(currentAngle, anotherAngle, MaxDifferenceDegrees)) {
+
+                        var averageAbsoluteAngle = Math.Abs((currentAngle + anotherAngle) * 0.5);
+                        if (AngleInRange(averageAbsoluteAngle, AbsoluteMinDegrees, AbsoluteMaxDegrees)) { // check range
+
+                            var currentDirection = CalculateDirection(current[i], current[j], another[i], another[j], limit: 3.0);
+                            if (currentDirection != null) {
+                                resultDirections.Add(currentDirection.Value);
+                                resultAngles.Add(GetProximityToTheStraightAngle(averageAbsoluteAngle));
+                            }
+                        }
                     }
                 }
             }
-
             if (resultDirections.IsEmpty()) {
-                return new Vector(0.0, 0.0); // if empty - run search by extreme points algorythm and calc weighted avg
+                return null;
             }
-            return resultDirections.Sum() / resultDirections.Count; // TMP avg., will be weighted by lengths
+            return AverageWeightedByAnglesDirection(resultAngles, resultDirections);
         }
 
-        private static Vector? Direction(Segment currentA, Segment currentB, Segment anotherA, Segment anotherB, double limit) {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsPermissibleAngleError(double angleA, double angleB, double maxError) {
+            return Math.Abs(angleA - angleB) <= maxError;
+        }
 
-            //var absAngle = Math.Abs(Segment.AngleBetween(currentA, currentB));
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool AngleInRange(double angle, double rangeMin, double rangeMax) {
+            return rangeMin < angle && angle < rangeMax;
+        }
 
-            //if (absAngle < 45.0 || absAngle > 135.0) {
-            //    return null;
-            //}
+        private static Vector? CalculateDirection(Segment currentA, Segment currentB, Segment anotherA, Segment anotherB, double limit) {
+
             Point? intersectionA = currentA.IntersectionPointWith(currentB);
             if (intersectionA == null) {
                 return null;
@@ -51,25 +82,18 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence.Searchers {
             if (intersectionB == null) {
                 return null;
             }
-
-            var resultDirection = intersectionA.Value.ConvergenceTo(intersectionB.Value);
-            if (Math.Abs(resultDirection.X) > limit || Math.Abs(resultDirection.Y) > limit) {
-                return null;
-            }
-            return resultDirection;
+            return intersectionA.Value.ConvergenceTo(intersectionB.Value);
         }
 
-        private static bool IsValidIntersectionPoint(Point point) {
-
-            // discard, if the intersection is too far or the angle is too acute or obtuse
-
-            throw new NotImplementedException();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static double GetProximityToTheStraightAngle(double angle) {
+            return 90 - Math.Abs(90 - angle);
         }
 
-        private static Vector AverageWeightedByLengthsDirection(IEnumerable<double> lengths, IEnumerable<Vector> directions) {
+        private static Vector AverageWeightedByAnglesDirection(IEnumerable<double> angles, IEnumerable<Vector> directions) {
 
-            var fullLength = lengths.Sum();
-            var weights = lengths.Select(s => s * 100.0 / fullLength);
+            var fullAngle = angles.Sum();
+            var weights = angles.Select(s => s * 100.0 / fullAngle);
 
             return directions.DoSequential(weights, (d, w) => d / 100.0 * w).Sum();
         }

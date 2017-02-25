@@ -11,7 +11,7 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
     using Convergence;
     using Convergence.Searchers;
 
-    internal abstract class SegmentSequence : IReadOnlyList<Segment>, IReadOnlyCollection<Segment>, IEnumerable<Segment> {
+    public abstract class SegmentSequence : IReadOnlyList<Segment>, IReadOnlyCollection<Segment>, IEnumerable<Segment> {
 
         private Lazy<List<Segment>> segments;
         public IEnumerable<Point> Points { get { return segments.Value.SelectMany(p => p).Distinct(); } } // !! Distinct() may be slow
@@ -24,36 +24,43 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
             this.segments = new Lazy<List<Segment>>(() => new List<Segment>(segments)); // <-- TMP
         }
 
-        public NavigationInfo ConvergenceTo(SegmentSequence sequence) {
+        internal NavigationInfo ConvergenceTo(SegmentSequence sequence) {
 
             var trackedPairs = SelectTrackedTo(sequence);
-            var trackedCurrent = trackedPairs.Select(s => s.Item1);
-            var trackedAnother = trackedPairs.Select(s => s.Item2);
+            if (trackedPairs.IsNullOrEmpty()) {
+                return new NavigationInfo(0.0, 0.0, 0.0); // to be processed later
+            }
+
+            var trackedCurrent = new List<Segment>(trackedPairs.Select(s => s.Item1));
+            var trackedAnother = new List<Segment>(trackedPairs.Select(s => s.Item2));
 
             double resultAngle = AngleByLines.SearchBetween(trackedCurrent, trackedAnother);
-            trackedAnother = trackedAnother.Select(
-                s => new Segment(new List<Point> { s.PointA.Rotate(-resultAngle), s.PointB.Rotate(-resultAngle) }));
 
-            Vector resultDirection;
-            int trackedPairsCount = trackedPairs.Count();
+            trackedAnother = new List<Segment>(trackedAnother.Select(
+                s => new Segment(new List<Point> { s.PointA.Rotate(-resultAngle), s.PointB.Rotate(-resultAngle) })));
 
-            if (trackedPairsCount > 1) {
-                resultDirection = OffsetByIntersectionPoints.SearchBetween(new List<Segment>(trackedCurrent), new List<Segment>(trackedAnother));
-                return new NavigationInfo(resultDirection, resultAngle);
+            Vector? resultDirection = null;
+
+            if (resultDirection == null) {
+                resultDirection = OffsetByIntersectionPoints.SearchBetween(trackedCurrent, trackedAnother);
             }
 
-            if (trackedPairsCount == 1) {
-                var currentFirst = trackedCurrent.First();
-                var anotherFirst = trackedAnother.First();
-
-                resultDirection = OffsetByExtremePoints.SearchBetween(currentFirst, anotherFirst);
-                return new NavigationInfo(resultDirection, resultAngle);
+            if (resultDirection == null) {
+                resultDirection = OffsetByExtremePoints.SearchBetween(trackedCurrent, trackedAnother);
             }
 
-            return new NavigationInfo(new Vector(0.0, 0.0), resultAngle);
+            if (resultDirection == null) {
+                resultDirection = OffsetByHeights.SearchBetween(trackedCurrent, trackedAnother);
+            }
+
+            if (resultDirection == null) {
+                return new NavigationInfo(new Vector(0.0, 0.0), resultAngle);
+            }
+            return new NavigationInfo(resultDirection.Value, resultAngle);
         }
 
         public IEnumerable<Tuple<Segment, Segment>> SelectTrackedTo(SegmentSequence sequence) {
+            if (sequence.IsNullOrEmpty()) { return null; }
             return SelectorOfTrackedSegmentsPairs.SelectTrackedPairs(this, sequence);
         }
         

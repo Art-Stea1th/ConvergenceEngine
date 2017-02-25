@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace ConvergenceEngine.ViewModels.AppWindows {
@@ -8,7 +9,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
 
     public sealed class MixedDataWindowViewModel : ViewModelBase {
 
-        private Model model;
+        private Map map;
 
         private IEnumerable<Point> sourcePoints;
         private IEnumerable<Tuple<Point, Point>> currentSegments;
@@ -35,9 +36,9 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
             set { Set(ref trackedSegments, value); }
         }
 
-        internal MixedDataWindowViewModel(Model model) {
-            this.model = model;
-            model.OnModelUpdated += Update;
+        internal MixedDataWindowViewModel(Map map) {
+            this.map = map;
+            map.OnFrameUpdate += Update;
             Initialize();
         }
 
@@ -49,10 +50,11 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
         }
 
         public void Update() {
-            SourcePoints = model.Map.SourceFramePoints;
-            CurrentSegments = model.Map.CurrentFrameSegments;
-            PreviousSegments = model.Map.PreviousFrameSegments;
-            TrackedSegments = model.Map.TrackedFrameSegments;
+            SourcePoints = map.CurrentFrame?.Points;
+            CurrentSegments = map.CurrentFrame?.Select(s => (Tuple<Point, Point>)s);
+            PreviousSegments = map.PreviousFrame?.Select(s => (Tuple<Point, Point>)s);
+            TrackedSegments = map.CurrentFrame?.SelectTrackedTo(map.PreviousFrame)?
+                .Select(s => new Tuple<Point, Point>(s.Item2.PointA, s.Item2.PointB));
         }
     }
 }

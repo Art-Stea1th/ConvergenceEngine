@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence.Searchers {
 
     using Extensions;
     using Segmentation;
-    using System.Runtime.CompilerServices;
 
     internal static class OffsetByExtremePoints { // as static TMP
 
@@ -14,14 +16,37 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence.Searchers {
         private static double maxX = 210, minX = -maxX;
         // <--------- hardcode trapeze limits ----------
 
-        public static Vector SearchBetween(Segment current, Segment another) {
+        public static Vector? SearchBetween(IReadOnlyList<Segment> current, IReadOnlyList<Segment> another) {
 
-            var pair = GetValidPointsPair(current, another);
-            if (pair != null) {
-                return pair.Item1.ConvergenceTo(pair.Item2);
+            if (current.IsNullOrEmpty() || another.IsNullOrEmpty()) {
+                return null;
             }
-            var currentMiddle = new Point((current.PointA.X + current.PointB.X) * 0.5, (current.PointA.Y + current.PointB.Y) * 0.5);
-            return currentMiddle.ConvergenceTo(currentMiddle.DistancePointTo(another.PointA, another.PointB));
+            if (current.Count != another.Count) {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            var pairs = GetValidPointsPairs(current, another);
+            if (pairs.IsNullOrEmpty()) {
+                return null;
+            }
+
+            var lehgths = current.DoSequential(another, (c, a) => (c.Length + a.Length) * 0.5);
+            var directions = pairs.Select(sp => sp.Item1.ConvergenceTo(sp.Item2));
+
+            return AverageWeightedByLehgthsDirection(lehgths, directions);
+        }
+
+        private static IEnumerable<Tuple<Point, Point>> GetValidPointsPairs(IReadOnlyList<Segment> current, IReadOnlyList<Segment> another) {
+
+            var currentEnumerator = current.GetEnumerator();
+            var anotherEnumerator = another.GetEnumerator();
+
+            while (currentEnumerator.MoveNext() && anotherEnumerator.MoveNext()) {
+                var validPair = GetValidPointsPair(currentEnumerator.Current, anotherEnumerator.Current);
+                if (validPair != null) {
+                    yield return validPair;
+                }
+            }
         }
 
         private static Tuple<Point, Point> GetValidPointsPair(Segment current, Segment another) {
@@ -72,6 +97,14 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence.Searchers {
                 return false;
             }
             return true;
+        }
+
+        private static Vector AverageWeightedByLehgthsDirection(IEnumerable<double> lengths, IEnumerable<Vector> directions) {
+
+            var fullLength = lengths.Sum();
+            var weights = lengths.Select(s => s * 100.0 / fullLength);
+
+            return directions.DoSequential(weights, (d, w) => d / 100.0 * w).Sum();
         }
     }
 }

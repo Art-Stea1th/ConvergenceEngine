@@ -6,17 +6,18 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
     using Extensions;
     using Segmentation;
 
-    internal sealed class Frame : SegmentSequence {
+    public sealed class Frame : SegmentSequence {
 
         private List<Point> transformedPoints;
-        public IEnumerable<Point> PointsTransformed { get { return transformedPoints; } }
+        internal IEnumerable<Point> PointsTransformed { get { return transformedPoints; } }
 
-        internal NavigationInfo Absolute { get; set; }
+        public NavigationInfo AbsolutePosition { get; internal set; }
+        public NavigationInfo RelativePosition { get; internal set; }
 
         internal Frame(IEnumerable<Point> points) : base(points) { }
 
         public void SetPosition(NavigationInfo position) {
-            Absolute = position;
+            AbsolutePosition = position;
             UpdateTransformedPoints();
         }
 
@@ -28,8 +29,8 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
             for (int i = 0; i < points.Count; i++) {
 
                 Point p = new Point(points[i].X, points[i].Y);
-                p = p.Rotate(Absolute.Angle);
-                p = new Point(p.X + Absolute.Direction.X, p.Y + Absolute.Direction.Y);
+                p = p.Rotate(AbsolutePosition.A);
+                p = new Point(p.X + AbsolutePosition.X, p.Y + AbsolutePosition.Y);
 
                 transformedPoints.Add(p);
                 //Console.WriteLine(p);

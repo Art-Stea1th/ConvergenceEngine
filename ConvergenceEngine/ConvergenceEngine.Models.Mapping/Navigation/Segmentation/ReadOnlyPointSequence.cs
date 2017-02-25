@@ -9,7 +9,7 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
 
     using Extensions;
 
-    internal abstract class ReadOnlyPointSequence : IReadOnlyList<Point>, IReadOnlyCollection<Point>, IEnumerable<Point> {
+    public abstract class ReadOnlyPointSequence : IReadOnlyList<Point>, IReadOnlyCollection<Point>, IEnumerable<Point> {
 
         protected readonly List<Point> Points;
 

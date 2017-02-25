@@ -6,6 +6,7 @@ namespace ConvergenceEngine.Models.Mapping {
 
     using IO.Readers;
     using IO.DataExtractors;
+    using Extensions;
 
     public sealed class Model {
 
@@ -27,7 +28,8 @@ namespace ConvergenceEngine.Models.Mapping {
 
         private void Initialize() {
             dataProvider = new KinectFileReader();
-            Map = new Map(dataProvider);
+            if (Map.IsNull()) { Map = new Map(dataProvider); }
+            else { Map.ReInitializeData(dataProvider); }
             coloredExtractor = new ColoredFrameExtractor(dataProvider);
         }
 

@@ -37,7 +37,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
 
         private void CreateViewModelsForChildWindows() {
             coloredDepthDataWindowViewModel = new ColoredDepthDataWindowViewModel(model);
-            mixedDataWindowViewModel = new MixedDataWindowViewModel(model);
+            mixedDataWindowViewModel = new MixedDataWindowViewModel(model.Map);
         }
 
         protected override void InitializeCommands() {
@@ -57,7 +57,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
             ModelReady = model.Ready;
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit && ModelReady) {
-                IEnumerable<Point> mapPoints = model.Map.MapPoints;
+                IEnumerable<Point> mapPoints = model.Map.GetMapPoints();
                 if (mapPoints != null) {
                     MapViewportData = mapPoints;
                     lastTimeOfFrameUpdate = DateTime.Now;

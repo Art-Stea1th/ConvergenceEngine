@@ -8,13 +8,13 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
 
     using Extensions;
 
-    internal sealed class Segment : ReadOnlyPointSequence {
+    public sealed class Segment : ReadOnlyPointSequence {
 
         private readonly Lazy<Tuple<Point, Point>> approximated;
         private readonly Lazy<int> maxDivergencePointIndex;
 
-        internal Point PointA { get { return approximated.Value.Item1; } }
-        internal Point PointB { get { return approximated.Value.Item2; } }
+        public Point PointA { get { return approximated.Value.Item1; } }
+        public Point PointB { get { return approximated.Value.Item2; } }
 
         public double Length { get { return (PointA - PointB).Length; } }
 
@@ -27,12 +27,17 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
             maxDivergencePointIndex = new Lazy<int>(() => FindMaxDivergencePointIndex(this));
         }
 
-        public static double AngleBetween(Segment segmentA, Segment segmentB) { // TMP
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static double AngleBetween(Segment segmentA, Segment segmentB) { // TMP
             return Vector.AngleBetween((segmentA.PointB - segmentA.PointA), (segmentB.PointB - segmentB.PointA));
         }
 
         public static explicit operator Tuple<Point, Point>(Segment segment) {
             return new Tuple<Point, Point>(segment.PointA, segment.PointB);
+        }
+
+        public Point MiddlePoint() {
+            return new Point((PointA.X + PointB.X) * 0.5, (PointA.Y + PointB.Y) * 0.5);
         }
 
         public Point? IntersectionPointWith(Segment segment) {

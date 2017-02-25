@@ -11,15 +11,22 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
 
         private SortedList<int, Frame> frames;
 
-        internal int ActualIndex { get; set; }
-        internal Frame ActualFrame { get; set; }
-        internal Frame PreviousFrame { get; set; }
+        internal int CurrentFrameIndex { get; private set; }
+        public Frame CurrentFrame { get; private set; }
+        public Frame PreviousFrame { get; private set; }
 
         internal FrameSequence() {
-            frames = new SortedList<int, Frame>();
+            ReInitializeData();
         }
 
-        internal IEnumerable<Point> GetMapPoints() { // TMP
+        protected void ReInitializeData() {
+            frames = new SortedList<int, Frame>();
+            CurrentFrameIndex = 0;
+            CurrentFrame = null;
+            PreviousFrame = null;
+        }
+
+        public IEnumerable<Point> GetMapPoints() { // TMP
 
             Point prevPoint = new Point(0, 0);
 
@@ -35,8 +42,8 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
 
         internal void NextFrameProceed(int index, Frame frame) { // TMP
 
-            ActualIndex = index;
-            ActualFrame = frame;
+            CurrentFrameIndex = index;
+            CurrentFrame = frame;
 
             var prev = frames.LastOrDefault(f => f.Key < index);
             PreviousFrame = prev.Value;
@@ -50,7 +57,7 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
             }
             else {
                 var convergence = frame.ConvergenceTo(prev.Value);
-                frame.SetPosition(prev.Value.Absolute + convergence);
+                frame.SetPosition(prev.Value.AbsolutePosition + convergence);
                 //Console.WriteLine($"{prev.Value.Absolute} | {convergence} | {frame.Absolute}");
             }
             frames.Add(index, frame);

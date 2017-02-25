@@ -15,11 +15,6 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsNull<T>(this IEnumerable<T> sequence) {
-            return sequence == null;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEmpty<T>(this IEnumerable<T> sequence) {
             return sequence.Count() < 1;
         }
