@@ -29,8 +29,8 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
             for (int i = 0; i < points.Count; i++) {
 
                 Point p = new Point(points[i].X, points[i].Y);
-                p = p.Rotate(AbsolutePosition.A);
-                p = new Point(p.X + AbsolutePosition.X, p.Y + AbsolutePosition.Y);
+                p = p.Rotate(AbsolutePosition.Angle);
+                p = new Point(p.X + AbsolutePosition.Direction.X, p.Y + AbsolutePosition.Direction.Y);
 
                 transformedPoints.Add(p);
                 //Console.WriteLine(p);

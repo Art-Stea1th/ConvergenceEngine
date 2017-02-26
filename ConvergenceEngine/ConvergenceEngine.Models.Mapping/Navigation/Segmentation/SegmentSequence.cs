@@ -8,8 +8,6 @@ using System.Windows;
 namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
 
     using Extensions;
-    using Convergence;
-    using Convergence.Searchers;
 
     public abstract class SegmentSequence : IReadOnlyList<Segment>, IReadOnlyCollection<Segment>, IEnumerable<Segment> {
 
@@ -34,27 +32,15 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
             var trackedCurrent = new List<Segment>(trackedPairs.Select(s => s.Item1));
             var trackedAnother = new List<Segment>(trackedPairs.Select(s => s.Item2));
 
-            double resultAngle = AngleByLines.SearchBetween(trackedCurrent, trackedAnother);
+            double resultAngle = CalculateAngle(trackedCurrent, trackedAnother);
 
             trackedAnother = new List<Segment>(trackedAnother.Select(
                 s => new Segment(new List<Point> { s.PointA.Rotate(-resultAngle), s.PointB.Rotate(-resultAngle) })));
 
-            Vector? resultDirection = null;
+            Vector? resultDirection = CalculateDirection(trackedCurrent, trackedAnother);
 
             if (resultDirection == null) {
-                resultDirection = OffsetByIntersectionPoints.SearchBetween(trackedCurrent, trackedAnother);
-            }
-
-            if (resultDirection == null) {
-                resultDirection = OffsetByExtremePoints.SearchBetween(trackedCurrent, trackedAnother);
-            }
-
-            if (resultDirection == null) {
-                resultDirection = OffsetByHeights.SearchBetween(trackedCurrent, trackedAnother);
-            }
-
-            if (resultDirection == null) {
-                return new NavigationInfo(new Vector(0.0, 0.0), resultAngle);
+                return new NavigationInfo(0.0, 0.0, resultAngle);
             }
             return new NavigationInfo(resultDirection.Value, resultAngle);
         }
@@ -63,7 +49,59 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
             if (sequence.IsNullOrEmpty()) { return null; }
             return SelectorOfTrackedSegmentsPairs.SelectTrackedPairs(this, sequence);
         }
-        
+
+        private double CalculateAngle(IEnumerable<Segment> current, IEnumerable<Segment> another) {
+
+            var lehgths = current.DoSequential(another, (c, a) => (c.Length + a.Length) * 0.5);
+            var angles = current.DoSequential(another, (c, a) => Segment.AngleBetween(c, a));
+
+            return AverageWeightedByLengthsAngle(lehgths, angles);
+        }
+
+        private double AverageWeightedByLengthsAngle(IEnumerable<double> lengths, IEnumerable<double> angles) {
+
+            var fullLength = lengths.Sum();
+            var weights = lengths.Select(s => s * 100.0 / fullLength);
+
+            return angles.DoSequential(weights, (a, w) => a / 100.0 * w).Sum();
+        }
+
+        private Vector? CalculateDirection(IReadOnlyList<Segment> current, IReadOnlyList<Segment> another) {
+
+            if (current.Count != another.Count) {
+                throw new ArgumentOutOfRangeException();
+            }
+            var heights = current.DoSequential(another, (c, a) => c.MiddlePoint().ConvergenceTo(c.MiddlePoint().DistancePointTo(a.PointA, a.PointB)));
+            return ApproximateDirections(heights);
+        }
+
+        private Vector ApproximateDirections(IEnumerable<Vector> directions) {
+
+            if (directions.IsNull()) {
+                throw new ArgumentNullException();
+            }
+            if (directions.IsEmpty()) {
+                throw new ArgumentOutOfRangeException();
+            }
+            switch (directions.Count()) {
+                case 1: return directions.First();
+                case 2: return (directions.First() + directions.Last()) * 0.5;
+            }
+
+            Vector p0 = directions.First(), pN = directions.Last();
+
+            double avgX = directions.Average(p => p.X);
+            double avgY = directions.Average(p => p.Y);
+            double avgXY = directions.Average(p => p.X * p.Y);
+            double avgSqX = directions.Average(p => Math.Pow(p.X, 2));
+            double sqAvgX = Math.Pow(avgX, 2);
+
+            double A = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
+            double B = avgY - A * avgX;
+
+            return (new Vector(p0.X, A * p0.X + B) + new Vector(pN.X, A * pN.X + B)) * 0.5;
+        }
+
         #region Segmentation
 
         private List<Segment> Segmentate(IEnumerable<Point> points) {
@@ -103,7 +141,7 @@ namespace ConvergenceEngine.Models.Mapping.Navigation.Segmentation {
         private Tuple<IEnumerable<Point>, IEnumerable<Point>> SplitByMaxDivergencePoint(Segment segment) {
 
             var allowedDivergence =
-                AveragePositionY(segment.MaxDivergencePoint, segment.First(), segment.Last()) * 0.03; // 3.0% of AvgY
+                AveragePositionY(segment.MaxDivergencePoint, segment.First(), segment.Last()) * 0.05; // 5.0% of AvgY
 
             if (segment.MaxDivergence > allowedDivergence) {
                 return segment.SplitBy(segment.MaxDivergencePointIndex);

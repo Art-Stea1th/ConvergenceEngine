@@ -47,11 +47,7 @@
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\ExtensionsDouble.cs" />
     <Compile Include="Extensions\ExtensionsPoint.cs" />
-    <Compile Include="Navigation\Convergence\Searchers\AngleByLines.cs" />
-    <Compile Include="Navigation\Convergence\Searchers\OffsetByExtremePoints.cs" />
-    <Compile Include="Navigation\Convergence\Searchers\OffsetByHeights.cs" />
-    <Compile Include="Navigation\Convergence\Searchers\OffsetByIntersectionPoints.cs" />
-    <Compile Include="Navigation\Convergence\SelectorOfTrackedSegmentsPairs.cs" />
+    <Compile Include="Navigation\SelectorOfTrackedSegmentsPairs.cs" />
     <Compile Include="Navigation\Frame.cs" />
     <Compile Include="Navigation\FrameSequence.cs" />
     <Compile Include="Navigation\NavigationInfo.cs" />

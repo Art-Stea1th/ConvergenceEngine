@@ -29,19 +29,5 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
                 yield return selector.Invoke(ssEnumerator.Current, asEnumerator.Current);
             }
         }
-
-        public static Vector Sum(this IEnumerable<Vector> sequence) {
-            var enumerator = sequence.GetEnumerator();
-
-            enumerator.MoveNext();
-            decimal resultX = (decimal)enumerator.Current.X;
-            decimal resultY = (decimal)enumerator.Current.Y;
-
-            while (enumerator.MoveNext()) {
-                resultX += (decimal)enumerator.Current.X;
-                resultY += (decimal)enumerator.Current.Y;
-            }
-            return new Vector((double)resultX, (double)resultY);
-        }
     }    
 }

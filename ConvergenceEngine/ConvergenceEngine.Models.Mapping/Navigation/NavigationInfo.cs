@@ -7,39 +7,41 @@ namespace ConvergenceEngine.Models.Mapping.Navigation {
 
     public sealed class NavigationInfo {
 
-        public double X { get; }
-        public double Y { get; }
-        public double A { get; } // angle
+        public Vector Direction { get; private set; }
+        public double Angle { get; private set; }
 
-        public double NormalizedDirection { get { return A.AsNormalizedAngle(); } }
+        public double NormalizedDirection { get { return Angle.AsNormalizedAngle(); } }
 
         public override string ToString() {
-            return $"{X}, {Y}, {A}";
+            return $"{Direction.X}, {Direction.Y}, {Angle}";
         }
 
         internal NavigationInfo(NavigationInfo navigationInfo) {
-            X = navigationInfo.X; Y = navigationInfo.Y; A = navigationInfo.A;
+            Direction = new Vector(navigationInfo.Direction.X, navigationInfo.Direction.Y);
+            Angle = navigationInfo.Angle;
         }
 
         internal NavigationInfo(Vector direction, double angle) {
-            X = direction.X; Y = direction.Y; A = angle;
+            Direction = direction;
+            Angle = angle;
         }
 
         internal NavigationInfo(double offsetX = 0.0, double offsetY = 0.0, double angle = 0.0) {
-            X = offsetX; Y = offsetY; A = angle;
+            Direction = new Vector(offsetX, offsetY);
+            Angle = angle;
         }
 
         public static NavigationInfo operator +(NavigationInfo navInfoA, NavigationInfo navInfoB) {
-            decimal resultDirectionX = (decimal)navInfoA.X + (decimal)navInfoB.X;
-            decimal resultDirectionY = (decimal)navInfoA.Y + (decimal)navInfoB.Y;
-            decimal resultAngle = (decimal)navInfoA.A + (decimal)navInfoB.A;
+            decimal resultDirectionX = (decimal)navInfoA.Direction.X + (decimal)navInfoB.Direction.X;
+            decimal resultDirectionY = (decimal)navInfoA.Direction.Y + (decimal)navInfoB.Direction.Y;
+            decimal resultAngle = (decimal)navInfoA.Angle + (decimal)navInfoB.Angle;
             return new NavigationInfo((double)resultDirectionX, (double)resultDirectionY, (double)resultAngle);
         }
 
         public static NavigationInfo operator -(NavigationInfo navInfoA, NavigationInfo navInfoB) {
-            decimal resultDirectionX = (decimal)navInfoA.X - (decimal)navInfoB.X;
-            decimal resultDirectionY = (decimal)navInfoA.Y - (decimal)navInfoB.Y;
-            decimal resultAngle = (decimal)navInfoA.A - (decimal)navInfoB.A;
+            decimal resultDirectionX = (decimal)navInfoA.Direction.X - (decimal)navInfoB.Direction.X;
+            decimal resultDirectionY = (decimal)navInfoA.Direction.Y - (decimal)navInfoB.Direction.Y;
+            decimal resultAngle = (decimal)navInfoA.Angle - (decimal)navInfoB.Angle;
             return new NavigationInfo((double)resultDirectionX, (double)resultDirectionY, (double)resultAngle);
         }
     }

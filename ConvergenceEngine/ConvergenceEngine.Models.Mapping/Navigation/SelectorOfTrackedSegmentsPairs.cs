@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace ConvergenceEngine.Models.Mapping.Navigation.Convergence {
+namespace ConvergenceEngine.Models.Mapping.Navigation {
 
     using Segmentation;
 
