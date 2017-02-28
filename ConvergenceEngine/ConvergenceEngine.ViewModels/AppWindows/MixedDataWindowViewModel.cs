@@ -38,7 +38,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
 
         internal MixedDataWindowViewModel(Map map) {
             this.map = map;
-            map.OnFrameUpdate += Update;
+            this.map.OnFrameUpdate += Update;
             Initialize();
         }
 

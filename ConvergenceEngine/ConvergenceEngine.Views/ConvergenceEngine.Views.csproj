@@ -83,6 +83,9 @@
     <Compile Include="AppWindows\MixedDataWindow.xaml.cs">
       <DependentUpon>MixedDataWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppWindows\MotionDataWindow.xaml.cs">
+      <DependentUpon>MotionDataWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppWindows\WindowManager.cs" />
     <Compile Include="AppWindows\ColoredDepthDataWindow.xaml.cs">
       <DependentUpon>ColoredDepthDataWindow.xaml</DependentUpon>
@@ -99,6 +102,7 @@
     <Compile Include="Converters\PointSegmentsToPathConverter.cs" />
     <Compile Include="Converters\PointSequenceToImageSourceFixedConverter.cs" />
     <Compile Include="Converters\PointSequenceToImageSourceConverter.cs" />
+    <Compile Include="Converters\PointSequenceToPathConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -135,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppWindows\ColoredDepthDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppWindows\MotionDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

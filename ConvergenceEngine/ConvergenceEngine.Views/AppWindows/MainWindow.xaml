@@ -26,6 +26,8 @@
                           Command="{Binding ShowRawDataWindow}"/>
                 <MenuItem Header="Mixed"
                           Command="{Binding ShowMixedDataWindow}"/>
+                <MenuItem Header="Motion"
+                          Command="{Binding ShowMotionDataWindow}"/>
             </MenuItem>
         </Menu>
 

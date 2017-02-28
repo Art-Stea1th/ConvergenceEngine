@@ -21,6 +21,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
 
         private ViewModelBase coloredDepthDataWindowViewModel;
         private ViewModelBase mixedDataWindowViewModel;
+        private ViewModelBase motionDataWindowViewModel;
 
         public MainWindowViewModel() {
             model = new Model(Update);
@@ -38,6 +39,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
         private void CreateViewModelsForChildWindows() {
             coloredDepthDataWindowViewModel = new ColoredDepthDataWindowViewModel(model);
             mixedDataWindowViewModel = new MixedDataWindowViewModel(model.Map);
+            motionDataWindowViewModel = new MotionDataWindowViewModel(model.Map);
         }
 
         protected override void InitializeCommands() {
@@ -50,6 +52,10 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
             ShowMixedDataWindow = new RelayCommand(
                 ex => ExecuteNewWindowCommand(mixedDataWindowViewModel),
                 canEx => CanExecuteNewWindowCommand(mixedDataWindowViewModel));
+
+            ShowMotionDataWindow = new RelayCommand(
+                ex => ExecuteNewWindowCommand(motionDataWindowViewModel),
+                canEx => CanExecuteNewWindowCommand(motionDataWindowViewModel));
         }
 
         private void Update() {
