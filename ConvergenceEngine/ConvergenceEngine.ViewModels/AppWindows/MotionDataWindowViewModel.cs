@@ -6,32 +6,44 @@ using System.Windows;
 namespace ConvergenceEngine.ViewModels.AppWindows {
 
     using Models.Mapping;
+    using System.Windows.Media;
 
     internal sealed class MotionDataWindowViewModel : ViewModelBase {
 
         private Map map;
 
-        private IEnumerable<Point> absolutePositionX;
-        private IEnumerable<Point> absolutePositionY;
-        private IEnumerable<Point> absoluteAngle;
+        private PointCollection absolutePositionX;
+        private PointCollection absolutePositionY;
+        private PointCollection absoluteAngle;
 
-        private IEnumerable<Point> relativePositionX;
-        private IEnumerable<Point> relativePositionY;
-        private IEnumerable<Point> relativeAngle;
+        private PointCollection relativePositionX;
+        private PointCollection relativePositionY;
+        private PointCollection relativeAngle;
 
-        public IEnumerable<Point> AbsolutePositionX {
+        public PointCollection AbsolutePositionX {
             get { return absolutePositionX; }
             set { Set(ref absolutePositionX, value); }
         }
-
-        public IEnumerable<Point> AbsolutePositionY {
+        public PointCollection AbsolutePositionY {
             get { return absolutePositionY; }
             set { Set(ref absolutePositionY, value); }
         }
-
-        public IEnumerable<Point> AbsoluteAngle {
+        public PointCollection AbsoluteAngle {
             get { return absoluteAngle; }
             set { Set(ref absoluteAngle, value); }
+        }
+
+        public PointCollection RelativePositionX {
+            get { return relativePositionX; }
+            set { Set(ref relativePositionX, value); }
+        }
+        public PointCollection RelativePositionY {
+            get { return relativePositionY; }
+            set { Set(ref relativePositionY, value); }
+        }
+        public PointCollection RelativeAngle {
+            get { return relativeAngle; }
+            set { Set(ref relativeAngle, value); }
         }
 
         internal MotionDataWindowViewModel(Map map) {
@@ -41,24 +53,28 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
         }
 
         private void Initialize() {
-            absolutePositionX = null;
+            Update();
         }
 
         public void Update() {
 
-            var absolute = map.Select(f => new Tuple<Point, Point, Point>(
-                new Point(f.Key, f.Value.AbsolutePosition.Direction.X),
-                new Point(f.Key, f.Value.AbsolutePosition.Direction.Y),
-                new Point(f.Key, f.Value.AbsolutePosition.Angle)));
+            AbsolutePositionX = new PointCollection();
+            AbsolutePositionY = new PointCollection();
+            AbsoluteAngle = new PointCollection();
 
-            var relative = map.Select(f => new Tuple<Point, Point, Point>(
-                new Point(f.Key, f.Value.RelativePosition.Direction.X),
-                new Point(f.Key, f.Value.RelativePosition.Direction.Y),
-                new Point(f.Key, f.Value.RelativePosition.Angle)));
+            RelativePositionX = new PointCollection();
+            RelativePositionY = new PointCollection();
+            RelativeAngle = new PointCollection();
 
-            AbsolutePositionX = absolute.Select(ni => ni.Item1);
-            AbsolutePositionY = absolute.Select(ni => ni.Item2);
-            AbsoluteAngle = absolute.Select(ni => ni.Item3);
+            foreach (var frame in map) {
+                AbsolutePositionX.Add(new Point(frame.Key, frame.Value.Absolute.Direction.X));
+                AbsolutePositionY.Add(new Point(frame.Key, frame.Value.Absolute.Direction.Y));
+                AbsoluteAngle.Add(new Point(frame.Key, frame.Value.Absolute.Angle));
+
+                //RelativePositionX.Add(new Point(frame.Key, frame.Value.RelativePosition.Direction.X));
+                //RelativePositionY.Add(new Point(frame.Key, frame.Value.RelativePosition.Direction.Y));
+                //RelativeAngle.Add(new Point(frame.Key, frame.Value.RelativePosition.Angle));
+            }
         }
     }
 }

@@ -14,8 +14,7 @@
         <cv:PointSegmentsToPathConverter x:Key="PointSegmentsToPath"/>
         <cv:PointSequenceToImageSourceConverter x:Key="PointSequenceToImageSource"/>
         <cv:PointSequenceToImageSourceFixedConverter x:Key="PointSequenceToImageSourceFixed"/>
-        <cv:PointSequenceToPathConverter x:Key="PointSequenceToPath"/>
-        
+
         <Style TargetType="{x:Type Viewbox}">
             <Setter Property="Stretch" Value="Uniform"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
