@@ -2,7 +2,7 @@
 
 namespace ConvergenceEngine.ViewModels {
 
-    using Models.Mapping;
+    using Models;
 
     public abstract class ApplicationDataViewModel : ViewModelBase {
 

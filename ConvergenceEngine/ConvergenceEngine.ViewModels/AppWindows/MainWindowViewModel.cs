@@ -4,8 +4,8 @@ using System.Windows;
 
 namespace ConvergenceEngine.ViewModels.AppWindows {
 
-    using Models.Mapping;
     using Helpers;
+    using Models;
 
     public sealed class MainWindowViewModel : CommandsViewModel {
 

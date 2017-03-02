@@ -4,7 +4,7 @@ using System.Windows.Media.Imaging;
 
 namespace ConvergenceEngine.ViewModels.AppWindows {
 
-    using Models.Mapping;
+    using Models;
 
     public sealed class ColoredDepthDataWindowViewModel : ViewModelBase {
 

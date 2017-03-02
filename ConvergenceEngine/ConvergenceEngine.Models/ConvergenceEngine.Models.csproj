@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7CCD7B69-0640-4499-938C-C5C6FCC5C39F}</ProjectGuid>
+    <ProjectGuid>{877BC084-EAB7-4A82-B73B-F4368AA9061C}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConvergenceEngine.ViewModels</RootNamespace>
-    <AssemblyName>ConvergenceEngine.ViewModels</AssemblyName>
+    <RootNamespace>ConvergenceEngine.Models</RootNamespace>
+    <AssemblyName>ConvergenceEngine.Models</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -30,25 +30,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -67,43 +48,38 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationDataViewModel.cs" />
-    <Compile Include="AppWindows\ColoredDepthDataWindowViewModel.cs" />
-    <Compile Include="AppWindows\MainWindowViewModel.cs" />
-    <Compile Include="AppWindows\MixedDataWindowViewModel.cs" />
-    <Compile Include="AppWindows\MotionDataWindowViewModel.cs" />
-    <Compile Include="CommandsViewModel.cs" />
-    <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="IO\DataExtractors\ColoredFrameExtractor.cs" />
+    <Compile Include="IO\DataExtractors\MiddleLineFrameExtractor.cs" />
+    <Compile Include="IO\FrameSequenceInfo.cs" />
+    <Compile Include="IO\Readers\DataProvider.cs" />
+    <Compile Include="IO\Readers\DeviceReader.cs" />
+    <Compile Include="IO\Readers\FileReader.cs" />
+    <Compile Include="IO\Readers\KinectDeviceReader.cs" />
+    <Compile Include="IO\Readers\KinectFileReader.cs" />
+    <Compile Include="IO\Writers\BaseWriter.cs" />
+    <Compile Include="Mapping\Collections\FrameSequence.cs" />
+    <Compile Include="Mapping\Collections\ReadOnlyLazyList.cs" />
+    <Compile Include="Mapping\Collections\SegmentSequence.cs" />
+    <Compile Include="Mapping\Extensions\Double.cs" />
+    <Compile Include="Mapping\Extensions\Extensions.cs" />
+    <Compile Include="Mapping\Extensions\Iterable\Enumerable.cs" />
+    <Compile Include="Mapping\Extensions\Iterable\ReadOnlyCollection.cs" />
+    <Compile Include="Mapping\Extensions\Ops\Approximator.cs" />
+    <Compile Include="Mapping\Extensions\Ops\Determinator.cs" />
+    <Compile Include="Mapping\Extensions\Ops\Segmenter.cs" />
+    <Compile Include="Mapping\Extensions\Ops\Selector.cs" />
+    <Compile Include="Mapping\Extensions\Point.cs" />
+    <Compile Include="Mapping\Frame.cs" />
+    <Compile Include="Mapping\Map.cs" />
+    <Compile Include="Mapping\NavigationInfo.cs" />
+    <Compile Include="Mapping\Segment.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="ViewModelBase.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ConvergenceEngine.Models\ConvergenceEngine.Models.csproj">
-      <Project>{877BC084-EAB7-4A82-B73B-F4368AA9061C}</Project>
-      <Name>ConvergenceEngine.Models</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

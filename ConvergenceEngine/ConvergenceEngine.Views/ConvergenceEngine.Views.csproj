@@ -102,7 +102,6 @@
     <Compile Include="Converters\PointSegmentsToPathConverter.cs" />
     <Compile Include="Converters\PointSequenceToImageSourceFixedConverter.cs" />
     <Compile Include="Converters\PointSequenceToImageSourceConverter.cs" />
-    <Compile Include="Converters\PointSequenceToPathConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
