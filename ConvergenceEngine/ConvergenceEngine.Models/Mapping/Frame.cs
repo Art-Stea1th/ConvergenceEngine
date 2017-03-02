@@ -15,8 +15,8 @@ namespace ConvergenceEngine.Models.Mapping {
 
         public readonly int Index;
 
-        public NavigationInfo Absolute { get; internal set; }
         public NavigationInfo Relative { get; internal set; }
+        public NavigationInfo Absolute { get; internal set; }
 
 
         private List<Point> transformedPoints; // TMP
@@ -36,17 +36,9 @@ namespace ConvergenceEngine.Models.Mapping {
             UpdateTransformedPoints();
         }
 
-        internal void UpdateNavigationInfoBy(Frame frame/*, IEnumerable<KeyValuePair<int, Frame>> container*/) {
-            //var prev = container.LastOrDefault(f => f.Key < Index);
-
+        internal void UpdateNavigationInfoBy(Frame frame) {
 
         }
-
-        //internal NavigationInfo ConvergenceTo(int index, Frame frame) {
-
-        //    base.ConvergenceTo(null);
-        //    return null;
-        //}
 
         private void UpdateTransformedPoints() { // TMP
 
@@ -60,7 +52,6 @@ namespace ConvergenceEngine.Models.Mapping {
                 p = new Point(p.X + Absolute.Direction.X, p.Y + Absolute.Direction.Y);
 
                 transformedPoints.Add(p);
-                //Console.WriteLine(p);
             }
         }
     }

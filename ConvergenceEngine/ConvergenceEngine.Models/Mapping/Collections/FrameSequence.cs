@@ -47,7 +47,7 @@ namespace ConvergenceEngine.Models.Mapping.Collections {
 
         internal void NextFrameProceed(int index, IEnumerable<Point> points) { // TMP
 
-            //currentFrameIndex = index;
+            currentFrameIndex = index;
 
             //previousFrame = frames.LastOrDefault(f => f.Key < index);
             //if (frames.ContainsKey(index)) {
@@ -55,7 +55,7 @@ namespace ConvergenceEngine.Models.Mapping.Collections {
             //    return;
             //}
 
-            //currentFrame = new KeyValuePair<int, Frame>(index, new Frame(index, points, this));
+            //currentFrame = new KeyValuePair<int, Frame>(index, new Frame(index, points));
 
             //var convergence = currentFrame.Value.ConvergenceTo(previousFrame.Value);
 

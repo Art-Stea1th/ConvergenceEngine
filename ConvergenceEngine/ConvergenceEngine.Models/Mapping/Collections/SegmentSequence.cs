@@ -20,7 +20,6 @@ namespace ConvergenceEngine.Models.Mapping.Collections {
 
         }
 
-        /*protected*/
         internal NavigationInfo ConvergenceTo(SegmentSequence sequence, double maxDistancePercent = 5.0, double maxAngleDegrees = 3.0) {
 
             var trackedPairs = SelectTrackedTo(sequence);
@@ -38,10 +37,7 @@ namespace ConvergenceEngine.Models.Mapping.Collections {
 
             Vector resultDirection = trackedCurrent.DetermineDirectionTo(trackedAnother);
 
-            //if (resultDirection == null) {
-            //    return new NavigationInfo(0.0, 0.0, resultAngle);
-            //}
-            return new NavigationInfo(resultDirection/*.Value*/, resultAngle);
+            return new NavigationInfo(resultDirection, resultAngle);
         }
 
         public IEnumerable<Tuple<Segment, Segment>> SelectTrackedTo(IEnumerable<Segment> sequence) {
