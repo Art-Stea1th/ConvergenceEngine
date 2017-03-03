@@ -15,7 +15,9 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
                 var currentMaxDistance = Math.Min(segment.PointA.Y, segment.PointB.Y) / 100.0 * maxDistancePercent;
 
                 Segment similar = another.SelectSimilarSegmentTo(segment, currentMaxDistance, maxAngleDegrees);
+
                 if (similar != null) {
+                    segment.Id = similar.Id;
                     yield return new Tuple<Segment, Segment>(segment, similar);
                 }
             }

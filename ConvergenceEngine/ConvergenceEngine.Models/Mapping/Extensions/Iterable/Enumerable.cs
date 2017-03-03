@@ -18,7 +18,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Iterable {
             return sequence.Count() < 1;
         }
 
-        public static IEnumerable<TResult> DoSequential<TSource, TAnother, TResult>(
+        public static IEnumerable<TResult> Sequential<TSource, TAnother, TResult>(
             this IEnumerable<TSource> sourceSequence, IEnumerable<TAnother> anotherSequence, Func<TSource, TAnother, TResult> selector) {
 
             var ssEnumerator = sourceSequence.GetEnumerator();

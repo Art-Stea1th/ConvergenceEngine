@@ -15,6 +15,8 @@ namespace ConvergenceEngine.Models.Mapping {
         private readonly Lazy<Tuple<Point, Point>> approximated;
         private readonly Lazy<int> maxDivergencePointIndex;
 
+        public int Id { get; set; }
+
         public Point PointA { get { return approximated.Value.Item1; } }
         public Point PointB { get { return approximated.Value.Item2; } }
 
