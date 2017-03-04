@@ -9,14 +9,30 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
 
     internal static class Approximator { // IEnumerable<Point>, IEnumerable<Vector> Extension class
 
-        public static Tuple<Point, Point> Approximate(this IEnumerable<Point> sequence) {
+        public static IEnumerable<Point> ThinOutSorted(this IEnumerable<Point> points, double maxDistance = 1.0) {
 
-            Point p0 = sequence.First(), pN = sequence.Last();
+            var enumerator = points.GetEnumerator();
+            var previous = enumerator.Current;
+            yield return previous;
 
-            double avgX = sequence.Average(p => p.X);
-            double avgY = sequence.Average(p => p.Y);
-            double avgXY = sequence.Average(p => p.X * p.Y);
-            double avgSqX = sequence.Average(p => Math.Pow(p.X, 2));
+            while (enumerator.MoveNext()) {
+                var current = enumerator.Current;
+                if (current.DistanceTo(previous) < maxDistance) {
+                    continue;
+                }
+                yield return current;
+                previous = current;
+            }
+        }
+
+        public static Tuple<Point, Point> ApproximateSorted(this IEnumerable<Point> points) {
+
+            Point p0 = points.First(), pN = points.Last();
+
+            double avgX = points.Average(p => p.X);
+            double avgY = points.Average(p => p.Y);
+            double avgXY = points.Average(p => p.X * p.Y);
+            double avgSqX = points.Average(p => Math.Pow(p.X, 2));
             double sqAvgX = Math.Pow(avgX, 2);
 
             double A = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
@@ -31,7 +47,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
             return new Tuple<Point, Point>(resultP0, resultPN);
         }
 
-        public static Vector Approximate(this IEnumerable<Vector> directions) {
+        public static Vector ApproximateSorted(this IEnumerable<Vector> directions) {
 
             if (directions.IsNull()) {
                 throw new ArgumentNullException();

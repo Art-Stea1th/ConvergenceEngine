@@ -8,6 +8,18 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Iterable {
 
     internal static partial class Extensions {
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int IndexOfMaxBy<TSource, TComparable>(this IReadOnlyCollection<TSource> sequence,
+            Func<TSource, TComparable> selector) where TComparable : IComparable {
+            return sequence.MinOrMaxBy(selector, value => value > 0).Key;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int IndexOfMinBy<TSource, TComparable>(this IReadOnlyCollection<TSource> sequence,
+            Func<TSource, TComparable> selector) where TComparable : IComparable {
+            return sequence.MinOrMaxBy(selector, value => value < 0).Key;
+        }
+
         public static Tuple<IEnumerable<T>, IEnumerable<T>> SplitBy<T>(this IReadOnlyCollection<T> sequence, int index) {
 
             if (sequence.Count < 3) { throw new InvalidOperationException(); }
@@ -19,6 +31,5 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Iterable {
 
             return new Tuple<IEnumerable<T>, IEnumerable<T>>(left, right);
         }
-
     }    
 }

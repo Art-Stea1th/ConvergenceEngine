@@ -7,16 +7,17 @@ using System.Windows;
 namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
 
     using Iterable;
+    using Segments;
 
     internal static class Segmenter { // IEnumerable<Point> Extension class
 
-        public static IEnumerable<Segment> Segmentate(this IEnumerable<Point> points, double allowedDivergencePercent = 3.0) {
+        public static IEnumerable<MultiPointsSegment> Segmentate(this IEnumerable<Point> points, double allowedDivergencePercent = 3.0) {
 
-            List<Segment> result = new List<Segment>();
+            List<MultiPointsSegment> result = new List<MultiPointsSegment>();
 
             if (!points.IsNullOrEmpty()) {
 
-                Segment segment = new Segment(points);
+                MultiPointsSegment segment = new MultiPointsSegment(points);
                 var segmentPair = SplitByMaxDivergencePoint(segment, allowedDivergencePercent);
 
                 if (segmentPair == null) {
@@ -44,13 +45,16 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
             return (segmentPositionY - b) / a;     // y = ax + b; => x = (y - b) / a;
         }
 
-        private static Tuple<IEnumerable<Point>, IEnumerable<Point>> SplitByMaxDivergencePoint(Segment segment, double allowedDivergencePercent) {
+        private static Tuple<IEnumerable<Point>, IEnumerable<Point>> SplitByMaxDivergencePoint(
+            IReadOnlyList<Point> points, double allowedDivergencePercent) {
 
-            var allowedDivergence =
-                AveragePositionY(segment.MaxDivergencePoint, segment.First(), segment.Last()) * (allowedDivergencePercent / 100.0);
+            var maxDivergencePointIndex = points.IndexOfMaxBy(p => p.DistanceTo(points.First(), points.Last()));
 
-            if (segment.MaxDivergence > allowedDivergence) {
-                return segment.SplitBy(segment.MaxDivergencePointIndex);
+            var allowedDivergence = AveragePositionY(
+                points[maxDivergencePointIndex], points.First(), points.Last()) * (allowedDivergencePercent / 100.0);
+
+            if (points[maxDivergencePointIndex].DistanceTo(points.First(), points.Last()) > allowedDivergence) {
+                return points.SplitBy(maxDivergencePointIndex);
             }
             return null;
         }
