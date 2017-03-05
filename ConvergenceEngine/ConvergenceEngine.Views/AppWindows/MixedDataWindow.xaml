@@ -15,21 +15,29 @@
             Grid.Column="0"
             Background="Black">
             <Grid.Resources>
-                <SolidColorBrush x:Key="SourceColor" Color="Red" Opacity="1.0"/>
+                <!--<SolidColorBrush x:Key="SourceColor" Color="Red" Opacity="1.0"/>-->
+                <SolidColorBrush x:Key="MapColor" Color="Gray" Opacity="0.5"/>
                 <SolidColorBrush x:Key="CurrentColor" Color="White" Opacity="0.75"/>
-                <SolidColorBrush x:Key="PreviousColor" Color="Gray" Opacity="0.5"/>
-                <SolidColorBrush x:Key="TrackedColor" Color="Orange" Opacity="1.0"/>
+                <!--<SolidColorBrush x:Key="TrackedColor" Color="Orange" Opacity="1.0"/>-->
                 <Style TargetType="{x:Type Path}">
                     <Setter Property="StrokeThickness" Value="1"/>
                     <Setter Property="SnapsToDevicePixels" Value="True"/>
                 </Style>
             </Grid.Resources>
-            <Viewbox>
+            <!--<Viewbox>
                 <Image
                     Source="{Binding SourcePoints,
                     Converter={StaticResource PointSequenceToImageSourceFixed},
                     ConverterParameter={StaticResource SourceColor}}"
                     Visibility="{Binding IsChecked, ElementName=SourcePointsCheckBox,
+                    Converter={StaticResource BoolToVisibility}}"/>
+            </Viewbox>-->
+            <Viewbox>
+                <Path
+                    Stroke="{StaticResource MapColor}"
+                    Data="{Binding MapSegments,
+                    Converter={StaticResource PointSegmentsToPath}}"
+                    Visibility="{Binding IsChecked, ElementName=MapSegmentCheckBox,
                     Converter={StaticResource BoolToVisibility}}"/>
             </Viewbox>
             <Viewbox>
@@ -40,22 +48,14 @@
                     Visibility="{Binding IsChecked, ElementName=CurrentSegmentsCheckBox,
                     Converter={StaticResource BoolToVisibility}}"/>
             </Viewbox>
-            <Viewbox>
-                <Path
-                    Stroke="{StaticResource PreviousColor}"
-                    Data="{Binding PreviousSegments,
-                    Converter={StaticResource PointSegmentsToPath}}"
-                    Visibility="{Binding IsChecked, ElementName=PreviousSegmentCheckBox,
-                    Converter={StaticResource BoolToVisibility}}"/>
-            </Viewbox>
-            <Viewbox>
+            <!--<Viewbox>
                 <Path
                     Stroke="{StaticResource TrackedColor}"
                     Data="{Binding TrackedSegments,
                     Converter={StaticResource PointSegmentsToPath}}"
                     Visibility="{Binding IsChecked, ElementName=TrackedSegmentsCheckBox,
                     Converter={StaticResource BoolToVisibility}}"/>
-            </Viewbox>
+            </Viewbox>-->
             <Viewbox>
                 <Grid>
                     <Grid Width="Auto" Height="Auto">
@@ -75,34 +75,34 @@
                                 <Setter Property="FontSize" Value="12"/>
                             </Style>
                         </Grid.Resources>
-                        <TextBlock
+                        <!--<TextBlock
                             Grid.Column="1"
                             Text="Points"
                             Foreground="{StaticResource SourceColor}"
                             Visibility="{Binding IsChecked, ElementName=SourcePointsCheckBox,
                             Converter={StaticResource BoolToVisibility},
-                            ConverterParameter={StaticResource Collapse}}"/>
+                            ConverterParameter={StaticResource Collapse}}"/>-->
                         <TextBlock
                             Grid.Column="2"
+                            Text="Map"
+                            Foreground="{StaticResource MapColor}"
+                            Visibility="{Binding IsChecked, ElementName=MapSegmentCheckBox,
+                            Converter={StaticResource BoolToVisibility},
+                            ConverterParameter={StaticResource Collapse}}"/>
+                        <TextBlock
+                            Grid.Column="3"
                             Text="Current"
                             Foreground="{StaticResource CurrentColor}"
                             Visibility="{Binding IsChecked, ElementName=CurrentSegmentsCheckBox,
                             Converter={StaticResource BoolToVisibility},
                             ConverterParameter={StaticResource Collapse}}"/>
-                        <TextBlock
-                            Grid.Column="3"
-                            Text="Previous"
-                            Foreground="{StaticResource PreviousColor}"
-                            Visibility="{Binding IsChecked, ElementName=PreviousSegmentCheckBox,
-                            Converter={StaticResource BoolToVisibility},
-                            ConverterParameter={StaticResource Collapse}}"/>
-                        <TextBlock
+                        <!--<TextBlock
                             Grid.Column="4"
                             Text="Tracked"
                             Foreground="{StaticResource TrackedColor}"
                             Visibility="{Binding IsChecked, ElementName=TrackedSegmentsCheckBox,
                             Converter={StaticResource BoolToVisibility},
-                            ConverterParameter={StaticResource Collapse}}"/>
+                            ConverterParameter={StaticResource Collapse}}"/>-->
                     </Grid>
                     <Path
                         Stroke="Transparent"
@@ -123,22 +123,22 @@
                 </Style>
             </StackPanel.Resources>
             
-            <CheckBox
+            <!--<CheckBox
                 Name="SourcePointsCheckBox"
                 Content="Source Points"
-                IsChecked="False"/>
+                IsChecked="False"/>-->
+            <CheckBox
+                Name="MapSegmentCheckBox"
+                Content="Map Segments"
+                IsChecked="True"/>
             <CheckBox
                 Name="CurrentSegmentsCheckBox"
                 Content="Current Segments"
                 IsChecked="True"/>
-            <CheckBox
-                Name="PreviousSegmentCheckBox"
-                Content="Previous Segments"
-                IsChecked="True"/>
-            <CheckBox
+            <!--<CheckBox
                 Name="TrackedSegmentsCheckBox"
                 Content="Tracked Segments"
-                IsChecked="True"/>
+                IsChecked="True"/>-->
         </StackPanel>
     </Grid>
 </Window>

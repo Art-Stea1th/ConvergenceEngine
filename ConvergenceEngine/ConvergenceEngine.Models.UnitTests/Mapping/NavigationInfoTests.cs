@@ -19,8 +19,8 @@ namespace ConvergenceEngine.Models.UnitTests.Mapping {
             var actual = navInfoA + navInfoB; // Act
 
             // Assert
-            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Constants.PrecisionMaximum);
-            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Constants.PrecisionMaximum);
+            Assert.AreEqual(expected.Offset.X, actual.Offset.X, Constants.PrecisionMaximum);
+            Assert.AreEqual(expected.Offset.Y, actual.Offset.Y, Constants.PrecisionMaximum);
             Assert.AreEqual(expected.Angle, actual.Angle, Constants.PrecisionMaximum);
         }
 
@@ -35,8 +35,8 @@ namespace ConvergenceEngine.Models.UnitTests.Mapping {
             var actual = navInfoA - navInfoB; // Act
 
             // Assert
-            Assert.AreEqual(expected.Direction.X, actual.Direction.X, Constants.PrecisionMaximum);
-            Assert.AreEqual(expected.Direction.Y, actual.Direction.Y, Constants.PrecisionMaximum);
+            Assert.AreEqual(expected.Offset.X, actual.Offset.X, Constants.PrecisionMaximum);
+            Assert.AreEqual(expected.Offset.Y, actual.Offset.Y, Constants.PrecisionMaximum);
             Assert.AreEqual(expected.Angle, actual.Angle, Constants.PrecisionMaximum);
         }
     }

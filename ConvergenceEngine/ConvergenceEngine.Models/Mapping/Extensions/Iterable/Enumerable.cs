@@ -15,7 +15,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Iterable {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEmpty<T>(this IEnumerable<T> sequence) {
-            return sequence.Count() < 1;
+            return sequence.Count() == 0;
         }
 
         public static IEnumerable<TResult> Sequential<TSource, TAnother, TResult>(this IEnumerable<TSource> sourceSequence,

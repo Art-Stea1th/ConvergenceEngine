@@ -57,7 +57,6 @@
     <Compile Include="Mapping\Extensions\DoubleTests.cs" />
     <Compile Include="Mapping\Extensions\Iterable\ReadOnlyCollectionTests.cs" />
     <Compile Include="Mapping\Extensions\Ops\ApproximatorTests.cs" />
-    <Compile Include="Mapping\Extensions\Ops\FrameSegmentateTests.cs" />
     <Compile Include="Mapping\Extensions\PointTests.cs" />
     <Compile Include="Mapping\NavigationInfoTests.cs" />
     <Compile Include="Mapping\SegmentTests.cs" />

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
-
-    using Iterable;
-    using System.Runtime.CompilerServices;
 
     internal static class Grader { // IEnumerable<Point>, IEnumerable<Vector> Extension class
 
@@ -17,7 +15,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
         public static IEnumerable<Vector> OrderByAngle(this IEnumerable<Vector> vectors) {
             return vectors.OrderBy(v => Vector.AngleBetween(v, BasisY));
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Point> OrderByLine(this IEnumerable<Point> points, Point pointA, Point pointB) {
             return points.OrderByVector(pointB - pointA);

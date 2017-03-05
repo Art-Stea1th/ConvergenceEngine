@@ -34,7 +34,7 @@ namespace ConvergenceEngine.Models.UnitTests.Mapping.Extensions.Ops {
                 line.Add(expectedPoint2);
 
                 // Act
-                var resultPair = line.Approximate();
+                var resultPair = line.ApproximateSorted();
 
                 var actualPoint1 = resultPair.Item1;
                 var actualPoint2 = resultPair.Item2;

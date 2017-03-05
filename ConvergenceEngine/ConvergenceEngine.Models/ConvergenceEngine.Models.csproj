@@ -57,13 +57,11 @@
     <Compile Include="IO\Readers\KinectDeviceReader.cs" />
     <Compile Include="IO\Readers\KinectFileReader.cs" />
     <Compile Include="IO\Writers\BaseWriter.cs" />
-    <Compile Include="Mapping\Collections\FrameSequence.cs" />
-    <Compile Include="Mapping\Collections\ReadOnlyLazyList.cs" />
-    <Compile Include="Mapping\Collections\SegmentSequence.cs" />
     <Compile Include="Mapping\Extensions\Double.cs" />
     <Compile Include="Mapping\Extensions\Extensions.cs" />
     <Compile Include="Mapping\Extensions\Iterable\Enumerable.cs" />
     <Compile Include="Mapping\Extensions\Iterable\ReadOnlyCollection.cs" />
+    <Compile Include="Mapping\Extensions\Ops\Grader.cs" />
     <Compile Include="Mapping\Extensions\Ops\Approximator.cs" />
     <Compile Include="Mapping\Extensions\Ops\Determinator.cs" />
     <Compile Include="Mapping\Extensions\Ops\Segmenter.cs" />
@@ -71,8 +69,11 @@
     <Compile Include="Mapping\Extensions\Point.cs" />
     <Compile Include="Mapping\Map.cs" />
     <Compile Include="Mapping\NavigationInfo.cs" />
-    <Compile Include="Mapping\NewMap.cs" />
-    <Compile Include="Mapping\Segment.cs" />
+    <Compile Include="Mapping\MapBase.cs" />
+    <Compile Include="Mapping\Segments\ISegment.cs" />
+    <Compile Include="Mapping\Segments\MapSegment.cs" />
+    <Compile Include="Mapping\Segments\MultiPointsSegment.cs" />
+    <Compile Include="Mapping\Segments\Segment.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -7,9 +7,8 @@ namespace ConvergenceEngine.Models.Mapping {
 
     using IO.DataExtractors;
     using IO.Readers;
-    using Collections;
 
-    public sealed class Map : FrameSequence {
+    public sealed class Map : MapBase {
 
         private DataProvider dataProvider;
         private byte[] currentFrameBuffer;
@@ -24,7 +23,7 @@ namespace ConvergenceEngine.Models.Mapping {
         internal void ReInitializeData(DataProvider dataProvider) {
             this.dataProvider = dataProvider;
             dataProvider.OnNextFrameReady += Update;
-            ReInitializeData();
+            ClearData();
         }
 
         private void Update() {
@@ -35,7 +34,11 @@ namespace ConvergenceEngine.Models.Mapping {
             dataProvider.GetNextRawFrameTo(out currentFrameBuffer);
             var points = middleLineExtractor.ExtractMiddleLine(currentFrameBuffer);
 
-            NextFrameProceed(dataProvider.FrameIndex, points);
+            if (points.Length < 1) {
+                return;
+            }
+
+            NextFrameDataProceed(points);
             OnFrameUpdate.Invoke();
         }
     }

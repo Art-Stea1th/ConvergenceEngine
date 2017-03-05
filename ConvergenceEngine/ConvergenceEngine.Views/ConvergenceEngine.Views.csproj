@@ -83,9 +83,6 @@
     <Compile Include="AppWindows\MixedDataWindow.xaml.cs">
       <DependentUpon>MixedDataWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppWindows\MotionDataWindow.xaml.cs">
-      <DependentUpon>MotionDataWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AppWindows\WindowManager.cs" />
     <Compile Include="AppWindows\ColoredDepthDataWindow.xaml.cs">
       <DependentUpon>ColoredDepthDataWindow.xaml</DependentUpon>
@@ -138,10 +135,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppWindows\ColoredDepthDataWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AppWindows\MotionDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
