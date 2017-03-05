@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
@@ -9,20 +10,15 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
 
     internal static class Determinator {
 
-        public static NavigationInfo ConvergenceTo(this IEnumerable<ISegment> current, IEnumerable<ISegment> another,
+        public static NavigationInfo ComputeConvergence(this IEnumerable<Tuple<ISegment, ISegment>> trackedPairs,
             double maxDistancePercent = 5.0, double maxAngleDegrees = 3.0) {
-
-            var trackedPairs = current.SelectSimilarTo(another, maxDistancePercent, maxAngleDegrees);
-            if (trackedPairs.IsNullOrEmpty()) {
-                return new NavigationInfo(0.0, 0.0, 0.0); // to be processed later
-            }
 
             var trackedCurrent = trackedPairs.Select(s => s.Item1);
             var trackedAnother = trackedPairs.Select(s => s.Item2);
 
             double resultAngle = trackedCurrent.DetermineAngleTo(trackedAnother);
 
-            trackedAnother = trackedAnother.Select(s => new Segment(s.PointA.Rotate(-resultAngle), s.PointB.Rotate(-resultAngle)));
+            trackedAnother = trackedAnother.Select(s => new Segment(s.PointA.Rotated(-resultAngle), s.PointB.Rotated(-resultAngle)));
 
             Vector resultDirection = trackedCurrent.DetermineDirectionTo(trackedAnother);
 

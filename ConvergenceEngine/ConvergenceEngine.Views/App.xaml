@@ -4,7 +4,9 @@
              xmlns:cv="clr-namespace:ConvergenceEngine.Views.Converters"
              xmlns:local="clr-namespace:ConvergenceEngine.Views">
     <Application.Resources>
-        
+
+        <SolidColorBrush x:Key="DeepGray" Color="#1F1F1F" Opacity="1.0"/>
+
         <cv:IntToBoolConverter x:Key="IntToBool"/>
         <cv:BoolInverseConverter x:Key="BoolInverse"/>
         <cv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>

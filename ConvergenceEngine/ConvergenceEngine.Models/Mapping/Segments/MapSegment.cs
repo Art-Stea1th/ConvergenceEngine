@@ -10,34 +10,45 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
     using Extensions.Ops;
 
-    public sealed class MapSegment : MultiPointsSegment {
+    public sealed class MapSegment : MultiPointSegment {
 
-        private List<MultiPointsSegment> similar;
+        private List<MultiPointSegment> nearestSegments;
         private Segment approximated;
 
-        public int Id { get; }
+        public readonly int Id;
 
         public override Point PointA { get { return approximated.PointA; } }
         public override Point PointB { get { return approximated.PointB; } }
 
-        internal MapSegment(int id, MultiPointsSegment segment) : base(segment) {
+        internal MapSegment(int id, MultiPointSegment segment) : base(segment) {
             Id = id;
-            similar = new List<MultiPointsSegment> { segment };
+            nearestSegments = new List<MultiPointSegment> { segment };
             approximated = new Segment(segment.ApproximateSorted());
         }
 
-        internal void Append(MultiPointsSegment segment) {
+        public override void ApplyTransform(double offsetX, double offsetY, double angle, bool rotatePrepend = true) {
+            foreach (var segment in nearestSegments) {
+                segment.ApplyTransform(offsetX, offsetY, angle, rotatePrepend);
+            }
+            approximated.ApplyTransform(offsetX, offsetY, angle, rotatePrepend);
+        }
 
-            // rotate / shift
-            // if (segment.Length > approximated.Length) { }
 
-            similar.Add(segment);
+        //  При добавлении очередного сегмента в класс MapSegment необходимо сравнить его длину с аппроксимированным,
+        //  и если она больше - пересчитать позицию существующих по новым, иначе - скорректировать новый по аппроксимированному.
+        //  
+        //  Для оптимизации - периодически "мержить" существующие в один.
+        internal void Append(MultiPointSegment segment) {
+
+            nearestSegments.Add(segment);
             RecalculateApproximated();
+
+            // update points collection async
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void RecalculateApproximated() {
-            approximated = new Segment(similar.SelectMany(mps => mps)
+            approximated = new Segment(nearestSegments.SelectMany(p => p)
                 .OrderByLine(approximated.PointA, approximated.PointB).ApproximateSorted());
         }
     }

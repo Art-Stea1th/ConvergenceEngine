@@ -15,10 +15,9 @@ namespace ConvergenceEngine.Models.Mapping {
 
     public class MapBase {
 
-        private const double SegmenterAllowedDivergencePercent = 3.0;
-
-        private const double SelectorMaxDistancePercent = 5.0;
-        private const double SelectorMaxAngleDegrees = 3.0;
+        private const double AllowedDivergencePercent = 3.0; // using Segmenter
+        private const double MaxDistancePercent = 5.0;       // using Selector & Determinator
+        private const double MaxAngleDegrees = 3.0;          // using Selector & Determinator
 
         // All Map Points
         // All Map Segments
@@ -31,7 +30,9 @@ namespace ConvergenceEngine.Models.Mapping {
 
         // Camera Path
 
-        private List<MultiPointsSegment> prevSegments;
+        private IEnumerable<ISegment> previous;
+        private IEnumerable<ISegment> segments;
+
         protected List<MapSegment> MapSegments { get; private set; }
 
 
@@ -43,30 +44,74 @@ namespace ConvergenceEngine.Models.Mapping {
         }
 
         protected void ClearData() {
-            prevSegments = new List<MultiPointsSegment>();
             MapSegments = new List<MapSegment>();
             CameraPath = new List<NavigationInfo>();
         }
 
+        //      --- Step A ---
+        //  
+        //  Применить последнее NavigationInfo к новым сегментам.
+        //  
+        //  Найти среди новых сегментов близкие к предыдущим сегментам.
+        //  Рассчитать новое NavigationInfo по предыдущим сегментам.
+        //  
+        //  Применить новое NavigationInfo к новым сегментам и к близким к предыдущим.
+        //  
+        //      --- Step B ---
+        //  
+        //  Среди сегментов, близких к предыдущим, найти сегменты близкие к сегментам карты
+        //  и присвоить им Id из соответствующих сегментов карты.
+        //  Уточнить новое NavigationInfo по сегментам карты и перезаписать его.
+        //  
+        //  Заново применить новое NavigationInfo к новым сегментам и к близким к предыдущим.
+        //  
+        //  Добавить все близкие к предыдущим в текущую коллекцию сегментов карты, присвоив новые Id сегментам без Id.
+        //  
+        //      --- Final Step ---
+        //  
+        //  Заменить предыдущие на новые.
+
         protected void NextFrameDataProceed(IEnumerable<Point> points) {
 
-            // A.
+            return;
 
-            var nextSegments = new List<MultiPointsSegment>(points.Segmentate(SegmenterAllowedDivergencePercent));
-            if (prevSegments.IsEmpty()) {
-                prevSegments = nextSegments;
+            var nextSegments = points.Segmentate(AllowedDivergencePercent);
+            
+            if (CameraPath.IsEmpty()) {
+                InitializeWithFirstData(nextSegments);
                 return;
             }
 
+            // --- Step A ---
+
+            NavigationInfo prevNavInfo = CameraPath.Last();
+            ApplyTransformToSegments(nextSegments, prevNavInfo);
+
+            var nearestNextAndPrev = nextSegments.SelectNearestTo(previous, MaxDistancePercent, MaxAngleDegrees);
+            NavigationInfo convergence = nearestNextAndPrev.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
+
+            ApplyTransformToSegments(nextSegments, convergence);
+
+            // --- Step B ---
+
+            var nearestNextToPrev = nearestNextAndPrev.Select(sp => sp.Item1);
+            ApplyTransformToSegments(nearestNextToPrev, convergence);
 
 
-            // B.
-            
-            // C.
 
-            // D.
+            NavigationInfo nextNavInfo = prevNavInfo + convergence;
         }
 
-        
+        private void InitializeWithFirstData(IEnumerable<MultiPointSegment> segments) {
+            previous = segments;
+            CameraPath.Add(new NavigationInfo(0.0, 0.0, 0.0));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void ApplyTransformToSegments(IEnumerable<ISegment> segments, NavigationInfo navigationInfo) {
+            foreach (var segment in segments) {
+                segment.ApplyTransform(navigationInfo.Offset.X, navigationInfo.Offset.Y, navigationInfo.Angle);
+            }
+        }
     }
 }

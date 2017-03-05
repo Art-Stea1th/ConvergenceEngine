@@ -1,0 +1,15 @@
+﻿<StatusBar x:Class="ConvergenceEngine.Views.AppControls.MainSatusBar"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:local="clr-namespace:ConvergenceEngine.Views.AppControls"
+           Padding="8,2">
+    <StatusBarItem>
+        <TextBlock
+            Text="Current File: "
+            Visibility="{Binding TotalFramesCount,
+            Converter={StaticResource IntToVisibility}}"/>
+    </StatusBarItem>
+    <StatusBarItem>
+        <TextBlock Text="{Binding CurrentFileName}"/>
+    </StatusBarItem>
+</StatusBar>

@@ -16,6 +16,7 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         public Point CenterPoint { get { return new Point((PointA.X + PointB.X) * 0.5, (PointA.Y + PointB.Y) * 0.5); } }
         public double Length { get { return (PointA - PointB).Length; } }
 
+        internal Segment(ISegment segment) : this(segment.PointA, segment.PointA) { }
         internal Segment(Tuple<Point, Point> points) : this(points.Item1, points.Item2) { }
         internal Segment(Point pointA, Point pointB) {
             PointA = pointA; PointB = pointB;
@@ -29,6 +30,17 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Tuple<Point, Point>(Segment segment) {
             return new Tuple<Point, Point>(segment.PointA, segment.PointB);
+        }
+
+        public virtual void ApplyTransform(double offsetX, double offsetY, double angle, bool rotatePrepend = true) {
+            if (rotatePrepend) {
+                PointA = PointA.RotatedAndShifted(offsetX, offsetY, angle);
+                PointB = PointB.RotatedAndShifted(offsetX, offsetY, angle);
+            }
+            else {
+                PointA = PointA.ShiftedAndRotated(offsetX, offsetY, angle);
+                PointB = PointB.ShiftedAndRotated(offsetX, offsetY, angle);
+            }            
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -73,9 +85,9 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             return new Tuple<double, double, double>(A, B, C);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private IEnumerable<Point> Points() {
-            yield return PointA;
-            yield return PointB;
+            yield return PointA; yield return PointB;
         }
 
         #region Generic Interfaces
@@ -91,7 +103,6 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual IEnumerator<Point> GetEnumerator() {
             return Points().GetEnumerator();
         }
@@ -99,7 +110,7 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerator IEnumerable.GetEnumerator() {
             return GetEnumerator();
-        }
+        }        
         #endregion
     }
 }

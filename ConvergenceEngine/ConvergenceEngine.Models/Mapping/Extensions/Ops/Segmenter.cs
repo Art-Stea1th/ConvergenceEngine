@@ -11,13 +11,13 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
 
     internal static class Segmenter { // IEnumerable<Point> Extension class
 
-        public static IEnumerable<MultiPointsSegment> Segmentate(this IEnumerable<Point> points, double allowedDivergencePercent = 3.0) {
+        public static IEnumerable<MultiPointSegment> Segmentate(this IEnumerable<Point> points, double allowedDivergencePercent = 3.0) {
 
-            List<MultiPointsSegment> result = new List<MultiPointsSegment>();
+            List<MultiPointSegment> result = new List<MultiPointSegment>();
 
             if (!points.IsNullOrEmpty()) {
 
-                MultiPointsSegment segment = new MultiPointsSegment(points);
+                MultiPointSegment segment = new MultiPointSegment(points);
                 var segmentPair = SplitByMaxDivergencePoint(segment, allowedDivergencePercent);
 
                 if (segmentPair == null) {

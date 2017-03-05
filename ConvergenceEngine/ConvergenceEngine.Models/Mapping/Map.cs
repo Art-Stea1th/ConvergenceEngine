@@ -7,6 +7,7 @@ namespace ConvergenceEngine.Models.Mapping {
 
     using IO.DataExtractors;
     using IO.Readers;
+    using System.Runtime.CompilerServices;
 
     public sealed class Map : MapBase {
 
@@ -14,7 +15,9 @@ namespace ConvergenceEngine.Models.Mapping {
         private byte[] currentFrameBuffer;
 
         private MiddleLineFrameExtractor middleLineExtractor;
+
         public event Action OnFrameUpdate;
+        public int ActualIndex { get; private set; }
 
         internal Map(DataProvider dataProvider) {
             ReInitializeData(dataProvider);
@@ -23,6 +26,7 @@ namespace ConvergenceEngine.Models.Mapping {
         internal void ReInitializeData(DataProvider dataProvider) {
             this.dataProvider = dataProvider;
             dataProvider.OnNextFrameReady += Update;
+            ActualIndex = -1;
             ClearData();
         }
 
@@ -31,15 +35,25 @@ namespace ConvergenceEngine.Models.Mapping {
                 middleLineExtractor = new MiddleLineFrameExtractor(dataProvider.FrameInfo);
             }
 
-            dataProvider.GetNextRawFrameTo(out currentFrameBuffer);
-            var points = middleLineExtractor.ExtractMiddleLine(currentFrameBuffer);
+            if (CorrectIndex(dataProvider.FrameIndex)) {
+                ActualIndex = dataProvider.FrameIndex;
 
-            if (points.Length < 1) {
+                dataProvider.GetNextRawFrameTo(out currentFrameBuffer);
+                var points = middleLineExtractor.ExtractMiddleLine(currentFrameBuffer);
+
+                if (points.Length < 1) {
+                    return;
+                }
+                NextFrameDataProceed(points);
+                OnFrameUpdate.Invoke();
                 return;
             }
+            Console.WriteLine($"{dataProvider.FrameIndex}, {ActualIndex}");
+        }
 
-            NextFrameDataProceed(points);
-            OnFrameUpdate.Invoke();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool CorrectIndex(int nextIndex) {
+            return nextIndex - ActualIndex == 1 ? true : false;
         }
     }
 }

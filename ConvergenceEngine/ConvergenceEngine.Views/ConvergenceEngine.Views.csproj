@@ -80,6 +80,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppControls\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppControls\MainSatusBar.xaml.cs">
+      <DependentUpon>MainSatusBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppControls\MainViewport.xaml.cs">
+      <DependentUpon>MainViewport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppControls\Mapping\OperationsControl.xaml.cs">
+      <DependentUpon>OperationsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppControls\ProcessIndicator.xaml.cs">
+      <DependentUpon>ProcessIndicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppWindows\MixedDataWindow.xaml.cs">
       <DependentUpon>MixedDataWindow.xaml</DependentUpon>
     </Compile>
@@ -126,6 +141,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AppControls\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppControls\MainSatusBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppControls\MainViewport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppControls\Mapping\OperationsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppControls\ProcessIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AppWindows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +180,7 @@
       <Name>ConvergenceEngine.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

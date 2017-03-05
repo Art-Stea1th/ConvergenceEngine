@@ -23,7 +23,7 @@ namespace ConvergenceEngine.Models.UnitTests.Mapping.Extensions {
                 m.Rotate(a);
 
                 Point expected = m.Transform(new Point(1.0, 0.0));
-                Point actual = new Point(1.0, 0.0).Rotate(a); // Act
+                Point actual = new Point(1.0, 0.0).Rotated(a); // Act
 
                 // Assert
                 Assert.AreEqual(expected.X, actual.X, Constants.PrecisionMaximum);
@@ -47,7 +47,7 @@ namespace ConvergenceEngine.Models.UnitTests.Mapping.Extensions {
                         m.RotateAt(angle, atX, atY);
 
                         Point expected = m.Transform(new Point(1.0, 0.0));
-                        Point actual = new Point(1.0, 0.0).RotateAt(angle, atX, atY); // Act
+                        Point actual = new Point(1.0, 0.0).RotatedAt(angle, atX, atY); // Act
 
                         // Assert
                         Assert.AreEqual(expected.X, actual.X, Constants.PrecisionMaximum);

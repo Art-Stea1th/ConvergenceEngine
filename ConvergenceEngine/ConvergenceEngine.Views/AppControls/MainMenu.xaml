@@ -1,0 +1,26 @@
+﻿<Menu x:Class="ConvergenceEngine.Views.AppControls.MainMenu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:ConvergenceEngine.Views.AppControls"
+      Padding="8,4">
+    <MenuItem Header="FILE"
+              Margin="0,0,4,0">
+        <MenuItem Header="Open"
+                  Command="{Binding OpenFile}"/>
+        <MenuItem Header="Close"
+                  Command="{Binding CloseFile}"/>
+        <Separator/>
+        <MenuItem Header="Exit"
+                  Command="{Binding ExitApplication}"
+                  CommandParameter="{Binding
+            RelativeSource={RelativeSource FindAncestor,
+            AncestorType={x:Type Window}}}"/>
+    </MenuItem>
+    <MenuItem Header="VIEW"
+              Margin="4,0,4,0">
+        <MenuItem Header="Raw"
+                  Command="{Binding ShowRawDataWindow}"/>
+        <MenuItem Header="Mixed"
+                  Command="{Binding ShowMixedDataWindow}"/>
+    </MenuItem>
+</Menu>
