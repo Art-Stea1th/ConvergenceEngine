@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace ConvergenceEngine.ViewModels.AppWindows {
 
     using Helpers;
     using Models;
+    using Models.Mapping;
+    using Models.Mapping.Segments;
 
     public sealed class MainWindowViewModel : CommandsViewModel {
 
         private DateTime lastTimeOfFrameUpdate;
         private TimeSpan frameUpdateLimit;
 
-        private IEnumerable<Point> mapViewportData;
-
-        public IEnumerable<Point> MapViewportData {
-            get { return mapViewportData; }
-            set { Set(ref mapViewportData, value); }
-        }
+        private Map map;
 
         private ViewModelBase coloredDepthDataWindowViewModel;
-        private ViewModelBase mixedDataWindowViewModel;
 
         public MainWindowViewModel() {
             model = new Model(Update);
@@ -29,7 +26,7 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
 
         private void Initialize() {
             lastTimeOfFrameUpdate = DateTime.Now;
-            frameUpdateLimit = TimeSpan.FromMilliseconds(1000.0 / 29.97);
+            frameUpdateLimit = TimeSpan.FromMilliseconds(1000.0 / 59.94 /*29.97*/);
             InitializeData();
             CreateViewModelsForChildWindows();
             InitializeCommands();
@@ -37,7 +34,6 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
 
         private void CreateViewModelsForChildWindows() {
             coloredDepthDataWindowViewModel = new ColoredDepthDataWindowViewModel(model);
-            mixedDataWindowViewModel = new MixedDataWindowViewModel(model.Map);
         }
 
         protected override void InitializeCommands() {
@@ -46,10 +42,6 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
             ShowRawDataWindow = new RelayCommand(
                 ex => ExecuteNewWindowCommand(coloredDepthDataWindowViewModel),
                 canEx => CanExecuteNewWindowCommand(coloredDepthDataWindowViewModel));
-
-            ShowMixedDataWindow = new RelayCommand(
-                ex => ExecuteNewWindowCommand(mixedDataWindowViewModel),
-                canEx => CanExecuteNewWindowCommand(mixedDataWindowViewModel));
         }
 
         private void Update() {
@@ -57,11 +49,11 @@ namespace ConvergenceEngine.ViewModels.AppWindows {
             ModelReady = model.Ready;
 
             if ((DateTime.Now - lastTimeOfFrameUpdate) >= frameUpdateLimit && ModelReady) {
-                IEnumerable<Point> mapPoints = null /*model.Map.GetMapPoints()*/;
-                if (mapPoints != null) {
-                    MapViewportData = mapPoints;
-                    lastTimeOfFrameUpdate = DateTime.Now;
-                }
+
+                //CurrentSegments = map.CurrentSegments?.Select(s => (Tuple<Point, Point>)(s as Segment));
+                //MapPoints = null /*model.Map.GetMapPoints()*/;
+
+                lastTimeOfFrameUpdate = DateTime.Now;
             }            
         }
     }

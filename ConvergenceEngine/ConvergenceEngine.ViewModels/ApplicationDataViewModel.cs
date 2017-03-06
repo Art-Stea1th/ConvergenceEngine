@@ -13,6 +13,7 @@ namespace ConvergenceEngine.ViewModels {
         protected string currentFilePath; // <- !
         private int totalFramesCount;
         private int currentFrame;
+        private bool viewportSettingsVisible;
 
         public string ModelCurrentStateInfo {
             get { return modelCurrentStateInfo; }
@@ -34,11 +35,16 @@ namespace ConvergenceEngine.ViewModels {
             get { return currentFrame; }
             set { Set(ref currentFrame, value); model.MoveToPosition(currentFrame); }
         }
+        public bool ViewportSettingsVisible {
+            get { return viewportSettingsVisible; }
+            set { Set(ref viewportSettingsVisible, value); }
+        }
 
         protected virtual void InitializeData() {
             ModelCurrentStateInfo = model.CurrentStateInfo;
             ModelReady = model.Ready;
             TotalFramesCount = model.FramesCount;
+            ViewportSettingsVisible = true;
         }
     }
 }

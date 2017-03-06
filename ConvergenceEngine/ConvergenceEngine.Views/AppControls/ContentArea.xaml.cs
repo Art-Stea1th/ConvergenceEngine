@@ -3,9 +3,9 @@
 
 namespace ConvergenceEngine.Views.AppControls {
 
-    public partial class MainViewport : UserControl {
+    public partial class ContentArea : UserControl {        
 
-        public MainViewport() {
+        public ContentArea() {
             InitializeComponent();
         }
     }

@@ -16,7 +16,7 @@ namespace ConvergenceEngine.Models {
         private DataProvider dataProvider;
         private ColoredFrameExtractor coloredExtractor;
 
-        public Map Map { get; private set; }
+        public Mapper Mapper { get; private set; }
 
         public string CurrentStateInfo { get; private set; } = "Ready";
         public bool Ready { get; private set; } = true;
@@ -29,8 +29,8 @@ namespace ConvergenceEngine.Models {
 
         private void Initialize() {
             dataProvider = new KinectFileReader();
-            if (Map.IsNull()) { Map = new Map(dataProvider); }
-            else { Map.ReInitializeData(dataProvider); }
+            if (Mapper.IsNull()) { Mapper = new Mapper(dataProvider); }
+            else { Mapper.ReInitializeData(dataProvider); }
             coloredExtractor = new ColoredFrameExtractor(dataProvider);
         }
 

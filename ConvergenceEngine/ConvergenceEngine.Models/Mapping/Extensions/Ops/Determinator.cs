@@ -27,6 +27,10 @@ namespace ConvergenceEngine.Models.Mapping.Extensions.Ops {
 
         public static Vector DetermineDirectionTo(this IEnumerable<ISegment> current, IEnumerable<ISegment> another) {
 
+            if (current.IsNullOrEmpty() || another.IsNullOrEmpty()) { // !!!
+                return new Vector();
+            }
+
             var heights = current.Sequential(another, (c, a) => c.CenterPoint.ConvergenceTo(c.CenterPoint.DistancePointTo(a.PointA, a.PointB)));
             return heights.OrderByAngle().ApproximateSorted();
         }

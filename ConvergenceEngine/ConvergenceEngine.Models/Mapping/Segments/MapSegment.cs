@@ -24,6 +24,7 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             Id = id;
             nearestSegments = new List<MultiPointSegment> { segment };
             approximated = new Segment(segment.ApproximateSorted());
+            UpdatePoints();
         }
 
         public override void ApplyTransform(double offsetX, double offsetY, double angle, bool rotatePrepend = true) {
@@ -43,13 +44,19 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             nearestSegments.Add(segment);
             RecalculateApproximated();
 
-            // update points collection async
+            // update points collection / async?
+            UpdatePoints();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void RecalculateApproximated() {
             approximated = new Segment(nearestSegments.SelectMany(p => p)
                 .OrderByLine(approximated.PointA, approximated.PointB).ApproximateSorted());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void UpdatePoints() {
+            points = new List<Point>(nearestSegments.SelectMany(p => p).OrderByLine(PointA, PointB).ThinOutSorted());
         }
     }
 }

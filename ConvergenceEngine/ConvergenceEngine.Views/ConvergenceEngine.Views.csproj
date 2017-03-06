@@ -86,17 +86,14 @@
     <Compile Include="AppControls\MainSatusBar.xaml.cs">
       <DependentUpon>MainSatusBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppControls\MainViewport.xaml.cs">
-      <DependentUpon>MainViewport.xaml</DependentUpon>
+    <Compile Include="AppControls\ContentArea.xaml.cs">
+      <DependentUpon>ContentArea.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppControls\Mapping\OperationsControl.xaml.cs">
       <DependentUpon>OperationsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppControls\ProcessIndicator.xaml.cs">
       <DependentUpon>ProcessIndicator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AppWindows\MixedDataWindow.xaml.cs">
-      <DependentUpon>MixedDataWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppWindows\WindowManager.cs" />
     <Compile Include="AppWindows\ColoredDepthDataWindow.xaml.cs">
@@ -149,7 +146,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppControls\MainViewport.xaml">
+    <Page Include="AppControls\ContentArea.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,15 +158,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AppStyles\Common.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppStyles\GroupBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppStyles\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AppWindows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppWindows\MixedDataWindow.xaml">
+    <Page Include="AppWindows\ColoredDepthDataWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AppWindows\ColoredDepthDataWindow.xaml">
+    <Page Include="Converters\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

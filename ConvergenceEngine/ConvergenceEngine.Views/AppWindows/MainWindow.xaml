@@ -4,7 +4,7 @@
         xmlns:cs="clr-namespace:ConvergenceEngine.Views.AppControls"
         xmlns:csm="clr-namespace:ConvergenceEngine.Views.AppControls.Mapping"
         Title="Convergence Engine: Simultaneous Localization And Mapping on Kinect"
-        Width="660" Height="540" MinWidth="396" MinHeight="124">
+        Width="960" Height="640" MinWidth="580" MinHeight="135">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,7 +24,7 @@
         <cs:MainMenu
             Grid.Row="0"/>
         
-        <cs:MainViewport
+        <cs:ContentArea
             Grid.Row="1"
             Margin="8,8,8,0"/>
 

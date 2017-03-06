@@ -18,9 +18,10 @@
     </MenuItem>
     <MenuItem Header="VIEW"
               Margin="4,0,4,0">
-        <MenuItem Header="Raw"
+        <MenuItem Header="Raw Data Window"
                   Command="{Binding ShowRawDataWindow}"/>
-        <MenuItem Header="Mixed"
-                  Command="{Binding ShowMixedDataWindow}"/>
+        <MenuItem Header="Viewport Settings"
+                  IsCheckable="True"
+                  IsChecked="{Binding ViewportSettingsVisible}"/>
     </MenuItem>
 </Menu>

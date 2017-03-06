@@ -67,9 +67,9 @@
     <Compile Include="Mapping\Extensions\Ops\Segmenter.cs" />
     <Compile Include="Mapping\Extensions\Ops\Selector.cs" />
     <Compile Include="Mapping\Extensions\Extensions.Point.cs" />
-    <Compile Include="Mapping\Map.cs" />
+    <Compile Include="Mapping\Mapper.cs" />
     <Compile Include="Mapping\NavigationInfo.cs" />
-    <Compile Include="Mapping\MapBase.cs" />
+    <Compile Include="Mapping\Map.cs" />
     <Compile Include="Mapping\Segments\ISegment.cs" />
     <Compile Include="Mapping\Segments\MapSegment.cs" />
     <Compile Include="Mapping\Segments\MultiPointSegment.cs" />
