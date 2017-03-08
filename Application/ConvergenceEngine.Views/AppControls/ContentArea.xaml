@@ -28,13 +28,16 @@
                     </Path.Data>-->
                 </Path>
             </Viewbox>
+            <Viewbox>
+                
+            </Viewbox>
         </Grid>
 
         <StackPanel
             Grid.Column="1"
-            Margin="8,0,0,0"
             Visibility="{Binding ViewportSettingsVisible,
-            Converter={StaticResource BoolToVisibilitySystem}}">
+            Converter={StaticResource BoolToVisibilitySystem}}"
+            Margin="8,0,0,0">
             <GroupBox
                 Header="Show result map as"
                 Margin="0,0,0,8"

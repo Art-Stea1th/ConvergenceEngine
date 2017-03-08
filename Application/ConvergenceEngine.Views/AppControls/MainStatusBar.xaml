@@ -5,9 +5,7 @@
            Padding="8,2">
     <StatusBarItem>
         <TextBlock
-            Text="Current File: "
-            Visibility="{Binding TotalFramesCount,
-            Converter={StaticResource IntToVisibility}}"/>
+            Text="Current File: "/>
     </StatusBarItem>
     <StatusBarItem>
         <TextBlock Text="{Binding CurrentFileName}"/>

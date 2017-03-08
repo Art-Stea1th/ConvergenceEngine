@@ -7,7 +7,10 @@ namespace ConvergenceEngine.Infrastructure.Interfaces {
     public interface IDataProvider : IDisposable {
 
         event Action<IEnumerable<Point>> OnNextDepthLineReady;
-        event Action<IEnumerable<short>> OnNextFullFrameReady;
+        event Action<short[,]> OnNextFullFrameReady;
+        event Action<DataProviderStates> OnStateChanged;
+
+        DataProviderStates State { get; }
 
         int FrameWidth { get; }
         int FrameHeight { get; }

@@ -81,6 +81,14 @@
       <Project>{45764031-8D60-49EE-80B3-9522960FD3F6}</Project>
       <Name>ConvergenceEngine.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConvergenceEngine.Models.IO\ConvergenceEngine.Models.IO.csproj">
+      <Project>{ADD85E58-DCD3-4FEF-9E26-B3B7302E67A9}</Project>
+      <Name>ConvergenceEngine.Models.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConvergenceEngine.Models.Mapping\ConvergenceEngine.Models.Mapping.csproj">
+      <Project>{D028FF2B-0998-4E2C-BEE7-2A8DF660EAD8}</Project>
+      <Name>ConvergenceEngine.Models.Mapping</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

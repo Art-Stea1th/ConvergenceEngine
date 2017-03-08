@@ -8,7 +8,7 @@ namespace ConvergenceEngine.Models.Mapping {
 
     using Infrastructure.Interfaces;
 
-    public class Map : IMap {
+    public sealed class Map : IMap {
 
         public IEnumerable<ISegment> AllSegments { get; internal set; }
         public IEnumerable<ISegment> LastSegments { get; internal set; }

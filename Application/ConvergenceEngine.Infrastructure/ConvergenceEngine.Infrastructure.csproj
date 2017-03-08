@@ -41,6 +41,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProviderStates.cs" />
     <Compile Include="Extensions\Extensions.Common.cs" />
     <Compile Include="Extensions\Extensions.Double.cs" />
     <Compile Include="Extensions\Extensions.Enumerable.cs" />

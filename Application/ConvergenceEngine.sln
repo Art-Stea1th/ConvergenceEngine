@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvergenceEngine.Models.IO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvergenceEngine.Infrastructure", "ConvergenceEngine.Infrastructure\ConvergenceEngine.Infrastructure.csproj", "{45764031-8D60-49EE-80B3-9522960FD3F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvergenceEngine.Views.AppCustomControls", "ConvergenceEngine.Views.AppCustomControls\ConvergenceEngine.Views.AppCustomControls.csproj", "{28594AC0-7963-46A5-A35C-638BFCA8CDDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{45764031-8D60-49EE-80B3-9522960FD3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45764031-8D60-49EE-80B3-9522960FD3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45764031-8D60-49EE-80B3-9522960FD3F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28594AC0-7963-46A5-A35C-638BFCA8CDDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28594AC0-7963-46A5-A35C-638BFCA8CDDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28594AC0-7963-46A5-A35C-638BFCA8CDDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28594AC0-7963-46A5-A35C-638BFCA8CDDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

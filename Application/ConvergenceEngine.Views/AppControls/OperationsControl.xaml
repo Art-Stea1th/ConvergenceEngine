@@ -18,45 +18,18 @@
                 <Setter Property="MinWidth" Value="38"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="IsReadOnly" Value="True"/>
-                <Setter Property="Visibility" Value="{Binding TotalFramesCount,
-                    Converter={StaticResource IntToVisibility}}"/>
             </Style>
             <Style TargetType="{x:Type RepeatButton}">
                 <Setter Property="Padding" Value="8,0"/>
-                <Setter Property="Visibility" Value="{Binding ModelReady,
-                    Converter={StaticResource BoolToVisibility}}"/>
             </Style>
         </Grid.Resources>
 
-        <TextBox
-            Grid.Column="0"
-            Margin="0,0,8,0"
-            Text="{Binding ElementName=FrameSlider, Path=Value}"/>
-
         <RepeatButton
-            Grid.Column="1"
-            Content="PREV"
-            Margin="0,0,8,0"
-            Command="{Binding PrevFrame}"/>
-
-        <Slider
-            Name="FrameSlider"
-            Grid.Column="2"
-            Margin="0,4"
-            Value="{Binding CurrentFrame}"
-            Maximum="{Binding TotalFramesCount}"
-            IsEnabled="False"/>
-
-        <RepeatButton
-            Grid.Column="3"
-            Content="NEXT"
-            Margin="8,0,0,0"
-            Command="{Binding NextFrame}"/>
-
-        <TextBox
             Grid.Column="4"
+            Content="{Binding StartStopResetButtonText}"
             Margin="8,0,0,0"
-            Text="{Binding TotalFramesCount}"/>
+            Command="{Binding StartStopReset}"
+            MinWidth="64"/>
 
     </Grid>
 </UserControl>

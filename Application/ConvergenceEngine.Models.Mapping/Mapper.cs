@@ -13,12 +13,12 @@ namespace ConvergenceEngine.Models.Mapping {
     using Infrastructure.Interfaces;
     using Segments;
 
-    public class Mapper : IMappep {
+    public sealed class Mapper : IMapper {
 
-        public event Action<IEnumerable<IMap>> OnMapUpdate;
+        public event Action<IMap> OnMapUpdate;
 
         public void HandleNextData(IEnumerable<Point> nextDepthLine) {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private const double AllowedDivergencePercent = 3.0; // using Segmenter
@@ -33,7 +33,7 @@ namespace ConvergenceEngine.Models.Mapping {
         public List<NavigationInfo> CameraPath { get; private set; }
 
 
-        internal Mapper() {
+        public Mapper() {
             ClearData();
         }
 
