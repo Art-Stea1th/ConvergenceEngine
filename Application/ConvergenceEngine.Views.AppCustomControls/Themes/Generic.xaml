@@ -6,9 +6,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:FullFrameViewport}">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border Background="Transparent"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
+                        <Viewbox>
+                            <Image x:Name="PART_Image"/>
+                        </Viewbox>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

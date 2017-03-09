@@ -2,8 +2,8 @@
 
 namespace ConvergenceEngine.Views {
 
-    public partial class MainWindow : Window {
-        public MainWindow() {
+    public partial class MainView : Window {
+        public MainView() {
             InitializeComponent();
         }
     }

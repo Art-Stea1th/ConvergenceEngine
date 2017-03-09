@@ -79,7 +79,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -102,8 +102,8 @@
     <Compile Include="AppConverters\BoolInverseConverter.cs" />
     <Compile Include="AppConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="AppConverters\IntToVisibilityConverter.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="AppStyles\Styles.xaml">
@@ -148,6 +148,10 @@
     <ProjectReference Include="..\ConvergenceEngine.ViewModels\ConvergenceEngine.ViewModels.csproj">
       <Project>{09a02ed3-6dbb-4693-8e3a-e4ca959ceed8}</Project>
       <Name>ConvergenceEngine.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConvergenceEngine.Views.AppCustomControls\ConvergenceEngine.Views.AppCustomControls.csproj">
+      <Project>{28594ac0-7963-46a5-a35c-638bfca8cdde}</Project>
+      <Name>ConvergenceEngine.Views.AppCustomControls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

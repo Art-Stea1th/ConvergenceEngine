@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ConvergenceEngine.ViewModels {
 
@@ -91,6 +92,10 @@ namespace ConvergenceEngine.ViewModels {
                 return;
             }
             StartStopResetButtonText = "RESET";
+        }
+
+        protected override void OnDispose() {
+            DataProvider?.Dispose();
         }
     }
 }

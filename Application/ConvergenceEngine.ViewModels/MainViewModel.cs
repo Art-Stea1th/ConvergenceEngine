@@ -11,7 +11,7 @@ namespace ConvergenceEngine.ViewModels {
     using Models.Mapping;
     using Infrastructure.Interfaces;
 
-    public sealed class MainWindowViewModel : CommandsViewModel {
+    public sealed class MainViewModel : CommandsViewModel {
 
         private bool viewportSettingsVisible = true;       
 
@@ -20,7 +20,7 @@ namespace ConvergenceEngine.ViewModels {
             set { Set(ref viewportSettingsVisible, value); }
         }
 
-        public MainWindowViewModel() {
+        public MainViewModel() {
             InitializeCommands();
         }
     }

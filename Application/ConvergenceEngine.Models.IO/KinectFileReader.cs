@@ -84,6 +84,7 @@ namespace ConvergenceEngine.Models.IO {
         private void FillBufferProcess() {
             using (var stream = new FileStream(sequenceInfo.FileName, FileMode.Open)) {
                 using (var reader = new BinaryReader(stream)) {
+                    reader.BaseStream.Position = sequenceInfo.FirstFramePosition;
                     while (State == DataProviderStates.Started && !allRead) {
                         FillBuffers(reader);
                         Thread.Sleep(10);
@@ -159,16 +160,15 @@ namespace ConvergenceEngine.Models.IO {
         private short[,] DepthsFrameFrom(byte[] rawFrame) {
 
             short[,] depthFrame = new short[FrameWidth, FrameHeight];
-            int step = sizeof(short), width = FrameWidth * step, height = FrameHeight;
 
-            for (int y = 0; y < height; ++y) {
-                for (int x = 0; x < width; x += step) {
-                    int i = GetLinearIndex(x, y, width);
+            for (int y = 0; y < FrameHeight; ++y) {
+                for (int x = 0; x < FrameWidth; ++x) {
+                    int i = GetLinearIndex(x * sizeof(short), y, FrameWidth * sizeof(short));
                     short nextDepth = rawFrame[i];
                     nextDepth <<= 8;
                     nextDepth |= (short)rawFrame[i + 1]; // <-- depth short construct
-                    nextDepth <<= 3;                     // <-- remove 3 unused low bits & return
-                    depthFrame[x / 2, y] = nextDepth;
+                    nextDepth >>= 3;                     // <-- remove 3 unused low bits & return
+                    depthFrame[x, y] = nextDepth;
                 }
             }
             return depthFrame;

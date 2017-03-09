@@ -75,8 +75,10 @@ namespace ConvergenceEngine.ViewModels {
             }
         }
         private void ExecuteCloseFileCommand(object obj) {
+            DataProvider.Stop();
             Mapper = null;
             DataProvider = null;
+            FullFrame = null;
         }
         private void ExecuteStartStopResetCommand(object obj) {
             if (DataProvider != null) {
@@ -93,6 +95,7 @@ namespace ConvergenceEngine.ViewModels {
                         MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes) {
                         Mapper = null;
+                        FullFrame = null;
                         UpdateStartStopResetButtonText(null);
                     }
                 }

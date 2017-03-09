@@ -51,7 +51,7 @@
     <Compile Include="ApplicationViewModel.cs" />
     <Compile Include="CommandsViewModel.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ConvergenceEngine.Views.AppCustomControls {
 
+    [TemplatePart(Name = FullFrameViewport.PartImageName, Type = typeof(Image))]
     public class FullFrameViewport : Control {
 
         public Color NearColor {
@@ -33,13 +25,13 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             set { SetValue(dataProperty, value); }
         }
 
-        public short DataMinValue {
-            get { return (short)GetValue(dataMaxValueProperty); }
+        public double DataMinValue {
+            get { return (double)GetValue(dataMinValueProperty); }
             set { SetValue(dataMinValueProperty, value); }
         }
 
-        public short DataMaxValue {
-            get { return (short)GetValue(dataMaxValueProperty); }
+        public double DataMaxValue {
+            get { return (double)GetValue(dataMaxValueProperty); }
             set { SetValue(dataMaxValueProperty, value); }
         }
 
@@ -56,40 +48,70 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                 .OverrideMetadata(typeof(FullFrameViewport), new FrameworkPropertyMetadata(typeof(FullFrameViewport)));
 
             nearColorProperty = DependencyProperty.Register("NearColor", typeof(Color), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(Color.FromArgb(255, 0, 128, 192), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(Color.FromArgb(255, 0, 128, 192), FrameworkPropertyMetadataOptions.AffectsRender));
 
             farColorProperty = DependencyProperty.Register("FarColor", typeof(Color), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(Color.FromArgb(255, 0, 0, 30), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+                new FrameworkPropertyMetadata(Color.FromArgb(255, 0, 0, 30), FrameworkPropertyMetadataOptions.AffectsRender));
 
-            dataProperty = DependencyProperty.Register("Data", typeof(Color), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            dataProperty = DependencyProperty.Register("Data", typeof(short[,]), typeof(FullFrameViewport),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
-            dataMinValueProperty = DependencyProperty.Register("DataMinValue", typeof(short), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(800, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            dataMinValueProperty = DependencyProperty.Register("DataMinValue", typeof(double), typeof(FullFrameViewport),
+                new FrameworkPropertyMetadata(800.0, FrameworkPropertyMetadataOptions.AffectsRender, null, CoerceDataMinMaxValue));
 
-            dataMaxValueProperty = DependencyProperty.Register("DataMaxValue", typeof(short), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(4000, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            dataMaxValueProperty = DependencyProperty.Register("DataMaxValue", typeof(double), typeof(FullFrameViewport),
+                new FrameworkPropertyMetadata(4000.0, FrameworkPropertyMetadataOptions.AffectsRender, null, CoerceDataMinMaxValue));
         }
+
+        private const string PartImageName = "PART_Image";
+        private Image image;
 
         private Color[] intensityBuffer;
         private byte[] frameBuffer;
 
-        public Image ImageData { get; private set; }
+        private static object CoerceDataMinMaxValue(DependencyObject o, object value) {
+            var result = (double)value;
+            return result < short.MinValue ? short.MinValue : result > short.MaxValue ? short.MaxValue : result;
+        }
 
         public override void OnApplyTemplate() {
+            image = GetTemplateChild(PartImageName) as Image;
             intensityBuffer = GenerateIntensityBuffer();
         }
 
-        
-
-        private Image UpdateImageData() {
-
-            FillFrameBuffer();
-
-            throw new NotImplementedException();
+        protected override void OnRender(DrawingContext drawingContext) {
+            UpdateImageData();
         }
 
-        private void FillFrameBuffer() {
+        private void UpdateImageData() {
+
+            if (Data == null) {
+                image.Source = NewBitmap(4, 3);
+                return;
+            }
+
+            PrepareFrameBuffer();
+
+            if (frameBuffer == null) {
+                image.Source = NewBitmap(4, 3);
+                return;
+            }
+
+            int width = Data.GetLength(0), height = Data.GetLength(1);
+
+            var bitmap = NewBitmap(width, height);
+            bitmap.WritePixels(new Int32Rect(0, 0, width, height), frameBuffer, width * sizeof(int), 0);
+
+            bitmap.Freeze();
+            image.Source = bitmap;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private WriteableBitmap NewBitmap(int width, int height) {
+            return new WriteableBitmap(width > 1 ? width : 1, height > 1 ? height : 1, 96.0, 96.0, PixelFormats.Bgr32, null);
+        }
+
+        private void PrepareFrameBuffer() {
 
             if (Data != null) {
 
@@ -113,12 +135,11 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                             SetColorToFrameBuffer(colorPixelIndex, FarColor);
                         }
                         else {
-                            SetColorToFrameBuffer(colorPixelIndex, intensityBuffer[depth - DataMinValue]);
+                            SetColorToFrameBuffer(colorPixelIndex, intensityBuffer[depth - (short)DataMinValue]);
                         }
                     }
                 }
             }
-            frameBuffer = null;            
         }
 
         private Color[] GenerateIntensityBuffer() {
@@ -129,7 +150,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             intensityBuffer = new Color[(int)depthRange];
             for (int i = 0; i < intensityBuffer.Length; ++i) {
                 byte colorComponent = (byte)(byte.MaxValue - (i * intencityStep));
-                intensityBuffer[i] = Color.FromArgb(255, colorComponent, colorComponent, colorComponent);
+                intensityBuffer[i] = Color.FromRgb(colorComponent, colorComponent, colorComponent);
             }
             return intensityBuffer;
         }
@@ -144,7 +165,6 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             frameBuffer[startIndex] = color.B;
             frameBuffer[++startIndex] = color.G;
             frameBuffer[++startIndex] = color.R;
-            frameBuffer[++startIndex] = color.A;
         }
     }
 }
