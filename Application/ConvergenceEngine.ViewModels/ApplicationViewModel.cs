@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace ConvergenceEngine.ViewModels {
 
@@ -13,36 +14,27 @@ namespace ConvergenceEngine.ViewModels {
         private IMap map;
         private short[,] fullFrame;
 
-        private string startStopResetButtonText;
-
         protected IDataProvider DataProvider {
             get { return dataProvider; }
             set { SetNew(value); }
         }
-
         protected IMapper Mapper {
             get { return mapper; }
             set { SetNew(value); }
         }
-
         public IMap Map {
             get { return map; }
             set { Set(ref map, value); }
         }
-
         public short[,] FullFrame {
             get { return fullFrame; }
             set { Set(ref fullFrame, value); }
-        }
+        }        
 
-        public string StartStopResetButtonText {
-            get { return startStopResetButtonText; }
-            set { Set(ref startStopResetButtonText, value); }
-        }
-
-        protected ApplicationViewModel() {
-            UpdateStartStopResetButtonText(null);
-        }
+        public abstract double FpsCurrent { get; set; }
+        public abstract bool ModelStarted { get; set; }
+        public abstract int TotalFrames { get; set; }
+        public abstract string StartStopResetButtonText { get; set; }
 
         private void SetNew(IDataProvider dataProvider) {
             if (dataProvider != null) {
@@ -50,6 +42,7 @@ namespace ConvergenceEngine.ViewModels {
                     dataProvider.OnNextDepthLineReady += mapper.HandleNextData;
                 }
                 dataProvider.OnNextFullFrameReady += UpdateFullFrame;
+                dataProvider.OnNextFullFrameReady += (f) => ++TotalFrames;
                 dataProvider.OnStateChanged += OnDataProviderStateChanged;
             }
             this.dataProvider = dataProvider;
@@ -79,20 +72,16 @@ namespace ConvergenceEngine.ViewModels {
         }
 
         protected virtual void OnDataProviderStateChanged(DataProviderStates state) {
-            UpdateStartStopResetButtonText(state);
+            if (state == DataProviderStates.Started) {
+                ModelStarted = true;
+            }
+            else {
+                ModelStarted = false;                
+            }
+            UpdateStartStopResetButtonText();
         }
 
-        protected void UpdateStartStopResetButtonText(DataProviderStates? state) {
-            if (Mapper == null) {
-                StartStopResetButtonText = "START";
-                return;
-            }
-            if (state == DataProviderStates.Started) {
-                StartStopResetButtonText = "STOP";
-                return;
-            }
-            StartStopResetButtonText = "RESET";
-        }
+        protected abstract void UpdateStartStopResetButtonText();
 
         protected override void OnDispose() {
             DataProvider?.Dispose();

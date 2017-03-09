@@ -3,25 +3,35 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:ConvergenceEngine.Views.AppControls"
       Padding="8,4">
-    <MenuItem Header="FILE"
-              Margin="0,0,4,0">
-        <MenuItem Header="Open"
-                  Command="{Binding OpenFile}"/>
-        <MenuItem Header="Close"
-                  Command="{Binding CloseFile}"/>
+    <MenuItem Header="FILE" Margin="0,0,4,0">
+        <MenuItem
+            Header="Open"
+            Command="{Binding OpenFile}"/>
+        <MenuItem
+            Header="Close"
+            Command="{Binding CloseFile}"/>
         <Separator/>
-        <MenuItem Header="Exit"
-                  Command="{Binding ExitApplication}"
-                  CommandParameter="{Binding
+        <MenuItem
+            Header="Exit"
+            Command="{Binding ExitApplication}"
+            CommandParameter="{Binding
             RelativeSource={RelativeSource FindAncestor,
             AncestorType={x:Type Window}}}"/>
     </MenuItem>
-    <MenuItem Header="VIEW"
-              Margin="4,0,4,0">
-        <MenuItem Header="Raw Data Viewport"
-                  Command="{Binding ShowRawDataViewport}"/>
-        <MenuItem Header="Main Viewport Settings"
-                  IsCheckable="True"
-                  IsChecked="{Binding ViewportSettingsVisible}"/>
+    <MenuItem Header="VIEW" Margin="4,0">
+        <MenuItem
+            Header="Full Frame Viewport"
+            IsCheckable="True"
+            IsChecked="{Binding FullFrameViewportVisible}"/>        
+    </MenuItem>
+    <MenuItem Header="SETTINGS" Margin="4,0">
+        <MenuItem
+            Header="Main Viewport"
+            IsCheckable="True"
+            IsChecked="{Binding ViewportSettingsVisible}"/>
+        <MenuItem
+            Header="Data Provider"
+            IsCheckable="True"
+            IsChecked="{Binding DataProviderSettingsVisible}"/>
     </MenuItem>
 </Menu>

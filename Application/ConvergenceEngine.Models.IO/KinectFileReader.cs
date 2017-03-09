@@ -36,7 +36,7 @@ namespace ConvergenceEngine.Models.IO {
         public int MinDepth { get { return sequenceInfo.MinDepth; } }
         public int MaxDepth { get { return sequenceInfo.MaxDepth; } }
 
-        public double FPS { get { return fps; } set { fps = LimitedValue(value, 1.0, 60.0); } }
+        public double FPS { get { return fps; } set { fps = LimitedValue(value, 0.5, 60.0); } }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double LimitedValue(double value, double min, double max) {
@@ -53,6 +53,7 @@ namespace ConvergenceEngine.Models.IO {
 
         private KinectFileReader(SequenceInfo sequenceInfo) {
             this.sequenceInfo = sequenceInfo;
+            FPS = 30.0;
             Initialize();
         }
 
@@ -65,7 +66,7 @@ namespace ConvergenceEngine.Models.IO {
         }
 
         private void Initialize() {
-            fps = 30.0; frames = new ConcurrentQueue<Tuple<Point[], short[,]>>();
+            frames = new ConcurrentQueue<Tuple<Point[], short[,]>>();
             State = DataProviderStates.Stopped; allRead = false;
         }
 

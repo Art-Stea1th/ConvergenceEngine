@@ -42,7 +42,7 @@ namespace ConvergenceEngine.ViewModels {
         }
 
         private bool CanExecuteOpenFileCommand(object obj) {
-            return DataProvider == null;
+            return DataProvider == null || DataProvider.State == DataProviderStates.Stopped;
         }
         private bool CanExecuteCloseFileCommand(object obj) {
             return DataProvider != null;
@@ -64,6 +64,7 @@ namespace ConvergenceEngine.ViewModels {
             bool? result = openFileDialog.ShowDialog();
 
             if (result == true) {
+                Reset(true);
                 DataProvider = KinectFileReader.CreateReader(openFileDialog.FileName);
                 if (DataProvider == null) {
                     string fileName = Path.GetFileName(openFileDialog.FileName);
@@ -72,34 +73,41 @@ namespace ConvergenceEngine.ViewModels {
                         "Open RAW Depth Stream Data file",
                         MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
+                else {
+                    DataProvider.FPS = FpsCurrent;
+                }
             }
         }
         private void ExecuteCloseFileCommand(object obj) {
-            DataProvider.Stop();
-            Mapper = null;
-            DataProvider = null;
-            FullFrame = null;
+            Reset(true);
         }
         private void ExecuteStartStopResetCommand(object obj) {
-            if (DataProvider != null) {
-                if (Mapper == null) {
-                    Mapper = new Mapper();
-                    DataProvider.Start();
-                    return;
-                }
-                if (DataProvider.State == DataProviderStates.Started) {
-                    DataProvider.Stop();
-                }
-                else {
-                    var result = MessageBox.Show($"Are you sure you want to reset?", "Reset Map",
+            if (Mapper == null) {
+                Mapper = new Mapper();
+                DataProvider?.Start();
+                return;
+            }
+            if (ModelStarted) {
+                DataProvider?.Stop();
+            }
+            else {
+                var result = MessageBox.Show($"Are you sure you want to reset?", "Reset Map",
                         MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
-                    if (result == MessageBoxResult.Yes) {
-                        Mapper = null;
-                        FullFrame = null;
-                        UpdateStartStopResetButtonText(null);
-                    }
+                if (result == MessageBoxResult.Yes) {
+                    Reset();
                 }
-            }            
+            }
         }
+
+        private void Reset(bool full = false) {
+            DataProvider?.Stop();
+            if (full) {
+                DataProvider = null;
+            }
+            Mapper = null;            
+            FullFrame = null;
+            TotalFrames = 0;
+            UpdateStartStopResetButtonText();
+        }        
     }
 }

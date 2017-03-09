@@ -17,13 +17,11 @@ namespace ConvergenceEngine.Models.Mapping {
 
         public event Action<IMap> OnMapUpdate;
 
-        public void HandleNextData(IEnumerable<Point> nextDepthLine) {
-            //throw new NotImplementedException();
-        }
-
         private const double AllowedDivergencePercent = 3.0; // using Segmenter
         private const double MaxDistancePercent = 5.0;       // using Selector & Determinator
         private const double MaxAngleDegrees = 3.0;          // using Selector & Determinator
+
+        private Map map;
 
         public Point Size { get; private set; }
 
@@ -65,8 +63,15 @@ namespace ConvergenceEngine.Models.Mapping {
         //  
         //  Заменить предыдущие на новые.
 
-        internal void NextFrameDataProceed(IEnumerable<Point> points) {
+        private void UpdateMap() {
+            map = new Map();
+            map.CurrentSegments = CurrentSegments;
+            OnMapUpdate?.Invoke(map);
+        }
 
+        public void HandleNextData(IEnumerable<Point> points) {
+
+            return;
 
             CurrentSegments = points.Segmentate(AllowedDivergencePercent);
 

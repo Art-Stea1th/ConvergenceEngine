@@ -18,6 +18,8 @@ namespace ConvergenceEngine.Infrastructure.Interfaces {
         int MinDepth { get; }
         int MaxDepth { get; }
 
+        double FPS { get; set; }
+
         void Start();
         void Stop();
     }

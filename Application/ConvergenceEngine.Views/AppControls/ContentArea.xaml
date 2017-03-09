@@ -14,21 +14,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Background="{StaticResource DeepGray}">
-            <Viewbox>
-                <Path
-                    Stroke="{StaticResource CurrentSegmentsColor}"
-                    Visibility="{Binding IsChecked, ElementName=CurrentSegmentsCheckBox,
-                    Converter={StaticResource BoolToVisibility}}">
-                    <!--<Path.Data>
-                        <MultiBinding Converter="{StaticResource PointSegmentsToPath}">
-                            <Binding Path="MapSize"/>
-                            <Binding Path="CurrentSegments"/>
-                        </MultiBinding>
-                    </Path.Data>-->
-                </Path>
-            </Viewbox>
-
-            
+            <acc:MapViewport/>
         </Grid>
 
         <Grid Grid.Column="0">
@@ -48,51 +34,97 @@
                 Margin="8"
                 Data="{Binding FullFrame}"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"/>
+                VerticalAlignment="Top"
+                Visibility="{Binding FullFrameViewportVisible,
+                Converter={StaticResource BoolToVisibilitySystem}}"/>
         </Grid>
 
-        <StackPanel
-            Grid.Column="1"
-            Visibility="{Binding ViewportSettingsVisible,
-            Converter={StaticResource BoolToVisibilitySystem}}"
-            Margin="8,0,0,0">
+        <StackPanel Grid.Column="1">
+
             <GroupBox
-                Header="Show result map as"
-                Margin="0,0,0,8"
-                BorderThickness="0">
-                <StackPanel>
-                    <RadioButton
-                        x:Name="MapPointsRadioButton"
-                        Content="Points"/>
-                    <RadioButton
-                        x:Name="MapSegmentsRadioButton"
-                        Content="Segments" IsChecked="True"/>
+                Header="Main Viewport Settings"
+                Margin="8,0,0,8"
+                Visibility="{Binding ViewportSettingsVisible,
+                Converter={StaticResource BoolToVisibilitySystem}}">
+                <StackPanel
+                    Margin="0,0,0,8">
+                    <GroupBox
+                        Header="Show result map as"
+                        BorderThickness="0">
+                        <StackPanel>
+                            <RadioButton
+                                x:Name="MapPointsRadioButton"
+                                Content="Points"/>
+                            <RadioButton
+                                x:Name="MapSegmentsRadioButton"
+                                Content="Segments" IsChecked="True"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox
+                        Header="Show additional data"
+                        BorderThickness="0">
+                        <StackPanel>
+                            <CheckBox
+                                x:Name="CurrentSegmentsCheckBox"
+                                Content="Current Segments" IsChecked="True"/>
+                            <CheckBox
+                                x:Name="TrackedSegmentsCheckBox"
+                                Content="Tracked Segments" IsChecked="True"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox
+                        Header="Show camera data"
+                        BorderThickness="0">
+                        <StackPanel>
+                            <CheckBox
+                                x:Name="CameraPositionCheckBox"
+                                Content="Camera Position" IsChecked="True"/>
+                            <CheckBox
+                                x:Name="CameraPathCheckBox"
+                                Content="Camera Path" IsChecked="True"/>
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
             </GroupBox>
+
             <GroupBox
-                Header="Show additional data"
-                Margin="0,0,0,8"
-                BorderThickness="0">
-                <StackPanel>
-                    <CheckBox
-                        x:Name="CurrentSegmentsCheckBox"
-                        Content="Current Segments" IsChecked="True"/>
-                    <CheckBox
-                        x:Name="TrackedSegmentsCheckBox"
-                        Content="Tracked Segments" IsChecked="True"/>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox
-                Header="Show camera data"
-                Margin="0,0,0,8"
-                BorderThickness="0">
-                <StackPanel>
-                    <CheckBox
-                        x:Name="CameraPositionCheckBox"
-                        Content="Camera Position" IsChecked="True"/>
-                    <CheckBox
-                        x:Name="CameraPathCheckBox"
-                        Content="Camera Path" IsChecked="True"/>
+                Header="Data Provider Settings"
+                Margin="8,0,0,0"
+                Visibility="{Binding DataProviderSettingsVisible,
+                Converter={StaticResource BoolToVisibilitySystem}}">
+                <StackPanel
+                    Margin="0,0,0,8">
+
+                    <GroupBox
+                        Header="Frames Per Second"
+                        BorderThickness="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <!--<TextBox
+                                Grid.Column="0"
+                                Text="{Binding ElementName=FpsSlider, Path=Value, StringFormat=\{0:n1\}}"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                IsReadOnly="True"
+                                BorderThickness="0"
+                                MinWidth="32"/>-->
+                            <Slider
+                                Grid.Column="1"
+                                x:Name="FpsSlider"
+                                Minimum="1.0"
+                                Maximum="60.0"
+                                Value="{Binding FpsCurrent}"
+                                Ticks="{Binding FpsCollection}"
+                                IsSnapToTickEnabled="True"
+                                TickPlacement="TopLeft"
+                                AutoToolTipPlacement="BottomRight">
+                            </Slider>
+                        </Grid>
+                    </GroupBox>
+                    
                 </StackPanel>
             </GroupBox>
         </StackPanel>

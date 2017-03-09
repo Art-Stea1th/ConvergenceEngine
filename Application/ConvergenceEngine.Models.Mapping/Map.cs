@@ -11,9 +11,8 @@ namespace ConvergenceEngine.Models.Mapping {
     public sealed class Map : IMap {
 
         public IEnumerable<ISegment> AllSegments { get; internal set; }
-        public IEnumerable<ISegment> LastSegments { get; internal set; }
+        public IEnumerable<ISegment> CurrentSegments { get; internal set; }
 
         public IEnumerable<INavigationInfo> CameraPath { get; internal set; }
-
     }
 }

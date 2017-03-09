@@ -11,55 +11,55 @@ namespace ConvergenceEngine.Views.AppCustomControls {
     public class FullFrameViewport : Control {
 
         public Color NearColor {
-            get { return (Color)GetValue(nearColorProperty); }
-            set { SetValue(nearColorProperty, value); }
+            get { return (Color)GetValue(NearColorProperty); }
+            set { SetValue(NearColorProperty, value); }
         }
 
         public Color FarColor {
-            get { return (Color)GetValue(farColorProperty); }
-            set { SetValue(farColorProperty, value); }
+            get { return (Color)GetValue(FarColorProperty); }
+            set { SetValue(FarColorProperty, value); }
         }
 
         public short[,] Data {
-            get { return (short[,])GetValue(dataProperty); }
-            set { SetValue(dataProperty, value); }
+            get { return (short[,])GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
         }
 
         public double DataMinValue {
-            get { return (double)GetValue(dataMinValueProperty); }
-            set { SetValue(dataMinValueProperty, value); }
+            get { return (double)GetValue(DataMinValueProperty); }
+            set { SetValue(DataMinValueProperty, value); }
         }
 
         public double DataMaxValue {
-            get { return (double)GetValue(dataMaxValueProperty); }
-            set { SetValue(dataMaxValueProperty, value); }
+            get { return (double)GetValue(DataMaxValueProperty); }
+            set { SetValue(DataMaxValueProperty, value); }
         }
 
-        public static readonly DependencyProperty nearColorProperty;
-        public static readonly DependencyProperty farColorProperty;
+        public static readonly DependencyProperty NearColorProperty;
+        public static readonly DependencyProperty FarColorProperty;
 
-        public static readonly DependencyProperty dataProperty;
-        public static readonly DependencyProperty dataMinValueProperty;
-        public static readonly DependencyProperty dataMaxValueProperty;
+        public static readonly DependencyProperty DataProperty;
+        public static readonly DependencyProperty DataMinValueProperty;
+        public static readonly DependencyProperty DataMaxValueProperty;
 
         static FullFrameViewport() {
 
             DefaultStyleKeyProperty
                 .OverrideMetadata(typeof(FullFrameViewport), new FrameworkPropertyMetadata(typeof(FullFrameViewport)));
 
-            nearColorProperty = DependencyProperty.Register("NearColor", typeof(Color), typeof(FullFrameViewport),
+            NearColorProperty = DependencyProperty.Register("NearColor", typeof(Color), typeof(FullFrameViewport),
                 new FrameworkPropertyMetadata(Color.FromArgb(255, 0, 128, 192), FrameworkPropertyMetadataOptions.AffectsRender));
 
-            farColorProperty = DependencyProperty.Register("FarColor", typeof(Color), typeof(FullFrameViewport),
+            FarColorProperty = DependencyProperty.Register("FarColor", typeof(Color), typeof(FullFrameViewport),
                 new FrameworkPropertyMetadata(Color.FromArgb(255, 0, 0, 30), FrameworkPropertyMetadataOptions.AffectsRender));
 
-            dataProperty = DependencyProperty.Register("Data", typeof(short[,]), typeof(FullFrameViewport),
+            DataProperty = DependencyProperty.Register("Data", typeof(short[,]), typeof(FullFrameViewport),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
-            dataMinValueProperty = DependencyProperty.Register("DataMinValue", typeof(double), typeof(FullFrameViewport),
+            DataMinValueProperty = DependencyProperty.Register("DataMinValue", typeof(double), typeof(FullFrameViewport),
                 new FrameworkPropertyMetadata(800.0, FrameworkPropertyMetadataOptions.AffectsRender, null, CoerceDataMinMaxValue));
 
-            dataMaxValueProperty = DependencyProperty.Register("DataMaxValue", typeof(double), typeof(FullFrameViewport),
+            DataMaxValueProperty = DependencyProperty.Register("DataMaxValue", typeof(double), typeof(FullFrameViewport),
                 new FrameworkPropertyMetadata(4000.0, FrameworkPropertyMetadataOptions.AffectsRender, null, CoerceDataMinMaxValue));
         }
 

@@ -5,10 +5,7 @@
              xmlns:local="clr-namespace:ConvergenceEngine.Views.AppControls">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.Resources>
@@ -24,12 +21,70 @@
             </Style>
         </Grid.Resources>
 
-        <RepeatButton
-            Grid.Column="4"
+
+        <Grid
+            Grid.Column="0"
+            Visibility="{Binding ModelStarted,
+            Converter={StaticResource BoolToVisibility}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <ProgressBar
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                IsIndeterminate="True"/>
+            <TextBlock
+                Grid.Column="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="Processed : : "/>
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="{Binding TotalFrames}"/>
+        </Grid>
+
+        <Grid
+            Grid.Column="0"
+            Visibility="{Binding ModelStarted,
+            Converter={StaticResource BoolToVisibilityInverse}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBox
+                Grid.Column="0"
+                Margin="0,0,8,0"
+                Text="{Binding ElementName=FrameSlider, Path=Value}"
+                Visibility="{Binding TotalFrames,
+                Converter={StaticResource IntToVisibility}}"/>
+
+            <Slider
+                Name="FrameSlider"
+                Grid.Column="1"
+                Margin="0,4"
+                Value="{Binding CurrentFrame}"
+                Maximum="{Binding TotalFrames}"
+                IsEnabled="False"/>
+
+            <TextBox
+                Grid.Column="2"
+                Margin="8,0,0,0"
+                Text="{Binding TotalFrames}"
+                Visibility="{Binding TotalFrames,
+                Converter={StaticResource IntToVisibility}}"/>
+        </Grid>
+
+        <Button
+            Grid.Column="3"
             Content="{Binding StartStopResetButtonText}"
             Margin="8,0,0,0"
             Command="{Binding StartStopReset}"
-            MinWidth="64"/>
-
+            MinWidth="128"/>
     </Grid>
 </UserControl>
