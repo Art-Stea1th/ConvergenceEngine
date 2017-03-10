@@ -25,7 +25,7 @@
         <Grid
             Grid.Column="0"
             Visibility="{Binding ModelStarted,
-            Converter={StaticResource BoolToVisibility}}">
+            Converter={StaticResource BooleanToVisibilityFalseHidden}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -50,7 +50,7 @@
         <Grid
             Grid.Column="0"
             Visibility="{Binding ModelStarted,
-            Converter={StaticResource BoolToVisibilityInverse}}">
+            Converter={StaticResource BooleanToVisibilityTrueHidden}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
@@ -62,7 +62,7 @@
                 Margin="0,0,8,0"
                 Text="{Binding ElementName=FrameSlider, Path=Value}"
                 Visibility="{Binding TotalFrames,
-                Converter={StaticResource IntToVisibility}}"/>
+                Converter={StaticResource IntegerToVisibilityZeroCollapsed}}"/>
 
             <Slider
                 Name="FrameSlider"
@@ -77,7 +77,7 @@
                 Margin="8,0,0,0"
                 Text="{Binding TotalFrames}"
                 Visibility="{Binding TotalFrames,
-                Converter={StaticResource IntToVisibility}}"/>
+                Converter={StaticResource IntegerToVisibilityZeroCollapsed}}"/>
         </Grid>
 
         <Button

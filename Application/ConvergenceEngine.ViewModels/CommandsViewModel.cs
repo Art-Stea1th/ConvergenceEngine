@@ -61,12 +61,9 @@ namespace ConvergenceEngine.ViewModels {
             openFileDialog.Filter = " RAW Depth Stream Data |*.rdsd| All Files |*.*";
             openFileDialog.ValidateNames = true;
 
-            bool? result = openFileDialog.ShowDialog();
-
-            if (result == true) {
-                Reset(true);
-                DataProvider = KinectFileReader.CreateReader(openFileDialog.FileName);
-                if (DataProvider == null) {
+            if (openFileDialog.ShowDialog() == true) {
+                var newDataProvider = KinectFileReader.CreateReader(openFileDialog.FileName);
+                if (newDataProvider == null) {
                     string fileName = Path.GetFileName(openFileDialog.FileName);
                     MessageBox.Show(
                         $"The content of \"{fileName}\" file corrupted, or the file has the wrong type.",
@@ -74,6 +71,8 @@ namespace ConvergenceEngine.ViewModels {
                         MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
                 else {
+                    Reset(true);
+                    DataProvider = newDataProvider;
                     DataProvider.FPS = FpsCurrent;
                 }
             }

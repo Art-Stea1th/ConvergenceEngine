@@ -1,16 +1,22 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ConvergenceEngine.Views.AppConverters">
-    
-    <BooleanToVisibilityConverter x:Key="BoolToVisibilitySystem"/>
 
-    <!--<cv:IntToBoolConverter x:Key="IntToBool"/>-->
-    <local:BoolInverseConverter x:Key="BoolInverse"/>
-    <local:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
-    <local:BoolToVisibilityConverterInverse x:Key="BoolToVisibilityInverse"/>
-    <local:IntToVisibilityConverter x:Key="IntToVisibility"/>
-    <local:IntToVisibilityConverterInverse x:Key="IntToVisibilityInverse"/>
-    <!--<cv:PointSegmentsToPathConverter x:Key="PointSegmentsToPath"/>
-    <cv:PointSequenceToImageSourceConverter x:Key="PointSequenceToImageSource"/>
-    <cv:PointSequenceToImageSourceFixedConverter x:Key="PointSequenceToImageSourceFixed"/>-->
+    <local:BooleanInverseConverter x:Key="BoolInverse" True="False" False="True"/>
+    
+    <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityFalseCollapsed" True="Visible" False="Collapsed"/>
+    <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityFalseHidden" True="Visible" False="Hidden"/>
+    <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityTrueCollapsed" True="Collapsed" False="Visible"/>
+    <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityTrueHidden" True="Hidden" False="Visible"/>
+
+    <local:IntegerToVisibilityConverter x:Key="IntegerToVisibilityZeroCollapsed" NonZero="Visible" Zero="Collapsed"/>
+    <local:IntegerToVisibilityConverter x:Key="IntegerToVisibilityZeroHidden" NonZero="Visible" Zero="Hidden"/>
+    <local:IntegerToVisibilityConverter x:Key="IntegerToVisibilityNonZeroCollapsed" NonZero="Collapsed" Zero="Visible"/>
+    <local:IntegerToVisibilityConverter x:Key="IntegerToVisibilityNonZeroHidden" NonZero="Hidden" Zero="Visible"/>
+
+    <local:ObjectToVisibilityConverter x:Key="ObjectToVisibilityNullCollapsed" NotNull="Visible" Null="Collapsed"/>
+    <local:ObjectToVisibilityConverter x:Key="ObjectToVisibilityNullHidden" NotNull="Visible" Null="Hidden"/>
+    <local:ObjectToVisibilityConverter x:Key="ObjectToVisibilityNotNullCollapsed" NotNull="Collapsed" Null="Visible"/>
+    <local:ObjectToVisibilityConverter x:Key="ObjectToVisibilityNotNullHidden" NotNull="Hidden" Null="Visible"/>
+
 </ResourceDictionary>

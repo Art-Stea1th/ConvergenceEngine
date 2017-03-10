@@ -12,6 +12,7 @@ namespace ConvergenceEngine.ViewModels {
         private double fpsCurrent;
         private bool modelStarted;
         private int totatFrames;
+        private int currentFrame;
         private string startStopResetButtonText;
 
         public DoubleCollection FpsCollection { get; private set; }
@@ -46,6 +47,10 @@ namespace ConvergenceEngine.ViewModels {
         public override int TotalFrames {
             get { return totatFrames; }
             set { Set(ref totatFrames, value); }
+        }
+        public override int CurrentFrame {
+            get { return currentFrame; }
+            set { Set(ref currentFrame, value); }
         }
         public override string StartStopResetButtonText {
             get { return startStopResetButtonText; }

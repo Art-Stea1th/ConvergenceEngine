@@ -15,6 +15,7 @@ namespace ConvergenceEngine.Models.IO {
     public sealed class KinectFileReader : IDataProvider {
 
         private readonly SequenceInfo sequenceInfo;
+        private const int rightBadAreaSize = 8;
 
         private ConcurrentQueue<Tuple<Point[], short[,]>> frames; // ~ 610 kb
         private const int bufferLimit = 64;           // 610 * 64 ~ 38.125 mb
@@ -45,6 +46,9 @@ namespace ConvergenceEngine.Models.IO {
 
         public static KinectFileReader CreateReader(string fileName) {
             var sequenceInfo = SequenceInfo.Read(fileName);
+            if (sequenceInfo == null) {
+                return null;
+            }
             if (sequenceInfo.IsValid) {
                 return new KinectFileReader(sequenceInfo);
             }
@@ -137,8 +141,8 @@ namespace ConvergenceEngine.Models.IO {
 
         private void HorizontalMirror(byte[] frame) {
 
-            int width  = FrameWidth * sizeof(short);
-            int height = FrameHeight;
+            int width  = sequenceInfo.Width * sizeof(short);
+            int height = sequenceInfo.Height;
 
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width / 2; ++x) {
@@ -160,11 +164,11 @@ namespace ConvergenceEngine.Models.IO {
 
         private short[,] DepthsFrameFrom(byte[] rawFrame) {
 
-            short[,] depthFrame = new short[FrameWidth, FrameHeight];
+            short[,] depthFrame = new short[sequenceInfo.Width - rightBadAreaSize, sequenceInfo.Height];
 
-            for (int y = 0; y < FrameHeight; ++y) {
-                for (int x = 0; x < FrameWidth; ++x) {
-                    int i = GetLinearIndex(x * sizeof(short), y, FrameWidth * sizeof(short));
+            for (int y = 0; y < sequenceInfo.Height; ++y) {
+                for (int x = 0; x < sequenceInfo.Width - rightBadAreaSize; ++x) {
+                    int i = GetLinearIndex(x * sizeof(short), y, sequenceInfo.Width * sizeof(short));
                     short nextDepth = rawFrame[i];
                     nextDepth <<= 8;
                     nextDepth |= (short)rawFrame[i + 1]; // <-- depth short construct
@@ -177,10 +181,11 @@ namespace ConvergenceEngine.Models.IO {
 
         private Point[] DepthLineFrom(short[,] depthFrame) {
 
-            int y = FrameHeight / 2;
+            int width = depthFrame.GetLength(0);
+            int y = depthFrame.GetLength(1) / 2;
 
-            Point[] depthLine = new Point[FrameWidth];
-            for (int x = 0; x < FrameWidth; ++x) {
+            Point[] depthLine = new Point[width];
+            for (int x = 0; x < width; ++x) {
                 depthLine[x] = PerspectiveToRectangle(x, y, depthFrame[x, y]);
             }
             return depthLine;

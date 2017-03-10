@@ -3,11 +3,28 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:local="clr-namespace:ConvergenceEngine.Views.AppControls"
            Padding="8,2">
-    <!--<StatusBarItem>
-        <TextBlock
-            Text="Current File: "/>
-    </StatusBarItem>-->
     <StatusBarItem>
-        <TextBlock Text="{Binding CurrentFileName}"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock
+                Text="Model State: "/>
+            <StackPanel
+                Orientation="Horizontal"
+                Visibility="{Binding ModelStarted,
+                Converter={StaticResource BooleanToVisibilityTrueCollapsed}}">
+                <TextBlock
+                    Text="Not Ready"
+                    Foreground="Red"
+                    Visibility="{Binding DataProvider,
+                    Converter={StaticResource ObjectToVisibilityNotNullCollapsed}}"/>
+                <TextBlock
+                    Text="Ready"
+                    Visibility="{Binding DataProvider,
+                    Converter={StaticResource ObjectToVisibilityNullCollapsed}}"/>
+            </StackPanel>
+            <TextBlock
+                Text="Started"
+                Visibility="{Binding ModelStarted,
+                Converter={StaticResource BooleanToVisibilityFalseCollapsed}}"/>
+        </StackPanel>
     </StatusBarItem>
 </StatusBar>

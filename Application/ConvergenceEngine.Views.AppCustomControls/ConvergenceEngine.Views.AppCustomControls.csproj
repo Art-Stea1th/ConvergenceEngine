@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConvergenceEngine.Infrastructure\ConvergenceEngine.Infrastructure.csproj">
-      <Project>{45764031-8D60-49EE-80B3-9522960FD3F6}</Project>
+      <Project>{45764031-8d60-49ee-80b3-9522960fd3f6}</Project>
       <Name>ConvergenceEngine.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>

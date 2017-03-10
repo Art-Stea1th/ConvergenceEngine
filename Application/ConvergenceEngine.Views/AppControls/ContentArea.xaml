@@ -4,7 +4,7 @@
              xmlns:acc="clr-namespace:ConvergenceEngine.Views.AppCustomControls;assembly=ConvergenceEngine.Views.AppCustomControls"
              xmlns:local="clr-namespace:ConvergenceEngine.Views.AppControls">
     <UserControl.Resources>
-        <SolidColorBrush x:Key="DeepGray" Color="#1F1F1F" Opacity="1.0"/>
+        <SolidColorBrush x:Key="ViewportBackground" Color="#1A1A1A" Opacity="1.0"/>
         <SolidColorBrush x:Key="CurrentSegmentsColor" Color="White" Opacity="0.75"/>
     </UserControl.Resources>
     <Grid>
@@ -13,39 +13,42 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" Background="{StaticResource DeepGray}">
-            <acc:MapViewport/>
+        <Grid Grid.Column="0" Background="{StaticResource ViewportBackground}">
+            <acc:MapViewport
+                Map="{Binding Map}"
+                ShowMapPoints="{Binding ElementName=MapPointsRadioButton, Path=IsChecked}"
+                ShowMapSegments="{Binding ElementName=MapSegmentsRadioButton, Path=IsChecked}"
+                ShowCurrentSegments="{Binding ElementName=CurrentSegmentsCheckBox, Path=IsChecked}"
+                ShowSensorPath="{Binding ElementName=SensorPathCheckBox, Path=IsChecked}"
+                ShowSensorPosition="{Binding ElementName=SensorPositionCheckBox, Path=IsChecked}"/>
         </Grid>
 
         <Grid Grid.Column="0">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
             <acc:FullFrameViewport
                 Grid.Row="0"
                 Grid.Column="0"
-                Margin="8"
-                Data="{Binding FullFrame}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
+                Margin="8"
+                Data="{Binding FullFrame}"
                 Visibility="{Binding FullFrameViewportVisible,
-                Converter={StaticResource BoolToVisibilitySystem}}"/>
+                Converter={StaticResource BooleanToVisibilityFalseCollapsed}}"
+                FarColor="MidnightBlue"
+                NearColor="DodgerBlue"/>
         </Grid>
 
         <StackPanel Grid.Column="1">
-
             <GroupBox
                 Header="Main Viewport Settings"
                 Margin="8,0,0,8"
                 Visibility="{Binding ViewportSettingsVisible,
-                Converter={StaticResource BoolToVisibilitySystem}}">
+                Converter={StaticResource BooleanToVisibilityFalseCollapsed}}">
                 <StackPanel
                     Margin="0,0,0,8">
                     <GroupBox
@@ -67,9 +70,6 @@
                             <CheckBox
                                 x:Name="CurrentSegmentsCheckBox"
                                 Content="Current Segments" IsChecked="True"/>
-                            <CheckBox
-                                x:Name="TrackedSegmentsCheckBox"
-                                Content="Tracked Segments" IsChecked="True"/>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox
@@ -77,11 +77,11 @@
                         BorderThickness="0">
                         <StackPanel>
                             <CheckBox
-                                x:Name="CameraPositionCheckBox"
-                                Content="Camera Position" IsChecked="True"/>
+                                x:Name="SensorPositionCheckBox"
+                                Content="Sensor Position" IsChecked="True"/>
                             <CheckBox
-                                x:Name="CameraPathCheckBox"
-                                Content="Camera Path" IsChecked="True"/>
+                                x:Name="SensorPathCheckBox"
+                                Content="Sensor Path" IsChecked="True"/>
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
@@ -91,7 +91,7 @@
                 Header="Data Provider Settings"
                 Margin="8,0,0,0"
                 Visibility="{Binding DataProviderSettingsVisible,
-                Converter={StaticResource BoolToVisibilitySystem}}">
+                Converter={StaticResource BooleanToVisibilityFalseCollapsed}}">
                 <StackPanel
                     Margin="0,0,0,8">
 
@@ -124,7 +124,7 @@
                             </Slider>
                         </Grid>
                     </GroupBox>
-                    
+
                 </StackPanel>
             </GroupBox>
         </StackPanel>

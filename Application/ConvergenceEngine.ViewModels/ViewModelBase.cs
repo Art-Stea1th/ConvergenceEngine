@@ -15,6 +15,10 @@ namespace ConvergenceEngine.ViewModels {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null) {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public void Dispose() {
             OnDispose();
         }

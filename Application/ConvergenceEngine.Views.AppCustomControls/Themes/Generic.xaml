@@ -9,9 +9,7 @@
                     <Border Background="Transparent"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Viewbox>
-                            <Image x:Name="PART_Image"/>
-                        </Viewbox>
+                        <Image x:Name="PART_Image"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -25,9 +23,10 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Viewbox>
-                            <Path x:Name="PART_CurrentSegments"/>
-                        </Viewbox>
+                        <Grid>
+                            <!--<Path x:Name="PART_MapSegments"/>
+                            <Path x:Name="PART_CurrentSegments"/>-->
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

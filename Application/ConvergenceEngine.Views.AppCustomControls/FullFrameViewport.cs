@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -25,22 +24,10 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             set { SetValue(DataProperty, value); }
         }
 
-        public double DataMinValue {
-            get { return (double)GetValue(DataMinValueProperty); }
-            set { SetValue(DataMinValueProperty, value); }
-        }
-
-        public double DataMaxValue {
-            get { return (double)GetValue(DataMaxValueProperty); }
-            set { SetValue(DataMaxValueProperty, value); }
-        }
-
         public static readonly DependencyProperty NearColorProperty;
         public static readonly DependencyProperty FarColorProperty;
 
         public static readonly DependencyProperty DataProperty;
-        public static readonly DependencyProperty DataMinValueProperty;
-        public static readonly DependencyProperty DataMaxValueProperty;
 
         static FullFrameViewport() {
 
@@ -48,19 +35,13 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                 .OverrideMetadata(typeof(FullFrameViewport), new FrameworkPropertyMetadata(typeof(FullFrameViewport)));
 
             NearColorProperty = DependencyProperty.Register("NearColor", typeof(Color), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(Color.FromArgb(255, 0, 128, 192), FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(Colors.White, FrameworkPropertyMetadataOptions.AffectsRender));
 
             FarColorProperty = DependencyProperty.Register("FarColor", typeof(Color), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(Color.FromArgb(255, 0, 0, 30), FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(Colors.Black, FrameworkPropertyMetadataOptions.AffectsRender));
 
             DataProperty = DependencyProperty.Register("Data", typeof(short[,]), typeof(FullFrameViewport),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
-
-            DataMinValueProperty = DependencyProperty.Register("DataMinValue", typeof(double), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(800.0, FrameworkPropertyMetadataOptions.AffectsRender, null, CoerceDataMinMaxValue));
-
-            DataMaxValueProperty = DependencyProperty.Register("DataMaxValue", typeof(double), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(4000.0, FrameworkPropertyMetadataOptions.AffectsRender, null, CoerceDataMinMaxValue));
         }
 
         private const string PartImageName = "PART_Image";
@@ -69,10 +50,11 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         private Color[] intensityBuffer;
         private byte[] frameBuffer;
 
-        private static object CoerceDataMinMaxValue(DependencyObject o, object value) {
-            var result = (double)value;
-            return result < short.MinValue ? short.MinValue : result > short.MaxValue ? short.MaxValue : result;
-        }
+        private int width = 4;
+        private int height = 3;
+
+        private short minDepth = 800;
+        private short maxDepth = 4000;
 
         public override void OnApplyTemplate() {
             image = GetTemplateChild(PartImageName) as Image;
@@ -86,18 +68,16 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         private void UpdateImageData() {
 
             if (Data == null) {
-                image.Source = NewBitmap(4, 3);
+                image.Source = NewBitmap(width, height);
                 return;
             }
 
             PrepareFrameBuffer();
 
             if (frameBuffer == null) {
-                image.Source = NewBitmap(4, 3);
+                image.Source = NewBitmap(width, height);
                 return;
             }
-
-            int width = Data.GetLength(0), height = Data.GetLength(1);
 
             var bitmap = NewBitmap(width, height);
             bitmap.WritePixels(new Int32Rect(0, 0, width, height), frameBuffer, width * sizeof(int), 0);
@@ -115,7 +95,8 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
             if (Data != null) {
 
-                int width = Data.GetLength(0), height = Data.GetLength(1);
+                width = Data.GetLength(0);
+                height = Data.GetLength(1);
                 int length = width * height * sizeof(int);
 
                 if (frameBuffer == null || frameBuffer.Length != length) {
@@ -128,14 +109,14 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                         short depth = Data[x, y];
                         int colorPixelIndex = GetLinearIndex(x * sizeof(int), y, width * sizeof(int));
 
-                        if (depth < DataMinValue) {
+                        if (depth < minDepth) {
                             SetColorToFrameBuffer(colorPixelIndex, NearColor);
                         }
-                        else if (depth > DataMaxValue) {
+                        else if (depth > maxDepth) {
                             SetColorToFrameBuffer(colorPixelIndex, FarColor);
                         }
                         else {
-                            SetColorToFrameBuffer(colorPixelIndex, intensityBuffer[depth - (short)DataMinValue]);
+                            SetColorToFrameBuffer(colorPixelIndex, intensityBuffer[maxDepth - depth]);
                         }
                     }
                 }
@@ -144,12 +125,12 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
         private Color[] GenerateIntensityBuffer() {
 
-            double depthRange = Math.Abs(DataMaxValue - DataMinValue);
-            double intencityStep = 192.0 / depthRange;
+            int depthRange = maxDepth - minDepth;
+            double intencityStep = 255.0 / depthRange;
 
-            intensityBuffer = new Color[(int)depthRange];
+            intensityBuffer = new Color[depthRange];
             for (int i = 0; i < intensityBuffer.Length; ++i) {
-                byte colorComponent = (byte)(byte.MaxValue - (i * intencityStep));
+                byte colorComponent = (byte)((i * intencityStep));
                 intensityBuffer[i] = Color.FromRgb(colorComponent, colorComponent, colorComponent);
             }
             return intensityBuffer;

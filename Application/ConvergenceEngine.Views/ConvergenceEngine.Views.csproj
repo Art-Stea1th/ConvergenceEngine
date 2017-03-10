@@ -99,9 +99,11 @@
     <Compile Include="AppControls\OperationsControl.xaml.cs">
       <DependentUpon>OperationsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppConverters\BoolInverseConverter.cs" />
-    <Compile Include="AppConverters\BoolToVisibilityConverter.cs" />
-    <Compile Include="AppConverters\IntToVisibilityConverter.cs" />
+    <Compile Include="AppConverters\BinaryLogicConverters.cs" />
+    <Compile Include="AppConverters\BooleanInverseConverter.cs" />
+    <Compile Include="AppConverters\IntegerToVisibilityConverter.cs" />
+    <Compile Include="AppConverters\ObjectToVisibilityConverter.cs" />
+    <Compile Include="AppConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>

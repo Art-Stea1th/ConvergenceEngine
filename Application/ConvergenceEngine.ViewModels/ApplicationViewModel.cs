@@ -14,26 +14,27 @@ namespace ConvergenceEngine.ViewModels {
         private IMap map;
         private short[,] fullFrame;
 
-        protected IDataProvider DataProvider {
+        public IDataProvider DataProvider {
             get { return dataProvider; }
-            set { SetNew(value); }
+            protected set { SetNew(value); NotifyPropertyChanged(); }
         }
-        protected IMapper Mapper {
+        public IMapper Mapper {
             get { return mapper; }
-            set { SetNew(value); }
+            protected set { SetNew(value); NotifyPropertyChanged(); }
         }
         public IMap Map {
             get { return map; }
-            set { Set(ref map, value); }
+            protected set { Set(ref map, value); }
         }
         public short[,] FullFrame {
             get { return fullFrame; }
-            set { Set(ref fullFrame, value); }
+            protected set { Set(ref fullFrame, value); }
         }        
 
         public abstract double FpsCurrent { get; set; }
         public abstract bool ModelStarted { get; set; }
         public abstract int TotalFrames { get; set; }
+        public abstract int CurrentFrame { get; set; }
         public abstract string StartStopResetButtonText { get; set; }
 
         private void SetNew(IDataProvider dataProvider) {
@@ -76,7 +77,8 @@ namespace ConvergenceEngine.ViewModels {
                 ModelStarted = true;
             }
             else {
-                ModelStarted = false;                
+                ModelStarted = false; 
+                CurrentFrame = TotalFrames - 1;               
             }
             UpdateStartStopResetButtonText();
         }
