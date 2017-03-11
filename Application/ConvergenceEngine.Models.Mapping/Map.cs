@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ConvergenceEngine.Models.Mapping {
 
@@ -10,9 +6,17 @@ namespace ConvergenceEngine.Models.Mapping {
 
     public sealed class Map : IMap {
 
-        public IEnumerable<ISegment> AllSegments { get; internal set; }
-        public IEnumerable<ISegment> CurrentSegments { get; internal set; }
+        public IEnumerable<ISegment> Segments { get; }
+        public IEnumerable<ISegment> CurrentSegments { get; }
+        public IEnumerable<INavigationInfo> CameraPath { get; }
 
-        public IEnumerable<INavigationInfo> CameraPath { get; internal set; }
+        internal Map(
+            IEnumerable<ISegment> segments,
+            IEnumerable<ISegment> currentSegments,
+            IEnumerable<INavigationInfo> cameraPath) {
+            Segments = segments;
+            CurrentSegments = currentSegments;
+            CameraPath = cameraPath;
+        }
     }
 }

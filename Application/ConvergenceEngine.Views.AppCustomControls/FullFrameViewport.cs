@@ -35,13 +35,13 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                 .OverrideMetadata(typeof(FullFrameViewport), new FrameworkPropertyMetadata(typeof(FullFrameViewport)));
 
             NearColorProperty = DependencyProperty.Register("NearColor", typeof(Color), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(Colors.White, FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(Colors.White, (s, e) => (s as FullFrameViewport).UpdateImageData()));
 
             FarColorProperty = DependencyProperty.Register("FarColor", typeof(Color), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(Colors.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(Colors.Black, (s, e) => (s as FullFrameViewport).UpdateImageData()));
 
             DataProperty = DependencyProperty.Register("Data", typeof(short[,]), typeof(FullFrameViewport),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+                new FrameworkPropertyMetadata(null, (s, e) => (s as FullFrameViewport).UpdateImageData()));
         }
 
         private const string PartImageName = "PART_Image";
@@ -59,13 +59,14 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         public override void OnApplyTemplate() {
             image = GetTemplateChild(PartImageName) as Image;
             intensityBuffer = GenerateIntensityBuffer();
-        }
-
-        protected override void OnRender(DrawingContext drawingContext) {
             UpdateImageData();
         }
 
         private void UpdateImageData() {
+
+            if (image == null) {
+                return;
+            }
 
             if (Data == null) {
                 image.Source = NewBitmap(width, height);
@@ -88,7 +89,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private WriteableBitmap NewBitmap(int width, int height) {
-            return new WriteableBitmap(width > 1 ? width : 1, height > 1 ? height : 1, 96.0, 96.0, PixelFormats.Bgr32, null);
+            return new WriteableBitmap(width > 1 ? width : 1, height > 1 ? height : 1, 96.0, 96.0, PixelFormats.Bgra32, null);
         }
 
         private void PrepareFrameBuffer() {
@@ -131,7 +132,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             intensityBuffer = new Color[depthRange];
             for (int i = 0; i < intensityBuffer.Length; ++i) {
                 byte colorComponent = (byte)((i * intencityStep));
-                intensityBuffer[i] = Color.FromRgb(colorComponent, colorComponent, colorComponent);
+                intensityBuffer[i] = Color.FromArgb(255, colorComponent, colorComponent, colorComponent);
             }
             return intensityBuffer;
         }
@@ -146,6 +147,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             frameBuffer[startIndex] = color.B;
             frameBuffer[++startIndex] = color.G;
             frameBuffer[++startIndex] = color.R;
+            frameBuffer[++startIndex] = color.A;
         }
     }
 }

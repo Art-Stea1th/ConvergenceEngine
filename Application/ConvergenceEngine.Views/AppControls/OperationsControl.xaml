@@ -1,29 +1,19 @@
 ﻿<UserControl x:Class="ConvergenceEngine.Views.AppControls.OperationsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:s="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:ConvergenceEngine.Views.AppControls">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+    <Grid>        
         <Grid.Resources>
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="MinWidth" Value="38"/>
                 <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Margin" Value="8,0"/>
                 <Setter Property="IsReadOnly" Value="True"/>
-            </Style>
-            <Style TargetType="{x:Type RepeatButton}">
-                <Setter Property="Padding" Value="8,0"/>
             </Style>
         </Grid.Resources>
 
-
         <Grid
-            Grid.Column="0"
             Visibility="{Binding ModelStarted,
             Converter={StaticResource BooleanToVisibilityFalseHidden}}">
             <Grid.ColumnDefinitions>
@@ -48,7 +38,6 @@
         </Grid>
 
         <Grid
-            Grid.Column="0"
             Visibility="{Binding ModelStarted,
             Converter={StaticResource BooleanToVisibilityTrueHidden}}">
             <Grid.ColumnDefinitions>
@@ -59,32 +48,25 @@
             
             <TextBox
                 Grid.Column="0"
-                Margin="0,0,8,0"
+                Width="{Binding ElementName=RightTextBox, Path=ActualWidth}"
                 Text="{Binding ElementName=FrameSlider, Path=Value}"
                 Visibility="{Binding TotalFrames,
                 Converter={StaticResource IntegerToVisibilityZeroCollapsed}}"/>
 
             <Slider
-                Name="FrameSlider"
+                x:Name="FrameSlider"
                 Grid.Column="1"
-                Margin="0,4"
+                VerticalAlignment="Center"
                 Value="{Binding CurrentFrame}"
                 Maximum="{Binding TotalFrames}"
                 IsEnabled="False"/>
 
             <TextBox
+                x:Name="RightTextBox"
                 Grid.Column="2"
-                Margin="8,0,0,0"
                 Text="{Binding TotalFrames}"
                 Visibility="{Binding TotalFrames,
                 Converter={StaticResource IntegerToVisibilityZeroCollapsed}}"/>
-        </Grid>
-
-        <Button
-            Grid.Column="3"
-            Content="{Binding StartStopResetButtonText}"
-            Margin="8,0,0,0"
-            Command="{Binding StartStopReset}"
-            MinWidth="128"/>
+        </Grid>        
     </Grid>
 </UserControl>

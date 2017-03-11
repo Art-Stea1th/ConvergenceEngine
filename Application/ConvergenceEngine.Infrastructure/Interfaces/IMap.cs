@@ -4,7 +4,7 @@ namespace ConvergenceEngine.Infrastructure.Interfaces {
 
     public interface IMap {
 
-        IEnumerable<ISegment> AllSegments { get; }
+        IEnumerable<ISegment> Segments { get; }
         IEnumerable<ISegment> CurrentSegments { get; }
         IEnumerable<INavigationInfo> CameraPath { get; }
     }

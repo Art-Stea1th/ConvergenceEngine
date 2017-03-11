@@ -14,29 +14,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.Resources>
-            <Style x:Key="OperationControlsStyle" TargetType="{x:Type Control}">
-                <Setter Property="Margin" Value="8"/>
-                <Setter Property="MinHeight" Value="24"/>
-                <Setter Property="Grid.Row" Value="2"/>
-            </Style>
-        </Grid.Resources>
-
-        <cs:MainMenu
-            Grid.Row="0"/>
-
-        <cs:ContentArea
-            Grid.Row="1"
-            Margin="8,8,8,0"/>
-
-        <!--<cs:ProcessIndicator
-            Style="{StaticResource OperationControlsStyle}"
-            Visibility="{Binding ModelReady,
-            Converter={StaticResource BoolToVisibilityInverse}}"/>-->
-
-        <cs:OperationsControl Style="{StaticResource OperationControlsStyle}"/>
-        <cs:MainSatusBar Grid.Row="3"/>
+        <cs:MainMenu Grid.Row="0" Padding="8,4"/>
+        <cs:ContentArea Grid.Row="1"/>
+        <cs:MainSatusBar Grid.Row="2" Padding="8,4"/>
     </Grid>
 </Window>

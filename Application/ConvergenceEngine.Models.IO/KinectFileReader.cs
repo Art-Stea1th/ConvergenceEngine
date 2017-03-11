@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
@@ -17,8 +16,8 @@ namespace ConvergenceEngine.Models.IO {
         private readonly SequenceInfo sequenceInfo;
         private const int rightBadAreaSize = 8;
 
-        private ConcurrentQueue<Tuple<Point[], short[,]>> frames; // ~ 610 kb
-        private const int bufferLimit = 64;           // 610 * 64 ~ 38.125 mb
+        private ConcurrentQueue<Tuple<List<Point>, short[,]>> frames; // ~ 610 kb
+        private const int bufferLimit = 64;               // 610 * 64 ~ 38.125 mb
 
         private DateTime nextFrameRedyInvokeLast;
         private TimeSpan nextFrameRedyInvokeInterval;
@@ -70,7 +69,7 @@ namespace ConvergenceEngine.Models.IO {
         }
 
         private void Initialize() {
-            frames = new ConcurrentQueue<Tuple<Point[], short[,]>>();
+            frames = new ConcurrentQueue<Tuple<List<Point>, short[,]>>();
             State = DataProviderStates.Stopped; allRead = false;
         }
 
@@ -107,8 +106,8 @@ namespace ConvergenceEngine.Models.IO {
                 if (reader.Read(nextRawBuffer, 0, bytesPerFrame) == bytesPerFrame) {
                     HorizontalMirror(nextRawBuffer);
                     short[,] nextDepthFrame = DepthsFrameFrom(nextRawBuffer);
-                    Point[] nextDepthLine = DepthLineFrom(nextDepthFrame);
-                    frames.Enqueue(new Tuple<Point[], short[,]>(nextDepthLine, nextDepthFrame));
+                    List<Point> nextDepthLine = new List<Point>(DepthLineFrom(nextDepthFrame));
+                    frames.Enqueue(new Tuple<List<Point>, short[,]>(nextDepthLine, nextDepthFrame));
                 }
                 else {
                     allRead = true;
@@ -118,7 +117,7 @@ namespace ConvergenceEngine.Models.IO {
 
         private void GenerateSequenceProcess() {
 
-            Tuple<Point[], short[,]> nextFrame = null;
+            Tuple<List<Point>, short[,]> nextFrame = null;
 
             while (State == DataProviderStates.Started && (frames.Count > 0 || !allRead)) {
                 if (DateTime.Now >= nextFrameRedyInvokeLast + nextFrameRedyInvokeInterval) {
@@ -132,7 +131,7 @@ namespace ConvergenceEngine.Models.IO {
             ChangeState(DataProviderStates.Stopped);
         }
 
-        private void NextFrameRedyInvoke(Point[] nextLine, short[,] nextFrame) {
+        private void NextFrameRedyInvoke(List<Point> nextLine, short[,] nextFrame) {
             OnNextDepthLineReady?.Invoke(nextLine);
             OnNextFullFrameReady?.Invoke(nextFrame);
             nextFrameRedyInvokeLast = DateTime.Now;
@@ -179,16 +178,18 @@ namespace ConvergenceEngine.Models.IO {
             return depthFrame;
         }
 
-        private Point[] DepthLineFrom(short[,] depthFrame) {
+        private IEnumerable<Point> DepthLineFrom(short[,] depthFrame) {
 
             int width = depthFrame.GetLength(0);
             int y = depthFrame.GetLength(1) / 2;
 
-            Point[] depthLine = new Point[width];
             for (int x = 0; x < width; ++x) {
-                depthLine[x] = PerspectiveToRectangle(x, y, depthFrame[x, y]);
+                int z = depthFrame[x, y];
+                if (z < sequenceInfo.MinDepth || z > sequenceInfo.MaxDepth) {
+                    continue;
+                }
+                yield return PerspectiveToRectangle(x, y, z);
             }
-            return depthLine;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

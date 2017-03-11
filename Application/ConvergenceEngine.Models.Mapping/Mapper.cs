@@ -23,22 +23,10 @@ namespace ConvergenceEngine.Models.Mapping {
 
         private Map map;
 
-        public Point Size { get; private set; }
-
+        public List<MapSegment> Segments { get; private set; }
         public IEnumerable<ISegment> PreviousSegments { get; private set; }
         public IEnumerable<ISegment> CurrentSegments { get; private set; }
-        public List<MapSegment> Segments { get; private set; }
         public List<NavigationInfo> CameraPath { get; private set; }
-
-
-        public Mapper() {
-            ClearData();
-        }
-
-        internal void ClearData() {
-            Segments = new List<MapSegment>();
-            CameraPath = new List<NavigationInfo>();
-        }
 
         //      --- Step A ---
         //  
@@ -63,49 +51,49 @@ namespace ConvergenceEngine.Models.Mapping {
         //  
         //  Заменить предыдущие на новые.
 
-        private void UpdateMap() {
-            map = new Map();
-            map.CurrentSegments = CurrentSegments;
-            OnMapUpdate?.Invoke(map);
+        public Mapper() {
+            Segments = new List<MapSegment>();
+            CameraPath = new List<NavigationInfo>();
         }
 
         public void HandleNextData(IEnumerable<Point> points) {
 
-            return;
+            //return;
 
             CurrentSegments = points.Segmentate(AllowedDivergencePercent);
 
-            if (CameraPath.IsEmpty()) {
-                InitializeWithFirstData(CurrentSegments);
-                return;
-            }
+            //if (CameraPath.IsEmpty()) {
+            //    InitializeWithFirstData(CurrentSegments);
+            //    return;
+            //}
 
-            // --- Step A ---
+            //// --- Step A ---
 
-            NavigationInfo prevNavInfo = CameraPath.Last();
-            ApplyTransformToSegments(CurrentSegments, prevNavInfo);
+            //NavigationInfo prevNavInfo = CameraPath.Last();
+            //ApplyTransformToSegments(CurrentSegments, prevNavInfo);
 
-            var nearestNextAndPrev = CurrentSegments.SelectNearestTo(PreviousSegments, MaxDistancePercent, MaxAngleDegrees);
-            NavigationInfo convergence = nearestNextAndPrev.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
+            //var nearestNextAndPrev = CurrentSegments.SelectNearestTo(PreviousSegments, MaxDistancePercent, MaxAngleDegrees);
+            //NavigationInfo convergence = nearestNextAndPrev.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
 
-            ApplyTransformToSegments(CurrentSegments, convergence);
+            //ApplyTransformToSegments(CurrentSegments, convergence);
 
-            // --- Step B ---
+            //// --- Step B ---
 
-            var nearestNextToPrev = nearestNextAndPrev.Select(sp => sp.Item1);
-            var nearestNextToPrevToMap = CurrentSegments.SelectNearestTo(Segments, MaxDistancePercent, MaxAngleDegrees);
-            NavigationInfo convergenceNew = nearestNextToPrevToMap.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
-
-
-            //ApplyTransformToSegments(nearestNextToPrev, convergence);
+            //var nearestNextToPrev = nearestNextAndPrev.Select(sp => sp.Item1);
+            //var nearestNextToPrevToMap = CurrentSegments.SelectNearestTo(Segments, MaxDistancePercent, MaxAngleDegrees);
+            //NavigationInfo convergenceNew = nearestNextToPrevToMap.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
 
 
-            // --- Final Step ---
+            ////ApplyTransformToSegments(nearestNextToPrev, convergence);
 
-            PreviousSegments = CurrentSegments;
-            NavigationInfo nextNavInfo = prevNavInfo + convergence;
-            CameraPath.Add(nextNavInfo);
-            UpdateMapSize();
+
+            //// --- Final Step ---
+
+            //PreviousSegments = CurrentSegments;
+            //NavigationInfo nextNavInfo = prevNavInfo + convergence;
+            //CameraPath.Add(nextNavInfo);
+
+            OnMapUpdate?.Invoke(new Map(Segments, CurrentSegments, CameraPath));
         }
 
         private void InitializeWithFirstData(IEnumerable<ISegment> segments) {
@@ -120,33 +108,33 @@ namespace ConvergenceEngine.Models.Mapping {
             }
         }
 
-        private void UpdateMapSize() {
-            if (Segments.IsNullOrEmpty()) {
-                if (CurrentSegments.IsNullOrEmpty()) {
-                    Size = new Point(0.0, 0.0);
-                    return;
-                }
-                Size = GetMapSizeBy(CurrentSegments);
-                return;
-            }
-            Size = GetMapSizeBy(Segments);
-        }
+        //private void UpdateMapSize() {
+        //    if (Segments.IsNullOrEmpty()) {
+        //        if (CurrentSegments.IsNullOrEmpty()) {
+        //            Size = new Point(0.0, 0.0);
+        //            return;
+        //        }
+        //        Size = GetMapSizeBy(CurrentSegments);
+        //        return;
+        //    }
+        //    Size = GetMapSizeBy(Segments);
+        //}
 
-        private Point GetMapSizeBy(IEnumerable<ISegment> segments) {
-            double minX = double.PositiveInfinity, minY = minX;
-            double maxX = double.NegativeInfinity, maxY = maxX;
-            foreach (var segment in CurrentSegments) {
-                foreach (var point in segment) {
-                    if (point.X < minX) { minX = point.X; }
-                    else
-                    if (point.X > maxX) { maxX = point.X; }
+        //private Point GetMapSizeBy(IEnumerable<ISegment> segments) {
+        //    double minX = double.PositiveInfinity, minY = minX;
+        //    double maxX = double.NegativeInfinity, maxY = maxX;
+        //    foreach (var segment in CurrentSegments) {
+        //        foreach (var point in segment) {
+        //            if (point.X < minX) { minX = point.X; }
+        //            else
+        //            if (point.X > maxX) { maxX = point.X; }
 
-                    if (point.Y < minY) { minY = point.Y; }
-                    else
-                    if (point.Y > maxY) { maxY = point.Y; }
-                }
-            }
-            return new Point(maxX - minX, maxY - minY);
-        }
+        //            if (point.Y < minY) { minY = point.Y; }
+        //            else
+        //            if (point.Y > maxY) { maxY = point.Y; }
+        //        }
+        //    }
+        //    return new Point(maxX - minX, maxY - minY);
+        //}
     }
 }

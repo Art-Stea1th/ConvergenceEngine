@@ -17,7 +17,8 @@
                             Background="{StaticResource UltraLightGray}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="0">
+                            CornerRadius="0"
+                            SnapsToDevicePixels="True">
                             <ContentPresenter
                                 Margin="4"
                                 ContentSource="Header"
@@ -28,9 +29,10 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="0">
+                            CornerRadius="0"
+                            SnapsToDevicePixels="True">
                             <ContentPresenter
-                                Margin="4" />
+                                Margin="{TemplateBinding Padding}" />
                         </Border>
                     </Grid>
                 </ControlTemplate>
