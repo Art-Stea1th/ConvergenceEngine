@@ -11,7 +11,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
     internal static class Selector { // IEnumerable<ISegment> Extension class
 
         public static IEnumerable<Tuple<ISegment, ISegment>> SelectNearestTo(
-            this IEnumerable<ISegment> current, IEnumerable<ISegment> another, double maxDistancePercent = 5.0, double maxAngleDegrees = 3.0) {
+            this IEnumerable<ISegment> current, IEnumerable<ISegment> another, double maxDistancePercent, double maxAngleDegrees) {
 
             foreach (var segment in current) {
                 var currentMaxDistance = Math.Min(segment.PointA.Y, segment.PointB.Y) / 100.0 * maxDistancePercent;
@@ -23,8 +23,10 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             }
         }
 
-        public static ISegment SelectNearestTo(this IEnumerable<ISegment> sequence, ISegment segment, double maxDistance, double maxAngle) {
-            var selection = sequence.SelectByDistanceTo(segment, maxDistance).Intersect(sequence.SelectByAngleTo(segment, maxAngle));
+        public static ISegment SelectNearestTo(
+            this IEnumerable<ISegment> sequence, ISegment segment, double maxDistance, double maxAngleDegrees) {
+            var selection = sequence.SelectByDistanceTo(segment, maxDistance)
+                .Intersect(sequence.SelectByAngleTo(segment, maxAngleDegrees));
             if (selection.Count() > 1) {
                 return selection.SelectWithNearestLengthTo(segment);
             }
@@ -38,8 +40,8 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<ISegment> SelectByAngleTo(this IEnumerable<ISegment> sequence, ISegment segment, double maxAngle) {
-            return sequence.Where(s => Math.Abs(Segment.AngleBetween(segment, s)) < maxAngle);
+        public static IEnumerable<ISegment> SelectByAngleTo(this IEnumerable<ISegment> sequence, ISegment segment, double maxAngleDegrees) {
+            return sequence.Where(s => Math.Abs(Segment.AngleBetween(segment, s)) < maxAngleDegrees);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

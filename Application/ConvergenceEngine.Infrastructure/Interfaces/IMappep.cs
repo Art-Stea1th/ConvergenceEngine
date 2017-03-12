@@ -4,9 +4,9 @@ using System.Windows;
 
 namespace ConvergenceEngine.Infrastructure.Interfaces {
 
-    public interface IMapper {
+    public interface IMap {
 
-        event Action<IMap> OnMapUpdate;
+        event Action<IMapData> OnMapUpdate;
         void HandleNextData(IEnumerable<Point> nextDepthLine);
     }
 }

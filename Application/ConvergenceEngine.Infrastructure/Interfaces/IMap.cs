@@ -2,7 +2,7 @@
 
 namespace ConvergenceEngine.Infrastructure.Interfaces {
 
-    public interface IMap {
+    public interface IMapData {
 
         IEnumerable<ISegment> Segments { get; }
         IEnumerable<ISegment> CurrentSegments { get; }

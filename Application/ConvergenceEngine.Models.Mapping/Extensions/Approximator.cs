@@ -6,6 +6,8 @@ using System.Windows;
 namespace ConvergenceEngine.Models.Mapping.Extensions {
 
     using Infrastructure.Extensions;
+    using Infrastructure.Interfaces;
+    using Segments;
 
     internal static class Approximator { // IEnumerable<Point>, IEnumerable<Vector> Extension class
 
@@ -23,6 +25,27 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
                 yield return current;
                 previous = current;
             }
+        }
+
+        public static MultiPointSegment MergedWith(this ISegment current, ISegment another) { // ?
+
+            ISegment primary, secondary;
+
+            if (current.Length > another.Length) {
+                primary = current; secondary = another;
+            }
+            else {
+                primary = another; secondary = current;
+            }
+
+            var angle = Segment.AngleBetween(secondary, primary);
+            secondary = new MultiPointSegment(secondary.Select(p => p.RotatedAt(angle, secondary.CenterPoint.X, secondary.CenterPoint.Y)));
+
+            var direction = secondary.CenterPoint.ConvergenceTo(secondary.CenterPoint.DistancePointTo(primary.PointA, primary.PointB));
+            secondary.ApplyTransform(direction.X, direction.Y, 0);
+
+            var resultPoints = new List<ISegment> { primary, secondary }.SelectMany(p => p).OrderByLine(primary.PointA, primary.PointB);
+            return new MultiPointSegment(resultPoints);
         }
 
         public static Tuple<Point, Point> ApproximateSorted(this IEnumerable<Point> points) {

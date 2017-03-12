@@ -10,21 +10,21 @@ namespace ConvergenceEngine.ViewModels {
     public abstract class ApplicationViewModel : ViewModelBase {
 
         private IDataProvider dataProvider;
-        private IMapper mapper;
         private IMap map;
+        private IMapData mapData;
         private short[,] fullFrame;
 
         public IDataProvider DataProvider {
             get { return dataProvider; }
             protected set { SetNew(value); NotifyPropertyChanged(); }
         }
-        public IMapper Mapper {
-            get { return mapper; }
-            protected set { SetNew(value); NotifyPropertyChanged(); }
-        }
         public IMap Map {
             get { return map; }
-            protected set { Set(ref map, value); }
+            protected set { SetNew(value); NotifyPropertyChanged(); }
+        }
+        public IMapData MapData {
+            get { return mapData; }
+            protected set { Set(ref mapData, value); }
         }
         public short[,] FullFrame {
             get { return fullFrame; }
@@ -39,8 +39,8 @@ namespace ConvergenceEngine.ViewModels {
 
         private void SetNew(IDataProvider dataProvider) {
             if (dataProvider != null) {
-                if (mapper != null) {
-                    dataProvider.OnNextDepthLineReady += mapper.HandleNextData;
+                if (map != null) {
+                    dataProvider.OnNextDepthLineReady += map.HandleNextData;
                 }
                 dataProvider.OnNextFullFrameReady += UpdateFullFrame;
                 dataProvider.OnNextFullFrameReady += (f) => ++TotalFrames;
@@ -49,23 +49,23 @@ namespace ConvergenceEngine.ViewModels {
             this.dataProvider = dataProvider;
         }
 
-        private void SetNew(IMapper mapper) {
+        private void SetNew(IMap map) {
             if (dataProvider != null) {
-                if (this.mapper != null) {
-                    dataProvider.OnNextDepthLineReady -= this.mapper.HandleNextData;
+                if (this.map != null) {
+                    dataProvider.OnNextDepthLineReady -= this.map.HandleNextData;
                 }
-                if (mapper != null) { // 1
-                    dataProvider.OnNextDepthLineReady += mapper.HandleNextData;
+                if (map != null) { // 1
+                    dataProvider.OnNextDepthLineReady += map.HandleNextData;
                 }
             }
-            if (mapper != null) { // 2
-                mapper.OnMapUpdate += UpdateMap;
+            if (map != null) { // 2
+                map.OnMapUpdate += UpdateMap;
             }
-            this.mapper = mapper;
+            this.map = map;
         }
 
-        protected virtual void UpdateMap(IMap map) {
-            Map = map;
+        protected virtual void UpdateMap(IMapData map) {
+            MapData = map;
         }
 
         protected virtual void UpdateFullFrame(short[,] fullFrame) {

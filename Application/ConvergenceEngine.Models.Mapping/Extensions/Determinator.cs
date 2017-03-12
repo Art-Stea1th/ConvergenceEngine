@@ -28,7 +28,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
         public static Vector DetermineDirectionTo(this IEnumerable<ISegment> current, IEnumerable<ISegment> another) {
 
-            if (current.IsNullOrEmpty() || another.IsNullOrEmpty()) { // !!!
+            if (current.IsNullOrEmpty() || another.IsNullOrEmpty()) {
                 return new Vector();
             }
 

@@ -26,12 +26,12 @@
                 Margin="8,8,8,0"
                 Background="{StaticResource ViewportBackground}">
                 <acc:MapViewport
-                    Map="{Binding Map}"
+                    MapData="{Binding MapData}"
                     ShowMapPoints="{Binding ElementName=MapPointsRadioButton, Path=IsChecked}"
                     ShowMapSegments="{Binding ElementName=MapSegmentsRadioButton, Path=IsChecked}"
                     ShowCurrentSegments="{Binding ElementName=CurrentSegmentsCheckBox, Path=IsChecked}"
                     ShowDepthSensorPath="{Binding ElementName=DepthSensorPathCheckBox, Path=IsChecked}"
-                    ShowDepthSensorPosition="{Binding ElementName=DepthSensorPositionCheckBox, Path=IsChecked}"/>
+                    ShowDepthSensorPosition="{Binding ElementName=DepthSensorPositionCheckBox, Path=IsChecked}"/>              
             </Grid>
 
             <Grid

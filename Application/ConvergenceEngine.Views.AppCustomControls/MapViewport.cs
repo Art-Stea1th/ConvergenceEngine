@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace ConvergenceEngine.Views.AppCustomControls {
 
     using Infrastructure.Interfaces;
-    using System.Linq;
+    using Infrastructure.Extensions;
 
     [TemplatePart(Name = MapViewport.PartMapPointsName, Type = typeof(Image))]
     [TemplatePart(Name = MapViewport.PartMapSegmentsName, Type = typeof(Path))]
@@ -18,9 +20,9 @@ namespace ConvergenceEngine.Views.AppCustomControls {
     [TemplatePart(Name = MapViewport.PartDepthSensorPositionName, Type = typeof(Polygon))]
     public class MapViewport : Control {
 
-        public IMap Map {
-            get { return (IMap)GetValue(MapProperty); }
-            set { SetValue(MapProperty, value); }
+        public IMapData MapData {
+            get { return (IMapData)GetValue(MapDataProperty); }
+            set { SetValue(MapDataProperty, value); }
         }
 
         public bool ShowMapPoints {
@@ -48,7 +50,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             set { SetValue(ShowDepthSensorPositionProperty, value); }
         }
 
-        public static readonly DependencyProperty MapProperty;
+        public static readonly DependencyProperty MapDataProperty;
 
         public static readonly DependencyProperty ShowMapPointsProperty;
         public static readonly DependencyProperty ShowMapSegmentsProperty;
@@ -56,14 +58,14 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         public static readonly DependencyProperty ShowCurrentSegmentsProperty;
 
         public static readonly DependencyProperty ShowDepthSensorPathProperty;
-        public static readonly DependencyProperty ShowDepthSensorPositionProperty;        
+        public static readonly DependencyProperty ShowDepthSensorPositionProperty;
 
         static MapViewport() {
 
             DefaultStyleKeyProperty
                 .OverrideMetadata(typeof(MapViewport), new FrameworkPropertyMetadata(typeof(MapViewport)));
 
-            MapProperty = DependencyProperty.Register("Map", typeof(IMap), typeof(MapViewport),
+            MapDataProperty = DependencyProperty.Register("MapData", typeof(IMapData), typeof(MapViewport),
                 new FrameworkPropertyMetadata(null, (s, e) => (s as MapViewport).Update()));
 
             ShowMapPointsProperty = DependencyProperty.Register("ShowMapPoints", typeof(bool), typeof(MapViewport),
@@ -96,7 +98,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             else {
                 element.Visibility = Visibility.Hidden;
             }
-        }        
+        }
 
         private const string PartMapPointsName = "PART_MapPoints";
         private const string PartMapSegmentsName = "PART_MapSegments";
@@ -113,10 +115,15 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         private Point min = new Point(double.MaxValue, double.MaxValue);
         private Point max = new Point(double.MinValue, double.MinValue);
 
-        private double Width { get { return max.X - min.X; } }
-        private double Height { get { return max.Y - min.Y; } }
+        private double Width { get { return (max.X - min.X) + 1; } }
+        private double Height { get { return (max.Y - min.Y) + 1; } }
 
         public override void OnApplyTemplate() {
+            InitializeParts();
+            DrawArrowAt(depthSensorPosition, Width / 2, Height / 2);
+        }
+
+        private void InitializeParts() {
             mapPoints = GetTemplateChild(PartMapPointsName) as Image;
             mapSegments = GetTemplateChild(PartMapSegmentsName) as Path;
             currentSegments = GetTemplateChild(PartCurrentSegmentsName) as Path;
@@ -125,10 +132,10 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         }
 
         private void Update() {
-            if (Map == null) {
+            if (MapData == null) {
                 return;
             }
-            UpdateLimitsBy(Map.Segments != null && Map.Segments.Count() > 0 ? Map.Segments : Map.CurrentSegments);
+            UpdateLimitsBy(MapData.Segments != null && MapData.Segments.Count() > 0 ? MapData.Segments : MapData.CurrentSegments);
             ReDrawMapPoints();
             ReDrawMapSegments();
             ReDrawCurrentSegments();
@@ -140,6 +147,10 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             if (segments == null) {
                 return;
             }
+
+            min = new Point(double.MaxValue, double.MaxValue);
+            max = new Point(double.MinValue, double.MinValue);
+
             foreach (var segment in segments) {
                 foreach (var point in segment) {
                     if (point.X < min.X) { min.X = point.X; }
@@ -147,14 +158,15 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                     if (point.X > max.X) { max.X = point.X; }
                     if (point.Y < min.Y) { min.Y = point.Y; }
                     else
-                    if (point.Y > max.X) { max.Y = point.Y; }
+                    if (point.Y > max.Y) { max.Y = point.Y; }
                 }
             }
-        }        
+        }
 
         private void ReDrawMapPoints() {
             if (ShowMapPoints) {
                 //Console.WriteLine($"Map Points");
+                mapPoints.Source = NewBitmap((int)Width, (int)Height);
                 return;
             }
         }
@@ -162,6 +174,8 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         private void ReDrawMapSegments() {
             if (ShowMapSegments) {
                 //Console.WriteLine($"Map Segments");
+
+                RedrawSegments(mapSegments, MapData?.Segments);
                 return;
             }
         }
@@ -169,59 +183,87 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         private void ReDrawCurrentSegments() {
             if (ShowCurrentSegments) {
                 //Console.WriteLine($"Current Segments");
-                RedrawSegments(currentSegments, Map?.CurrentSegments);
+                RedrawSegments(currentSegments, MapData?.CurrentSegments);
                 return;
-            }            
+            }
         }
 
         private void ReDrawDepthSensorPath() {
             if (ShowDepthSensorPath) {
                 //Console.WriteLine($"Sensor Path");
                 return;
-            }            
+            }
         }
 
         private void UpdateDepthSensorPosition() {
             if (ShowDepthSensorPosition) {
                 //Console.WriteLine($"Sensor Position");
-                return;
+
+                if (MapData?.CameraPath != null) {
+                    var last = MapData.CameraPath.Last();
+                    Point position = new Point(last.X - min.X, (Height - 1) - (last.Y - min.Y));
+
+                    DrawArrowAt(depthSensorPosition, position.X, position.Y, -last.A);
+
+                }
             }
+        }
+
+        private void DrawArrowAt(Polygon polygon, double x = 0.0, double y = 0.0, double angle = 0.0) {
+            polygon.Points.Clear();
+            polygon.Points.Add(new Point(-15, 20).RotatedAndShifted(x, y, angle));
+            polygon.Points.Add(new Point(0, -20).RotatedAndShifted(x, y, angle));
+            polygon.Points.Add(new Point(15, 20).RotatedAndShifted(x, y, angle));
         }
 
         private void RedrawSegments(Path path, IEnumerable<ISegment> segments) {
             PathGeometry geometry = new PathGeometry();
 
             // Border
-            geometry.Figures.Add(new PathFigure(
-                        new Point(0, 0),
-                        new List<LineSegment> {
-                            new LineSegment(new Point(Width, 0), true),
-                            new LineSegment(new Point(Width, Height), true),
-                            new LineSegment(new Point(0, Height), true),
-                            new LineSegment(new Point(0, 0), true)
-                        }, false));
+            //geometry.Figures.Add(new PathFigure(
+            //            new Point(0, 0),
+            //            new List<LineSegment> {
+            //                new LineSegment(new Point(Width, 0), true),
+            //                new LineSegment(new Point(Width, Height), true),
+            //                new LineSegment(new Point(0, Height), true),
+            //                new LineSegment(new Point(0, 0), true)
+            //            }, false));
 
             if (segments != null) {
                 // Linear Data
                 foreach (var segment in segments) {
 
                     if (segment != null) {
-                        Point startPoint = FixPosition(segment.PointA);
-                        var lineSegments = new List<LineSegment> { new LineSegment(FixPosition(segment.PointB), true) };
+                        Point startPoint = Fixed(segment.PointA);
+                        var lineSegments = new List<LineSegment> { new LineSegment(Fixed(segment.PointB), true) };
                         PathFigure figure = new PathFigure(startPoint, lineSegments, false);
                         geometry.Figures.Add(figure);
                     }
                 }
             }
             path.Data = geometry;
-            
+
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Point FixPosition(Point point) {
-            var result = new Point(point.X /*+ Width / 2*/, /*(Height - 1)*/ - point.Y);
-            Console.WriteLine(result);
-            return result;
+        private Point Fixed(Point point) {
+            return FixToSystemScreenCoordinate(FixToPositiveOnly(point, min.X, min.Y), Height);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Point FixToSystemScreenCoordinate(Point point, double screenHeight) {
+            return new Point(point.X, (screenHeight - 1) - point.Y);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Point FixToPositiveOnly(Point point, double minX, double minY) {
+            return new Point(point.X - minX, point.Y - minY);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private WriteableBitmap NewBitmap(int width, int height, bool withAlpha = false) {
+            return new WriteableBitmap(width > 1 ? width : 1, height > 1 ? height : 1, 96.0, 96.0,
+                withAlpha ? PixelFormats.Bgra32 : PixelFormats.Bgr32, null);
         }
     }
 }

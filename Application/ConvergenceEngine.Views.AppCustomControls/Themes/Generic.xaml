@@ -29,7 +29,7 @@
                                     x:Name="PART_MapPoints"/>
                                 <Path
                                     x:Name="PART_MapSegments"
-                                    Stroke="Gray"
+                                    Stroke="Yellow"
                                     StrokeThickness="1"/>
                                 <Path
                                     x:Name="PART_CurrentSegments"
@@ -37,11 +37,11 @@
                                     StrokeThickness="1"/>
                                 <Polyline
                                     x:Name="PART_DepthSensorPath"
-                                    Stroke="Red"
+                                    Stroke="Green"
                                     StrokeThickness="1"/>
                                 <Polygon
                                     x:Name="PART_DepthSensorPosition"
-                                    Points="-15,20 0,-20 15,20"
+                                    Points="-15,10 0,-10 15,10"
                                     Fill="DodgerBlue">
                                 </Polygon>
                             </Grid>
