@@ -10,8 +10,6 @@ namespace ConvergenceEngine.Infrastructure.Interfaces {
         Point PointB { get; }
         Point CenterPoint { get; }
 
-        int? Id { get; }
-
         double Length { get; }
         double DistanceToNearestPoint(ISegment segment);
         void ApplyTransform(double offsetX, double offsetY, double angle, bool rotatePrepend = true);

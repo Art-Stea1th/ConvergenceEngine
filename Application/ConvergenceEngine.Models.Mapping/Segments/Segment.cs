@@ -17,8 +17,6 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         public Point CenterPoint { get { return new Point((PointA.X + PointB.X) * 0.5, (PointA.Y + PointB.Y) * 0.5); } }
         public double Length { get { return (PointA - PointB).Length; } }
 
-        public int? Id { get; set; } = null;
-
         internal Segment(ISegment segment) : this(segment.PointA, segment.PointA) { }
         internal Segment(Tuple<Point, Point> points) : this(points.Item1, points.Item2) { }
         internal Segment(Point pointA, Point pointB) {

@@ -6,8 +6,9 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
     using Extensions;
     using Infrastructure.Extensions;
+    using Infrastructure.Interfaces;
 
-    public class MultiPointSegment : Segment {
+    public class MultiPointSegment : Segment, ISegment {
 
         protected List<Point> points;
 

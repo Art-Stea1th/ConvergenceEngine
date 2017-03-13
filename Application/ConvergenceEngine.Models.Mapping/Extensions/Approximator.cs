@@ -13,39 +13,23 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
         public static IEnumerable<Point> ThinOutSorted(this IEnumerable<Point> points, double maxDistance = 1.0) {
 
-            var enumerator = points.GetEnumerator();
-            var previous = enumerator.Current;
-            yield return previous;
+            Point first = points.First();
+            Point last = points.Last();
 
-            while (enumerator.MoveNext()) {
-                var current = enumerator.Current;
-                if (current.DistanceTo(previous) < maxDistance) {
-                    continue;
-                }
-                yield return current;
-                previous = current;
-            }
-        }
-
-        public static MultiPointSegment MergedWith(this ISegment current, ISegment another) { // ?
-
-            ISegment primary, secondary;
-
-            if (current.Length > another.Length) {
-                primary = current; secondary = another;
-            }
-            else {
-                primary = another; secondary = current;
+            if (first.DistanceTo(last) <= maxDistance) {
+                yield return first;
+                yield return last;
+                yield break;
             }
 
-            var angle = Segment.AngleBetween(secondary, primary);
-            secondary = new MultiPointSegment(secondary.Select(p => p.RotatedAt(angle, secondary.CenterPoint.X, secondary.CenterPoint.Y)));
+            Point prev = first;
 
-            var direction = secondary.CenterPoint.ConvergenceTo(secondary.CenterPoint.DistancePointTo(primary.PointA, primary.PointB));
-            secondary.ApplyTransform(direction.X, direction.Y, 0);
-
-            var resultPoints = new List<ISegment> { primary, secondary }.SelectMany(p => p).OrderByLine(primary.PointA, primary.PointB);
-            return new MultiPointSegment(resultPoints);
+            foreach (var next in points.Skip(1)) {
+                if (next.DistanceTo(prev) >= maxDistance) {
+                    yield return next;
+                    prev = next;
+                }                
+            }
         }
 
         public static Tuple<Point, Point> ApproximateSorted(this IEnumerable<Point> points) {
@@ -60,6 +44,10 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
             double A = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
             double B = avgY - A * avgX;
+
+            if (double.IsNaN(A) || double.IsNaN(B)) {
+                return new Tuple<Point, Point>(p0, pN);
+            }
 
             Point olsP0 = new Point(p0.X, A * p0.X + B), olsPN = new Point(pN.X, A * pN.X + B);
 
@@ -93,6 +81,10 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
             double A = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
             double B = avgY - A * avgX;
+
+            if (double.IsNaN(A) || double.IsNaN(B)) {
+                return (p0 + pN) * 0.5;
+            }
 
             return (new Vector(p0.X, A * p0.X + B) + new Vector(pN.X, A * pN.X + B)) * 0.5;
         }

@@ -29,7 +29,7 @@
                                     x:Name="PART_MapPoints"/>
                                 <Path
                                     x:Name="PART_MapSegments"
-                                    Stroke="Yellow"
+                                    Stroke="Gray"
                                     StrokeThickness="1"/>
                                 <Path
                                     x:Name="PART_CurrentSegments"

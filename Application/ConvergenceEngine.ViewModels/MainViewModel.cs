@@ -77,7 +77,7 @@ namespace ConvergenceEngine.ViewModels {
         }
 
         protected override void UpdateStartStopResetButtonText() {
-            if (Map == null) {
+            if (Mapper == null) {
                 StartStopResetButtonText = "START";
                 return;
             }

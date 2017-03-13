@@ -23,6 +23,8 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             }
         }
 
+        // Nearest
+
         public static ISegment SelectNearestTo(
             this IEnumerable<ISegment> sequence, ISegment segment, double maxDistance, double maxAngleDegrees) {
             var selection = sequence.SelectByDistanceTo(segment, maxDistance)
@@ -33,6 +35,18 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             return selection.FirstOrDefault();
         }
 
+        public static KeyValuePair<int, ISegment> SelectNearestTo(
+            this IEnumerable<KeyValuePair<int, ISegment>> sequence, ISegment segment, double maxDistance, double maxAngleDegrees) {
+            var selection = sequence.SelectByDistanceTo(segment, maxDistance)
+                .Intersect(sequence.SelectByAngleTo(segment, maxAngleDegrees));
+            if (selection.Count() > 1) {
+                return selection.SelectWithNearestLengthTo(segment);
+            }
+            return selection.FirstOrDefault();
+        }
+
+        // by Nearest Length
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ISegment SelectWithNearestLengthTo(this IEnumerable<ISegment> sequence, ISegment segment) {
             var minDifference = sequence.Min(s => Math.Abs(segment.Length - s.Length));
@@ -40,13 +54,33 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static KeyValuePair<int, ISegment> SelectWithNearestLengthTo(this IEnumerable<KeyValuePair<int, ISegment>> sequence, ISegment segment) {
+            var minDifference = sequence.Min(s => Math.Abs(segment.Length - s.Value.Length));
+            return sequence.Where(sg => Math.Abs(segment.Length - sg.Value.Length) == minDifference).FirstOrDefault();
+        }
+
+        // by Angle
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<ISegment> SelectByAngleTo(this IEnumerable<ISegment> sequence, ISegment segment, double maxAngleDegrees) {
             return sequence.Where(s => Math.Abs(Segment.AngleBetween(segment, s)) < maxAngleDegrees);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerable<KeyValuePair<int, ISegment>> SelectByAngleTo(this IEnumerable<KeyValuePair<int, ISegment>> sequence, ISegment segment, double maxAngleDegrees) {
+            return sequence.Where(s => Math.Abs(Segment.AngleBetween(segment, s.Value)) < maxAngleDegrees);
+        }
+
+        // by Distance
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<ISegment> SelectByDistanceTo(this IEnumerable<ISegment> sequence, ISegment segment, double maxDistance) {
             return sequence.Where(s => segment.DistanceToNearestPoint(s) < maxDistance);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IEnumerable<KeyValuePair<int, ISegment>> SelectByDistanceTo(this IEnumerable<KeyValuePair<int, ISegment>> sequence, ISegment segment, double maxDistance) {
+            return sequence.Where(s => segment.DistanceToNearestPoint(s.Value) < maxDistance);
         }
     }
 }

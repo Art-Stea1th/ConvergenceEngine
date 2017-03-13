@@ -7,6 +7,7 @@ using System.Windows;
 namespace ConvergenceEngine.Models.Mapping.Extensions {
 
     using Infrastructure.Extensions;
+
     internal static class Grader { // IEnumerable<Point>, IEnumerable<Vector> Extension class
 
         public static readonly Vector BasisX = new Vector(1.0, 0.0);

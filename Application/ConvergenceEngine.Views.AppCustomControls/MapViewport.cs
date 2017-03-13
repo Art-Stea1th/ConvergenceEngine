@@ -12,6 +12,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
     using Infrastructure.Interfaces;
     using Infrastructure.Extensions;
+    using System.Collections.Concurrent;
 
     [TemplatePart(Name = MapViewport.PartMapPointsName, Type = typeof(Image))]
     [TemplatePart(Name = MapViewport.PartMapSegmentsName, Type = typeof(Path))]
@@ -118,9 +119,12 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         private double Width { get { return (max.X - min.X) + 1; } }
         private double Height { get { return (max.Y - min.Y) + 1; } }
 
+        private ConcurrentQueue<IMapData> mapDataBuffer;
+
         public override void OnApplyTemplate() {
             InitializeParts();
             DrawArrowAt(depthSensorPosition, Width / 2, Height / 2);
+            mapDataBuffer = new ConcurrentQueue<IMapData>();
         }
 
         private void InitializeParts() {
@@ -132,10 +136,9 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         }
 
         private void Update() {
-            if (MapData == null) {
-                return;
-            }
-            UpdateLimitsBy(MapData.Segments != null && MapData.Segments.Count() > 0 ? MapData.Segments : MapData.CurrentSegments);
+            if (MapData != null) {
+                UpdateLimitsBy(MapData.Segments != null && MapData.Segments.Count() > 0 ? MapData.Segments : MapData.CurrentSegments);
+            }            
             ReDrawMapPoints();
             ReDrawMapSegments();
             ReDrawCurrentSegments();
@@ -165,16 +168,13 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
         private void ReDrawMapPoints() {
             if (ShowMapPoints) {
-                //Console.WriteLine($"Map Points");
-                mapPoints.Source = NewBitmap((int)Width, (int)Height);
+                //mapPoints.Source = NewBitmap((int)Width, (int)Height);
                 return;
             }
         }
 
         private void ReDrawMapSegments() {
             if (ShowMapSegments) {
-                //Console.WriteLine($"Map Segments");
-
                 RedrawSegments(mapSegments, MapData?.Segments);
                 return;
             }
@@ -182,7 +182,6 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
         private void ReDrawCurrentSegments() {
             if (ShowCurrentSegments) {
-                //Console.WriteLine($"Current Segments");
                 RedrawSegments(currentSegments, MapData?.CurrentSegments);
                 return;
             }
@@ -190,21 +189,19 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
         private void ReDrawDepthSensorPath() {
             if (ShowDepthSensorPath) {
-                //Console.WriteLine($"Sensor Path");
                 return;
             }
         }
 
         private void UpdateDepthSensorPosition() {
             if (ShowDepthSensorPosition) {
-                //Console.WriteLine($"Sensor Position");
-
                 if (MapData?.CameraPath != null) {
                     var last = MapData.CameraPath.Last();
                     Point position = new Point(last.X - min.X, (Height - 1) - (last.Y - min.Y));
-
                     DrawArrowAt(depthSensorPosition, position.X, position.Y, -last.A);
-
+                }
+                else {
+                    depthSensorPosition.Points.Clear();
                 }
             }
         }

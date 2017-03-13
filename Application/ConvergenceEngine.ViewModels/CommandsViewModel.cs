@@ -81,8 +81,8 @@ namespace ConvergenceEngine.ViewModels {
             Reset(true);
         }
         private void ExecuteStartStopResetCommand(object obj) {
-            if (Map == null) {
-                Map = new Map();
+            if (Mapper == null) {
+                Mapper = new Mapper();
                 DataProvider?.Start();
                 return;
             }
@@ -103,8 +103,9 @@ namespace ConvergenceEngine.ViewModels {
             if (full) {
                 DataProvider = null;
             }
-            Map = null;            
             FullFrame = null;
+            Mapper = null;
+            MapData = null;
             TotalFrames = 0;
             UpdateStartStopResetButtonText();
         }        

@@ -1,10 +1,6 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping {
 
@@ -13,142 +9,80 @@ namespace ConvergenceEngine.Models.Mapping {
     using Infrastructure.Interfaces;
     using Segments;
 
-    public sealed class Map : IMap { // quick hardcode not optimized impl.
+    public sealed class Map : IEnumerable<ISegment> {
 
-        public event Action<IMapData> OnMapUpdate;
+        private const double MaxDistancePercent = 25.0; // using Selector & Determinator
+        private const double MaxAngleDegrees = 30.0;    // using Selector & Determinator
 
-        private const double AllowedDivergencePercent = 3.0; // using Segmenter
-        private const double MaxDistancePercent = 5.0;       // using Selector & Determinator
-        private const double MaxAngleDegrees = 3.0;          // using Selector & Determinator
+        private SortedList<int, ISegment> segments;
 
-        private int uid = 0;
-        private int NextUniqueId { get { return uid++; } }
+        public int UnusedId { get { return segments.Count; } }
 
-        public List<MultiPointSegment> Segments { get; private set; }
-        public IEnumerable<Segment> PreviousSegments { get; private set; }
-        public IEnumerable<Segment> CurrentSegments { get; private set; }
-        public List<NavigationInfo> CameraPath { get; private set; }
-
-        public Map() {
-            Segments = new List<MultiPointSegment>();
-            CameraPath = new List<NavigationInfo>();
+        public Map(IEnumerable<MultiPointSegment> segments) {
+            this.segments = new SortedList<int, ISegment>();
+            foreach (var segment in segments) {                
+                AddSegment(UnusedId, segment);
+            }
         }
 
-        public void HandleNextData(IEnumerable<Point> points) {
+        public void AddSegment(ISegment segment) {
+            var nearest = segments.SelectNearestTo(segment, MaxDistancePercent, MaxAngleDegrees);
+            if (nearest.Value == null) {
+                AddSegment(UnusedId, segment);
+            }
+            else {
+                AddSegment(nearest.Key, segment);
+            }
+        }
 
-            CurrentSegments = points.Segmentate(AllowedDivergencePercent);
-
-            if (CameraPath.IsEmpty()) {
-                InitializeWithFirstData(CurrentSegments);
+        private void AddSegment(int id, ISegment segment) {
+            if (segment.Count < 2) {
                 return;
             }
-
-            // --- Step A ---
-
-            NavigationInfo prevNavInfo = CameraPath.Last();
-            ApplyTransformToSegments(CurrentSegments, prevNavInfo);
-
-            SetIdentifiersForNearest(CurrentSegments, PreviousSegments, MaxDistancePercent, MaxAngleDegrees);
-
-            var nearestPairsToPrev = GetPairsWithEqualsId(CurrentSegments, PreviousSegments);
-            NavigationInfo convergence = nearestPairsToPrev.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
-
-            ApplyTransformToSegments(CurrentSegments, convergence);
-
-            // --- Step B ---
-
-            var nearestCurrToPrev = nearestPairsToPrev.Select(sp => new MultiPointSegment(sp.Item1));
-
-            SetIdentifiersForNearest(nearestCurrToPrev, Segments, MaxDistancePercent, MaxAngleDegrees);
-
-            var nearestPairsToMap = GetPairsWithEqualsId(nearestCurrToPrev, Segments);
-            NavigationInfo convergenceToMap = nearestPairsToMap.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
-
-            ApplyTransformToSegments(CurrentSegments, convergenceToMap);
-            ApplyTransformToSegments(nearestCurrToPrev, convergenceToMap);
-
-            Segments = GetMergedSegmentsCollection(Segments, nearestCurrToPrev);
-
-            PreviousSegments = CurrentSegments;
-            NavigationInfo nextNavInfo = prevNavInfo + convergence + convergenceToMap;
-            CameraPath.Add(nextNavInfo);
-
-            OnMapUpdate?.Invoke(new MapData(Segments, CurrentSegments, CameraPath));
-        }
-
-        private List<MultiPointSegment> GetMergedSegmentsCollection(IEnumerable<ISegment> toCurrent, IEnumerable<ISegment> fromAnother) {
-            var result = new List<MultiPointSegment>();
-
-            foreach (var c in toCurrent) {
-                MultiPointSegment next = null;
-                if (ExistsById(fromAnother, c)) {
-                    var another = fromAnother.Where(s => s.Id == c.Id).First();
-                    if (c.Length > another.Length) {
-                        next = new MultiPointSegment(c);
-                        next.Id = c.Id;
-                        result.Add(next);
-                    }
-                    else {
-                        next = new MultiPointSegment(another);
-                        next.Id = another.Id;
-                        result.Add(next);
-                    }
-                }
-                else {
-                    next = new MultiPointSegment(c);
-                    next.Id = c.Id;
-                    result.Add(next);
-                }
-                
+            if (segments.ContainsKey(id)) {
+                //var result = MergedFromSegment(segments[id], segment);
+                var result = GetLarger(segments[id], segment);
+                segments.RemoveAt(id);
+                segments.Add(id, result);
             }
-            return result;
-        }
-
-        private bool ExistsById(IEnumerable<ISegment> segments, ISegment segment) {
-            foreach (var s in segments) {
-                if (s.Id == segment.Id) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private void SetIdentifiersForNearest(IEnumerable<Segment> toCurrent, IEnumerable<ISegment> fromAnother,
-            double maxDistancePercent, double maxAngleDegrees) {
-            foreach (var segment in toCurrent) {
-                int? nextId = fromAnother.SelectNearestTo(segment, maxDistancePercent, maxAngleDegrees)?.Id;
-                if (nextId != null) {
-                    segment.Id = nextId;
-                }
-                else {
-                    segment.Id = NextUniqueId;
-                }
+            else {
+                segments.Add(id, segment);
             }
         }
 
-        private IEnumerable<Tuple<ISegment, ISegment>> GetPairsWithEqualsId(IEnumerable<ISegment> current, IEnumerable<ISegment> another) {
-            foreach (var c in current) {
-                foreach (var a in another) {
-                    if (c.Id == a.Id) {
-                        yield return new Tuple<ISegment, ISegment>(c, a);
-                    }
-                }
+        private ISegment MergedFromSegment(ISegment current, ISegment another) {
+
+            ISegment primary, secondary;
+
+            if (current.Length >= another.Length) {
+                primary = current; secondary = another;
             }
+            else {
+                primary = another; secondary = current;
+            }
+
+            var angle = Segment.AngleBetween(secondary, primary);
+            secondary = new MultiPointSegment(secondary.Select(p => p.RotatedAt(angle, secondary.CenterPoint.X, secondary.CenterPoint.Y)));
+
+            var direction = secondary.CenterPoint.ConvergenceTo(secondary.CenterPoint.DistancePointTo(primary.PointA, primary.PointB));
+            secondary.ApplyTransform(direction.X, direction.Y, 0);
+
+            var resultPoints = new List<ISegment> { primary, secondary }.SelectMany(p => p)
+                .OrderByLine(primary.PointA, primary.PointB).ThinOutSorted(3.0);
+
+            return new MultiPointSegment(resultPoints);
         }
 
-        private void InitializeWithFirstData(IEnumerable<Segment> segments) {
-            foreach (var segment in segments) {
-                segment.Id = NextUniqueId;
-            }
-            PreviousSegments = segments;
-            CameraPath.Add(new NavigationInfo(0.0, 0.0, 0.0));
+        private ISegment GetLarger(ISegment current, ISegment another) {
+            return current.Length >= another.Length ? current : another;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ApplyTransformToSegments(IEnumerable<ISegment> segments, NavigationInfo navigationInfo) {
-            foreach (var segment in segments) {
-                segment.ApplyTransform(navigationInfo.X, navigationInfo.Y, navigationInfo.A);
-            }
+        public IEnumerator<ISegment> GetEnumerator() {
+            return segments.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return segments.GetEnumerator();
         }
     }
 }

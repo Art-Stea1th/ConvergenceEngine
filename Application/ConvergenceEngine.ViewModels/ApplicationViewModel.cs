@@ -10,7 +10,7 @@ namespace ConvergenceEngine.ViewModels {
     public abstract class ApplicationViewModel : ViewModelBase {
 
         private IDataProvider dataProvider;
-        private IMap map;
+        private IMapper mapper;
         private IMapData mapData;
         private short[,] fullFrame;
 
@@ -18,8 +18,8 @@ namespace ConvergenceEngine.ViewModels {
             get { return dataProvider; }
             protected set { SetNew(value); NotifyPropertyChanged(); }
         }
-        public IMap Map {
-            get { return map; }
+        public IMapper Mapper {
+            get { return mapper; }
             protected set { SetNew(value); NotifyPropertyChanged(); }
         }
         public IMapData MapData {
@@ -29,7 +29,7 @@ namespace ConvergenceEngine.ViewModels {
         public short[,] FullFrame {
             get { return fullFrame; }
             protected set { Set(ref fullFrame, value); }
-        }        
+        }
 
         public abstract double FpsCurrent { get; set; }
         public abstract bool ModelStarted { get; set; }
@@ -39,8 +39,8 @@ namespace ConvergenceEngine.ViewModels {
 
         private void SetNew(IDataProvider dataProvider) {
             if (dataProvider != null) {
-                if (map != null) {
-                    dataProvider.OnNextDepthLineReady += map.HandleNextData;
+                if (mapper != null) {
+                    dataProvider.OnNextDepthLineReady += mapper.HandleNextData;
                 }
                 dataProvider.OnNextFullFrameReady += UpdateFullFrame;
                 dataProvider.OnNextFullFrameReady += (f) => ++TotalFrames;
@@ -49,23 +49,23 @@ namespace ConvergenceEngine.ViewModels {
             this.dataProvider = dataProvider;
         }
 
-        private void SetNew(IMap map) {
+        private void SetNew(IMapper mapper) {
             if (dataProvider != null) {
-                if (this.map != null) {
-                    dataProvider.OnNextDepthLineReady -= this.map.HandleNextData;
+                if (this.mapper != null) {
+                    dataProvider.OnNextDepthLineReady -= this.mapper.HandleNextData;
                 }
-                if (map != null) { // 1
-                    dataProvider.OnNextDepthLineReady += map.HandleNextData;
+                if (mapper != null) { // 1
+                    dataProvider.OnNextDepthLineReady += mapper.HandleNextData;
                 }
             }
-            if (map != null) { // 2
-                map.OnMapUpdate += UpdateMap;
+            if (mapper != null) { // 2
+                mapper.OnMapUpdate += UpdateMap;
             }
-            this.map = map;
+            this.mapper = mapper;
         }
 
-        protected virtual void UpdateMap(IMapData map) {
-            MapData = map;
+        protected virtual void UpdateMap(IMapData mapData) {
+            MapData = mapData;
         }
 
         protected virtual void UpdateFullFrame(short[,] fullFrame) {
@@ -77,8 +77,8 @@ namespace ConvergenceEngine.ViewModels {
                 ModelStarted = true;
             }
             else {
-                ModelStarted = false; 
-                CurrentFrame = TotalFrames - 1;               
+                ModelStarted = false;
+                CurrentFrame = TotalFrames - 1;
             }
             UpdateStartStopResetButtonText();
         }
