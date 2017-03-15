@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping {
 
@@ -14,7 +15,7 @@ namespace ConvergenceEngine.Models.Mapping {
             return $"{X}, {Y}, {A}";
         }
 
-        internal NavigationInfo(NavigationInfo navigationInfo) {
+        internal NavigationInfo(INavigationInfo navigationInfo) {
             X = navigationInfo.X; Y = navigationInfo.Y; A = navigationInfo.A;
         }
 
@@ -26,18 +27,14 @@ namespace ConvergenceEngine.Models.Mapping {
             X = offsetX; Y = offsetY; A = angle;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static NavigationInfo operator +(NavigationInfo navInfoA, NavigationInfo navInfoB) {
-            decimal resultX = (decimal)navInfoA.X + (decimal)navInfoB.X;
-            decimal resultY = (decimal)navInfoA.Y + (decimal)navInfoB.Y;
-            decimal resultA = (decimal)navInfoA.A + (decimal)navInfoB.A;
-            return new NavigationInfo((double)resultX, (double)resultY, (double)resultA);
+            return new NavigationInfo(navInfoA.X + navInfoB.X, navInfoA.Y + navInfoB.Y, navInfoA.A + navInfoB.A);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static NavigationInfo operator -(NavigationInfo navInfoA, NavigationInfo navInfoB) {
-            decimal resultX = (decimal)navInfoA.X - (decimal)navInfoB.X;
-            decimal resultY = (decimal)navInfoA.Y - (decimal)navInfoB.Y;
-            decimal resultA = (decimal)navInfoA.A - (decimal)navInfoB.A;
-            return new NavigationInfo((double)resultX, (double)resultY, (double)resultA);
+            return new NavigationInfo(navInfoA.X - navInfoB.X, navInfoA.Y - navInfoB.Y, navInfoA.A - navInfoB.A);
         }
     }
 }

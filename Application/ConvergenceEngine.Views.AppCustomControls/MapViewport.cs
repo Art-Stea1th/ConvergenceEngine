@@ -12,7 +12,6 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
     using Infrastructure.Interfaces;
     using Infrastructure.Extensions;
-    using System.Collections.Concurrent;
 
     [TemplatePart(Name = MapViewport.PartMapPointsName, Type = typeof(Image))]
     [TemplatePart(Name = MapViewport.PartMapSegmentsName, Type = typeof(Path))]
@@ -119,12 +118,9 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         private double Width { get { return (max.X - min.X) + 1; } }
         private double Height { get { return (max.Y - min.Y) + 1; } }
 
-        private ConcurrentQueue<IMapData> mapDataBuffer;
-
         public override void OnApplyTemplate() {
             InitializeParts();
             DrawArrowAt(depthSensorPosition, Width / 2, Height / 2);
-            mapDataBuffer = new ConcurrentQueue<IMapData>();
         }
 
         private void InitializeParts() {
@@ -231,8 +227,8 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                 foreach (var segment in segments) {
 
                     if (segment != null) {
-                        Point startPoint = Fixed(segment.PointA);
-                        var lineSegments = new List<LineSegment> { new LineSegment(Fixed(segment.PointB), true) };
+                        Point startPoint = Fixed(segment.A);
+                        var lineSegments = new List<LineSegment> { new LineSegment(Fixed(segment.B), true) };
                         PathFigure figure = new PathFigure(startPoint, lineSegments, false);
                         geometry.Figures.Add(figure);
                     }

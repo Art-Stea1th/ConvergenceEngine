@@ -27,8 +27,8 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Point> OrderByVector(this IEnumerable<Point> points, Vector vector) {
             var angle = Vector.AngleBetween(vector, BasisX);
-            var pairsWithRotated = points.Select(p => new Tuple<Point, Point>(p, p.Rotated(angle)));
-            return pairsWithRotated.OrderBy(pp => pp.Item2.X).Select(pp => pp.Item1);
+            var pairsWithRotated = points.Select(p => new { Original = p, Rotated = p.Rotated(angle) });
+            return pairsWithRotated.OrderBy(pp => pp.Rotated.X).Select(pp => pp.Original);
         }
     }
 }

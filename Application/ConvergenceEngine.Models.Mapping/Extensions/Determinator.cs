@@ -7,39 +7,38 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
     using Segments;
     using Infrastructure.Extensions;
-    using Infrastructure.Interfaces;
 
     internal static class Determinator {
 
-        public static NavigationInfo ComputeConvergence(this IEnumerable<Tuple<ISegment, ISegment>> trackedPairs,
-            double maxDistancePercent = 5.0, double maxAngleDegrees = 3.0) {
+        public static NavigationInfo ComputeConvergence(this IEnumerable<Tuple<Segment, Segment>> trackedPairs,
+            double maxDistancePercent, double maxAngleDegrees) {
 
             var trackedCurrent = trackedPairs.Select(s => s.Item1);
             var trackedAnother = trackedPairs.Select(s => s.Item2);
 
             double resultAngle = trackedCurrent.DetermineAngleTo(trackedAnother);
 
-            trackedAnother = trackedAnother.Select(s => new Segment(s.PointA.Rotated(-resultAngle), s.PointB.Rotated(-resultAngle)));
+            trackedAnother = trackedAnother.Select(s => new Segment(s.A.Rotated(-resultAngle), s.B.Rotated(-resultAngle)));
 
             Vector resultDirection = trackedCurrent.DetermineDirectionTo(trackedAnother);
 
             return new NavigationInfo(resultDirection, resultAngle);
         }
 
-        public static Vector DetermineDirectionTo(this IEnumerable<ISegment> current, IEnumerable<ISegment> another) {
+        public static Vector DetermineDirectionTo(this IEnumerable<Segment> current, IEnumerable<Segment> another) {
 
             if (current.IsNullOrEmpty() || another.IsNullOrEmpty()) {
                 return new Vector();
             }
 
-            var heights = current.Sequential(another, (c, a) => c.CenterPoint.ConvergenceTo(c.CenterPoint.DistancePointTo(a.PointA, a.PointB)));
-            return heights.OrderByAngle().ApproximateSorted();
+            var heights = current.Sequential(another, (c, a) => c.Center.DistanceVectorTo(c.Center.DistancePointTo(a.A, a.B)));
+            return heights.OrderByAngle().ApproximateOrdered();
         }
 
-        public static double DetermineAngleTo(this IEnumerable<ISegment> current, IEnumerable<ISegment> another) {
+        public static double DetermineAngleTo(this IEnumerable<Segment> current, IEnumerable<Segment> another) {
 
             var lehgths = current.Sequential(another, (c, a) => (c.Length + a.Length) * 0.5);
-            var angles = current.Sequential(another, (c, a) => Segment.AngleBetween(c, a));
+            var angles = current.Sequential(another, (c, a) => c.AngleTo(a));
 
             return AverageWeightedByLengthsAngle(angles, lehgths);
         }

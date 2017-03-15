@@ -10,12 +10,7 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> sequence) {
-            return sequence.IsNull() || sequence.IsEmpty();
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsEmpty<T>(this IEnumerable<T> sequence) {
-            return sequence.Count() == 0;
+            return sequence == null || sequence.First() == null;
         }
 
         public static IEnumerable<TResult> Sequential<TSource, TAnother, TResult>(this IEnumerable<TSource> sourceSequence,

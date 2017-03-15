@@ -9,50 +9,39 @@ namespace ConvergenceEngine.Models.Mapping {
     using Infrastructure.Interfaces;
     using Segments;
 
-    public sealed class Map : IEnumerable<ISegment> {
+    internal sealed class Map : IEnumerable<MapSegment> {
 
-        private const double MaxDistancePercent = 25.0; // using Selector & Determinator
-        private const double MaxAngleDegrees = 30.0;    // using Selector & Determinator
+        private const double MaxDistancePercent = 10.0; // using Selector & Determinator
+        private const double MaxAngleDegrees = 10.0;    // using Selector & Determinator
 
-        private SortedList<int, ISegment> segments;
+        private List<MapSegment> segments;
 
         public int UnusedId { get { return segments.Count; } }
 
-        public Map(IEnumerable<MultiPointSegment> segments) {
-            this.segments = new SortedList<int, ISegment>();
+        internal Map(IEnumerable<Segment> segments) {
+            this.segments = new List<MapSegment>();
             foreach (var segment in segments) {                
-                AddSegment(UnusedId, segment);
+                AddSegment(new MapSegment(UnusedId, segment));
             }
         }
 
-        public void AddSegment(ISegment segment) {
-            var nearest = segments.SelectNearestTo(segment, MaxDistancePercent, MaxAngleDegrees);
-            if (nearest.Value == null) {
-                AddSegment(UnusedId, segment);
+        public void AddSegment(MapSegment segment) {
+
+            var existing = segments.FirstOrDefault(s => s.Id == segment.Id);
+
+            if (existing == null) {
+                existing = segments.SelectNearestTo(segment, MaxDistancePercent, MaxAngleDegrees);
             }
-            else {
-                AddSegment(nearest.Key, segment);
+            if (existing != null) {
+                segments.RemoveAll(s => s.Id == segment.Id);
+                segment = GetLarger(segment, existing);
             }
+            segments.Add(segment);
         }
 
-        private void AddSegment(int id, ISegment segment) {
-            if (segment.Count < 2) {
-                return;
-            }
-            if (segments.ContainsKey(id)) {
-                //var result = MergedFromSegment(segments[id], segment);
-                var result = GetLarger(segments[id], segment);
-                segments.RemoveAt(id);
-                segments.Add(id, result);
-            }
-            else {
-                segments.Add(id, segment);
-            }
-        }
+        private MapSegment MergedFromSegment(MapSegment current, MapSegment another) {
 
-        private ISegment MergedFromSegment(ISegment current, ISegment another) {
-
-            ISegment primary, secondary;
+            MapSegment primary, secondary;
 
             if (current.Length >= another.Length) {
                 primary = current; secondary = another;
@@ -61,24 +50,24 @@ namespace ConvergenceEngine.Models.Mapping {
                 primary = another; secondary = current;
             }
 
-            var angle = Segment.AngleBetween(secondary, primary);
-            secondary = new MultiPointSegment(secondary.Select(p => p.RotatedAt(angle, secondary.CenterPoint.X, secondary.CenterPoint.Y)));
+            var angle = secondary.AngleTo(primary);
+            secondary = new MapSegment(secondary.Select(p => p.RotatedAt(angle, secondary.Center.X, secondary.Center.Y)));
 
-            var direction = secondary.CenterPoint.ConvergenceTo(secondary.CenterPoint.DistancePointTo(primary.PointA, primary.PointB));
+            var direction = secondary.Center.DistanceVectorTo(secondary.Center.DistancePointTo(primary.A, primary.B));
             secondary.ApplyTransform(direction.X, direction.Y, 0);
 
-            var resultPoints = new List<ISegment> { primary, secondary }.SelectMany(p => p)
-                .OrderByLine(primary.PointA, primary.PointB).ThinOutSorted(3.0);
+            var resultPoints = new List<MapSegment> { primary, secondary }.SelectMany(p => p)
+                .OrderByLine(primary.A, primary.B).ThinOutSorted(3.0);
 
-            return new MultiPointSegment(resultPoints);
+            return new MapSegment(resultPoints);
         }
 
-        private ISegment GetLarger(ISegment current, ISegment another) {
+        private MapSegment GetLarger(MapSegment current, MapSegment another) {
             return current.Length >= another.Length ? current : another;
         }
 
-        public IEnumerator<ISegment> GetEnumerator() {
-            return segments.Values.GetEnumerator();
+        public IEnumerator<MapSegment> GetEnumerator() {
+            return segments.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {

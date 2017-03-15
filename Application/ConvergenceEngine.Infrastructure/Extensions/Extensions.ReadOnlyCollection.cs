@@ -29,7 +29,7 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
             IEnumerable<T> left = sequence.TakeWhile((p, i) => i <= index);
             IEnumerable<T> right = sequence.SkipWhile((p, i) => i < index);
 
-            return new Tuple<IEnumerable<T>, IEnumerable<T>>(left, right);
+            return Tuple.Create(left, right);
         }
     }    
 }

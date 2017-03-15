@@ -18,13 +18,39 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Point Shifted(this Point p, double offsetX, double offsetY) {
+            p.Offset(offsetX, offsetY); return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Point ShiftedX(this Point p, double offsetX) {
+            p.Offset(offsetX, 0); return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Point ShiftedY(this Point p, double offsetY) {
+            p.Offset(0, offsetY); return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point Rotated(this Point p, double angle) {
             return p.RotatedRadians(angle.AsNormalizedAngle().ToRadians());
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Point RotatedAt(this Point p, double angle, Point center) {
+            return p.RotatedRadiansAt(angle.AsNormalizedAngle().ToRadians(), center);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point RotatedAt(this Point p, double angle, double centerX, double centerY) {
             return p.RotatedRadiansAt(angle.AsNormalizedAngle().ToRadians(), centerX, centerY);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Point RotatedRadiansAt(this Point p, double angle, Point center) {
+            p.Offset(-center.X, -center.Y); p = p.RotatedRadians(angle); p.Offset(center.X, center.Y);
+            return p;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -47,7 +73,7 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double DistanceTo(this Point p, Point point) {
-            return p.ConvergenceTo(point).Length;
+            return p.DistanceVectorTo(point).Length;
         }
 
         public static Point DistancePointTo(this Point pointC, Point pointA, Point pointB) {
@@ -58,14 +84,14 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
             if (pointA == pointB) {
                 return pointA;
             }
-            Vector ab = pointA.ConvergenceTo(pointB);
-            Vector ac = pointA.ConvergenceTo(pointC);
+            Vector ab = pointA.DistanceVectorTo(pointB);
+            Vector ac = pointA.DistanceVectorTo(pointC);
             ab.Normalize();
             return Vector.Multiply(ab, ac) * ab + pointA;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector ConvergenceTo(this Point p, Point point) {
+        public static Vector DistanceVectorTo(this Point p, Point point) {
             return point - p;
         }
     }
