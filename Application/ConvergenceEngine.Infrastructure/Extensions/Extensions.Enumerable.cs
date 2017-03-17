@@ -10,7 +10,13 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> sequence) {
-            return sequence == null || sequence.First() == null;
+            return sequence == null || sequence.Count() < 1;
+        }
+
+        public static double AverageWeighted<TSource>(this IEnumerable<TSource> sequence,
+            Func<TSource, double> valueSelector, Func<TSource, double> weightSelector) {
+            var weightsSum = sequence.Sum(w => weightSelector.Invoke(w));
+            return sequence.Select(s => valueSelector(s) * weightSelector(s) / weightsSum).Sum();
         }
 
         public static IEnumerable<TResult> Sequential<TSource, TAnother, TResult>(this IEnumerable<TSource> sourceSequence,

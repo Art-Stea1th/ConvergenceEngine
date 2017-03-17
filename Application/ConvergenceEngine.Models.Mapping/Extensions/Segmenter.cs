@@ -11,7 +11,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
     internal static class Segmenter { // IEnumerable<Point> Extension class
 
-        public static IEnumerable<IEnumerable<Point>> Segmentate(this IEnumerable<Point> points, double allowedDivergencePercent = 3.0) {
+        public static IEnumerable<List<Point>> Segmentate(this IEnumerable<Point> points, double allowedDivergencePercent = 3.0) {
 
             List<List<Point>> result = new List<List<Point>>();
 

@@ -51,7 +51,6 @@
     <Compile Include="MapData.cs" />
     <Compile Include="NavigationInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Segments\MapSegment.cs" />
     <Compile Include="Segments\Segment.Static.cs" />
     <Compile Include="Segments\Segment.Impl.cs" />
     <Compile Include="Segments\Segment.Base.cs" />

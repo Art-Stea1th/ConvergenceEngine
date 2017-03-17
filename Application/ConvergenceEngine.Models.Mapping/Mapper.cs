@@ -13,7 +13,7 @@ namespace ConvergenceEngine.Models.Mapping {
 
         public event Action<IMapData> OnMapUpdate;
 
-        private const double AllowedDivergencePercent = 5.0;
+        private const double AllowedDivergencePercent = 3.0;
 
         private const double MaxDistancePercentToPrev = 5.0;
         private const double MaxAngleDegreesToPrev = 3.0;
@@ -23,13 +23,13 @@ namespace ConvergenceEngine.Models.Mapping {
 
         private Map map;
 
-        private IEnumerable<MapSegment> prev;
-        private IEnumerable<MapSegment> next;
+        private IEnumerable<Segment> prev;
+        private IEnumerable<Segment> next;
         private List<INavigationInfo> path;
 
         public void HandleNextData(IEnumerable<Point> points) {
 
-            next = points.Segmentate(AllowedDivergencePercent);
+            next = points.Segmentate(AllowedDivergencePercent).Select(s => new Segment(s));
 
             if (map == null) {
                 if (next.Count() > 0) {
@@ -39,50 +39,56 @@ namespace ConvergenceEngine.Models.Mapping {
                 return;
             }
 
+            // ---
+
             NavigationInfo prevNavInfo = new NavigationInfo(path.Last());
-            TransformedSegments(next, prevNavInfo);
+            next = TransformedSegments(next, prevNavInfo);
 
             // ---
 
             var nearestPairsToPrev = next.SelectNearestTo(prev, MaxDistancePercentToPrev, MaxAngleDegreesToPrev);
-            NavigationInfo convergenceToPrev = nearestPairsToPrev.ComputeConvergence(MaxDistancePercentToPrev, MaxAngleDegreesToPrev);
-
-            TransformedSegments(next, convergenceToPrev);
+            NavigationInfo convergenceToPrev = nearestPairsToPrev.ComputeConvergence(MaxDistancePercentToPrev, MaxAngleDegreesToPrev, prevNavInfo.X, prevNavInfo.Y);
 
             // ---
 
-            var nearestOnly = nearestPairsToPrev.Select(sp => sp.Item1);
+            next = TransformedSegments(next, convergenceToPrev);
+            var nearestOnly = TransformedSegments(nearestPairsToPrev.Select(sp => sp.Item1), convergenceToPrev);
+
+            NavigationInfo nextNavInfo = prevNavInfo + convergenceToPrev;
 
             // ---
 
             var nearestPairsToMap = nearestOnly.SelectNearestTo(map, MaxDistancePercentToMap, MaxAngleDegreesToMap);
-            NavigationInfo convergenceToMap = nearestPairsToMap.ComputeConvergence(MaxDistancePercentToMap, MaxAngleDegreesToMap);
+            NavigationInfo convergenceToMap = nearestPairsToMap.ComputeConvergence(MaxDistancePercentToMap, MaxAngleDegreesToMap, nextNavInfo.X, nextNavInfo.Y);
 
-            TransformedSegments(next, convergenceToMap);
+            // ---
+
+            next = TransformedSegments(next, convergenceToMap);
+            nearestOnly = TransformedSegments(nearestOnly, convergenceToMap);
+
+            nextNavInfo += convergenceToMap;
 
             // ---
 
             foreach (var segment in nearestOnly) {
-                map.AddSegment(segment as MapSegment);
+                map.AddSegment(segment);
             }
-            path.Add(prevNavInfo + convergenceToPrev + convergenceToMap);
+            path.Add(nextNavInfo);
             prev = next;
 
             OnMapUpdate?.Invoke(new MapData(map, next, path));
         }
 
-        private void InitializeWith(IEnumerable<MapSegment> segments) {
+        private void InitializeWith(IEnumerable<Segment> segments) {
             map = new Map(segments);
             path = new List<INavigationInfo> { new NavigationInfo(0.0, 0.0, 0.0) };
         }
 
-        //private NavigationInfo CalculateNavigationInfoBy(IEnumerable<ISegment> segments) {
-
-        //}
-
-        private void TransformedSegments(IEnumerable<MapSegment> segments, INavigationInfo navigationInfo) {
+        private IEnumerable<Segment> TransformedSegments(IEnumerable<Segment> segments, INavigationInfo navigationInfo) {
             foreach (var segment in segments) {
-                segment.ApplyTransform(navigationInfo.X, navigationInfo.Y, navigationInfo.A);
+                yield return segment
+                    .RotatedAt(navigationInfo.A, navigationInfo.X, navigationInfo.Y)
+                    .Shifted(navigationInfo.X, navigationInfo.Y);
             }
         }
     }

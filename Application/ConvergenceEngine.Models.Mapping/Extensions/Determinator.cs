@@ -11,44 +11,23 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
     internal static class Determinator {
 
         public static NavigationInfo ComputeConvergence(this IEnumerable<Tuple<Segment, Segment>> trackedPairs,
-            double maxDistancePercent, double maxAngleDegrees) {
+            double maxDistancePercent, double maxAngleDegrees, double currentPositionX/* = 0.0*/, double currentPositionY/* = 0.0*/) {
 
-            var trackedCurrent = trackedPairs.Select(s => s.Item1);
-            var trackedAnother = trackedPairs.Select(s => s.Item2);
-
-            double resultAngle = trackedCurrent.DetermineAngleTo(trackedAnother);
-
-            trackedAnother = trackedAnother.Select(s => new Segment(s.A.Rotated(-resultAngle), s.B.Rotated(-resultAngle)));
-
-            Vector resultDirection = trackedCurrent.DetermineDirectionTo(trackedAnother);
-
-            return new NavigationInfo(resultDirection, resultAngle);
-        }
-
-        public static Vector DetermineDirectionTo(this IEnumerable<Segment> current, IEnumerable<Segment> another) {
-
-            if (current.IsNullOrEmpty() || another.IsNullOrEmpty()) {
-                return new Vector();
+            if (trackedPairs.IsNullOrEmpty()) {
+                return new NavigationInfo();
             }
 
-            var heights = current.Sequential(another, (c, a) => c.Center.DistanceVectorTo(c.Center.DistancePointTo(a.A, a.B)));
-            return heights.OrderByAngle().ApproximateOrdered();
-        }
+            double resultAngle =
+                trackedPairs.AverageWeighted(sp => sp.Item1.AngleTo(sp.Item2), sp => (sp.Item1.Length + sp.Item2.Length));
 
-        public static double DetermineAngleTo(this IEnumerable<Segment> current, IEnumerable<Segment> another) {
+            trackedPairs = trackedPairs
+                .Select(sp => Tuple.Create(sp.Item1, sp.Item2.RotatedAt(-resultAngle, currentPositionX, currentPositionY)));
 
-            var lehgths = current.Sequential(another, (c, a) => (c.Length + a.Length) * 0.5);
-            var angles = current.Sequential(another, (c, a) => c.AngleTo(a));
+            Vector resultDirection = trackedPairs
+                .Select(sp => sp.Item1.Center.DistanceVectorTo(sp.Item1.Center.DistancePointTo(sp.Item2.A, sp.Item2.B)))
+                .OrderByAngle().ApproximateOrdered();            
 
-            return AverageWeightedByLengthsAngle(angles, lehgths);
-        }
-
-        private static double AverageWeightedByLengthsAngle(IEnumerable<double> angles, IEnumerable<double> lengths) {
-
-            var fullLength = lengths.Sum();
-            var weights = lengths.Select(s => s * 100.0 / fullLength);
-
-            return angles.Sequential(weights, (a, w) => a / 100.0 * w).Sum();
+            return new NavigationInfo(resultDirection, resultAngle);
         }
     }
 }

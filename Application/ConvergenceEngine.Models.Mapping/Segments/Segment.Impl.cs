@@ -11,11 +11,9 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
     internal partial class Segment {
 
-        protected static object Lockable = new object();
-
-        protected static Point Zero = new Point(0.0, 0.0);
-        protected static Vector BasisX = new Vector(1.0, 0.0);
-        protected static Vector BasisY = new Vector(0.0, 1.0);
+        private static Point Zero = new Point(0.0, 0.0);
+        private static Vector BasisX = new Vector(1.0, 0.0);
+        private static Vector BasisY = new Vector(0.0, 1.0);
 
         public double AngleToHorizontal { get { return AngleTo(BasisX); } }
         public double AngleToVertical { get { return AngleTo(BasisY); } }
@@ -28,6 +26,8 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         private double AngleTo(Vector vector) {
             var angle = Vector.AngleBetween((B - A), vector);
             return Math.Abs(angle) < 90.0 ? angle : angle < 0 ? angle + 180.0 : angle - 180.0;
+
+            // return Vector.AngleBetween((B - A), vector);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -38,6 +38,11 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment ShiftedY(double offsetY) {
             return new Segment(A.ShiftedY(offsetY), B.ShiftedY(offsetY));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Segment Shifted(Vector direction) {
+            return new Segment(A.Shifted(direction.X, direction.Y), B.Shifted(direction.X, direction.Y));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -58,6 +63,11 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment RotatedAt(double angle, Point center) {
             return new Segment(A.RotatedAt(angle, center), B.RotatedAt(angle, center));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Segment RotatedAt(double angle, double centerX, double centerY) {
+            return new Segment(A.RotatedAt(angle, centerX, centerY), B.RotatedAt(angle, centerX, centerY));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -112,18 +122,14 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             return new Tuple<double, double, double>(a, b, c);
         }
 
-        protected object ThreadGuard = new object();
-
-        public virtual void ApplyTransform(double offsetX, double offsetY, double angle, bool rotatePrepend = true) {
-            lock (ThreadGuard) {
-                if (rotatePrepend) {
-                    A = A.RotatedAndShifted(offsetX, offsetY, angle);
-                    B = B.RotatedAndShifted(offsetX, offsetY, angle);
-                }
-                else {
-                    A = A.ShiftedAndRotated(offsetX, offsetY, angle);
-                    B = B.ShiftedAndRotated(offsetX, offsetY, angle);
-                }
+        public void ApplyTransform(double offsetX, double offsetY, double angle, bool rotatePrepend = true) {
+            if (rotatePrepend) {
+                A = A.RotatedAndShifted(offsetX, offsetY, angle);
+                B = B.RotatedAndShifted(offsetX, offsetY, angle);
+            }
+            else {
+                A = A.ShiftedAndRotated(offsetX, offsetY, angle);
+                B = B.ShiftedAndRotated(offsetX, offsetY, angle);
             }
         }
     }

@@ -16,10 +16,10 @@ namespace ConvergenceEngine.Models.Mapping {
         internal MapData(
             IEnumerable<ISegment> segments, IEnumerable<ISegment> currentSegments, IEnumerable<INavigationInfo> cameraPath) {
             if (segments != null && segments.Count() > 1 && segments.First().Count() > 1) {
-                Segments = segments.Select(s => new MultiPointSegment(s.ThinOutSorted(5.0))).ToList();
+                Segments = segments.Select(s => new Segment(s)).ToList();
             }
             if (currentSegments != null && currentSegments.Count() > 0 && currentSegments.First().Count() > 1) {
-                CurrentSegments = currentSegments.Select(s => new MultiPointSegment(s.ThinOutSorted(5.0))).ToList();
+                CurrentSegments = currentSegments.Select(s => new Segment(s)).ToList();
             }
             if (cameraPath != null && cameraPath.Count() > 0) {
                 CameraPath = cameraPath.Select(cp => new NavigationInfo(cp.X, cp.Y, cp.A)).ToList();
