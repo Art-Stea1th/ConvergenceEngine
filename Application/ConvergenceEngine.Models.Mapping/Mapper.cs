@@ -46,7 +46,7 @@ namespace ConvergenceEngine.Models.Mapping {
 
             // ---
 
-            var nearestPairsToPrev = next.SelectNearestTo(prev, MaxDistancePercentToPrev, MaxAngleDegreesToPrev);
+            var nearestPairsToPrev = next.SelectNearestTo(prev, MaxDistancePercentToPrev, MaxAngleDegreesToPrev, prevNavInfo.X, prevNavInfo.Y);
             NavigationInfo convergenceToPrev = nearestPairsToPrev.ComputeConvergence(MaxDistancePercentToPrev, MaxAngleDegreesToPrev, prevNavInfo.X, prevNavInfo.Y);
 
             // ---
@@ -58,7 +58,7 @@ namespace ConvergenceEngine.Models.Mapping {
 
             // ---
 
-            var nearestPairsToMap = nearestOnly.SelectNearestTo(map, MaxDistancePercentToMap, MaxAngleDegreesToMap);
+            var nearestPairsToMap = nearestOnly.SelectNearestTo(map, MaxDistancePercentToMap, MaxAngleDegreesToMap, nextNavInfo.X, nextNavInfo.Y);
             NavigationInfo convergenceToMap = nearestPairsToMap.ComputeConvergence(MaxDistancePercentToMap, MaxAngleDegreesToMap, nextNavInfo.X, nextNavInfo.Y);
 
             // ---

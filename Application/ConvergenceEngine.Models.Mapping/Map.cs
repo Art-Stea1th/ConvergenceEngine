@@ -16,8 +16,6 @@ namespace ConvergenceEngine.Models.Mapping {
 
         private List<Segment> segments;
 
-        //public int UnusedId { get { return segments.Count; } }
-
         internal Map(IEnumerable<Segment> segments) {
             this.segments = new List<Segment>();
             foreach (var segment in segments) {
@@ -27,15 +25,12 @@ namespace ConvergenceEngine.Models.Mapping {
 
         public void AddSegment(Segment segment) {
 
-            var //existing = segments.FirstOrDefault(s => s.Id == segment.Id);
-
-            //if (existing == null) {
-                existing = segments.SelectNearestTo(segment, MaxDistancePercent, MaxAngleDegrees);
-            //}
+            var existing = segments.SelectNearestTo(segment, MaxDistancePercent, MaxAngleDegrees);
             if (existing != null) {
                 int index = segments.IndexOf(existing);
                 segments.RemoveAt(index);
-                segment = GetLarger(segment, existing);
+                //segment = GetLarger(segment, existing);
+                segment = Segment.Merged(new[] { segment, existing });
             }
             segments.Add(segment);
         }

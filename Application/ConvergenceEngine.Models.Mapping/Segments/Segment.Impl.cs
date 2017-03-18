@@ -24,10 +24,9 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         }
 
         private double AngleTo(Vector vector) {
-            var angle = Vector.AngleBetween((B - A), vector);
-            return Math.Abs(angle) < 90.0 ? angle : angle < 0 ? angle + 180.0 : angle - 180.0;
-
-            // return Vector.AngleBetween((B - A), vector);
+            //var angle = Vector.AngleBetween((B - A), vector);
+            //return Math.Abs(angle) < 90.0 ? angle : angle < 0 ? angle + 180.0 : angle - 180.0;
+            return Vector.AngleBetween((B - A), vector);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -71,8 +70,9 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool NearestByAngleTo(Segment segment, double maxAngle) {
-            return Math.Abs(AngleTo(segment)) > maxAngle ? false : true;
+        public bool NearestByAngleTo(Segment segment, double maxAbsAngle) {
+            var absAngle = Math.Abs(AngleTo(segment));
+            return absAngle <= maxAbsAngle || 180.0 - absAngle <= maxAbsAngle ? true : false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

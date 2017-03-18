@@ -10,75 +10,17 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
     internal static class Approximator { // IEnumerable<Point>, IEnumerable<Vector> Extension class
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static Tuple<Point, Point> ApproximateOrdered(this IEnumerable<Point> points) {
-        //    var result = points.Approximate(p => p.X, p => p.Y);
-        //    return Tuple.Create(new Point(result.Item1, result.Item2), new Point(result.Item3, result.Item4));
-        //}
-
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static Vector ApproximateOrdered(this IEnumerable<Vector> vectors) {
-        //    var result = vectors.Approximate(v => v.X, v => v.Y);
-        //    return (new Vector(result.Item1, result.Item2) + new Vector(result.Item3, result.Item4)) * 0.5;
-        //}
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Tuple<Point, Point> ApproximateOrdered(this IEnumerable<Point> points) {
-
-            Point p0 = points.First(), pN = points.Last();
-
-            double avgX = points.Average(p => p.X);
-            double avgY = points.Average(p => p.Y);
-            double avgXY = points.Average(p => p.X * p.Y);
-            double avgSqX = points.Average(p => Math.Pow(p.X, 2));
-            double sqAvgX = Math.Pow(avgX, 2);
-
-            double A = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
-            double B = avgY - A * avgX;
-
-            if (double.IsNaN(A) || double.IsNaN(B)) {
-                return new Tuple<Point, Point>(p0, pN);
-            }
-
-            Point olsP0 = new Point(p0.X, A * p0.X + B), olsPN = new Point(pN.X, A * pN.X + B);
-
-            // Trim Y
-            Point resultP0 = new Point(p0.X, p0.DistancePointTo(olsP0, olsPN).Y);
-            Point resultPN = new Point(pN.X, pN.DistancePointTo(olsP0, olsPN).Y);
-
-            return new Tuple<Point, Point>(resultP0, resultPN);
+            var result = points.Approximate(p => p.X, p => p.Y);
+            return Tuple.Create(new Point(result.Item1, result.Item2), new Point(result.Item3, result.Item4));
         }
 
-        public static Vector ApproximateOrdered(this IEnumerable<Vector> directions) {
-
-            if (directions == null) {
-                throw new ArgumentNullException();
-            }
-            if (directions.Count() == 0) {
-                throw new ArgumentOutOfRangeException();
-            }
-            switch (directions.Count()) {
-                case 1: return directions.First();
-                case 2: return (directions.First() + directions.Last()) * 0.5;
-            }
-
-            Vector p0 = directions.First(), pN = directions.Last();
-
-            double avgX = directions.Average(p => p.X);
-            double avgY = directions.Average(p => p.Y);
-            double avgXY = directions.Average(p => p.X * p.Y);
-            double avgSqX = directions.Average(p => Math.Pow(p.X, 2));
-            double sqAvgX = Math.Pow(avgX, 2);
-
-            double A = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
-            double B = avgY - A * avgX;
-
-            if (double.IsNaN(A) || double.IsNaN(B)) {
-                return (p0 + pN) * 0.5;
-            }
-
-            return (new Vector(p0.X, A * p0.X + B) + new Vector(pN.X, A * pN.X + B)) * 0.5;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector ApproximateOrdered(this IEnumerable<Vector> vectors) {
+            var result = vectors.Approximate(v => v.X, v => v.Y);
+            return (new Vector(result.Item1, result.Item2) + new Vector(result.Item3, result.Item4)) * 0.5;
         }
-
 
         // Ordinary Least Squares
         private static Tuple<double, double, double, double> Approximate<TSource>(this IEnumerable<TSource> sequence,

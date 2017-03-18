@@ -11,10 +11,11 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
     internal static class Selector { // IEnumerable<Segment> Extension class
 
         public static IEnumerable<Tuple<Segment, Segment>> SelectNearestTo(
-            this IEnumerable<Segment> current, IEnumerable<Segment> another, double maxDistancePercent, double maxAngleDegrees) {
+            this IEnumerable<Segment> current, IEnumerable<Segment> another,
+            double maxDistancePercent, double maxAngleDegrees, double currentPositionX/* = 0.0*/, double currentPositionY/* = 0.0*/) { // offset!!
 
             foreach (var segment in current) {
-                var currentMaxDistance = Math.Min(segment.A.Y, segment.B.Y) / 100.0 * maxDistancePercent;
+                var currentMaxDistance = Math.Min(segment.A.Y - currentPositionY, segment.B.Y - currentPositionY) / 100.0 * maxDistancePercent;
 
                 Segment similar = another.SelectNearestTo(segment, currentMaxDistance, maxAngleDegrees);
                 if (similar != null) {
