@@ -1,95 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping {
 
-    using Extensions;
     using Infrastructure.Interfaces;
-    using Segments;
+    using System.Runtime.CompilerServices;
 
     public sealed class Mapper : IMapper {
 
-        public event Action<IMapData> OnMapUpdate;
+        public event Action OnMapperUpdate;
 
-        private const double AllowedDivergencePercent = 3.0;
+        private List<Frame> frames = new List<Frame>();
 
-        private const double MaxDistancePercentToPrev = 5.0;
-        private const double MaxAngleDegreesToPrev = 3.0;
+        private int actualFrameIndex = 0;
+        private int additionalFrameIndexOffset = -1;
 
-        private const double MaxDistancePercentToMap = 5.0;
-        private const double MaxAngleDegreesToMap = 3.0;
+        private Map map = new Map();
 
-        private Map map;
+        public int ActualFrameIndex {
+            get { return actualFrameIndex; }
+            set { actualFrameIndex = FixFrameIndex(value); }
+        }
+        public int AdditionalFrameIndexOffset { get; set; }
 
-        private IEnumerable<Segment> prev;
-        private IEnumerable<Segment> next;
-        private List<INavigationInfo> path;
+        public IFrame ActualFrame {
+            get { return frames[actualFrameIndex]; }
+        }
+        public IFrame AdditionalFrame {
+            get { return frames[FixFrameIndex(actualFrameIndex + additionalFrameIndexOffset)]; }
+        }
 
-        public void HandleNextData(IEnumerable<Point> points) {
+        public IEnumerable<ISegment> Map { get { return map; } }
 
-            next = points.Segmentate(AllowedDivergencePercent).Select(s => new Segment(s));
 
-            if (map == null) {
-                if (next.Count() > 0) {
-                    InitializeWith(next);
-                    prev = next;
-                }
+        public void HandleNextData(IEnumerable<Point> nextDepthLine) {
+
+            var next = new Frame(nextDepthLine);
+
+            next.SetOffsetBy(frames.LastOrDefault());
+            frames.Add(next);
+
+            actualFrameIndex = frames.Count - 1;
+            OnMapperUpdate?.Invoke();
+        }
+
+        private void Recalculate() {
+            if (frames.Count < 2) {
                 return;
             }
-
-            // ---
-
-            NavigationInfo prevNavInfo = new NavigationInfo(path.Last());
-            next = TransformedSegments(next, prevNavInfo);
-
-            // ---
-
-            var nearestPairsToPrev = next.SelectNearestTo(prev, MaxDistancePercentToPrev, MaxAngleDegreesToPrev, prevNavInfo.X, prevNavInfo.Y);
-            NavigationInfo convergenceToPrev = nearestPairsToPrev.ComputeConvergence(MaxDistancePercentToPrev, MaxAngleDegreesToPrev, prevNavInfo.X, prevNavInfo.Y);
-
-            // ---
-
-            next = TransformedSegments(next, convergenceToPrev);
-            var nearestOnly = TransformedSegments(nearestPairsToPrev.Select(sp => sp.Item1), convergenceToPrev);
-
-            NavigationInfo nextNavInfo = prevNavInfo + convergenceToPrev;
-
-            // ---
-
-            var nearestPairsToMap = nearestOnly.SelectNearestTo(map, MaxDistancePercentToMap, MaxAngleDegreesToMap, nextNavInfo.X, nextNavInfo.Y);
-            NavigationInfo convergenceToMap = nearestPairsToMap.ComputeConvergence(MaxDistancePercentToMap, MaxAngleDegreesToMap, nextNavInfo.X, nextNavInfo.Y);
-
-            // ---
-
-            next = TransformedSegments(next, convergenceToMap);
-            nearestOnly = TransformedSegments(nearestOnly, convergenceToMap);
-
-            nextNavInfo += convergenceToMap;
-
-            // ---
-
-            foreach (var segment in nearestOnly) {
-                map.AddSegment(segment);
-            }
-            path.Add(nextNavInfo);
-            prev = next;
-
-            OnMapUpdate?.Invoke(new MapData(map, next, path));
-        }
-
-        private void InitializeWith(IEnumerable<Segment> segments) {
-            map = new Map(segments);
-            path = new List<INavigationInfo> { new NavigationInfo(0.0, 0.0, 0.0) };
-        }
-
-        private IEnumerable<Segment> TransformedSegments(IEnumerable<Segment> segments, INavigationInfo navigationInfo) {
-            foreach (var segment in segments) {
-                yield return segment
-                    .RotatedAt(navigationInfo.A, navigationInfo.X, navigationInfo.Y)
-                    .Shifted(navigationInfo.X, navigationInfo.Y);
+            for (int i = 1; i < frames.Count; ++i) {
+                frames[i].SetOffsetBy(frames[i - 1]);
             }
         }
-    }
+
+        private void EmplaceFrame(IEnumerable<Point> points) {
+            frames.Add(new Frame(points));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private int FixFrameIndex(int index) {
+            return index < 0 ? 0 : index >= frames.Count ? frames.Count - 1 : index;
+        }
+    }    
 }

@@ -47,8 +47,8 @@
     <Compile Include="Extensions\Extensions.Point.cs" />
     <Compile Include="Extensions\Extensions.ReadOnlyCollection.cs" />
     <Compile Include="Interfaces\IDataProvider.cs" />
+    <Compile Include="Interfaces\IFrame.cs" />
     <Compile Include="Interfaces\IMapper.cs" />
-    <Compile Include="Interfaces\IMapData.cs" />
     <Compile Include="Interfaces\INavigationInfo.cs" />
     <Compile Include="Interfaces\ISegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

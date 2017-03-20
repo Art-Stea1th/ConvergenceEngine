@@ -16,10 +16,10 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:MapViewport}">
+    <Style TargetType="{x:Type local:MapperViewport}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:MapViewport}">
+                <ControlTemplate TargetType="{x:Type local:MapperViewport}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -32,7 +32,7 @@
                                     Stroke="Gray"
                                     StrokeThickness="1"/>
                                 <Path
-                                    x:Name="PART_CurrentSegments"
+                                    x:Name="PART_ActualSegments"
                                     Stroke="Red"
                                     StrokeThickness="1"/>
                                 <Polyline

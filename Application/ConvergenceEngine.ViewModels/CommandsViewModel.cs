@@ -105,7 +105,9 @@ namespace ConvergenceEngine.ViewModels {
             }
             FullFrame = null;
             Mapper = null;
-            MapData = null;
+            //MapperData = null;
+            ActualSegments = null;
+            MapSegments = null;
             TotalFrames = 0;
             UpdateStartStopResetButtonText();
         }        

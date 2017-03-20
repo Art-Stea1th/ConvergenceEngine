@@ -25,11 +25,12 @@
                 Grid.Column="0"
                 Margin="8,8,8,0"
                 Background="{StaticResource ViewportBackground}">
-                <acc:MapViewport
-                    MapData="{Binding MapData}"
+                <acc:MapperViewport
+                    MapSegments="{Binding MapSegments}"
+                    ActualSegments="{Binding ActualSegments}"
                     ShowMapPoints="{Binding ElementName=MapPointsRadioButton, Path=IsChecked}"
                     ShowMapSegments="{Binding ElementName=MapSegmentsRadioButton, Path=IsChecked}"
-                    ShowCurrentSegments="{Binding ElementName=CurrentSegmentsCheckBox, Path=IsChecked}"
+                    ShowActualSegments="{Binding ElementName=ActualSegmentsCheckBox, Path=IsChecked}"
                     ShowDepthSensorPath="{Binding ElementName=DepthSensorPathCheckBox, Path=IsChecked}"
                     ShowDepthSensorPosition="{Binding ElementName=DepthSensorPositionCheckBox, Path=IsChecked}"/>              
             </Grid>
@@ -74,7 +75,7 @@
                             <StackPanel>
                                 <RadioButton
                                     x:Name="MapPointsRadioButton"
-                                    Content="Points"/>
+                                    Content="Points" IsEnabled="False"/>
                                 <RadioButton
                                     x:Name="MapSegmentsRadioButton"
                                     Content="Segments" IsChecked="True"/>
@@ -86,8 +87,8 @@
                             Padding="8">
                             <StackPanel>
                                 <CheckBox
-                                    x:Name="CurrentSegmentsCheckBox"
-                                    Content="Current Segments" IsChecked="True"/>
+                                    x:Name="ActualSegmentsCheckBox"
+                                    Content="Actual Segments" IsChecked="True"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox
@@ -97,7 +98,7 @@
                             <StackPanel>
                                 <CheckBox
                                     x:Name="DepthSensorPathCheckBox"
-                                    Content="Path" IsChecked="True"/>
+                                    Content="Path" IsChecked="False" IsEnabled="False"/>
                                 <CheckBox
                                     x:Name="DepthSensorPositionCheckBox"
                                     Content="Position" IsChecked="True"/>

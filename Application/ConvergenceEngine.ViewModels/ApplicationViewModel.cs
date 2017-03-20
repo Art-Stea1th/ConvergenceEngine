@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Media;
+﻿using System.Collections.Generic;
 
 namespace ConvergenceEngine.ViewModels {
 
@@ -10,26 +8,33 @@ namespace ConvergenceEngine.ViewModels {
     public abstract class ApplicationViewModel : ViewModelBase {
 
         private IDataProvider dataProvider;
-        private IMapper mapper;
-        private IMapData mapData;
         private short[,] fullFrame;
+
+        private IMapper mapper;
+        private IEnumerable<ISegment> mapSegments;
+        private IEnumerable<ISegment> actualSegments;
 
         public IDataProvider DataProvider {
             get { return dataProvider; }
             protected set { SetNew(value); NotifyPropertyChanged(); }
         }
-        public IMapper Mapper {
-            get { return mapper; }
-            protected set { SetNew(value); NotifyPropertyChanged(); }
-        }
-        public IMapData MapData {
-            get { return mapData; }
-            protected set { Set(ref mapData, value); }
-        }
         public short[,] FullFrame {
             get { return fullFrame; }
             protected set { Set(ref fullFrame, value); }
         }
+
+        public IMapper Mapper {
+            get { return mapper; }
+            protected set { SetNew(value); NotifyPropertyChanged(); }
+        }
+        public IEnumerable<ISegment> MapSegments {
+            get { return mapSegments; }
+            internal set { Set(ref mapSegments, value); }
+        }
+        public IEnumerable<ISegment> ActualSegments {
+            get { return actualSegments; }
+            internal set { Set(ref actualSegments, value); }
+        }        
 
         public abstract double FpsCurrent { get; set; }
         public abstract bool ModelStarted { get; set; }
@@ -59,13 +64,14 @@ namespace ConvergenceEngine.ViewModels {
                 }
             }
             if (mapper != null) { // 2
-                mapper.OnMapUpdate += UpdateMap;
+                mapper.OnMapperUpdate += UpdateMapperData;
             }
             this.mapper = mapper;
         }
 
-        protected virtual void UpdateMap(IMapData mapData) {
-            MapData = mapData;
+        protected virtual void UpdateMapperData() {
+            MapSegments = Mapper.Map;
+            ActualSegments = Mapper.ActualFrame;
         }
 
         protected virtual void UpdateFullFrame(short[,] fullFrame) {

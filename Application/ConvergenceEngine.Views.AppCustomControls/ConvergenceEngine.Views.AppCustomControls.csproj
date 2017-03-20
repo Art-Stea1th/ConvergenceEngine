@@ -57,7 +57,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapViewport.cs" />
+    <Compile Include="MapperViewport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

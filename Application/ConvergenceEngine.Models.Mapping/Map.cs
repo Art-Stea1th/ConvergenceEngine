@@ -14,25 +14,13 @@ namespace ConvergenceEngine.Models.Mapping {
         private const double MaxDistancePercent = 5.0; // using Selector & Determinator
         private const double MaxAngleDegrees = 3.0;    // using Selector & Determinator
 
-        private List<Segment> segments;
+        private List<Segment> segments = new List<Segment>();
 
-        internal Map(IEnumerable<Segment> segments) {
-            this.segments = new List<Segment>();
-            foreach (var segment in segments) {
-                AddSegment(new Segment(segment));
-            }
-        }
+        internal Map() { }
 
-        public void AddSegment(Segment segment) {
 
-            var existing = segments.SelectNearestTo(segment, MaxDistancePercent, MaxAngleDegrees);
-            if (existing != null) {
-                int index = segments.IndexOf(existing);
-                segments.RemoveAt(index);
-                //segment = GetLarger(segment, existing);
-                segment = Segment.Merged(new[] { segment, existing });
-            }
-            segments.Add(segment);
+        internal void AddSegments(IEnumerable<Segment> segments) {
+
         }
 
         private Segment GetLarger(Segment current, Segment another) {
