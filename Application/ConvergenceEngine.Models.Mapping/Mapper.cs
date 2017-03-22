@@ -41,20 +41,11 @@ namespace ConvergenceEngine.Models.Mapping {
 
             var next = new Frame(nextDepthLine);
 
-            next.SetOffsetBy(frames.LastOrDefault());
+            next.SetPrev(frames.LastOrDefault());
             frames.Add(next);
 
             actualFrameIndex = frames.Count - 1;
             OnMapperUpdate?.Invoke();
-        }
-
-        private void Recalculate() {
-            if (frames.Count < 2) {
-                return;
-            }
-            for (int i = 1; i < frames.Count; ++i) {
-                frames[i].SetOffsetBy(frames[i - 1]);
-            }
         }
 
         private void EmplaceFrame(IEnumerable<Point> points) {

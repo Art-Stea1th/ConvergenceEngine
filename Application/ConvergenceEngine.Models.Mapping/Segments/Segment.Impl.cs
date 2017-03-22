@@ -8,6 +8,7 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
     using Extensions;
     using Infrastructure.Extensions;
+    using Infrastructure.Interfaces;
 
     internal partial class Segment {
 
@@ -69,15 +70,26 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             return new Segment(A.RotatedAt(angle, centerX, centerY), B.RotatedAt(angle, centerX, centerY));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool NearestByAngleTo(Segment segment, double maxAbsAngle) {
-            var absAngle = Math.Abs(AngleTo(segment));
-            return absAngle <= maxAbsAngle || 180.0 - absAngle <= maxAbsAngle ? true : false;
+        public ISegment SelectNearestFrom(IEnumerable<Segment> sequence, double maxDistance, double maxAngle) {
+            var selection = sequence
+                .Where(s => s.NearestByExtremePointsDistanceTo(this, maxDistance))
+                .Where(s => s.NearestByAngleTo(this, maxAngle));
+
+            if (selection.Count() > 1) {
+                return selection.MinBy(s => Math.Abs(s.Length - Length));
+            }
+            return selection.FirstOrDefault();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool NearestByExtremePointsDistanceTo(Segment segment, double maxDistance) {
             return DistanceToNearestExtremePoints(segment) > maxDistance ? false : true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool NearestByAngleTo(Segment segment, double maxAngle) {
+            maxAngle = Math.Abs(maxAngle); var realAngle = Math.Abs(AngleTo(segment));
+            return realAngle <= maxAngle || 180.0 - realAngle <= maxAngle ? true : false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
