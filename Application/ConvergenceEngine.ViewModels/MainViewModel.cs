@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace ConvergenceEngine.ViewModels {
 
@@ -18,15 +17,15 @@ namespace ConvergenceEngine.ViewModels {
         public DoubleCollection FpsCollection { get; private set; }
 
         public bool ViewportSettingsVisible {
-            get { return viewportSettingsVisible; }
-            set { Set(ref viewportSettingsVisible, value); }
+            get => viewportSettingsVisible;
+            set => Set(ref viewportSettingsVisible, value);
         }
         public bool DataProviderSettingsVisible {
-            get { return dataProviderSettingsVisible; }
-            set { Set(ref dataProviderSettingsVisible, value); }
+            get => dataProviderSettingsVisible;
+            set => Set(ref dataProviderSettingsVisible, value);
         }
         public bool FullFrameViewportVisible {
-            get { return fullFrameViewportVisible; }
+            get => fullFrameViewportVisible;
             set {
                 Set(ref fullFrameViewportVisible, value);
                 SwitchFullFrameViewportVisibility(value);
@@ -34,27 +33,27 @@ namespace ConvergenceEngine.ViewModels {
         }
 
         public override double FpsCurrent {
-            get { return fpsCurrent; }
+            get => fpsCurrent;
             set {
                 if (DataProvider != null) { Set(ref fpsCurrent, DataProvider.FPS = value); return; }
                 Set(ref fpsCurrent, value);
             }
         }
         public override bool ModelStarted {
-            get { return modelStarted; }
-            set { Set(ref modelStarted, value); }
+            get => modelStarted;
+            set => Set(ref modelStarted, value);
         }
         public override int TotalFrames {
-            get { return totatFrames; }
-            set { Set(ref totatFrames, value); }
+            get => totatFrames;
+            set => Set(ref totatFrames, value);
         }
         public override int CurrentFrame {
-            get { return currentFrame; }
-            set { Set(ref currentFrame, value); }
+            get => currentFrame;
+            set => Set(ref currentFrame, value);
         }
         public override string StartStopResetButtonText {
-            get { return startStopResetButtonText; }
-            set { Set(ref startStopResetButtonText, value); }
+            get => startStopResetButtonText;
+            set => Set(ref startStopResetButtonText, value);
         }
 
         public MainViewModel() {

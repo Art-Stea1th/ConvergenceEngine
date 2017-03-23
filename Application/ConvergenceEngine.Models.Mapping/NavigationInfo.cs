@@ -9,9 +9,9 @@ namespace ConvergenceEngine.Models.Mapping {
 
         decimal x, y, a;
 
-        public double X { get { return (double)x; } }
-        public double Y { get { return (double)y; } }
-        public double A { get { return (double)a; } }
+        public double X { get => (double)x; }
+        public double Y { get => (double)y; }
+        public double A { get => (double)a; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static NavigationInfo operator +(NavigationInfo navInfoA, NavigationInfo navInfoB) {

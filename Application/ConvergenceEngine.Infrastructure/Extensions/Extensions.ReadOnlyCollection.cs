@@ -20,7 +20,7 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
             return sequence.MinOrMaxBy(selector, value => value < 0).Key;
         }
 
-        public static Tuple<IEnumerable<T>, IEnumerable<T>> SplitBy<T>(this IReadOnlyCollection<T> sequence, int index) {
+        public static (IEnumerable<T> Left, IEnumerable<T> Right) SplitBy<T>(this IReadOnlyCollection<T> sequence, int index) {
 
             if (sequence.Count < 3) { throw new InvalidOperationException(); }
             if (index == 0 || index == sequence.Count - 1) { throw new ArgumentException(); }
@@ -29,7 +29,7 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
             IEnumerable<T> left = sequence.TakeWhile((p, i) => i <= index);
             IEnumerable<T> right = sequence.SkipWhile((p, i) => i < index);
 
-            return Tuple.Create(left, right);
+            return (Left: left, Right: right);
         }
     }    
 }

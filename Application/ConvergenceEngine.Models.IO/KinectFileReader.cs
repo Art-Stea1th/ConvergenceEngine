@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
@@ -16,8 +17,8 @@ namespace ConvergenceEngine.Models.IO {
         private readonly SequenceInfo sequenceInfo;
         private const int rightBadAreaSize = 8;
 
-        private ConcurrentQueue<Tuple<List<Point>, short[,]>> frames; // ~ 610 kb
-        private const int bufferLimit = 64;               // 610 * 64 ~ 38.125 mb
+        private ConcurrentQueue<(short[,] Frame, List<Point> Line)> frames; // ~ 610 kb
+        private const int bufferLimit = 64;                     // 610 * 64 ~ 38.125 mb
 
         private DateTime nextFrameRedyInvokeLast;
         private TimeSpan nextFrameRedyInvokeInterval;
@@ -30,13 +31,13 @@ namespace ConvergenceEngine.Models.IO {
 
         public DataProviderStates State { get; private set; }
 
-        public int FrameWidth { get { return sequenceInfo.Width; } }
-        public int FrameHeight { get { return sequenceInfo.Height; } }
+        public int FrameWidth { get => sequenceInfo.Width; }
+        public int FrameHeight { get => sequenceInfo.Height; }
 
-        public int MinDepth { get { return sequenceInfo.MinDepth; } }
-        public int MaxDepth { get { return sequenceInfo.MaxDepth; } }
+        public int MinDepth { get => sequenceInfo.MinDepth; }
+        public int MaxDepth { get => sequenceInfo.MaxDepth; }
 
-        public double FPS { get { return fps; } set { fps = LimitedValue(value, 0.5, 60.0); } }
+        public double FPS { get => fps; set => fps = LimitedValue(value, 0.5, 60.0); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double LimitedValue(double value, double min, double max) {
@@ -45,13 +46,7 @@ namespace ConvergenceEngine.Models.IO {
 
         public static KinectFileReader CreateReader(string fileName) {
             var sequenceInfo = SequenceInfo.Read(fileName);
-            if (sequenceInfo == null) {
-                return null;
-            }
-            if (sequenceInfo.IsValid) {
-                return new KinectFileReader(sequenceInfo);
-            }
-            return null;
+            return sequenceInfo == null ? null : sequenceInfo.IsValid ? new KinectFileReader(sequenceInfo) : null;
         }
 
         private KinectFileReader(SequenceInfo sequenceInfo) {
@@ -69,7 +64,7 @@ namespace ConvergenceEngine.Models.IO {
         }
 
         private void Initialize() {
-            frames = new ConcurrentQueue<Tuple<List<Point>, short[,]>>();
+            frames = new ConcurrentQueue<(short[,] Frame, List<Point> Line)>();
             State = DataProviderStates.Stopped; allRead = false;
         }
 
@@ -105,35 +100,33 @@ namespace ConvergenceEngine.Models.IO {
             while (frames.Count < bufferLimit && !allRead) {
                 if (reader.Read(nextRawBuffer, 0, bytesPerFrame) == bytesPerFrame) {
                     HorizontalMirror(nextRawBuffer);
-                    short[,] nextDepthFrame = DepthsFrameFrom(nextRawBuffer);
-                    List<Point> nextDepthLine = new List<Point>(DepthLineFrom(nextDepthFrame));
-                    frames.Enqueue(new Tuple<List<Point>, short[,]>(nextDepthLine, nextDepthFrame));
+                    var nextDepthFrame = DepthsFrameFrom(nextRawBuffer);
+                    var nextDepthLine = DepthLineFrom(nextDepthFrame).ToList();
+                    frames.Enqueue((Frame: nextDepthFrame, Line: nextDepthLine));
                 }
                 else {
                     allRead = true;
-                }                
+                }
             }
         }
 
         private void GenerateSequenceProcess() {
 
-            Tuple<List<Point>, short[,]> nextFrame = null;
-
             while (State == DataProviderStates.Started && (frames.Count > 0 || !allRead)) {
-                if (DateTime.Now >= nextFrameRedyInvokeLast + nextFrameRedyInvokeInterval) {
-                    while (!frames.TryDequeue(out nextFrame)) {
-                        Thread.Sleep(nextFrameRedyInvokeInterval.Milliseconds / 10);
-                    }
-                    NextFrameRedyInvoke(nextFrame.Item1, nextFrame.Item2);
+                if (DateTime.Now >= nextFrameRedyInvokeLast + nextFrameRedyInvokeInterval
+                    && frames.TryDequeue(out var nextFrame)) {
+                    NextFrameRedyInvoke(nextFrame.Frame, nextFrame.Line);
                 }
-                Thread.Sleep(nextFrameRedyInvokeInterval.Milliseconds / 10);
+                else {
+                    Thread.Sleep(nextFrameRedyInvokeInterval.Milliseconds / 10);
+                }
             }
             ChangeState(DataProviderStates.Stopped);
         }
 
-        private void NextFrameRedyInvoke(List<Point> nextLine, short[,] nextFrame) {
-            OnNextDepthLineReady?.Invoke(nextLine);
+        private void NextFrameRedyInvoke(short[,] nextFrame, List<Point> nextLine) {
             OnNextFullFrameReady?.Invoke(nextFrame);
+            OnNextDepthLineReady?.Invoke(nextLine);
             nextFrameRedyInvokeLast = DateTime.Now;
             nextFrameRedyInvokeInterval = TimeSpan.FromSeconds(1.0 / fps);
         }

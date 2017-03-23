@@ -13,18 +13,13 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
         public Point A { get; private set; }
         public Point B { get; private set; }
-        public Point Center { get { return new Point((A.X + B.X) * 0.5, (A.Y + B.Y) * 0.5); } }
-        public double Length { get { return (B - A).Length; } }
+        public Point Center { get => new Point((A.X + B.X) * 0.5, (A.Y + B.Y) * 0.5); }
+        public double Length { get => (B - A).Length; }
 
         internal Segment(IEnumerable<Point> linearOrderedPoints) : this(linearOrderedPoints.ApproximateOrdered()) { }
         internal Segment(ISegment segment) : this(segment.A, segment.B) { }
-        internal Segment(Tuple<Point, Point> points) : this(points.Item1, points.Item2) { }
+        internal Segment((Point A, Point B) points) : this(points.A, points.B) { }
         internal Segment(Point pointA, Point pointB) { A = pointA; B = pointB; }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Tuple<Point, Point>(Segment segment) {
-            return Tuple.Create(segment.A, segment.B);
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private IEnumerable<Point> Points() {
@@ -33,7 +28,7 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
         #region Generic Interfaces
 
-        public int Count { get { return 2; } }
+        public int Count { get => 2; }
 
         public Point this[int index] {
             get { switch (index) { case 0: return A; case 1: return B; default: throw new IndexOutOfRangeException(); } }
@@ -46,7 +41,7 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerator IEnumerable.GetEnumerator() {
-            return GetEnumerator();
+            return Points().GetEnumerator();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

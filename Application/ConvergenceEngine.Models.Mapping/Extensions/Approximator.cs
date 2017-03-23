@@ -11,20 +11,20 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
     internal static class Approximator { // IEnumerable<Point>, IEnumerable<Vector> Extension class
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Tuple<Point, Point> ApproximateOrdered(this IEnumerable<Point> points) {
+        public static (Point A, Point B) ApproximateOrdered(this IEnumerable<Point> points) {
             var result = points.Approximate(p => p.X, p => p.Y);
-            return Tuple.Create(new Point(result.Item1, result.Item2), new Point(result.Item3, result.Item4));
+            return (A: new Point(result.X1, result.Y1), B: new Point(result.X2, result.Y2));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector ApproximateOrdered(this IEnumerable<Vector> vectors) {
             var result = vectors.Approximate(v => v.X, v => v.Y);
-            return (new Vector(result.Item1, result.Item2) + new Vector(result.Item3, result.Item4)) * 0.5;
+            return (new Vector(result.X1, result.Y1) + new Vector(result.X2, result.Y2)) * 0.5;
         }
 
         // Ordinary Least Squares
-        private static Tuple<double, double, double, double> Approximate<TSource>(this IEnumerable<TSource> sequence,
-            Func<TSource, double> x, Func<TSource, double> y) {
+        private static (double X1, double Y1, double X2, double Y2) Approximate<TSource>(
+            this IEnumerable<TSource> sequence, Func<TSource, double> x, Func<TSource, double> y) {
             if (sequence == null || x == null || y == null) {
                 throw new ArgumentNullException();
             }
@@ -34,11 +34,11 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             }
             var first = sequence.First();
             if (count == 1) {
-                return Tuple.Create(x(first), y(first), x(first), y(first));
+                return (X1: x(first), Y1: y(first), X2: x(first), Y2: y(first));
             }
             var last = sequence.Last();
             if (count == 2) {
-                return Tuple.Create(x(first), y(first), x(last), y(last));
+                return (X1: x(first), Y1: y(first), X2: x(last), Y2: y(last));
             }
 
             var avgX = sequence.Average(p => x(p));
@@ -51,7 +51,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             var b = avgY - a * avgX;
 
             if (double.IsNaN(a) || double.IsInfinity(a)) {
-                return Tuple.Create(x(first), y(first), x(last), y(last));
+                return (X1: x(first), Y1: y(first), X2: x(last), Y2: y(last));
             }
 
             var p0 = new Point(x(first), y(first));
@@ -63,7 +63,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             var resultP0 = new Point(p0.X, p0.DistancePointTo(olsP0, olsPN).Y);
             var resultPN = new Point(pN.X, pN.DistancePointTo(olsP0, olsPN).Y);
 
-            return Tuple.Create(resultP0.X, resultP0.Y, resultPN.X, resultPN.Y);
+            return (X1: resultP0.X, Y1: resultP0.Y, X2: resultPN.X, Y2: resultPN.Y);
         }
     }
 }

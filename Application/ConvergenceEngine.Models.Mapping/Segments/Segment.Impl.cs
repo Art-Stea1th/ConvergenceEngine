@@ -6,7 +6,6 @@ using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Segments {
 
-    using Extensions;
     using Infrastructure.Extensions;
     using Infrastructure.Interfaces;
 
@@ -16,8 +15,8 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         private static Vector BasisX = new Vector(1.0, 0.0);
         private static Vector BasisY = new Vector(0.0, 1.0);
 
-        public double AngleToHorizontal { get { return AngleTo(BasisX); } }
-        public double AngleToVertical { get { return AngleTo(BasisY); } }
+        public double AngleToHorizontal { get => AngleTo(BasisX); }
+        public double AngleToVertical { get => AngleTo(BasisY); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double AngleTo(Segment segment) {
@@ -25,8 +24,6 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         }
 
         private double AngleTo(Vector vector) {
-            //var angle = Vector.AngleBetween((B - A), vector);
-            //return Math.Abs(angle) < 90.0 ? angle : angle < 0 ? angle + 180.0 : angle - 180.0;
             return Vector.AngleBetween((B - A), vector);
         }
 

@@ -7,8 +7,8 @@ namespace ConvergenceEngine.Views.AppConverters {
 
     public abstract class BinaryLogicIntegerConverter<TTarget> : BinaryLogicConverter<int, TTarget> {
 
-        public TTarget NonZero { get { return nonZeroTarget; } set { nonZeroTarget = value; } }
-        public TTarget Zero { get { return zeroTarget; } set { zeroTarget = value; } }
+        public TTarget NonZero { get => nonZeroTarget; set => nonZeroTarget = value; }
+        public TTarget Zero { get => zeroTarget; set => zeroTarget = value; }
 
         public BinaryLogicIntegerConverter(TTarget nonZeroTarget, TTarget zeroTarget)
             : base(1, 0, nonZeroTarget, zeroTarget) { }
@@ -17,8 +17,8 @@ namespace ConvergenceEngine.Views.AppConverters {
 
     public abstract class BinaryLogicBooleanConverter<TTarget> : BinaryLogicConverter<bool, TTarget> {
 
-        public TTarget True { get { return nonZeroTarget; } set { nonZeroTarget = value; } }
-        public TTarget False { get { return zeroTarget; } set { zeroTarget = value; } }
+        public TTarget True { get => nonZeroTarget; set => nonZeroTarget = value; }
+        public TTarget False { get => zeroTarget; set => zeroTarget = value; }
 
         public BinaryLogicBooleanConverter(TTarget trueValue, TTarget falseValue)
             : base(true, false, trueValue, falseValue) { }
@@ -26,8 +26,8 @@ namespace ConvergenceEngine.Views.AppConverters {
 
     public abstract class BinaryLogicObjectConverter<TTarget> : BinaryLogicConverter<object, TTarget> {
 
-        public TTarget NotNull { get { return nonZeroTarget; } set { nonZeroTarget = value; } }
-        public TTarget Null { get { return zeroTarget; } set { zeroTarget = value; } }
+        public TTarget NotNull { get => nonZeroTarget; set => nonZeroTarget = value; }
+        public TTarget Null { get => zeroTarget; set => zeroTarget = value; }
 
         public BinaryLogicObjectConverter(TTarget notNullValue, TTarget nullValue)
             : base(null, null, notNullValue, nullValue) { }

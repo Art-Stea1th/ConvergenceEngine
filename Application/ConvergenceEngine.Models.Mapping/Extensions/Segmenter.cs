@@ -6,7 +6,6 @@ using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Extensions {
 
-    using Segments;
     using Infrastructure.Extensions;
 
     internal static class Segmenter { // IEnumerable<Point> Extension class
@@ -20,14 +19,14 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
                 List<Point> segment = new List<Point>(points);
                 var segmentPair = SplitByMaxDivergencePoint(segment, allowedDivergencePercent);
 
-                if (segmentPair == null) {
+                if (segmentPair.Left == null || segmentPair.Right == null) {
                     if (IsValidSequence(segment)) {
                         result.Add(segment);
                     }
                 }
                 else {
-                    result.AddRange(segmentPair.Item1.Segmentate(allowedDivergencePercent));
-                    result.AddRange(segmentPair.Item2.Segmentate(allowedDivergencePercent));
+                    result.AddRange(segmentPair.Left.Segmentate(allowedDivergencePercent));
+                    result.AddRange(segmentPair.Right.Segmentate(allowedDivergencePercent));
                 }
             }
             return result;
@@ -45,7 +44,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             return (segmentPositionY - b) / a;     // y = ax + b; => x = (y - b) / a;
         }
 
-        private static Tuple<IEnumerable<Point>, IEnumerable<Point>> SplitByMaxDivergencePoint(
+        private static (IEnumerable<Point> Left, IEnumerable<Point> Right) SplitByMaxDivergencePoint(
             IReadOnlyList<Point> points, double allowedDivergencePercent) {
 
             var maxDivergencePointIndex = points.IndexOfMaxBy(p => p.DistanceTo(points.First(), points.Last()));
@@ -56,7 +55,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             if (points[maxDivergencePointIndex].DistanceTo(points.First(), points.Last()) > allowedDivergence) {
                 return points.SplitBy(maxDivergencePointIndex);
             }
-            return null;
+            return (null, null);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,7 +9,6 @@ using System.Windows;
 namespace ConvergenceEngine.Models.Mapping {
 
     using Infrastructure.Interfaces;
-    using System.Runtime.CompilerServices;
 
     public sealed class Mapper : IMapper {
 
@@ -22,19 +22,15 @@ namespace ConvergenceEngine.Models.Mapping {
         private Map map = new Map();
 
         public int ActualFrameIndex {
-            get { return actualFrameIndex; }
-            set { actualFrameIndex = FixFrameIndex(value); }
+            get => actualFrameIndex;
+            set => actualFrameIndex = FixFrameIndex(value);
         }
         public int AdditionalFrameIndexOffset { get; set; }
 
-        public IFrame ActualFrame {
-            get { return frames[actualFrameIndex]; }
-        }
-        public IFrame AdditionalFrame {
-            get { return frames[FixFrameIndex(actualFrameIndex + additionalFrameIndexOffset)]; }
-        }
+        public IFrame ActualFrame { get => frames[actualFrameIndex]; }
+        public IFrame AdditionalFrame { get => frames[FixFrameIndex(actualFrameIndex + additionalFrameIndexOffset)]; }
 
-        public IEnumerable<ISegment> Map { get { return map; } }
+        public IEnumerable<ISegment> Map { get => map; }
 
 
         public void HandleNextData(IEnumerable<Point> nextDepthLine) {
@@ -56,5 +52,5 @@ namespace ConvergenceEngine.Models.Mapping {
         private int FixFrameIndex(int index) {
             return index < 0 ? 0 : index >= frames.Count ? frames.Count - 1 : index;
         }
-    }    
+    }
 }

@@ -6,22 +6,22 @@ using System.Windows.Media.Imaging;
 
 namespace ConvergenceEngine.Views.AppCustomControls {
 
-    [TemplatePart(Name = FullFrameViewport.PartImageName, Type = typeof(Image))]
+    [TemplatePart(Name = PartImageName, Type = typeof(Image))]
     public class FullFrameViewport : Control {
 
         public Color NearColor {
-            get { return (Color)GetValue(NearColorProperty); }
-            set { SetValue(NearColorProperty, value); }
+            get => (Color)GetValue(NearColorProperty);
+            set => SetValue(NearColorProperty, value);
         }
 
         public Color FarColor {
-            get { return (Color)GetValue(FarColorProperty); }
-            set { SetValue(FarColorProperty, value); }
+            get => (Color)GetValue(FarColorProperty);
+            set => SetValue(FarColorProperty, value);
         }
 
         public short[,] Data {
-            get { return (short[,])GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
+            get => (short[,])GetValue(DataProperty);
+            set => SetValue(DataProperty, value);
         }
 
         public static readonly DependencyProperty NearColorProperty;

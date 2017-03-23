@@ -18,10 +18,10 @@ namespace ConvergenceEngine.Models.IO {
         internal readonly int Width;
         internal readonly int Height;
 
-        internal int FirstFramePosition { get { return sizeof(float) * 5 + sizeof(int) * 4; } }
+        internal int FirstFramePosition { get => sizeof(float) * 5 + sizeof(int) * 4; }
 
-        internal int BytesPerFrame { get { return FrameLength * sizeof(short); } }
-        internal int FrameLength { get { return Width * Height; } }
+        internal int BytesPerFrame { get => FrameLength * sizeof(short); }
+        internal int FrameLength { get => Width * Height; }
 
         internal bool IsValid {
             get {

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:cs="clr-namespace:ConvergenceEngine.Views.AppControls"
         xmlns:vm="clr-namespace:ConvergenceEngine.ViewModels;assembly=ConvergenceEngine.ViewModels"
-        xmlns:local="clr-namespace:ConvergenceEngine.Views"
         Title="Convergence Engine: Simultaneous Localization And Mapping on Kinect"
         Width="960" Height="640" MinWidth="580" MinHeight="135">
     <Window.DataContext>

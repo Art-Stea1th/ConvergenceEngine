@@ -28,8 +28,8 @@ namespace ConvergenceEngine.Models.Mapping {
         public Frame Prev { get; private set; } = null;
         // public Frame Next { get; private set; } = null;
 
-        public INavigationInfo Absolute { get { return absolute; } }
-        public INavigationInfo Relative { get { return relative; } }
+        public INavigationInfo Absolute { get => absolute; }
+        public INavigationInfo Relative { get => relative; }
 
         private List<Segment> nearestToPrev = null;
 
@@ -62,18 +62,18 @@ namespace ConvergenceEngine.Models.Mapping {
         }
 
         private void SetOffsetBy(Frame frame) {
-            var nearest = sourceSegments.SelectNearestTo(frame.sourceSegments, MaxDistancePercent, MaxAngleDegrees, 0, 0);
-            relative = nearest.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees, 0, 0);
+            var nearest = sourceSegments.SelectNearestTo(frame.sourceSegments, MaxDistancePercent, MaxAngleDegrees);
+            relative = nearest.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
             absolute = frame.absolute + relative;
             actualSegments = sourceSegments.Select(s => s.RotatedAtZero(absolute.A).Shifted(absolute.X, absolute.Y)).ToList();
         }
 
-        private IEnumerable<Tuple<ISegment, ISegment>> SelectNearestToPrev(double maxDistancePercent, double maxAngleDegrees) {
+        private IEnumerable<(ISegment Current, ISegment Similar)> SelectNearestToPrev(double maxDistancePercent, double maxAngleDegrees) {
             foreach (var segment in sourceSegments) {
                 var currentMaxDistance = Math.Min(segment.A.Y, segment.B.Y) / 100.0 * maxDistancePercent;
                 ISegment nearest = segment.SelectNearestFrom(Prev.sourceSegments, currentMaxDistance, maxAngleDegrees);
                 if (nearest != null) {
-                    yield return Tuple.Create(segment as ISegment, nearest);
+                    yield return (Current: segment as ISegment, Similar: nearest);
                 }
             }
         }

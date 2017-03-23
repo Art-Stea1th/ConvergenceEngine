@@ -18,20 +18,20 @@ namespace ConvergenceEngine.ViewModels {
         private ICommand startStopResetCommand;
 
         public ICommand OpenFile {
-            get { return openFileCommand; }
-            set { Set(ref openFileCommand, value); }
+            get => openFileCommand;
+            set => Set(ref openFileCommand, value);
         }
         public ICommand CloseFile {
-            get { return closeFileCommand; }
-            set { Set(ref closeFileCommand, value); }
+            get => closeFileCommand;
+            set => Set(ref closeFileCommand, value);
         }
         public ICommand ExitApplication {
-            get { return exitApplicationCommand; }
-            set { Set(ref exitApplicationCommand, value); }
+            get => exitApplicationCommand;
+            set => Set(ref exitApplicationCommand, value);
         }
         public ICommand StartStopReset {
-            get { return startStopResetCommand; }
-            set { Set(ref startStopResetCommand, value); }
+            get => startStopResetCommand;
+            set => Set(ref startStopResetCommand, value);
         }
 
         protected virtual void InitializeCommands() {
@@ -53,13 +53,13 @@ namespace ConvergenceEngine.ViewModels {
 
         private void ExecuteOpenFileCommand(object obj) {
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.Title = "Open RAW Depth Stream Data file";
-            openFileDialog.Multiselect = false;
-            openFileDialog.DefaultExt = ".rdsd";
-            openFileDialog.Filter = " RAW Depth Stream Data |*.rdsd| All Files |*.*";
-            openFileDialog.ValidateNames = true;
+            OpenFileDialog openFileDialog = new OpenFileDialog() {
+                Title = "Open RAW Depth Stream Data file",
+                Multiselect = false,
+                DefaultExt = ".rdsd",
+                Filter = " RAW Depth Stream Data |*.rdsd| All Files |*.*",
+                ValidateNames = true
+            };
 
             if (openFileDialog.ShowDialog() == true) {
                 var newDataProvider = KinectFileReader.CreateReader(openFileDialog.FileName);
