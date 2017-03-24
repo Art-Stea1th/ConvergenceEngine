@@ -11,10 +11,10 @@ namespace ConvergenceEngine.Models.Mapping {
 
     internal sealed class Map : IEnumerable<Segment> {
 
-        private const double MaxDistancePercent = 5.0; // using Selector & Determinator
-        private const double MaxAngleDegrees = 3.0;    // using Selector & Determinator
+        private const double _maxDistancePercent = 5.0; // using Selector & Determinator
+        private const double _maxAngleDegrees = 3.0;    // using Selector & Determinator
 
-        private List<Segment> segments = new List<Segment>();
+        private List<Segment> _segments = new List<Segment>();
 
         internal Map() { }
 
@@ -27,12 +27,8 @@ namespace ConvergenceEngine.Models.Mapping {
             return current.Length >= another.Length ? current : another;
         }
 
-        public IEnumerator<Segment> GetEnumerator() {
-            return segments.GetEnumerator();
-        }
+        public IEnumerator<Segment> GetEnumerator() => _segments.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() {
-            return segments.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => _segments.GetEnumerator();
     }
 }

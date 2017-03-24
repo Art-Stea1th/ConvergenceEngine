@@ -12,26 +12,26 @@ namespace ConvergenceEngine.ViewModels {
 
     public abstract class CommandsViewModel : ApplicationViewModel {
 
-        private ICommand openFileCommand;
-        private ICommand closeFileCommand;
-        private ICommand exitApplicationCommand;
-        private ICommand startStopResetCommand;
+        private ICommand _openFileCommand;
+        private ICommand _closeFileCommand;
+        private ICommand _exitApplicationCommand;
+        private ICommand _startStopResetCommand;
 
         public ICommand OpenFile {
-            get => openFileCommand;
-            set => Set(ref openFileCommand, value);
+            get => _openFileCommand;
+            set => Set(ref _openFileCommand, value);
         }
         public ICommand CloseFile {
-            get => closeFileCommand;
-            set => Set(ref closeFileCommand, value);
+            get => _closeFileCommand;
+            set => Set(ref _closeFileCommand, value);
         }
         public ICommand ExitApplication {
-            get => exitApplicationCommand;
-            set => Set(ref exitApplicationCommand, value);
+            get => _exitApplicationCommand;
+            set => Set(ref _exitApplicationCommand, value);
         }
         public ICommand StartStopReset {
-            get => startStopResetCommand;
-            set => Set(ref startStopResetCommand, value);
+            get => _startStopResetCommand;
+            set => Set(ref _startStopResetCommand, value);
         }
 
         protected virtual void InitializeCommands() {
@@ -44,16 +44,18 @@ namespace ConvergenceEngine.ViewModels {
         private bool CanExecuteOpenFileCommand(object obj) {
             return DataProvider == null || DataProvider.State == DataProviderStates.Stopped;
         }
+
         private bool CanExecuteCloseFileCommand(object obj) {
             return DataProvider != null;
         }
+
         private bool CanExecuteStartStopResetCommand(object obj) {
             return DataProvider != null;
         }
 
         private void ExecuteOpenFileCommand(object obj) {
 
-            OpenFileDialog openFileDialog = new OpenFileDialog() {
+            var openFileDialog = new OpenFileDialog() {
                 Title = "Open RAW Depth Stream Data file",
                 Multiselect = false,
                 DefaultExt = ".rdsd",
@@ -80,6 +82,7 @@ namespace ConvergenceEngine.ViewModels {
         private void ExecuteCloseFileCommand(object obj) {
             Reset(true);
         }
+
         private void ExecuteStartStopResetCommand(object obj) {
             if (Mapper == null) {
                 Mapper = new Mapper();

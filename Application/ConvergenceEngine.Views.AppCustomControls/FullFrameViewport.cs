@@ -9,6 +9,8 @@ namespace ConvergenceEngine.Views.AppCustomControls {
     [TemplatePart(Name = PartImageName, Type = typeof(Image))]
     public class FullFrameViewport : Control {
 
+        public const string PartImageName = "PART_Image";
+
         public Color NearColor {
             get => (Color)GetValue(NearColorProperty);
             set => SetValue(NearColorProperty, value);
@@ -44,47 +46,46 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                 new FrameworkPropertyMetadata(null, (s, e) => (s as FullFrameViewport).UpdateImageData()));
         }
 
-        private const string PartImageName = "PART_Image";
-        private Image image;
+        private Image _image;
 
-        private Color[] intensityBuffer;
-        private byte[] frameBuffer;
+        private Color[] _intensityBuffer;
+        private byte[] _frameBuffer;
 
-        private int width = 4;
-        private int height = 3;
+        private int _width = 4;
+        private int _height = 3;
 
-        private short minDepth = 800;
-        private short maxDepth = 4000;
+        private short _minDepth = 800;
+        private short _maxDepth = 4000;
 
         public override void OnApplyTemplate() {
-            image = GetTemplateChild(PartImageName) as Image;
-            intensityBuffer = GenerateIntensityBuffer();
+            _image = GetTemplateChild(PartImageName) as Image;
+            _intensityBuffer = GenerateIntensityBuffer();
             UpdateImageData();
         }
 
         private void UpdateImageData() {
 
-            if (image == null) {
+            if (_image == null) {
                 return;
             }
 
             if (Data == null) {
-                image.Source = NewBitmap(width, height);
+                _image.Source = NewBitmap(_width, _height);
                 return;
             }
 
             PrepareFrameBuffer();
 
-            if (frameBuffer == null) {
-                image.Source = NewBitmap(width, height);
+            if (_frameBuffer == null) {
+                _image.Source = NewBitmap(_width, _height);
                 return;
             }
 
-            var bitmap = NewBitmap(width, height);
-            bitmap.WritePixels(new Int32Rect(0, 0, width, height), frameBuffer, width * sizeof(int), 0);
+            var bitmap = NewBitmap(_width, _height);
+            bitmap.WritePixels(new Int32Rect(0, 0, _width, _height), _frameBuffer, _width * sizeof(int), 0);
 
             bitmap.Freeze();
-            image.Source = bitmap;
+            _image.Source = bitmap;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -96,28 +97,28 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
             if (Data != null) {
 
-                width = Data.GetLength(0);
-                height = Data.GetLength(1);
-                int length = width * height * sizeof(int);
+                _width = Data.GetLength(0);
+                _height = Data.GetLength(1);
+                int length = _width * _height * sizeof(int);
 
-                if (frameBuffer == null || frameBuffer.Length != length) {
-                    frameBuffer = new byte[length];
+                if (_frameBuffer == null || _frameBuffer.Length != length) {
+                    _frameBuffer = new byte[length];
                 }
 
-                for (int y = 0; y < height; ++y) {
-                    for (int x = 0; x < width; ++x) {
+                for (int y = 0; y < _height; ++y) {
+                    for (int x = 0; x < _width; ++x) {
 
                         short depth = Data[x, y];
-                        int colorPixelIndex = GetLinearIndex(x * sizeof(int), y, width * sizeof(int));
+                        int colorPixelIndex = GetLinearIndex(x * sizeof(int), y, _width * sizeof(int));
 
-                        if (depth < minDepth) {
+                        if (depth < _minDepth) {
                             SetColorToFrameBuffer(colorPixelIndex, NearColor);
                         }
-                        else if (depth > maxDepth) {
+                        else if (depth > _maxDepth) {
                             SetColorToFrameBuffer(colorPixelIndex, FarColor);
                         }
                         else {
-                            SetColorToFrameBuffer(colorPixelIndex, intensityBuffer[maxDepth - depth]);
+                            SetColorToFrameBuffer(colorPixelIndex, _intensityBuffer[_maxDepth - depth]);
                         }
                     }
                 }
@@ -126,28 +127,26 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
         private Color[] GenerateIntensityBuffer() {
 
-            int depthRange = maxDepth - minDepth;
+            int depthRange = _maxDepth - _minDepth;
             double intencityStep = 255.0 / depthRange;
 
-            intensityBuffer = new Color[depthRange];
-            for (int i = 0; i < intensityBuffer.Length; ++i) {
+            _intensityBuffer = new Color[depthRange];
+            for (int i = 0; i < _intensityBuffer.Length; ++i) {
                 byte colorComponent = (byte)((i * intencityStep));
-                intensityBuffer[i] = Color.FromArgb(255, colorComponent, colorComponent, colorComponent);
+                _intensityBuffer[i] = Color.FromArgb(255, colorComponent, colorComponent, colorComponent);
             }
-            return intensityBuffer;
+            return _intensityBuffer;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int GetLinearIndex(int x, int y, int width) {
-            return width * y + x;
-        }
+        private int GetLinearIndex(int x, int y, int width) => width * y + x;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetColorToFrameBuffer(int startIndex, Color color) {
-            frameBuffer[startIndex] = color.B;
-            frameBuffer[++startIndex] = color.G;
-            frameBuffer[++startIndex] = color.R;
-            frameBuffer[++startIndex] = color.A;
+            _frameBuffer[startIndex] = color.B;
+            _frameBuffer[++startIndex] = color.G;
+            _frameBuffer[++startIndex] = color.R;
+            _frameBuffer[++startIndex] = color.A;
         }
     }
 }

@@ -14,16 +14,16 @@ namespace ConvergenceEngine.Models.IO {
 
     public sealed class KinectFileReader : IDataProvider {
 
-        private readonly SequenceInfo sequenceInfo;
-        private const int rightBadAreaSize = 8;
+        private readonly SequenceInfo _sequenceInfo;
+        private const int _rightBadAreaSize = 8;
 
-        private ConcurrentQueue<(short[,] Frame, List<Point> Line)> frames; // ~ 610 kb
-        private const int bufferLimit = 64;                     // 610 * 64 ~ 38.125 mb
+        private ConcurrentQueue<(short[,] frame, List<Point> line)> _frames; // ~ 610 kb
+        private const int _bufferLimit = 64;                     // 610 * 64 ~ 38.125 mb
 
-        private DateTime nextFrameRedyInvokeLast;
-        private TimeSpan nextFrameRedyInvokeInterval;
-        private double fps;
-        private bool allRead;
+        private DateTime _nextFrameRedyInvokeLast;
+        private TimeSpan _nextFrameRedyInvokeInterval;
+        private double _fps;
+        private bool _allRead;
 
         public event Action<IEnumerable<Point>> OnNextDepthLineReady;
         public event Action<short[,]> OnNextFullFrameReady;
@@ -31,13 +31,13 @@ namespace ConvergenceEngine.Models.IO {
 
         public DataProviderStates State { get; private set; }
 
-        public int FrameWidth { get => sequenceInfo.Width; }
-        public int FrameHeight { get => sequenceInfo.Height; }
+        public int FrameWidth => _sequenceInfo.Width;
+        public int FrameHeight => _sequenceInfo.Height;
 
-        public int MinDepth { get => sequenceInfo.MinDepth; }
-        public int MaxDepth { get => sequenceInfo.MaxDepth; }
+        public int MinDepth => _sequenceInfo.MinDepth;
+        public int MaxDepth => _sequenceInfo.MaxDepth;
 
-        public double FPS { get => fps; set => fps = LimitedValue(value, 0.5, 60.0); }
+        public double FPS { get => _fps; set => _fps = LimitedValue(value, 0.5, 60.0); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double LimitedValue(double value, double min, double max) {
@@ -50,7 +50,7 @@ namespace ConvergenceEngine.Models.IO {
         }
 
         private KinectFileReader(SequenceInfo sequenceInfo) {
-            this.sequenceInfo = sequenceInfo;
+            _sequenceInfo = sequenceInfo;
             FPS = 30.0;
             Initialize();
         }
@@ -64,8 +64,8 @@ namespace ConvergenceEngine.Models.IO {
         }
 
         private void Initialize() {
-            frames = new ConcurrentQueue<(short[,] Frame, List<Point> Line)>();
-            State = DataProviderStates.Stopped; allRead = false;
+            _frames = new ConcurrentQueue<(short[,] Frame, List<Point> Line)>();
+            State = DataProviderStates.Stopped; _allRead = false;
         }
 
         public void Start() {
@@ -81,10 +81,10 @@ namespace ConvergenceEngine.Models.IO {
         }
 
         private void FillBufferProcess() {
-            using (var stream = new FileStream(sequenceInfo.FileName, FileMode.Open)) {
+            using (var stream = new FileStream(_sequenceInfo.FileName, FileMode.Open)) {
                 using (var reader = new BinaryReader(stream)) {
-                    reader.BaseStream.Position = sequenceInfo.FirstFramePosition;
-                    while (State == DataProviderStates.Started && !allRead) {
+                    reader.BaseStream.Position = _sequenceInfo.FirstFramePosition;
+                    while (State == DataProviderStates.Started && !_allRead) {
                         FillBuffers(reader);
                         Thread.Sleep(10);
                     }
@@ -94,31 +94,30 @@ namespace ConvergenceEngine.Models.IO {
 
         private void FillBuffers(BinaryReader reader) {
 
-            int bytesPerFrame = sequenceInfo.BytesPerFrame;
-            byte[] nextRawBuffer = new byte[bytesPerFrame];
+            int bytesPerFrame = _sequenceInfo.BytesPerFrame;
+            var nextRawBuffer = new byte[bytesPerFrame];
 
-            while (frames.Count < bufferLimit && !allRead) {
+            while (_frames.Count < _bufferLimit && !_allRead) {
                 if (reader.Read(nextRawBuffer, 0, bytesPerFrame) == bytesPerFrame) {
                     HorizontalMirror(nextRawBuffer);
                     var nextDepthFrame = DepthsFrameFrom(nextRawBuffer);
-                    var nextDepthLine = DepthLineFrom(nextDepthFrame).ToList();
-                    frames.Enqueue((Frame: nextDepthFrame, Line: nextDepthLine));
+                    _frames.Enqueue((frame: nextDepthFrame, line: DepthLineFrom(nextDepthFrame).ToList()));
                 }
                 else {
-                    allRead = true;
+                    _allRead = true;
                 }
             }
         }
 
         private void GenerateSequenceProcess() {
 
-            while (State == DataProviderStates.Started && (frames.Count > 0 || !allRead)) {
-                if (DateTime.Now >= nextFrameRedyInvokeLast + nextFrameRedyInvokeInterval
-                    && frames.TryDequeue(out var nextFrame)) {
-                    NextFrameRedyInvoke(nextFrame.Frame, nextFrame.Line);
+            while (State == DataProviderStates.Started && (_frames.Count > 0 || !_allRead)) {
+                if (DateTime.Now >= _nextFrameRedyInvokeLast + _nextFrameRedyInvokeInterval
+                    && _frames.TryDequeue(out var nextFrame)) {
+                    NextFrameRedyInvoke(nextFrame.frame, nextFrame.line);
                 }
                 else {
-                    Thread.Sleep(nextFrameRedyInvokeInterval.Milliseconds / 10);
+                    Thread.Sleep(_nextFrameRedyInvokeInterval.Milliseconds / 10);
                 }
             }
             ChangeState(DataProviderStates.Stopped);
@@ -127,14 +126,14 @@ namespace ConvergenceEngine.Models.IO {
         private void NextFrameRedyInvoke(short[,] nextFrame, List<Point> nextLine) {
             OnNextFullFrameReady?.Invoke(nextFrame);
             OnNextDepthLineReady?.Invoke(nextLine);
-            nextFrameRedyInvokeLast = DateTime.Now;
-            nextFrameRedyInvokeInterval = TimeSpan.FromSeconds(1.0 / fps);
+            _nextFrameRedyInvokeLast = DateTime.Now;
+            _nextFrameRedyInvokeInterval = TimeSpan.FromSeconds(1.0 / _fps);
         }
 
         private void HorizontalMirror(byte[] frame) {
 
-            int width  = sequenceInfo.Width * sizeof(short);
-            int height = sequenceInfo.Height;
+            int width  = _sequenceInfo.Width * sizeof(short);
+            int height = _sequenceInfo.Height;
 
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width / 2; ++x) {
@@ -150,17 +149,15 @@ namespace ConvergenceEngine.Models.IO {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int GetLinearIndex(int x, int y, int width) {
-            return width * y + x;
-        }
+        private int GetLinearIndex(int x, int y, int width) => width * y + x;
 
         private short[,] DepthsFrameFrom(byte[] rawFrame) {
 
-            short[,] depthFrame = new short[sequenceInfo.Width - rightBadAreaSize, sequenceInfo.Height];
+            var depthFrame = new short[_sequenceInfo.Width - _rightBadAreaSize, _sequenceInfo.Height];
 
-            for (int y = 0; y < sequenceInfo.Height; ++y) {
-                for (int x = 0; x < sequenceInfo.Width - rightBadAreaSize; ++x) {
-                    int i = GetLinearIndex(x * sizeof(short), y, sequenceInfo.Width * sizeof(short));
+            for (int y = 0; y < _sequenceInfo.Height; ++y) {
+                for (int x = 0; x < _sequenceInfo.Width - _rightBadAreaSize; ++x) {
+                    int i = GetLinearIndex(x * sizeof(short), y, _sequenceInfo.Width * sizeof(short));
                     short nextDepth = rawFrame[i];
                     nextDepth <<= 8;
                     nextDepth |= (short)rawFrame[i + 1]; // <-- depth short construct
@@ -178,7 +175,7 @@ namespace ConvergenceEngine.Models.IO {
 
             for (int x = 0; x < width; ++x) {
                 int z = depthFrame[x, y];
-                if (z < sequenceInfo.MinDepth || z > sequenceInfo.MaxDepth) {
+                if (z < _sequenceInfo.MinDepth || z > _sequenceInfo.MaxDepth) {
                     continue;
                 }
                 yield return PerspectiveToRectangle(x, y, z);
@@ -190,8 +187,6 @@ namespace ConvergenceEngine.Models.IO {
             return new Point((x - 320.0) * (0.003501 * 0.5) * (z * 0.1), z * 0.1);
         }
 
-        public void Dispose() {
-            Stop();
-        }
+        public void Dispose() => Stop();
     }
 }

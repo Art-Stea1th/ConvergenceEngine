@@ -7,33 +7,33 @@ namespace ConvergenceEngine.ViewModels {
 
     public abstract class ApplicationViewModel : ViewModelBase {
 
-        private IDataProvider dataProvider;
-        private short[,] fullFrame;
+        private IDataProvider _dataProvider;
+        private short[,] _fullFrame;
 
-        private IMapper mapper;
-        private IEnumerable<ISegment> mapSegments;
-        private IEnumerable<ISegment> actualSegments;
+        private IMapper _mapper;
+        private IEnumerable<ISegment> _mapSegments;
+        private IEnumerable<ISegment> _actualSegments;
 
         public IDataProvider DataProvider {
-            get => dataProvider;
+            get => _dataProvider;
             protected set { SetNew(value); NotifyPropertyChanged(); }
         }
         public short[,] FullFrame {
-            get => fullFrame;
-            protected set => Set(ref fullFrame, value);
+            get => _fullFrame;
+            protected set => Set(ref _fullFrame, value);
         }
 
         public IMapper Mapper {
-            get { return mapper; }
+            get => _mapper;
             protected set { SetNew(value); NotifyPropertyChanged(); }
         }
         public IEnumerable<ISegment> MapSegments {
-            get => mapSegments;
-            internal set => Set(ref mapSegments, value);
+            get => _mapSegments;
+            internal set => Set(ref _mapSegments, value);
         }
         public IEnumerable<ISegment> ActualSegments {
-            get => actualSegments;
-            internal set => Set(ref actualSegments, value);
+            get => _actualSegments;
+            internal set => Set(ref _actualSegments, value);
         }        
 
         public abstract double FpsCurrent { get; set; }
@@ -44,29 +44,29 @@ namespace ConvergenceEngine.ViewModels {
 
         private void SetNew(IDataProvider dataProvider) {
             if (dataProvider != null) {
-                if (mapper != null) {
-                    dataProvider.OnNextDepthLineReady += mapper.HandleNextData;
+                if (_mapper != null) {
+                    dataProvider.OnNextDepthLineReady += _mapper.HandleNextData;
                 }
                 dataProvider.OnNextFullFrameReady += UpdateFullFrame;
                 dataProvider.OnNextFullFrameReady += (f) => ++TotalFrames;
                 dataProvider.OnStateChanged += OnDataProviderStateChanged;
             }
-            this.dataProvider = dataProvider;
+            _dataProvider = dataProvider;
         }
 
         private void SetNew(IMapper mapper) {
-            if (dataProvider != null) {
-                if (this.mapper != null) {
-                    dataProvider.OnNextDepthLineReady -= this.mapper.HandleNextData;
+            if (_dataProvider != null) {
+                if (_mapper != null) {
+                    _dataProvider.OnNextDepthLineReady -= _mapper.HandleNextData;
                 }
                 if (mapper != null) { // 1
-                    dataProvider.OnNextDepthLineReady += mapper.HandleNextData;
+                    _dataProvider.OnNextDepthLineReady += mapper.HandleNextData;
                 }
             }
             if (mapper != null) { // 2
                 mapper.OnMapperUpdate += UpdateMapperData;
             }
-            this.mapper = mapper;
+            _mapper = mapper;
         }
 
         protected virtual void UpdateMapperData() {

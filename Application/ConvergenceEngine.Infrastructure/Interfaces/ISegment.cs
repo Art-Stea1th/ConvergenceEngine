@@ -9,5 +9,8 @@ namespace ConvergenceEngine.Infrastructure.Interfaces {
 
         Point A { get; }
         Point B { get; }
+
+        Point Center { get; }
+        double Length { get; }
     }
 }

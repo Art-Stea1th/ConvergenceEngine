@@ -61,8 +61,8 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Point RotatedRadians(this Point p, double angle) {
-            var cosA = Math.Cos(angle);
-            var sinA = Math.Sin(angle); // repeated new for max XY precision (expressions in the initializer) / tested
+            double cosA = Math.Cos(angle);
+            double sinA = Math.Sin(angle); // repeated new for max XY precision (expressions in the initializer) / tested
             return new Point((p.X * cosA) - (p.Y * sinA), (p.Y * cosA) + (p.X * sinA));
         }
 
@@ -84,8 +84,8 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
             if (pointA == pointB) {
                 return pointA;
             }
-            Vector ab = pointA.DistanceVectorTo(pointB);
-            Vector ac = pointA.DistanceVectorTo(pointC);
+            var ab = pointA.DistanceVectorTo(pointB);
+            var ac = pointA.DistanceVectorTo(pointC);
             ab.Normalize();
             return Vector.Multiply(ab, ac) * ab + pointA;
         }

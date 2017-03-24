@@ -9,27 +9,32 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
     public static partial class Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int IndexOfMaxBy<TSource, TComparable>(this IReadOnlyCollection<TSource> sequence,
-            Func<TSource, TComparable> selector) where TComparable : IComparable {
-            return sequence.MinOrMaxBy(selector, value => value > 0).Key;
+        public static int IndexOfMaxBy<TSource, TComparable>(
+            this IReadOnlyCollection<TSource> sequence, Func<TSource, TComparable> selector) where TComparable : IComparable {
+            return sequence.MinOrMaxBy(selector, value => value > 0).index;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int IndexOfMinBy<TSource, TComparable>(this IReadOnlyCollection<TSource> sequence,
-            Func<TSource, TComparable> selector) where TComparable : IComparable {
-            return sequence.MinOrMaxBy(selector, value => value < 0).Key;
+        public static int IndexOfMinBy<TSource, TComparable>(
+            this IReadOnlyCollection<TSource> sequence, Func<TSource, TComparable> selector) where TComparable : IComparable {
+            return sequence.MinOrMaxBy(selector, value => value < 0).index;
         }
 
-        public static (IEnumerable<T> Left, IEnumerable<T> Right) SplitBy<T>(this IReadOnlyCollection<T> sequence, int index) {
+        public static int IndexesOf<TSource>(this IReadOnlyCollection<TSource> sequence, Func<bool> predicate) {
+            for (int i = 0; i < sequence.Count; ++i) {
+
+            }
+        }
+
+        public static (IEnumerable<T> left, IEnumerable<T> right) SplitBy<T>(this IReadOnlyCollection<T> sequence, int index) {
 
             if (sequence.Count < 3) { throw new InvalidOperationException(); }
             if (index == 0 || index == sequence.Count - 1) { throw new ArgumentException(); }
             if (index < 0 || index >= sequence.Count) { throw new ArgumentOutOfRangeException(); }
 
-            IEnumerable<T> left = sequence.TakeWhile((p, i) => i <= index);
-            IEnumerable<T> right = sequence.SkipWhile((p, i) => i < index);
-
-            return (Left: left, Right: right);
+            return (
+                left: sequence.TakeWhile((p, i) => i <= index),
+                right: sequence.SkipWhile((p, i) => i < index));
         }
     }    
 }

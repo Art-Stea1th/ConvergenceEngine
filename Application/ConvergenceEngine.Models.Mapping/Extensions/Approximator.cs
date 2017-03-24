@@ -12,18 +12,18 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static (Point A, Point B) ApproximateOrdered(this IEnumerable<Point> points) {
-            var result = points.Approximate(p => p.X, p => p.Y);
-            return (A: new Point(result.X1, result.Y1), B: new Point(result.X2, result.Y2));
+            var s = points.Approximate(p => p.X, p => p.Y);
+            return (A: new Point(s.x1, s.y1), B: new Point(s.x2, s.y2));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector ApproximateOrdered(this IEnumerable<Vector> vectors) {
-            var result = vectors.Approximate(v => v.X, v => v.Y);
-            return (new Vector(result.X1, result.Y1) + new Vector(result.X2, result.Y2)) * 0.5;
+            var s = vectors.Approximate(v => v.X, v => v.Y);
+            return (new Vector(s.x1, s.y1) + new Vector(s.x2, s.y2)) * 0.5;
         }
 
         // Ordinary Least Squares
-        private static (double X1, double Y1, double X2, double Y2) Approximate<TSource>(
+        private static (double x1, double y1, double x2, double y2) Approximate<TSource>(
             this IEnumerable<TSource> sequence, Func<TSource, double> x, Func<TSource, double> y) {
             if (sequence == null || x == null || y == null) {
                 throw new ArgumentNullException();
@@ -34,24 +34,24 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             }
             var first = sequence.First();
             if (count == 1) {
-                return (X1: x(first), Y1: y(first), X2: x(first), Y2: y(first));
+                return (x1: x(first), y1: y(first), x2: x(first), y2: y(first));
             }
             var last = sequence.Last();
             if (count == 2) {
-                return (X1: x(first), Y1: y(first), X2: x(last), Y2: y(last));
+                return (x1: x(first), y1: y(first), x2: x(last), y2: y(last));
             }
 
-            var avgX = sequence.Average(p => x(p));
-            var avgY = sequence.Average(p => y(p));
-            var avgXY = sequence.Average(p => x(p) * y(p));
-            var avgSqX = sequence.Average(p => Math.Pow(x(p), 2));
-            var sqAvgX = Math.Pow(avgX, 2);
+            double avgX = sequence.Average(p => x(p));
+            double avgY = sequence.Average(p => y(p));
+            double avgXY = sequence.Average(p => x(p) * y(p));
+            double avgSqX = sequence.Average(p => Math.Pow(x(p), 2));
+            double sqAvgX = Math.Pow(avgX, 2);
 
-            var a = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
-            var b = avgY - a * avgX;
+            double a = (avgXY - avgX * avgY) / (avgSqX - sqAvgX);
+            double b = avgY - a * avgX;
 
             if (double.IsNaN(a) || double.IsInfinity(a)) {
-                return (X1: x(first), Y1: y(first), X2: x(last), Y2: y(last));
+                return (x1: x(first), y1: y(first), x2: x(last), y2: y(last));
             }
 
             var p0 = new Point(x(first), y(first));
@@ -63,7 +63,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             var resultP0 = new Point(p0.X, p0.DistancePointTo(olsP0, olsPN).Y);
             var resultPN = new Point(pN.X, pN.DistancePointTo(olsP0, olsPN).Y);
 
-            return (X1: resultP0.X, Y1: resultP0.Y, X2: resultPN.X, Y2: resultPN.Y);
+            return (x1: resultP0.X, y1: resultP0.Y, x2: resultPN.X, y2: resultPN.Y);
         }
     }
 }

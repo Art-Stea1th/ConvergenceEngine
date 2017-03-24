@@ -7,41 +7,37 @@ namespace ConvergenceEngine.Models.Mapping {
 
     public struct NavigationInfo : INavigationInfo {
 
-        decimal x, y, a;
+        decimal _x, _y, _a;
 
-        public double X { get => (double)x; }
-        public double Y { get => (double)y; }
-        public double A { get => (double)a; }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static NavigationInfo operator +(NavigationInfo navInfoA, NavigationInfo navInfoB) {
-            return new NavigationInfo(navInfoA.x + navInfoB.x, navInfoA.y + navInfoB.y, navInfoA.a + navInfoB.a);
-        }
+        public double X => (double)_x;
+        public double Y => (double)_y;
+        public double A => (double)_a;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static NavigationInfo operator -(NavigationInfo navInfoA, NavigationInfo navInfoB) {
-            return new NavigationInfo(navInfoA.x - navInfoB.x, navInfoA.y - navInfoB.y, navInfoA.a - navInfoB.a);
-        }
+        public static NavigationInfo operator +(NavigationInfo navInfoA, NavigationInfo navInfoB)
+            => new NavigationInfo(navInfoA._x + navInfoB._x, navInfoA._y + navInfoB._y, navInfoA._a + navInfoB._a);
 
-        public override string ToString() {
-            return $"{x}, {y}, {a}";
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static NavigationInfo operator -(NavigationInfo navInfoA, NavigationInfo navInfoB)
+            => new NavigationInfo(navInfoA._x - navInfoB._x, navInfoA._y - navInfoB._y, navInfoA._a - navInfoB._a);
+
+        public override string ToString() => $"{_x}, {_y}, {_a}";
 
         internal NavigationInfo(INavigationInfo navigationInfo)
             : this((NavigationInfo)navigationInfo) { }
 
         internal NavigationInfo(NavigationInfo navigationInfo)
-            : this(navigationInfo.x, navigationInfo.y, navigationInfo.a) { }
+            : this(navigationInfo._x, navigationInfo._y, navigationInfo._a) { }
 
         internal NavigationInfo(decimal x, decimal y, decimal a) {
-            this.x = x; this.y = y; this.a = a;
+            _x = x; _y = y; _a = a;
         }
 
         internal NavigationInfo(Vector direction, double angle)
             : this(direction.X, direction.Y, angle) { }
 
         internal NavigationInfo(double x, double y, double a) {
-            this.x = (decimal)x; this.y = (decimal)y; this.a = (decimal)a;
+            _x = (decimal)x; _y = (decimal)y; _a = (decimal)a;
         }
     }
 }

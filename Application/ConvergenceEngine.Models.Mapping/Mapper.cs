@@ -14,43 +14,41 @@ namespace ConvergenceEngine.Models.Mapping {
 
         public event Action OnMapperUpdate;
 
-        private List<Frame> frames = new List<Frame>();
+        private List<Frame> _frames = new List<Frame>();
 
-        private int actualFrameIndex = 0;
-        private int additionalFrameIndexOffset = -1;
+        private int _actualFrameIndex = 0;
+        private int _additionalFrameIndexOffset = -1;
 
-        private Map map = new Map();
+        private Map _map = new Map();
 
         public int ActualFrameIndex {
-            get => actualFrameIndex;
-            set => actualFrameIndex = FixFrameIndex(value);
+            get => _actualFrameIndex;
+            set => _actualFrameIndex = FixFrameIndex(value);
         }
         public int AdditionalFrameIndexOffset { get; set; }
 
-        public IFrame ActualFrame { get => frames[actualFrameIndex]; }
-        public IFrame AdditionalFrame { get => frames[FixFrameIndex(actualFrameIndex + additionalFrameIndexOffset)]; }
+        public IEnumerable<ISegment> ActualFrame => _frames[_actualFrameIndex];
+        public IEnumerable<ISegment> AdditionalFrame => _frames[FixFrameIndex(_actualFrameIndex + _additionalFrameIndexOffset)];
 
-        public IEnumerable<ISegment> Map { get => map; }
+        public IEnumerable<ISegment> Map => _map;
 
 
         public void HandleNextData(IEnumerable<Point> nextDepthLine) {
 
             var next = new Frame(nextDepthLine);
 
-            next.SetPrev(frames.LastOrDefault());
-            frames.Add(next);
+            next.SetPrev(_frames.LastOrDefault());
+            _frames.Add(next);
 
-            actualFrameIndex = frames.Count - 1;
+            _actualFrameIndex = _frames.Count - 1;
             OnMapperUpdate?.Invoke();
         }
 
         private void EmplaceFrame(IEnumerable<Point> points) {
-            frames.Add(new Frame(points));
+            _frames.Add(new Frame(points));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private int FixFrameIndex(int index) {
-            return index < 0 ? 0 : index >= frames.Count ? frames.Count - 1 : index;
-        }
+        private int FixFrameIndex(int index) => index < 0 ? 0 : index >= _frames.Count ? _frames.Count - 1 : index;
     }
 }

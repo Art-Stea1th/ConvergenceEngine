@@ -11,8 +11,8 @@ namespace ConvergenceEngine.Infrastructure.Interfaces {
         int ActualFrameIndex { get; set; }
         int AdditionalFrameIndexOffset { get; set; }
 
-        IFrame ActualFrame { get; }
-        IFrame AdditionalFrame { get; }
+        IEnumerable<ISegment> ActualFrame { get; }
+        IEnumerable<ISegment> AdditionalFrame { get; }
         IEnumerable<ISegment> Map { get; }
 
         void HandleNextData(IEnumerable<Point> nextDepthLine);

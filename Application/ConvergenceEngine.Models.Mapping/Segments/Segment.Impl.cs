@@ -11,18 +11,19 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
     internal partial class Segment {
 
-        private static Point Zero = new Point(0.0, 0.0);
-        private static Vector BasisX = new Vector(1.0, 0.0);
-        private static Vector BasisY = new Vector(0.0, 1.0);
+        public static readonly Point Zero = new Point(0.0, 0.0);
+        public static readonly Vector BasisX = new Vector(1.0, 0.0);
+        public static readonly Vector BasisY = new Vector(0.0, 1.0);
 
-        public double AngleToHorizontal { get => AngleTo(BasisX); }
-        public double AngleToVertical { get => AngleTo(BasisY); }
+        public double AngleToHorizontal => AngleTo(BasisX);
+        public double AngleToVertical => AngleTo(BasisY);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double AngleTo(Segment segment) {
+        public double AngleTo(ISegment segment) {
             return AngleTo(segment.B - segment.A);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double AngleTo(Vector vector) {
             return Vector.AngleBetween((B - A), vector);
         }
@@ -67,10 +68,10 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             return new Segment(A.RotatedAt(angle, centerX, centerY), B.RotatedAt(angle, centerX, centerY));
         }
 
-        public ISegment SelectNearestFrom(IEnumerable<Segment> sequence, double maxDistance, double maxAngle) {
+        public ISegment SelectNearestFrom(IEnumerable<ISegment> sequence, double maxDistance, double maxAngle) {
             var selection = sequence
-                .Where(s => s.NearestByExtremePointsDistanceTo(this, maxDistance))
-                .Where(s => s.NearestByAngleTo(this, maxAngle));
+                .Where(s => NearestByExtremePointsDistanceTo(s, maxDistance))
+                .Where(s => NearestByAngleTo(s, maxAngle));
 
             if (selection.Count() > 1) {
                 return selection.MinBy(s => Math.Abs(s.Length - Length));
@@ -78,19 +79,23 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             return selection.FirstOrDefault();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool NearestByExtremePointsDistanceTo(Segment segment, double maxDistance) {
-            return DistanceToNearestExtremePoints(segment) > maxDistance ? false : true;
+        public int IndexOfNearest(IReadOnlyList<ISegment> sequence, double maxDistance, double maxAngle) {
+            var indexOfMinByDistance = sequence.Select((s, i) => (index: i, segment: s)).Where(e => ;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool NearestByAngleTo(Segment segment, double maxAngle) {
-            maxAngle = Math.Abs(maxAngle); var realAngle = Math.Abs(AngleTo(segment));
+        public bool NearestByExtremePointsDistanceTo(ISegment segment, double maxDistance) {
+            return DistanceToNearestExtremePoints(segment) > Math.Abs(maxDistance) ? false : true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool NearestByAngleTo(ISegment segment, double maxAngle) {
+            maxAngle = Math.Abs(maxAngle); double realAngle = Math.Abs(AngleTo(segment));
             return realAngle <= maxAngle || 180.0 - realAngle <= maxAngle ? true : false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double DistanceToNearestExtremePoints(Segment segment) {
+        public double DistanceToNearestExtremePoints(ISegment segment) {
             return new[] {
                 A.DistanceTo(segment.A),
                 A.DistanceTo(segment.B),
@@ -101,45 +106,29 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
         internal Point? IntersectPointWith(Segment segment) {
 
-            var lineCoefficients1 = LineCoefficients();
-            var lineCoefficients2 = segment.LineCoefficients();
+            var lc1 = LineCoefficients();
+            var lc2 = segment.LineCoefficients();
 
-            var a1 = lineCoefficients1.Item1;
-            var b1 = lineCoefficients1.Item2;
-            var c1 = lineCoefficients1.Item3;
+            double a1 = lc1.a, b1 = lc1.b, c1 = lc1.c;
+            double a2 = lc2.a, b2 = lc2.b, c2 = lc2.c;
 
-            var a2 = lineCoefficients2.Item1;
-            var b2 = lineCoefficients2.Item2;
-            var c2 = lineCoefficients2.Item3;
-
-            var commonDenominator = a1 * b2 - a2 * b1;
+            double commonDenominator = a1 * b2 - a2 * b1;
 
             if (commonDenominator == 0.0) {
                 return null;
             }
 
-            var resultX = -(c1 * b2 - c2 * b1) / commonDenominator;
-            var resultY = -(a1 * c2 - a2 * c1) / commonDenominator;
+            double resultX = -(c1 * b2 - c2 * b1) / commonDenominator;
+            double resultY = -(a1 * c2 - a2 * c1) / commonDenominator;
 
             return new Point(resultX, resultY);
         }
 
-        private Tuple<double, double, double> LineCoefficients() {
-            var a = A.Y - B.Y;
-            var b = B.X - A.X;
-            var c = -(a * A.X) - (b * A.Y);
-            return new Tuple<double, double, double>(a, b, c);
-        }
-
-        public void ApplyTransform(double offsetX, double offsetY, double angle, bool rotatePrepend = true) {
-            if (rotatePrepend) {
-                A = A.RotatedAndShifted(offsetX, offsetY, angle);
-                B = B.RotatedAndShifted(offsetX, offsetY, angle);
-            }
-            else {
-                A = A.ShiftedAndRotated(offsetX, offsetY, angle);
-                B = B.ShiftedAndRotated(offsetX, offsetY, angle);
-            }
+        private (double a, double b, double c) LineCoefficients() {
+            double a = A.Y - B.Y;
+            double b = B.X - A.X;
+            double c = -(a * A.X) - (b * A.Y);
+            return (a: a, b: b, c: c);
         }
     }
 }

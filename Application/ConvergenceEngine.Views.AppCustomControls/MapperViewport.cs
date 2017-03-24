@@ -20,6 +20,12 @@ namespace ConvergenceEngine.Views.AppCustomControls {
     [TemplatePart(Name = PartDepthSensorPositionName, Type = typeof(Polygon))]
     public class MapperViewport : Control {
 
+        public const string PartMapPointsName = "PART_MapPoints";
+        public const string PartMapSegmentsName = "PART_MapSegments";
+        public const string PartActualSegmentsName = "PART_ActualSegments";
+        public const string PartDepthSensorPathName = "PART_DepthSensorPath";
+        public const string PartDepthSensorPositionName = "PART_DepthSensorPosition";
+
         public IEnumerable<ISegment> MapSegments {
             get => (IEnumerable<ISegment>)GetValue(MapSegmentsProperty);
             set => SetValue(MapSegmentsProperty, value);
@@ -79,23 +85,23 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
             ShowMapPointsProperty = DependencyProperty.Register("ShowMapPoints", typeof(bool), typeof(MapperViewport),
                 new FrameworkPropertyMetadata(true, (s, e) =>
-                OnShowPropertyChanged((s as MapperViewport).mapPoints, (bool)e.NewValue, (s as MapperViewport).ReDrawMapPoints)));
+                OnShowPropertyChanged((s as MapperViewport)._mapPoints, (bool)e.NewValue, (s as MapperViewport).ReDrawMapPoints)));
 
             ShowMapSegmentsProperty = DependencyProperty.Register("ShowMapSegments", typeof(bool), typeof(MapperViewport),
                 new FrameworkPropertyMetadata(true, (s, e) =>
-                OnShowPropertyChanged((s as MapperViewport).mapSegments, (bool)e.NewValue, (s as MapperViewport).UpdateMapSegments)));
+                OnShowPropertyChanged((s as MapperViewport)._mapSegments, (bool)e.NewValue, (s as MapperViewport).UpdateMapSegments)));
 
             ShowActualSegmentsProperty = DependencyProperty.Register("ShowActualSegments", typeof(bool), typeof(MapperViewport),
                 new FrameworkPropertyMetadata(true, (s, e) =>
-                OnShowPropertyChanged((s as MapperViewport).actualSegments, (bool)e.NewValue, (s as MapperViewport).UpdateActualSegments)));
+                OnShowPropertyChanged((s as MapperViewport)._actualSegments, (bool)e.NewValue, (s as MapperViewport).UpdateActualSegments)));
 
             ShowDepthSensorPathProperty = DependencyProperty.Register("ShowDepthSensorPath", typeof(bool), typeof(MapperViewport),
                 new FrameworkPropertyMetadata(true, (s, e) =>
-                OnShowPropertyChanged((s as MapperViewport).depthSensorPath, (bool)e.NewValue, (s as MapperViewport).ReDrawDepthSensorPath)));
+                OnShowPropertyChanged((s as MapperViewport)._depthSensorPath, (bool)e.NewValue, (s as MapperViewport).ReDrawDepthSensorPath)));
 
             ShowDepthSensorPositionProperty = DependencyProperty.Register("ShowDepthSensorPosition", typeof(bool), typeof(MapperViewport),
                 new FrameworkPropertyMetadata(true, (s, e) =>
-                OnShowPropertyChanged((s as MapperViewport).depthSensorPosition, (bool)e.NewValue, (s as MapperViewport).UpdateDepthSensorPosition)));
+                OnShowPropertyChanged((s as MapperViewport)._depthSensorPosition, (bool)e.NewValue, (s as MapperViewport).UpdateDepthSensorPosition)));
         }
 
 
@@ -107,37 +113,31 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             else {
                 element.Visibility = Visibility.Hidden;
             }
-        }
+        }        
 
-        private const string PartMapPointsName = "PART_MapPoints";
-        private const string PartMapSegmentsName = "PART_MapSegments";
-        private const string PartActualSegmentsName = "PART_ActualSegments";
-        private const string PartDepthSensorPathName = "PART_DepthSensorPath";
-        private const string PartDepthSensorPositionName = "PART_DepthSensorPosition";
+        private Image _mapPoints;             // Source - WriteableBitmap
+        private Path _mapSegments;            // Data   - PathGeometry
+        private Path _actualSegments;         // Data   - PathGeometry
+        private Polyline _depthSensorPath;    // Points - PointCollection
+        private Polygon _depthSensorPosition; // Points - PointCollection
 
-        private Image mapPoints;             // Source - WriteableBitmap
-        private Path mapSegments;            // Data   - PathGeometry
-        private Path actualSegments;         // Data   - PathGeometry
-        private Polyline depthSensorPath;    // Points - PointCollection
-        private Polygon depthSensorPosition; // Points - PointCollection
+        private Point _min = new Point(double.MaxValue, double.MaxValue);
+        private Point _max = new Point(double.MinValue, double.MinValue);
 
-        private Point min = new Point(double.MaxValue, double.MaxValue);
-        private Point max = new Point(double.MinValue, double.MinValue);
-
-        private double AreaWidth { get => (max.X - min.X) + 1; }
-        private double AreaHeight { get => (max.Y - min.Y) + 1; }
+        private double AreaWidth => (_max.X - _min.X) + 1;
+        private double AreaHeight => (_max.Y - _min.Y) + 1;
 
         public override void OnApplyTemplate() {
             InitializeParts();
-            DrawArrowAt(depthSensorPosition, AreaWidth / 2, AreaHeight / 2);
+            DrawArrowAt(_depthSensorPosition, AreaWidth / 2, AreaHeight / 2);
         }
 
         private void InitializeParts() {
-            mapPoints = GetTemplateChild(PartMapPointsName) as Image;
-            mapSegments = GetTemplateChild(PartMapSegmentsName) as Path;
-            actualSegments = GetTemplateChild(PartActualSegmentsName) as Path;
-            depthSensorPath = GetTemplateChild(PartDepthSensorPathName) as Polyline;
-            depthSensorPosition = GetTemplateChild(PartDepthSensorPositionName) as Polygon;
+            _mapPoints = GetTemplateChild(PartMapPointsName) as Image;
+            _mapSegments = GetTemplateChild(PartMapSegmentsName) as Path;
+            _actualSegments = GetTemplateChild(PartActualSegmentsName) as Path;
+            _depthSensorPath = GetTemplateChild(PartDepthSensorPathName) as Polyline;
+            _depthSensorPosition = GetTemplateChild(PartDepthSensorPositionName) as Polygon;
         }
 
 
@@ -153,7 +153,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             }
             UpdateLimitsBy(MapSegments);
             if (ShowMapSegments) {
-                RedrawSegments(mapSegments, MapSegments);
+                RedrawSegments(_mapSegments, MapSegments);
             }
         }
 
@@ -163,7 +163,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             }
             UpdateLimitsBy(MapSegments == null || MapSegments.Count() < 1 ? ActualSegments : MapSegments);
             if (ShowActualSegments) {
-                RedrawSegments(actualSegments, ActualSegments);
+                RedrawSegments(_actualSegments, ActualSegments);
             }
         }
 
@@ -173,17 +173,17 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                 return;
             }
 
-            min = new Point(double.MaxValue, double.MaxValue);
-            max = new Point(double.MinValue, double.MinValue);
+            _min = new Point(double.MaxValue, double.MaxValue);
+            _max = new Point(double.MinValue, double.MinValue);
 
             foreach (var segment in segments) {
                 foreach (var point in segment) {
-                    if (point.X < min.X) { min.X = point.X; }
+                    if (point.X < _min.X) { _min.X = point.X; }
                     else
-                    if (point.X > max.X) { max.X = point.X; }
-                    if (point.Y < min.Y) { min.Y = point.Y; }
+                    if (point.X > _max.X) { _max.X = point.X; }
+                    if (point.Y < _min.Y) { _min.Y = point.Y; }
                     else
-                    if (point.Y > max.Y) { max.Y = point.Y; }
+                    if (point.Y > _max.Y) { _max.Y = point.Y; }
                 }
             }
         }
@@ -222,7 +222,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
         }
 
         private void RedrawSegments(Path path, IEnumerable<ISegment> segments) {
-            PathGeometry geometry = new PathGeometry();
+            var geometry = new PathGeometry();
 
             // Border
             //geometry.Figures.Add(new PathFigure(
@@ -239,9 +239,9 @@ namespace ConvergenceEngine.Views.AppCustomControls {
                 foreach (var segment in segments) {
 
                     if (segment != null) {
-                        Point startPoint = Fixed(segment.A);
+                        var startPoint = Fixed(segment.A);
                         var lineSegments = new List<LineSegment> { new LineSegment(Fixed(segment.B), true) };
-                        PathFigure figure = new PathFigure(startPoint, lineSegments, false);
+                        var figure = new PathFigure(startPoint, lineSegments, false);
                         geometry.Figures.Add(figure);
                     }
                 }
@@ -252,7 +252,7 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Point Fixed(Point point) {
-            return FixToSystemScreenCoordinate(FixToPositiveOnly(point, min.X, min.Y), AreaHeight);
+            return FixToSystemScreenCoordinate(FixToPositiveOnly(point, _min.X, _min.Y), AreaHeight);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

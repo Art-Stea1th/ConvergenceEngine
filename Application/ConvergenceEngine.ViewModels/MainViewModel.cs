@@ -4,56 +4,56 @@ namespace ConvergenceEngine.ViewModels {
 
     public sealed class MainViewModel : CommandsViewModel {
 
-        private bool viewportSettingsVisible;
-        private bool dataProviderSettingsVisible;
-        private bool fullFrameViewportVisible;
+        private bool _viewportSettingsVisible;
+        private bool _dataProviderSettingsVisible;
+        private bool _fullFrameViewportVisible;
 
-        private double fpsCurrent;
-        private bool modelStarted;
-        private int totatFrames;
-        private int currentFrame;
-        private string startStopResetButtonText;
+        private double _fpsCurrent;
+        private bool _modelStarted;
+        private int _totatFrames;
+        private int _currentFrame;
+        private string _startStopResetButtonText;
 
         public DoubleCollection FpsCollection { get; private set; }
 
         public bool ViewportSettingsVisible {
-            get => viewportSettingsVisible;
-            set => Set(ref viewportSettingsVisible, value);
+            get => _viewportSettingsVisible;
+            set => Set(ref _viewportSettingsVisible, value);
         }
         public bool DataProviderSettingsVisible {
-            get => dataProviderSettingsVisible;
-            set => Set(ref dataProviderSettingsVisible, value);
+            get => _dataProviderSettingsVisible;
+            set => Set(ref _dataProviderSettingsVisible, value);
         }
         public bool FullFrameViewportVisible {
-            get => fullFrameViewportVisible;
+            get => _fullFrameViewportVisible;
             set {
-                Set(ref fullFrameViewportVisible, value);
+                Set(ref _fullFrameViewportVisible, value);
                 SwitchFullFrameViewportVisibility(value);
             }
         }
 
         public override double FpsCurrent {
-            get => fpsCurrent;
+            get => _fpsCurrent;
             set {
-                if (DataProvider != null) { Set(ref fpsCurrent, DataProvider.FPS = value); return; }
-                Set(ref fpsCurrent, value);
+                if (DataProvider != null) { Set(ref _fpsCurrent, DataProvider.FPS = value); return; }
+                Set(ref _fpsCurrent, value);
             }
         }
         public override bool ModelStarted {
-            get => modelStarted;
-            set => Set(ref modelStarted, value);
+            get => _modelStarted;
+            set => Set(ref _modelStarted, value);
         }
         public override int TotalFrames {
-            get => totatFrames;
-            set => Set(ref totatFrames, value);
+            get => _totatFrames;
+            set => Set(ref _totatFrames, value);
         }
         public override int CurrentFrame {
-            get => currentFrame;
-            set => Set(ref currentFrame, value);
+            get => _currentFrame;
+            set => Set(ref _currentFrame, value);
         }
         public override string StartStopResetButtonText {
-            get => startStopResetButtonText;
-            set => Set(ref startStopResetButtonText, value);
+            get => _startStopResetButtonText;
+            set => Set(ref _startStopResetButtonText, value);
         }
 
         public MainViewModel() {
@@ -63,15 +63,15 @@ namespace ConvergenceEngine.ViewModels {
         }
 
         private void InitializeViews() {
-            viewportSettingsVisible = true;
-            dataProviderSettingsVisible = true;
-            fullFrameViewportVisible = true;
+            _viewportSettingsVisible = true;
+            _dataProviderSettingsVisible = true;
+            _fullFrameViewportVisible = true;
         }
 
         private void Initialize() {
             FpsCollection = new DoubleCollection { 1, 2, 3, 5, 10, 15, 20, 30, 50, 60 };
             FpsCurrent = 30.0;
-            modelStarted = false;
+            _modelStarted = false;
             UpdateStartStopResetButtonText();
         }
 
