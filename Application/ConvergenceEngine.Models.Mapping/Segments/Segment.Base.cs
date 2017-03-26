@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Segments {
@@ -21,7 +20,6 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         internal Segment((Point a, Point b) points) : this(points.a, points.b) { }
         internal Segment(Point pointA, Point pointB) { A = pointA; B = pointB; }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private IEnumerable<Point> Points() {
             yield return A; yield return B;
         }
@@ -34,13 +32,8 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             get { switch (index) { case 0: return A; case 1: return B; default: throw new IndexOutOfRangeException(); } }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IEnumerator<Point> GetEnumerator() => Points().GetEnumerator();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         IEnumerator IEnumerable.GetEnumerator() => Points().GetEnumerator();
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(ISegment segment) => A == segment.A && B == segment.B || A == segment.B && B == segment.A;
         #endregion
     }

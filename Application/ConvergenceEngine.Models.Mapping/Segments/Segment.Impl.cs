@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Segments {
@@ -18,60 +17,49 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
         public double AngleToHorizontal => AngleTo(BasisX);
         public double AngleToVertical => AngleTo(BasisY);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double AngleTo(ISegment segment) {
             return AngleTo(segment.B - segment.A);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double AngleTo(Vector vector) {
             return Vector.AngleBetween((B - A), vector);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment ShiftedX(double offsetX) {
             return new Segment(A.ShiftedX(offsetX), B.ShiftedX(offsetX));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment ShiftedY(double offsetY) {
             return new Segment(A.ShiftedY(offsetY), B.ShiftedY(offsetY));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment Shifted(Vector direction) {
             return new Segment(A.Shifted(direction.X, direction.Y), B.Shifted(direction.X, direction.Y));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment Shifted(double offsetX, double offsetY) {
             return new Segment(A.Shifted(offsetX, offsetY), B.Shifted(offsetX, offsetY));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment RotatedAtZero(double angle) {
             return RotatedAt(angle, Zero);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment RotatedAtCenter(double angle) {
             return RotatedAt(angle, Center);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment RotatedAt(double angle, Point center) {
             return new Segment(A.RotatedAt(angle, center), B.RotatedAt(angle, center));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Segment RotatedAt(double angle, double centerX, double centerY) {
             return new Segment(A.RotatedAt(angle, centerX, centerY), B.RotatedAt(angle, centerX, centerY));
         }
 
         public ISegment SelectNearestFrom(IEnumerable<ISegment> sequence, double maxDistance, double maxAngle) {
             var selection = sequence
-                .Where(s => NearestByExtremePointsDistanceTo(s, maxDistance))
-                .Where(s => NearestByAngleTo(s, maxAngle));
+                .Where(s => NearestByExtremePointsDistanceTo(s, maxDistance) && NearestByAngleTo(s, maxAngle));
 
             if (selection.Count() > 1) {
                 return selection.MinBy(s => Math.Abs(s.Length - Length));
@@ -79,22 +67,15 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
             return selection.FirstOrDefault();
         }
 
-        public int IndexOfNearest(IReadOnlyList<ISegment> sequence, double maxDistance, double maxAngle) {
-            var indexOfMinByDistance = sequence.Select((s, i) => (index: i, segment: s)).Where(e => ;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool NearestByExtremePointsDistanceTo(ISegment segment, double maxDistance) {
             return DistanceToNearestExtremePoints(segment) > Math.Abs(maxDistance) ? false : true;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool NearestByAngleTo(ISegment segment, double maxAngle) {
             maxAngle = Math.Abs(maxAngle); double realAngle = Math.Abs(AngleTo(segment));
             return realAngle <= maxAngle || 180.0 - realAngle <= maxAngle ? true : false;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double DistanceToNearestExtremePoints(ISegment segment) {
             return new[] {
                 A.DistanceTo(segment.A),

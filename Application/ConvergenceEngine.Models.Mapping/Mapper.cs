@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping {
@@ -27,17 +24,27 @@ namespace ConvergenceEngine.Models.Mapping {
         }
         public int AdditionalFrameIndexOffset { get; set; }
 
-        public IEnumerable<ISegment> ActualFrame => _frames[_actualFrameIndex];
-        public IEnumerable<ISegment> AdditionalFrame => _frames[FixFrameIndex(_actualFrameIndex + _additionalFrameIndexOffset)];
+        public IEnumerable<ISegment> ActualFrame
+            => _frames[_actualFrameIndex].ActualSegments;
+
+        public IEnumerable<ISegment> AdditionalFrame
+            => _frames[FixFrameIndex(_actualFrameIndex + _additionalFrameIndexOffset)].ActualSegments;
 
         public IEnumerable<ISegment> Map => _map;
 
 
         public void HandleNextData(IEnumerable<Point> nextDepthLine) {
 
+            var prev = _frames.LastOrDefault();
             var next = new Frame(nextDepthLine);
 
-            next.SetPrev(_frames.LastOrDefault());
+            //prev?.SetNext(next);
+            next.SetPrev(prev);
+
+            if (prev != null) {
+                next.Absolute = (NavigationInfo)prev.Absolute + (NavigationInfo)next.RelativeByPrev;
+            }            
+
             _frames.Add(next);
 
             _actualFrameIndex = _frames.Count - 1;
@@ -48,7 +55,6 @@ namespace ConvergenceEngine.Models.Mapping {
             _frames.Add(new Frame(points));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int FixFrameIndex(int index) => index < 0 ? 0 : index >= _frames.Count ? _frames.Count - 1 : index;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -88,7 +87,6 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             _image.Source = bitmap;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private WriteableBitmap NewBitmap(int width, int height) {
             return new WriteableBitmap(width > 1 ? width : 1, height > 1 ? height : 1, 96.0, 96.0, PixelFormats.Bgra32, null);
         }
@@ -138,10 +136,8 @@ namespace ConvergenceEngine.Views.AppCustomControls {
             return _intensityBuffer;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetLinearIndex(int x, int y, int width) => width * y + x;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetColorToFrameBuffer(int startIndex, Color color) {
             _frameBuffer[startIndex] = color.B;
             _frameBuffer[++startIndex] = color.G;

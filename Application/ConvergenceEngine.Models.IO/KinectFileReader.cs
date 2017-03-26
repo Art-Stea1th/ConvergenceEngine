@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 
@@ -39,7 +38,6 @@ namespace ConvergenceEngine.Models.IO {
 
         public double FPS { get => _fps; set => _fps = LimitedValue(value, 0.5, 60.0); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private double LimitedValue(double value, double min, double max) {
             return value < min ? min : value > max ? max : value;
         }
@@ -55,7 +53,6 @@ namespace ConvergenceEngine.Models.IO {
             Initialize();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ChangeState(DataProviderStates newState) {
             if (newState == DataProviderStates.Stopped) {
                 Initialize();
@@ -148,7 +145,6 @@ namespace ConvergenceEngine.Models.IO {
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetLinearIndex(int x, int y, int width) => width * y + x;
 
         private short[,] DepthsFrameFrom(byte[] rawFrame) {
@@ -182,7 +178,6 @@ namespace ConvergenceEngine.Models.IO {
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Point PerspectiveToRectangle(double x, double y, double z) {
             return new Point((x - 320.0) * (0.003501 * 0.5) * (z * 0.1), z * 0.1);
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Extensions {
@@ -32,13 +31,11 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             return result;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsValidSequence(IReadOnlyCollection<Point> sequence) {
             double averageDistanceBetweenPoints = sequence.First().DistanceTo(sequence.Last()) / (sequence.Count - 1);
             return averageDistanceBetweenPoints <= ExpectedDistanceBetweenPoints(sequence.Average(p => p.Y));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double ExpectedDistanceBetweenPoints(double segmentPositionY) {
             double a = 100.0 * (2.0 / 3.0), b = a; // magic coefficients // a = b = 100.0 * (2.0 / 3.0);
             return (segmentPositionY - b) / a;     // y = ax + b; => x = (y - b) / a;
@@ -47,7 +44,9 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
         private static (IEnumerable<Point> left, IEnumerable<Point> right) SplitByMaxDivergencePoint(
             IReadOnlyList<Point> points, double allowedDivergencePercent) {
 
-            int maxDivergencePointIndex = points.IndexOfMaxBy(p => p.DistanceTo(points.First(), points.Last()));
+            int maxDivergencePointIndex = points
+                .Select((p, i) => (index: i, distance: p.DistanceTo(points.First(), points.Last())))
+                .MaxBy(id => id.distance).index;
 
             double allowedDivergence = AveragePositionY(
                 points[maxDivergencePointIndex], points.First(), points.Last()) * (allowedDivergencePercent / 100.0);
@@ -58,7 +57,6 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             return (null, null);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static double AveragePositionY(Point point, Point lineStart, Point lineEnd) {
             return Math.Abs((point.Y + lineStart.Y + lineEnd.Y) / 3);
         }

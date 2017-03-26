@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Extensions {
@@ -10,13 +9,11 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
     internal static class Approximator { // IEnumerable<Point>, IEnumerable<Vector> Extension class
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static (Point A, Point B) ApproximateOrdered(this IEnumerable<Point> points) {
             var s = points.Approximate(p => p.X, p => p.Y);
             return (A: new Point(s.x1, s.y1), B: new Point(s.x2, s.y2));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector ApproximateOrdered(this IEnumerable<Vector> vectors) {
             var s = vectors.Approximate(v => v.X, v => v.Y);
             return (new Vector(s.x1, s.y1) + new Vector(s.x2, s.y2)) * 0.5;

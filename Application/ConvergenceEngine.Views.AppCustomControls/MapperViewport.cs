@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,8 +9,8 @@ using System.Windows.Shapes;
 
 namespace ConvergenceEngine.Views.AppCustomControls {
 
-    using Infrastructure.Interfaces;
     using Infrastructure.Extensions;
+    using Infrastructure.Interfaces;
 
     [TemplatePart(Name = PartMapPointsName, Type = typeof(Image))]
     [TemplatePart(Name = PartMapSegmentsName, Type = typeof(Path))]
@@ -250,22 +249,18 @@ namespace ConvergenceEngine.Views.AppCustomControls {
 
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Point Fixed(Point point) {
             return FixToSystemScreenCoordinate(FixToPositiveOnly(point, _min.X, _min.Y), AreaHeight);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Point FixToSystemScreenCoordinate(Point point, double screenHeight) {
             return new Point(point.X, (screenHeight - 1) - point.Y);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Point FixToPositiveOnly(Point point, double minX, double minY) {
             return new Point(point.X - minX, point.Y - minY);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private WriteableBitmap NewBitmap(int width, int height, bool withAlpha = false) {
             return new WriteableBitmap(width > 1 ? width : 1, height > 1 ? height : 1, 96.0, 96.0,
                 withAlpha ? PixelFormats.Bgra32 : PixelFormats.Bgr32, null);

@@ -1,12 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ConvergenceEngine.Models.Mapping {
 
-    using Extensions;
-    using Infrastructure.Extensions;
-    using Infrastructure.Interfaces;
     using Segments;
 
     internal sealed class Map : IEnumerable<Segment> {

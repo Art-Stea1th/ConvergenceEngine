@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace ConvergenceEngine.Models.Mapping.Extensions {
 
@@ -34,7 +33,6 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             return selection.FirstOrDefault();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Segment SelectWithNearestLengthTo(this IEnumerable<Segment> sequence, Segment segment) {
             return sequence.MinBy(s => Math.Abs(s.Length - segment.Length));
         }

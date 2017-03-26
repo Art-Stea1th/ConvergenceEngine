@@ -2,9 +2,10 @@
 
 namespace ConvergenceEngine.Infrastructure.Interfaces {
 
-    //public interface IFrame : IEnumerable<ISegment> {
+    public interface IFrame : IEnumerable<ISegment> {
 
-    //    INavigationInfo Relative { get; }
-    //    INavigationInfo Absolute { get; }
-    //}
+        INavigationInfo RelativeByPrev { get; }
+        INavigationInfo RelativeByNext { get; }
+        INavigationInfo Absolute { get; }
+    }
 }

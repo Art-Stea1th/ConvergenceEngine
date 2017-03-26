@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping {
@@ -11,38 +10,31 @@ namespace ConvergenceEngine.Models.Mapping {
     using Infrastructure.Interfaces;
     using Segments;
 
-    internal sealed class Frame : /*IFrame,*/ IEnumerable<ISegment> {
+    internal sealed class Frame : IFrame {
 
         private const double _allowedDivergencePercent = 3.0, _maxDistancePercent = 5.0, _maxAngleDegrees = 3.0;
 
         private Frame _prev, _next;
-
-        private List<Segment> SourceSegments { get; }
-        //private List<Segment> ActualSegments { get; set; }
-
         private IEnumerable<(ISegment current, ISegment nearest)> _nearestWithPrev, _nearestWithNext;
+        private INavigationInfo _relativeByPrev, _relativeByNext, _absolute;
 
-        private NavigationInfo _relative, _absolute;
+        public IEnumerable<ISegment> NearestToPrev => _nearestWithPrev?.Select(s => s.nearest);
+        public IEnumerable<ISegment> NearestToNext => _nearestWithNext?.Select(s => s.nearest);
 
-
-        //public INavigationInfo Absolute { get => absolute; }
-        //public INavigationInfo Relative { get => relative; }
-
-
-        //internal Frame(Frame frame) {
-        //    sourceSegments = frame.sourceSegments;
-        //    actualSegments = frame.actualSegments;
-        //    absolute = frame.absolute;
-        //    relative = frame.relative;
-        //}
-
-        internal Frame(IEnumerable<Point> points) {
-            SourceSegments = points.Segmentate(_allowedDivergencePercent).Select(s => new Segment(s)).ToList();
+        public INavigationInfo RelativeByPrev => _relativeByPrev ?? new NavigationInfo();
+        public INavigationInfo RelativeByNext => _relativeByNext ?? new NavigationInfo();
+        public INavigationInfo Absolute {
+            get => _absolute ?? new NavigationInfo();
+            internal set => _absolute = value;
         }
 
-        //internal Frame(IEnumerable<ISegment> segments) {
-        //    sourceSegments = (segments as IEnumerable<Segment>).ToList();
-        //}
+        public IEnumerable<ISegment> SourceSegments { get; }
+        public IEnumerable<ISegment> ActualSegments => SourceSegments?
+            .Select(s => (s as Segment).RotatedAtZero(Absolute.A).Shifted(Absolute.X, Absolute.Y));
+
+        internal Frame(IEnumerable<Point> points) {
+            SourceSegments = points.Segmentate(_allowedDivergencePercent).Select(s => new Segment(s));
+        }
 
         internal void SetPrev(Frame frame) {
             if (frame == null || ReferenceEquals(frame, this)) {
@@ -50,11 +42,16 @@ namespace ConvergenceEngine.Models.Mapping {
             }
             _prev = frame;
             SetNearestWithPrev();
+            CalculateNavigationInfoByPrev();
         }
 
-
-        private void CalculateRelative() {
-            //_relative = _nearestWithPrev.ComputeConvergence(_maxDistancePercent, _maxAngleDegrees);
+        internal void SetNext(Frame frame) {
+            if (frame == null || ReferenceEquals(frame, this)) {
+                return;
+            }
+            _next = frame;
+            SetNearestWithNext();
+            CalculateNavigationInfoByNext();
         }
 
         private void SetNearestWithPrev() {
@@ -65,31 +62,31 @@ namespace ConvergenceEngine.Models.Mapping {
             _nearestWithNext = SelectNearestWith(_next, _maxDistancePercent, _maxAngleDegrees);
         }
 
+        private void CalculateNavigationInfoByPrev() {
+            _relativeByPrev = _nearestWithPrev.ComputeConvergence(_maxDistancePercent, _maxAngleDegrees);
+        }
+
+        private void CalculateNavigationInfoByNext() {
+            _relativeByNext = _nearestWithNext.ComputeConvergence(_maxDistancePercent, _maxAngleDegrees);
+        }
+
         private IEnumerable<(ISegment current, ISegment nearest)> SelectNearestWith(Frame frame,
             double maxDistancePercent, double maxAngleDegrees) {
 
-            foreach (var segment in frame.SourceSegments) {
+            foreach (var segment in SourceSegments) {
 
                 double maxDistance = Math.Min(segment.A.Y, segment.B.Y) / 100.0 * maxDistancePercent;
 
-                var nearest = segment.SelectNearestFrom(frame.SourceSegments, maxDistance, maxAngleDegrees);
+                var nearest = (segment as Segment).SelectNearestFrom(frame.SourceSegments, maxDistance, maxAngleDegrees);
                 if (nearest != null) {
                     yield return (current: segment as ISegment, nearest: nearest);
                 }
             }
         }
 
-        //private void SetOffsetBy(Frame frame) {
-        //    var nearest = sourceSegments.SelectNearestTo(frame.sourceSegments, MaxDistancePercent, MaxAngleDegrees);
-        //    relative = nearest.ComputeConvergence(MaxDistancePercent, MaxAngleDegrees);
-        //    absolute = frame.absolute + relative;
-        //    actualSegments = sourceSegments.Select(s => s.RotatedAtZero(absolute.A).Shifted(absolute.X, absolute.Y)).ToList();
-        //}
-
         #region Generic Interfaces
 
         public IEnumerator<ISegment> GetEnumerator() => SourceSegments.GetEnumerator();
-
         IEnumerator IEnumerable.GetEnumerator() => SourceSegments.GetEnumerator();
         #endregion
     }

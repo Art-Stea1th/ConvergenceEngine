@@ -1,30 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-
 
 namespace ConvergenceEngine.Infrastructure.Extensions {
 
     public static partial class Extensions {
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int IndexOfMaxBy<TSource, TComparable>(
-            this IReadOnlyCollection<TSource> sequence, Func<TSource, TComparable> selector) where TComparable : IComparable {
-            return sequence.MinOrMaxBy(selector, value => value > 0).index;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int IndexOfMinBy<TSource, TComparable>(
-            this IReadOnlyCollection<TSource> sequence, Func<TSource, TComparable> selector) where TComparable : IComparable {
-            return sequence.MinOrMaxBy(selector, value => value < 0).index;
-        }
-
-        public static int IndexesOf<TSource>(this IReadOnlyCollection<TSource> sequence, Func<bool> predicate) {
-            for (int i = 0; i < sequence.Count; ++i) {
-
-            }
-        }
 
         public static (IEnumerable<T> left, IEnumerable<T> right) SplitBy<T>(this IReadOnlyCollection<T> sequence, int index) {
 

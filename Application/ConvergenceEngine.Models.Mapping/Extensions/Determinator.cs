@@ -4,22 +4,24 @@ using System.Windows;
 
 namespace ConvergenceEngine.Models.Mapping.Extensions {
 
-    using Segments;
+    using ConvergenceEngine.Infrastructure.Interfaces;
     using Infrastructure.Extensions;
+    using Segments;
 
     internal static class Determinator {
 
-        public static NavigationInfo ComputeConvergence(this IEnumerable<(Segment current, Segment nearest)> trackedPairs,
+        public static NavigationInfo ComputeConvergence(this IEnumerable<(ISegment current, ISegment nearest)> trackedPairs,
             double maxDistancePercent, double maxAngleDegrees) {
 
             if (trackedPairs.IsNullOrEmpty()) {
-                return new NavigationInfo(); // !
+                return null; // !
             }
 
             double resultAngle = AverageWeightedAngle(trackedPairs);
 
-            trackedPairs = trackedPairs
-                .Select(sp => (sp.current, sp.nearest.RotatedAtZero(-resultAngle)));
+            trackedPairs = trackedPairs.Select(sp => (
+                current: sp.current,
+                nearest: (sp.nearest as Segment).RotatedAtZero(-resultAngle) as ISegment));
 
             var resultDirection = trackedPairs
                 .Select(sp => sp.current.Center.DistanceVectorTo(sp.current.Center.DistancePointTo(sp.nearest.A, sp.nearest.B)))
@@ -28,17 +30,17 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             return new NavigationInfo(resultDirection, resultAngle);
         }
 
-        public static double AverageWeightedAngle(this IEnumerable<(Segment current, Segment nearest)> trackedPairs) {
+        public static double AverageWeightedAngle(this IEnumerable<(ISegment current, ISegment nearest)> trackedPairs) {
 
-            var vectorizedAngles = trackedPairs.Select(sp => sp.current.AngleTo(sp.nearest).DegreesToVector());
+            var weightedVectors = trackedPairs.Select(sp => (
+            vector: (sp.current as Segment).AngleTo(sp.nearest).DegreesToVector(),
+            weight: sp.current.Length + sp.nearest.Length));
 
-            var weigths = trackedPairs.Select(sp => sp.current.Length + sp.nearest.Length);
-            double weightsSum = weigths.Sum();
+            double weightsSum = weightedVectors.Sum(wv => wv.weight);
 
-            double weightedAverageX = vectorizedAngles.Sequential(weigths, (v, w) => v.X * w / weightsSum).Sum();
-            double weightedAverageY = vectorizedAngles.Sequential(weigths, (v, w) => v.Y * w / weightsSum).Sum();
-
-            return Vector.AngleBetween(Segment.BasisX, new Vector(weightedAverageX, weightedAverageY));
+            return Vector.AngleBetween(Segment.BasisX, new Vector(
+                    weightedVectors.Sum(wv => wv.vector.X * wv.weight / weightsSum),
+                    weightedVectors.Sum(wv => wv.vector.Y * wv.weight / weightsSum)));
         }
     }
 }
