@@ -32,8 +32,17 @@ namespace ConvergenceEngine.Models.Mapping {
         public IEnumerable<ISegment> ActualSegments => SourceSegments?
             .Select(s => (s as Segment).RotatedAtZero(Absolute.A).Shifted(Absolute.X, Absolute.Y));
 
+        public IEnumerable<ISegment> ActualSegmentsNearestOnly => Actual();
+
         internal Frame(IEnumerable<Point> points) {
             SourceSegments = points.Segmentate(_allowedDivergencePercent).Select(s => new Segment(s));
+        }
+
+        private IEnumerable<ISegment> Actual() {
+            return _nearestWithPrev?
+                //.Select(s => s.current)
+                //.Intersect(_prev._nearestWithNext.Select(s => s.nearest))
+                .Select(s => (s.current as Segment).RotatedAtZero(Absolute.A).Shifted(Absolute.X, Absolute.Y));
         }
 
         internal void SetPrev(Frame frame) {

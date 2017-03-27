@@ -23,9 +23,7 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
                 current: sp.current,
                 nearest: (sp.nearest as Segment).RotatedAtZero(-resultAngle) as ISegment));
 
-            var resultDirection = trackedPairs
-                .Select(sp => sp.current.Center.DistanceVectorTo(sp.current.Center.DistancePointTo(sp.nearest.A, sp.nearest.B)))
-                .OrderByAngle().ApproximateOrdered();
+            var resultDirection = AverageDirection(trackedPairs);
 
             return new NavigationInfo(resultDirection, resultAngle);
         }
@@ -41,6 +39,12 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
             return Vector.AngleBetween(Segment.BasisX, new Vector(
                     weightedVectors.Sum(wv => wv.vector.X * wv.weight / weightsSum),
                     weightedVectors.Sum(wv => wv.vector.Y * wv.weight / weightsSum)));
+        }
+
+        public static Vector AverageDirection(this IEnumerable<(ISegment current, ISegment nearest)> trackedPairs) {
+            return trackedPairs
+                .Select(sp => sp.current.Center.DistanceVectorTo(sp.current.Center.DistancePointTo(sp.nearest.A, sp.nearest.B)))
+                .OrderByAngle().ApproximateOrdered();
         }
     }
 }

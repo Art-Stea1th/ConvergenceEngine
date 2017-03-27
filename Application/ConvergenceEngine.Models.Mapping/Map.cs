@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConvergenceEngine.Models.Mapping {
 
+    using Infrastructure.Extensions;
+    using Infrastructure.Interfaces;
     using Segments;
 
     internal sealed class Map : IEnumerable<Segment> {
@@ -15,8 +18,11 @@ namespace ConvergenceEngine.Models.Mapping {
         internal Map() { }
 
 
-        internal void AddSegments(IEnumerable<Segment> segments) {
-
+        internal void AddSegments(IEnumerable<ISegment> segments) {
+            if (segments.IsNullOrEmpty()) {
+                return;
+            }
+            _segments.AddRange(segments.Select(s => s as Segment));
         }
 
         private Segment GetLarger(Segment current, Segment another) {

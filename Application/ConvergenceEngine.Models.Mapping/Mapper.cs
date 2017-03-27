@@ -6,6 +6,7 @@ using System.Windows;
 namespace ConvergenceEngine.Models.Mapping {
 
     using Infrastructure.Interfaces;
+    using Segments;
 
     public sealed class Mapper : IMapper {
 
@@ -30,7 +31,7 @@ namespace ConvergenceEngine.Models.Mapping {
         public IEnumerable<ISegment> AdditionalFrame
             => _frames[FixFrameIndex(_actualFrameIndex + _additionalFrameIndexOffset)].ActualSegments;
 
-        public IEnumerable<ISegment> Map => _map;
+        public IEnumerable<ISegment> Map => new List<Segment>(_map);
 
 
         public void HandleNextData(IEnumerable<Point> nextDepthLine) {
@@ -38,21 +39,25 @@ namespace ConvergenceEngine.Models.Mapping {
             var prev = _frames.LastOrDefault();
             var next = new Frame(nextDepthLine);
 
-            //prev?.SetNext(next);
-            next.SetPrev(prev);
-
-            if (prev != null) {
-                next.Absolute = (NavigationInfo)prev.Absolute + (NavigationInfo)next.RelativeByPrev;
-            }            
-
+            SetFramesAbsolute(prev, next);
             _frames.Add(next);
+            _map.AddSegments(next.ActualSegmentsNearestOnly);
 
             _actualFrameIndex = _frames.Count - 1;
             OnMapperUpdate?.Invoke();
         }
 
-        private void EmplaceFrame(IEnumerable<Point> points) {
-            _frames.Add(new Frame(points));
+        private void SetFramesAbsolute(Frame prev, Frame next) {
+
+            if (prev == null) {
+                return;
+            }
+            prev.SetNext(next);
+            next.SetPrev(prev);
+
+            var nextAverageRelative = (-(NavigationInfo)prev.RelativeByNext + (NavigationInfo)next.RelativeByPrev) / 2.0;
+
+            next.Absolute = (NavigationInfo)prev.Absolute + nextAverageRelative;
         }
 
         private int FixFrameIndex(int index) => index < 0 ? 0 : index >= _frames.Count ? _frames.Count - 1 : index;
