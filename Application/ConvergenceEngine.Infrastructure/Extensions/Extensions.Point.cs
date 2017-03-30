@@ -4,7 +4,13 @@ using System.Windows;
 namespace ConvergenceEngine.Infrastructure.Extensions {
 
     public static partial class Extensions {
-        
+
+        public static (double x, double y) Decomposite(this Point p) => (p.X, p.Y);
+        public static (double x, double y) Decomposite(this Vector v) => (v.X, v.Y);
+
+        public static Point AsPoint((double x, double y) doubleTuple) => new Point(doubleTuple.x, doubleTuple.y);
+        public static Vector AsVector((double x, double y) doubleTuple) => new Vector(doubleTuple.x, doubleTuple.y);
+
         public static Point ShiftedAndRotated(this Point p, double offsetX, double offsetY, double angle) {
             p.Offset(offsetX, offsetY); return p.Rotated(angle);
         }

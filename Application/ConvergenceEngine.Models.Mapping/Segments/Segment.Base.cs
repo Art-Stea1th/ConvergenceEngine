@@ -17,8 +17,24 @@ namespace ConvergenceEngine.Models.Mapping.Segments {
 
         internal Segment(IEnumerable<Point> linearOrderedPoints) : this(linearOrderedPoints.ApproximateOrdered()) { }
         internal Segment(ISegment segment) : this(segment.A, segment.B) { }
-        internal Segment((Point a, Point b) points) : this(points.a, points.b) { }
+        internal Segment(Segment segment) : this(segment.A, segment.B) { }
         internal Segment(Point pointA, Point pointB) { A = pointA; B = pointB; }
+
+        public static implicit operator (Point a, Point b) (Segment segment) {
+            return (a: segment.A, b: segment.B);
+        }
+
+        public static implicit operator (double aX, double aY, double bX, double bY) (Segment segment) {
+            return (aX: segment.A.X, aY: segment.A.Y, bX: segment.B.X, bY: segment.B.Y);
+        }
+
+        public static implicit operator Segment ((Point a, Point b) points) {
+            return new Segment(points.a, points.b);
+        }
+
+        public static implicit operator Segment ((double aX, double aY, double bX, double bY) coordinates) {
+            return new Segment(new Point(coordinates.aX, coordinates.aY), new Point(coordinates.bX, coordinates.bY));
+        }
 
         private IEnumerable<Point> Points() {
             yield return A; yield return B;

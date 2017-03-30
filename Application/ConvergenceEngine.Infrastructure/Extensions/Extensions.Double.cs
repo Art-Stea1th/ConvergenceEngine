@@ -5,6 +5,8 @@ namespace ConvergenceEngine.Infrastructure.Extensions {
 
     public static partial class Extensions {
 
+        // 1 Double
+
         public static double ToDegrees(this double radians)
             => (radians * 180.0) / Math.PI;
 

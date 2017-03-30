@@ -88,7 +88,7 @@ namespace ConvergenceEngine.Models.Mapping {
 
                 var nearest = (segment as Segment).SelectNearestFrom(frame.SourceSegments, maxDistance, maxAngleDegrees);
                 if (nearest != null) {
-                    yield return (current: segment as ISegment, nearest: nearest);
+                    yield return (current: segment, nearest: nearest);
                 }
             }
         }

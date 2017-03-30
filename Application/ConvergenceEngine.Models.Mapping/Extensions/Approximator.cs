@@ -9,9 +9,9 @@ namespace ConvergenceEngine.Models.Mapping.Extensions {
 
     internal static class Approximator { // IEnumerable<Point>, IEnumerable<Vector> Extension class
 
-        public static (Point A, Point B) ApproximateOrdered(this IEnumerable<Point> points) {
+        public static (Point a, Point b) ApproximateOrdered(this IEnumerable<Point> points) {
             var s = points.Approximate(p => p.X, p => p.Y);
-            return (A: new Point(s.x1, s.y1), B: new Point(s.x2, s.y2));
+            return (a: new Point(s.x1, s.y1), b: new Point(s.x2, s.y2));
         }
 
         public static Vector ApproximateOrdered(this IEnumerable<Vector> vectors) {

@@ -51,6 +51,7 @@
     <Compile Include="Extensions\Segmenter.cs" />
     <Compile Include="Extensions\Selector.cs" />
     <Compile Include="Frame.cs" />
+    <Compile Include="FrameX.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="NavigationInfo.cs" />
     <Compile Include="Mapper.cs" />
